@@ -1,0 +1,435 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+   Fixes for img and svg
+   Add box-sizing: border-box
+   Add clearfix
+   Link decoration disable
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
+/* HTML5 display-role reset for older browsers */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+svg {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
+.vdatetime > * {
+  box-sizing: border-box;
+}
+
+.vdatetime-overlay {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.5s;
+}
+
+.dcal_box {
+  width: 380px;
+  max-width: calc(100% - 30px);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  color: #444;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  background: #fff;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.dcal_header {
+  padding: 15px 30px;
+  background: #3f51b5;
+  color: #fff;
+  font-size: 32px;
+  text-transform: capitalize;
+}
+
+.dcal_year {
+  display: block;
+  font-weight: 300;
+  font-size: 14px;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.dcal_body {
+  padding: 15px 0;
+  font-size: 16px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.dcal_monthSelector {
+  position: relative;
+  padding: 0 30px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.dcal_monthSelector_prev,
+.dcal_monthSelector_next {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 8px;
+  cursor: pointer;
+}
+
+.dcal_monthSelector_prev svg,
+.dcal_monthSelector_next svg {
+  width: 8px;
+}
+
+.dcal_monthSelector_prev svg path,
+.dcal_monthSelector_next svg path {
+  transition: stroke 0.3s;
+}
+
+.dcal_monthSelector_prev:hover svg path,
+.dcal_monthSelector_next:hover svg path {
+  stroke: #888;
+}
+
+.dcal_monthSelector_prev {
+  left: 30px;
+}
+
+.dcal_monthSelector_next {
+  right: 30px;
+  -webkit-transform: translateY(-50%) scaleX(-1);
+          transform: translateY(-50%) scaleX(-1);
+}
+
+.dcal_monthSelector_current {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.dcal_daysBox {
+  padding: 0 20px;
+  transition: height 0.2s;
+}
+
+.dcal_weekday {
+  position: relative;
+  display: inline-block;
+  width: 14.285714%;
+  padding-top: 14.285714%;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dcal_dayGrid {
+  display: inline-block;
+  vertical-align: top;
+  width: 14.285714%;
+  padding: 2px;
+}
+
+.dcal_dayGrid .dcal_day {
+  display: block;
+  position: relative;
+  padding-top: 100%;
+  /*border: 1px dashed $lazure;*/
+  color: #3f51b5;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.dcal_dayGrid .dcal_day-empty {
+  visibility: hidden;
+}
+
+.dcal_dayGrid .dcal_num {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.dcal_dayGrid .dcal_daySelect {
+  opacity: 0;
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  top: 0;
+  right: 0;
+  border: 1px solid #3f51b5;
+  border-radius: 100%;
+  background: #ffffff;
+  text-align: center;
+  font-size: 8px;
+  transition: all 0.1s ease;
+}
+
+.dcal_dayGrid .dcal_dayInput,
+.dcal_dayGrid .dcal_daySelect > .checked {
+  display: none;
+}
+
+.dcal_dayGrid .dcal_day:hover .dcal_daySelect,
+.dcal_dayGrid .dcal_dayInput:checked ~ .dcal_day .dcal_daySelect {
+  opacity: 1;
+}
+
+.dcal_dayGrid .dcal_dayInput:checked ~ .dcal_day .dcal_daySelect,
+.dcal_dayGrid .dcal_daySelect:hover {
+  display: block;
+  background: darkred;
+}
+
+.dcal_dayGrid .dcal_dayInput:checked ~ .dcal_day,
+.dcal_dayGrid .dcal_day:hover {
+  background: #3f51b5;
+  color: #fff;
+}
+
+.dcal_day-selected > span > span,
+.dcal_day-selected:hover > span > span {
+  color: #fff;
+  background: #3f51b5;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.vdatetime-popup__date-picker__item--disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.vdatetime-popup__date-picker__item--disabled:hover > span > span {
+  color: inherit;
+  background: transparent;
+}
+
+.vdatetime-popup__list-picker-wrapper:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.vdatetime-popup__list-picker {
+  height: 305px;
+  overflow-y: scroll;
+}
+
+.vdatetime-popup__list-picker::-webkit-scrollbar {
+  width: 3px;
+}
+
+.vdatetime-popup__list-picker::-webkit-scrollbar-track {
+  background: #efefef;
+}
+
+.vdatetime-popup__list-picker::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+
+.vdatetime-popup__list-picker--half {
+  float: left;
+  width: 50%;
+}
+
+.vdatetime-popup__list-picker__item {
+  padding: 10px 0;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: font-size 0.3s;
+}
+
+.vdatetime-popup__list-picker__item:hover {
+  font-size: 32px;
+}
+
+.vdatetime-popup__list-picker__item--selected {
+  color: #3f51b5;
+  font-size: 32px;
+}
+
+.dcal_actions {
+  padding: 0 20px 10px 30px;
+  text-align: right;
+}
+
+.dcal_btn {
+  display: inline-block;
+  border: none;
+  padding: 10px 20px;
+  background: transparent;
+  font-size: 16px;
+  color: #3f51b5;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.dcal_btn:hover {
+  color: #444;
+}
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+

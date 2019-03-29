@@ -1,0 +1,254 @@
+.vdatetime {
+  > * {
+    box-sizing: border-box;
+  }
+}
+
+.vdatetime-overlay {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity .5s;
+}
+
+.dcal_box {
+  width: 380px;
+  max-width: calc(100% - 30px);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  color: #444;
+  font-family: -apple-system, BlinkMacSystemFont,
+  "Segoe UI", "Roboto", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans",
+  "Droid Sans", "Helvetica Neue", sans-serif;
+  background: #fff;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.dcal_header{
+  padding: 15px 30px;
+  background: $lazure;
+  color: #fff;
+  font-size: 32px;
+  text-transform: capitalize;
+}
+
+.dcal_year {
+  display: block;
+  font-weight: 300;
+  font-size: 14px;
+  opacity: 0.7;
+  transition: opacity .3s;
+}
+
+.dcal_body {
+  padding: 15px 0;
+  font-size: 16px;
+  user-select: none;
+}
+
+.dcal_monthSelector {
+  position: relative;
+  padding: 0 30px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.dcal_monthSelector_prev,
+.dcal_monthSelector_next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  cursor: pointer;
+
+  svg {
+    width: 8px;
+
+    path {
+      transition: stroke .3s;
+    }
+  }
+  &:hover svg path {
+    stroke: #888;
+  }
+}
+
+.dcal_monthSelector_prev {
+  left: 30px;
+}
+.dcal_monthSelector_next {
+  right: 30px;
+  transform: translateY(-50%) scaleX(-1);
+}
+
+.dcal_monthSelector_current {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.dcal_daysBox {
+  padding: 0 20px;
+  transition: height .2s;
+}
+
+.dcal_weekday{
+  position: relative;
+  display: inline-block;
+  width: 14.285714%;
+  padding-top: 14.285714%;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: bold;
+  cursor: pointer;
+}
+.dcal_dayGrid{
+  display: inline-block;
+  vertical-align: top;
+  width: 14.285714%;
+  padding: 2px;
+  .dcal_day{
+    display: block;
+    position: relative;
+    padding-top: 100%;
+    /*border: 1px dashed $lazure;*/
+    color: $lazure;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+  .dcal_day-empty{
+    visibility: hidden;
+  }
+  .dcal_num{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .dcal_daySelect{
+    opacity: 0;
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    top: 0;
+    right: 0;
+    border: 1px solid $lazure;
+    border-radius: 100%;
+    background: #ffffff;
+    text-align: center;
+    font-size: 8px;
+    transition: all 0.1s ease;
+  }
+  .dcal_dayInput,
+  .dcal_daySelect>.checked{
+    display: none;
+  }
+  .dcal_day:hover .dcal_daySelect,
+  .dcal_dayInput:checked ~ .dcal_day .dcal_daySelect{
+    opacity: 1;
+  }
+  .dcal_dayInput:checked ~ .dcal_day .dcal_daySelect,
+  .dcal_daySelect:hover{
+    display: block;
+    background: darkred;
+  }
+  .dcal_dayInput:checked ~ .dcal_day,
+  .dcal_day:hover{
+    background: $lazure;
+    color: #fff;
+  }
+}
+
+.dcal_day-selected {
+  & > span > span,
+  &:hover > span > span {
+    color: #fff;
+    background: #3f51b5;
+  }
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.vdatetime-popup__date-picker__item--disabled {
+  opacity: 0.4;
+  cursor: default;
+
+  &:hover > span > span {
+    color: inherit;
+    background: transparent;
+  }
+}
+
+.vdatetime-popup__list-picker-wrapper {
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.vdatetime-popup__list-picker {
+  height: 305px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #efefef;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ccc;
+  }
+}
+
+.vdatetime-popup__list-picker--half {
+  float: left;
+  width: 50%;
+}
+
+.vdatetime-popup__list-picker__item {
+  padding: 10px 0;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: font-size .3s;
+}
+
+.vdatetime-popup__list-picker__item:hover {
+  font-size: 32px;
+}
+
+.vdatetime-popup__list-picker__item--selected {
+  color: #3f51b5;
+  font-size: 32px;
+}
+
+.dcal_actions {
+  padding: 0 20px 10px 30px;
+  text-align: right;
+}
+
+.dcal_btn {
+  display: inline-block;
+  border: none;
+  padding: 10px 20px;
+  background: transparent;
+  font-size: 16px;
+  color: #3f51b5;
+  cursor: pointer;
+  transition: color .3s;
+
+  &:hover {
+    color: #444;
+  }
+}
