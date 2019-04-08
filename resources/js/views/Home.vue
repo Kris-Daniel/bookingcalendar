@@ -2,7 +2,7 @@
     <main>
         Home here
         
-        <calendar2 v-model="datenow"></calendar2>
+        <calendar2></calendar2>
     </main>
 </template>
 
@@ -11,10 +11,10 @@
     import Calendar2 from "../components/calendar2/Calendar2";
     export default {
         name: 'home',
-        components: {Calendar2, Datetime},
+        components: {Calendar2},
         data() {
             return {
-                datenow: new Date().toISOString(),
+
             }
         }
     }

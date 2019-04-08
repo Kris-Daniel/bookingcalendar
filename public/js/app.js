@@ -518,62 +518,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _calendar_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../calendar/util */ "./resources/js/components/calendar/util.js");
-/* harmony import */ var _calendar_TypeFlows__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../calendar/TypeFlows */ "./resources/js/components/calendar/TypeFlows/index.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _data_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/data */ "./resources/js/components/calendar2/data/data.js");
+/* harmony import */ var _data_reactSchedule__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./data/reactSchedule */ "./resources/js/components/calendar2/data/reactSchedule.js");
 //
 //
 //
@@ -587,164 +533,61 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+var presset = _data_data__WEBPACK_IMPORTED_MODULE_2__["data"];
+
+var _rc = new _data_reactSchedule__WEBPACK_IMPORTED_MODULE_3__["default"](presset);
+
+var calendar = _rc.calendar;
+var _cYear = calendar.years['y' + calendar.time.getFullYear()];
+
+var _cMonth = _cYear.months['m' + (calendar.time.getMonth() + 1)];
+
+var _cDay = _cMonth.days['d' + calendar.time.getDate()];
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'calendar2',
-  props: {
-    value: {
-      type: String,
-      required: true
-    },
-    type: {
-      type: String,
-      default: 'date'
-    },
-    inputFormat: {
-      type: String,
-      default: ''
-    },
-    wrapperClass: {
-      type: String
-    },
-    inputClass: {
-      type: String
-    },
-    placeholder: {
-      type: String
-    },
-    momentLocale: {
-      type: String,
-      default: null
-    },
-    minDate: {
-      type: String,
-      default: null
-    },
-    maxDate: {
-      type: String,
-      default: null
-    },
-    disabledDates: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    mondayFirst: {
-      type: Boolean,
-      default: false
-    },
-    autoContinue: {
-      type: Boolean,
-      default: false
-    },
-    autoClose: {
-      type: Boolean,
-      default: false
-    },
-    required: {
-      type: Boolean,
-      default: false
-    },
-    i18n: {
-      type: Object,
-      default: function _default() {
-        return {
-          ok: 'Ok',
-          cancel: 'Cancel'
-        };
-      }
-    }
-  },
+  props: {},
   data: function data() {
-    var date = this.getDate();
     return {
-      isOpen: false,
-      show: null,
-      date: date,
-      newDate: null,
-      currentMonthDate: null,
-      typeFlow: Object(_calendar_TypeFlows__WEBPACK_IMPORTED_MODULE_3__["default"])(this.type, this, date ? date.clone() : moment__WEBPACK_IMPORTED_MODULE_1___default()().locale(this.momentLocale)),
-      datePickerHeight: null
+      vflag: true
     };
   },
   watch: {
-    value: function value(newValue) {
-      this.date = this.getDate();
-      this.typeFlow.setDate(date ? date.clone() : moment__WEBPACK_IMPORTED_MODULE_1___default()().locale(this.momentLocale));
-      this.newDate = this.getNewDate();
-      this.currentMonthDate = this.getCurrentMonthDate();
-    }
+    value: function value() {}
   },
   created: function created() {
     /*if(this.date) {
         this.$emit('input', this.typeFlow.isoDate())
     }*/
-    this.newDate = this.getNewDate();
-    this.currentMonthDate = this.getCurrentMonthDate();
   },
   computed: {
-    inputValue: function inputValue() {
-      return this.typeFlow.format(this.date, this.inputFormat || this.typeFlow.inputFormat());
+    rc: function rc() {
+      this.notF();
+      return _rc;
     },
-    newDay: function newDay() {
-      return this.newDate.format('ddd, MMM D');
+    cYear: function cYear() {
+      this.notF();
+      return _cYear;
     },
-    newYear: function newYear() {
-      return this.newDate.format('YYYY');
+    cMonth: function cMonth() {
+      this.notF();
+      return _cMonth;
     },
-    currentMonth: function currentMonth() {
-      return this.currentMonthDate.format('MMMM YYYY');
-    },
-    currentMonthDays: function currentMonthDays() {
-      var _this = this;
-
-      var currentYear = this.currentMonthDate.year();
-      var currentMonth = this.currentMonthDate.month();
-      var isCurrentMonth = currentYear === this.newDate.year() && currentMonth === this.newDate.month();
-      var days = _calendar_util__WEBPACK_IMPORTED_MODULE_2__["monthDays"](currentMonth, currentYear, this.mondayFirst);
-      return days.map(function (day) {
-        return {
-          number: day || '',
-          selected: day ? isCurrentMonth && day === _this.newDate.date() : false,
-          disabled: day ? _this.isDisabled(moment__WEBPACK_IMPORTED_MODULE_1___default()([currentYear, currentMonth, day])) : true
-        };
-      });
-    },
-    weekdays: function weekdays() {
-      return _calendar_util__WEBPACK_IMPORTED_MODULE_2__["weekdays"](this.momentLocale, this.mondayFirst);
+    cDay: function cDay() {
+      this.notF();
+      return _cDay;
     }
   },
   methods: {
-    myconsole: function myconsole() {
-      console.log(this.currentMonthDays, 'days');
+    changeMonth: function changeMonth(side) {
+      if (_cMonth[side]) _cMonth = _cMonth[side];
+      _cYear = _cMonth.ref;
+      this.notF();
+      console.log(this.cMonth, _cYear, side);
     },
-    getDate: function getDate() {
-      return this.value.length ? moment__WEBPACK_IMPORTED_MODULE_1___default()(this.value, this.type === 'time' ? 'HH:mm' : null).locale(this.momentLocale) : null;
-    },
-    open: function open() {},
-    previousMonth: function previousMonth() {
-      this.currentMonthDate = this.currentMonthDate.clone().subtract(1, 'month');
-    },
-    nextMonth: function nextMonth() {
-      this.currentMonthDate = this.currentMonthDate.clone().add(1, 'month');
-    },
-    getNewDate: function getNewDate() {
-      var newDate = this.date ? this.date.clone() : moment__WEBPACK_IMPORTED_MODULE_1___default()().locale(this.momentLocale);
-
-      for (var i = 0; i < 1e5 && this.isDisabled(newDate); i++) {
-        newDate = newDate.clone().add(1, 'day');
-      }
-
-      return newDate;
-    },
-    isDisabled: function isDisabled(date) {
-      return this.minDate && date.isBefore(this.minDate, 'day') || this.maxDate && date.isAfter(this.maxDate, 'day') || this.disabledDatesRanges && this.disabledDatesRanges.find(function (dates) {
-        return date.isBetween(dates[0], dates[1], 'day', '[)');
-      }) !== undefined;
-    },
-    getCurrentMonthDate: function getCurrentMonthDate() {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()([this.newDate.year(), this.newDate.month(), 1]).locale(this.momentLocale);
+    notF: function notF() {
+      this.vflag = !this.vflag;
     }
   }
 });
@@ -817,13 +660,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'home',
   components: {
-    Calendar2: _components_calendar2_Calendar2__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Datetime: _components_calendar_Datetime__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Calendar2: _components_calendar2_Calendar2__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
-    return {
-      datenow: new Date().toISOString()
-    };
+    return {};
   }
 });
 
@@ -19347,177 +19187,44 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "dcal", class: _vm.wrapperClass }, [
-    _vm._v("\n    hello\n    "),
-    _c("div", { staticClass: "dcal_box" }, [
-      _c("div", { staticClass: "dcal_header" }, [
-        _c("div", { staticClass: "dcal_year" }, [_vm._v(_vm._s(_vm.newYear))]),
-        _vm._v("\n            " + _vm._s(_vm.newDay) + "\n        ")
-      ]),
+  return _c(
+    "div",
+    { staticClass: "dcal" },
+    [
+      _vm._l(_vm.cMonth.days.d7.date.getDay(), function(n) {
+        return _c("div")
+      }),
       _vm._v(" "),
-      _c("div", { ref: "popupBody", staticClass: "dcal_body" }, [
-        _c("div", [
-          _c("div", { staticClass: "dcal_monthSelector" }, [
-            _c(
-              "div",
-              {
-                staticClass: "dcal_monthSelector_prev",
-                on: { click: _vm.previousMonth }
-              },
-              [
-                _c(
-                  "svg",
-                  {
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      viewBox: "0 0 61.3 102.8"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        fill: "none",
-                        stroke: "#444",
-                        "stroke-width": "14",
-                        "stroke-miterlimit": "10",
-                        d: "M56.3 97.8L9.9 51.4 56.3 5"
-                      }
-                    })
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "dcal_monthSelector_current" }, [
-              _vm._v(_vm._s(_vm.currentMonth))
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "dcal_monthSelector_next",
-                on: { click: _vm.nextMonth }
-              },
-              [
-                _c(
-                  "svg",
-                  {
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      viewBox: "0 0 61.3 102.8"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        fill: "none",
-                        stroke: "#444",
-                        "stroke-width": "14",
-                        "stroke-miterlimit": "10",
-                        d: "M56.3 97.8L9.9 51.4 56.3 5"
-                      }
-                    })
-                  ]
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dcal_daysBox",
-              style: { height: _vm.datePickerHeight }
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "dcal_weekdays" },
-                _vm._l(_vm.weekdays, function(weekday) {
-                  return _c("div", { staticClass: "dcal_weekday" }, [
-                    _vm._v(_vm._s(weekday) + "\n                        ")
-                  ])
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "dcal_days" },
-                _vm._l(_vm.currentMonthDays, function(day) {
-                  return _c(
-                    "div",
-                    {
-                      staticClass: "dcal_dayGrid",
-                      class: { "dcal_day-selected": day.selected }
-                    },
-                    [
-                      day.number
-                        ? _c("input", {
-                            staticClass: "dcal_dayInput",
-                            attrs: {
-                              type: "checkbox",
-                              id: _vm.newYear + _vm.currentMonth + day.number
-                            }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      day.number
-                        ? _c(
-                            "label",
-                            {
-                              staticClass: "dcal_day",
-                              class: { "dcal_day-empty": !day.number },
-                              attrs: {
-                                for: _vm.newYear + _vm.currentMonth + day.number
-                              }
-                            },
-                            [
-                              day.number
-                                ? _c(
-                                    "label",
-                                    {
-                                      staticClass: "dcal_daySelect",
-                                      attrs: {
-                                        for:
-                                          _vm.newYear +
-                                          _vm.currentMonth +
-                                          day.number
-                                      }
-                                    },
-                                    [_c("span", { staticClass: "checked" })]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "dcal_num" }, [
-                                _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(day.number) +
-                                    "\n                                "
-                                )
-                              ])
-                            ]
-                          )
-                        : _vm._e()
-                    ]
-                  )
-                }),
-                0
-              )
-            ]
-          )
-        ])
-      ]),
+      _vm._l(_vm.cMonth.days, function(item) {
+        return _c("div", [_vm._v(_vm._s(item.date.getDate()))])
+      }),
       _vm._v(" "),
-      _c("div", { staticClass: "dcal_actions" }, [
-        _c(
-          "button",
-          { staticClass: "dcal_btn", on: { click: _vm.myconsole } },
-          [_vm._v("Click")]
-        )
-      ])
-    ])
-  ])
+      _c(
+        "button",
+        {
+          on: {
+            click: function($event) {
+              return _vm.changeMonth("prev")
+            }
+          }
+        },
+        [_vm._v("prev")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          on: {
+            click: function($event) {
+              return _vm.changeMonth("next")
+            }
+          }
+        },
+        [_vm._v("next")]
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -19589,22 +19296,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "main",
-    [
-      _vm._v("\n    Home here\n    \n    "),
-      _c("calendar2", {
-        model: {
-          value: _vm.datenow,
-          callback: function($$v) {
-            _vm.datenow = $$v
-          },
-          expression: "datenow"
-        }
-      })
-    ],
-    1
-  )
+  return _c("main", [_vm._v("\n    Home here\n    \n    "), _c("calendar2")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -35040,6 +34732,332 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/calendar2/data/data.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/calendar2/data/data.js ***!
+  \********************************************************/
+/*! exports provided: data */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "data", function() { return data; });
+var data = {
+  time: new Date(),
+  segment: 60,
+  weekDays: {
+    Su: [{
+      from: '09:00',
+      to: '18:00'
+    }],
+    Mo: [{
+      from: '09:00',
+      to: '11:00'
+    }, {
+      from: '12:00',
+      to: '13:00'
+    }, {
+      from: '14:00',
+      to: '15:00'
+    }, {
+      from: '16:00',
+      to: '18:00'
+    }],
+    Tu: [{
+      from: '00:00',
+      to: '11:00'
+    }, {
+      from: '12:00',
+      to: '18:00'
+    }]
+  },
+  days: {
+    'd2019-04-04': [{
+      from: '10:00',
+      to: '15:00'
+    }],
+    'd2019-04-05': [{
+      from: '11:00',
+      to: '16:00'
+    }]
+  }
+};
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar2/data/reactSchedule.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/calendar2/data/reactSchedule.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return reactCalendar; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var reactCalendar =
+/*#__PURE__*/
+function () {
+  function reactCalendar(data) {
+    _classCallCheck(this, reactCalendar);
+
+    this.data = data;
+    this.from = new Date('2009-01-01');
+    this.to = new Date('2019-11-21');
+    this.calendar = {
+      time: data.time,
+      segment: data.segment,
+      weekDays: {
+        Su: {},
+        Mo: {},
+        Tu: {},
+        We: {},
+        Th: {},
+        Fr: {},
+        Sa: {}
+      },
+      years: {}
+    };
+    this.startEnv();
+  }
+
+  _createClass(reactCalendar, [{
+    key: "startEnv",
+    value: function startEnv() {
+      var it = this;
+      var funcs = [this.setRegularSchedule, this.setSpecialDays];
+      pipelineArr(funcs, function (func) {
+        func(it);
+      });
+    }
+  }, {
+    key: "setRegularSchedule",
+    value: function setRegularSchedule(it) {
+      var weekDays = it.calendar.weekDays;
+      pipelineObj(weekDays, setWeekDays);
+
+      function setWeekDays(obj, wd) {
+        weekDays[wd] = {
+          name: wd,
+          checked: false,
+          intervals: {}
+        };
+        it.startAllIntervals('week', weekDays[wd]);
+      }
+    }
+  }, {
+    key: "setSpecialDays",
+    value: function setSpecialDays(it) {
+      var from = it.from.getTime();
+      var to = it.to.getTime();
+      var step = 86400000;
+      pipelineFor(from, to + step, step, setDays);
+
+      function setDays(ms) {
+        var day = new Date(ms);
+        var y = day.getFullYear();
+        var m = day.getMonth() + 1;
+        var d = day.getDate();
+        var years = it.calendar.years;
+        var nameY = 'y' + y;
+        var nameYprev = 'y' + (y - 1);
+        var monthDate = new Date(y + '-' + zeroToNum(m));
+
+        if (years[nameY] == undefined) {
+          years[nameY] = {
+            name: y,
+            date: new Date(y),
+            prev: undefined,
+            next: undefined,
+            months: {},
+            monthsLen: 0
+          };
+        }
+
+        if (!years[nameY].months['m' + m]) {
+          years[nameY].months['m' + m] = {
+            name: y + '-' + zeroToNum(m),
+            index: m,
+            date: monthDate,
+            ref: years[nameY],
+            prev: undefined,
+            next: undefined,
+            days: {},
+            daysLen: 0
+          };
+          years[nameY].monthsLen++;
+        }
+
+        var monthObj = years[nameY].months['m' + m];
+
+        if (!monthObj.days['d' + d]) {
+          monthObj.days['d' + d] = {
+            name: 'd' + y + '-' + zeroToNum(m) + '-' + zeroToNum(d),
+            date: day,
+            prev: undefined,
+            next: undefined,
+            checked: false,
+            ref: years[nameY].months['m' + m],
+            intervals: {},
+            intervalsLen: 0
+          };
+          monthObj.daysLen++;
+        }
+
+        var dayObj = monthObj.days['d' + d];
+
+        if (years[nameYprev] != undefined) {
+          years[nameYprev].next = years[nameY];
+          years[nameY].prev = years[nameYprev];
+        }
+
+        it.setPrevNext(monthDate, 'month', monthObj);
+        it.setPrevNext(day, 'day', dayObj);
+        it.startAllIntervals('day', dayObj);
+      }
+
+      ;
+    }
+  }, {
+    key: "setPrevNext",
+    value: function setPrevNext(currentDate, deep, currentObj) {
+      var years = this.calendar.years;
+      var prevDate = new Date(currentDate.getTime());
+
+      if (deep == 'month') {
+        prevDate.setMonth(prevDate.getMonth() - 1);
+      } else if (deep == 'day') {
+        prevDate.setDate(prevDate.getDate() - 1);
+      }
+
+      var py = years['y' + prevDate.getFullYear()];
+
+      if (py) {
+        var pm = py.months['m' + (prevDate.getMonth() + 1)];
+
+        if (pm) {
+          if (deep == 'month') {
+            pm.next = currentObj;
+            currentObj.prev = pm;
+          } else if (deep == 'day') {
+            var pd = pm.days['d' + prevDate.getDate()];
+
+            if (pd) {
+              pd.next = currentObj;
+              currentObj.prev = pd;
+            }
+          }
+        }
+      }
+    }
+  }, {
+    key: "startAllIntervals",
+    value: function startAllIntervals(type, day) {
+      var it = this;
+
+      function callback() {
+        var arr = [];
+
+        if (type == 'week') {
+          if (it.data.weekDays[day.name]) {
+            var _arr = it.data.weekDays[day.name];
+          }
+        } else if (type == 'day') {
+          if (it.data.days[day.name]) {
+            var _arr2 = it.data.days[day.name];
+          }
+        }
+
+        pipelineArr(arr, function (interval) {
+          var from = parseFromMins(interval.from);
+          var to = parseFromMins(interval.to);
+          var segment = it.calendar.segment;
+          pipelineFor(from, to, segment, function (item) {
+            var index = 'i' + item / segment;
+            day.intervals[index].checked = true;
+          });
+        });
+      }
+
+      it.insertIntervals(day, callback);
+    }
+  }, {
+    key: "insertIntervals",
+    value: function insertIntervals(obj, callback) {
+      var it = this;
+      var step = it.calendar.segment;
+      var len = 24 * 60;
+      pipelineFor(0, len, step, fastInterval);
+
+      function fastInterval(mins) {
+        var minsTo = mins + step;
+        var interval = {
+          ref: obj,
+          from: parseToMins(mins),
+          to: parseToMins(minsTo),
+          checked: false
+        };
+        obj['intervals']['i' + mins / step] = interval;
+        obj.intervalsLen++;
+      }
+
+      callback();
+    }
+  }]);
+
+  return reactCalendar;
+}();
+
+
+
+function pipelineArr(arr, func) {
+  for (var item = 0; item < arr.length; item++) {
+    func(arr[item]);
+  }
+}
+
+function pipelineObj(obj, func) {
+  for (var prop in obj) {
+    func(obj, prop);
+  }
+}
+
+function pipelineFor(start, end, step, func) {
+  for (var item = start; item < end; item += step) {
+    func(item);
+  }
+}
+
+function parseToMins(hm) {
+  var h = Math.floor(hm / 60);
+  var m = hm - h * 60;
+  h = h == 24 ? 0 : h;
+  hm = h + ':' + m;
+  return zeroToNum(h) + ':' + zeroToNum(m);
+}
+
+function parseFromMins(hm) {
+  hm = hm.split(':');
+  var h = parseInt(hm[0]);
+  var m = parseInt(hm[1]);
+  hm = h * 60 + m;
+  return hm;
+}
+
+function zeroToNum(num) {
+  num = num.toString();
+  num = num.length < 2 ? '0' + num : num;
+  return num;
+}
+
+/***/ }),
+
 /***/ "./resources/js/router/index.js":
 /*!**************************************!*\
   !*** ./resources/js/router/index.js ***!
@@ -35292,8 +35310,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OSPanel\domains\lara6\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\lara6\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\OSPanel\domains\bookingcalendar\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\bookingcalendar\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
