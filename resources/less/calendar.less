@@ -1,0 +1,132 @@
+@dark: #293143;
+@gray: #c2c9dd;
+
+.dark{color: @dark;}
+.gray{color: @gray;}
+
+.dcal{
+    font-family: 'LatoWeb', sans-serif;
+    .main{
+        .m0a();
+        max-width: 500px;
+        box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.1);
+        background: #fff;
+        user-select: none;
+        border-radius: 0 0 4px 4px;
+    }
+    .YM{
+        .f0();
+        .rel();
+        height: 68px;
+        .semi-bold();
+    }
+    .YM_text{
+        .y-center();
+        &-left{
+            right: 50%;
+            margin-right: 12px;
+            .dark();
+            .size29();
+        }
+        &-right{
+            left: 50%;
+            margin-left: 12px;
+            margin-top: 3px;
+            .gray();
+            .size20();
+        }
+    }
+    .arrow{
+        .y-center();
+        .f1();
+        cursor: pointer;
+        svg{
+            width: 9px;
+            height: 20px;
+        }
+        &-left{
+            left: 22px;
+        }
+        &-right{
+            right: 22px;
+        }
+    }
+    .hr-top{
+        margin: 0 22px;
+        border-top: 1px solid #fbfbfc;
+        border-bottom: 1px solid #f5f4f8;
+    }
+    .hr-bottom{
+        margin: 0 22px;
+        border-bottom: 1px solid #fbfbfc;
+        border-top: 1px solid #f5f4f8;
+    }
+    .days{
+        .f0();
+        padding: 0 10px;
+    }
+    .weekdays{
+        padding: 2px 10px;
+    }
+    .main_days{
+        padding: 8px 10px 18px 10px;
+    }
+    .day_grid{
+        .dinl-top();
+        .center();
+        .dark();
+        width: 11.25%;
+        min-height: 1px;
+        margin: 1px 1.770833%;
+    }
+    .day_grid-ml0{
+        margin-left: 0;
+    }
+    .day_grid-mr0{
+        margin-right: 0;
+    }
+    .day_rel{
+        .rel();
+        cursor: pointer;
+        padding-top: calc(100% - 4px);
+        border-radius: 100%;
+        border: 2px solid transparent;
+        &:hover{
+            border: 2px solid #dbdbdd;
+            background: #f0f0f0;
+            color: #808288;
+        }
+        &.dayOff{
+            color: #c2c9dd;
+        }
+        &.current{
+            color: #00cec9;
+            text-shadow: 0px 3px 5px rgba(62, 69, 94, 0.25);
+        }
+        &.day_checked{
+            border: 2px solid #00b8b5;
+            color: #f4fcfc;
+            background: #00cec9;
+        }
+    }
+    .day_name{
+        .a-center();
+        margin-top: 1px;
+    }
+    .day_name-rel{
+        .rel();
+        .center();
+        width: 24px;
+        height: 18px;
+        font-size: 18px;
+    }
+    .day_info{
+        .abs();
+        right: -6px;
+        top: -6px;
+        width: 6px;
+        height: 6px;
+        border-radius: 100%;
+        background: #00cec9;
+    }
+}

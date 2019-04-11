@@ -1,10 +1,12 @@
 export default class reactCalendar {
     constructor(data) {
         this.data = data;
-        this.from = new Date('2009-01-01');
-        this.to = new Date('2019-11-21');
+        this.from = new Date('2019-01-01').getTime();
+        this.to = new Date('2019-11-30').getTime();
         this.calendar = {
-            time: data.time,
+            cYear: data.time.getFullYear(),
+            cMonth: data.time.getMonth(),
+            cDay: data.time.getDate(),
             segment: data.segment,
             weekDays: {Su: {}, Mo: {}, Tu: {}, We: {}, Th: {}, Fr: {}, Sa: {}},
             years: {}
@@ -18,6 +20,14 @@ export default class reactCalendar {
         pipelineArr(funcs, function (func) {
             func(it);
         });
+        this.insertCurrent();
+    }
+
+    insertCurrent() {
+        let y = this.calendar.cYear;
+        let m = this.calendar.cMonth + 1;
+        let d = this.calendar.cDay;
+        this.find(['y' + y, 'm' + m, 'd' + d]).current = true;
     }
 
     setRegularSchedule(it) {
@@ -29,15 +39,16 @@ export default class reactCalendar {
             weekDays[wd] = {
                 name: wd,
                 checked: false,
-                intervals: {}
+                intervals: {},
+                isActive: false
             };
             it.startAllIntervals('week', weekDays[wd]);
         }
     }
 
     setSpecialDays(it) {
-        let from = it.from.getTime();
-        let to = it.to.getTime();
+        let from = it.from;
+        let to = it.to;
         let step = 86400000;
 
         pipelineFor(from, to + step, step, setDays);
@@ -56,47 +67,54 @@ export default class reactCalendar {
 
             if (years[nameY] == undefined) {
                 years[nameY] = {
-                    name: y,
-                    date: new Date(y),
+                    index: y,
+                    address: [nameY],
+                    date: new Date(y.toString()).getTime(),
                     prev: undefined,
                     next: undefined,
                     months: {},
-                    monthsLen: 0
+                    length: 0
                 }
             }
 
             if (!years[nameY].months['m' + m]) {
                 years[nameY].months['m' + m] = {
-                    name: y + '-' + zeroToNum(m),
                     index: m,
-                    date: monthDate,
-                    ref: years[nameY],
+                    address: [nameY, 'm' + m],
+                    date: monthDate.getTime(),
+                    ref: years[nameY].address,
                     prev: undefined,
                     next: undefined,
                     days: {},
-                    daysLen: 0
+                    length: 0
                 };
-                years[nameY].monthsLen++;
+                years[nameY].length++;
             }
             let monthObj = years[nameY].months['m' + m];
             if (!monthObj.days['d' + d]) {
+                let dateString = y + '-' + zeroToNum(m) + '-' + zeroToNum(d);
                 monthObj.days['d' + d] = {
-                    name: 'd' + y + '-' + zeroToNum(m) + '-' + zeroToNum(d),
-                    date: day,
+                    name: 'd' + dateString,
+                    address: [nameY, 'm' + m, 'd' + d],
+                    index: d,
+                    weekIndex: day.getDay(),
+                    date: day.getTime(),
+                    dateString: dateString,
                     prev: undefined,
                     next: undefined,
                     checked: false,
-                    ref: years[nameY].months['m' + m],
+                    ref: years[nameY].months['m' + m].address,
                     intervals: {},
-                    intervalsLen: 0
+                    length: 0,
+                    isActive: false
                 };
-                monthObj.daysLen++;
+                monthObj.length++;
             }
             let dayObj = monthObj.days['d' + d];
 
             if (years[nameYprev] != undefined) {
-                years[nameYprev].next = years[nameY];
-                years[nameY].prev = years[nameYprev];
+                years[nameYprev].next = years[nameY].address;
+                years[nameY].prev = years[nameYprev].address;
             }
             it.setPrevNext(monthDate, 'month', monthObj);
             it.setPrevNext(day, 'day', dayObj);
@@ -119,13 +137,13 @@ export default class reactCalendar {
             let pm = py.months['m' + (prevDate.getMonth() + 1)];
             if (pm) {
                 if (deep == 'month') {
-                    pm.next = currentObj;
-                    currentObj.prev = pm;
+                    pm.next = currentObj.address;
+                    currentObj.prev = pm.address;
                 } else if (deep == 'day') {
                     let pd = pm.days['d' + prevDate.getDate()];
                     if (pd) {
-                        pd.next = currentObj;
-                        currentObj.prev = pd;
+                        pd.next = currentObj.address;
+                        currentObj.prev = pd.address;
                     }
                 }
             }
@@ -139,19 +157,20 @@ export default class reactCalendar {
             let arr = [];
             if (type == 'week') {
                 if (it.data.weekDays[day.name]) {
-                    let arr = it.data.weekDays[day.name];
+                    arr = it.data.weekDays[day.name];
                 }
             } else if (type == 'day') {
                 if (it.data.days[day.name]) {
-                    let arr = it.data.days[day.name];
+                    arr = it.data.days[day.name];
+                    day.isSpecial = true;
                 }
             }
 
             pipelineArr(arr, function (interval) {
                 let from = parseFromMins(interval.from);
                 let to = parseFromMins(interval.to);
-
                 let segment = it.calendar.segment;
+                day.hasIntervals = true;
                 pipelineFor(from, to, segment, function (item) {
                     let index = 'i' + item / segment;
                     day.intervals[index].checked = true;
@@ -172,16 +191,28 @@ export default class reactCalendar {
         function fastInterval(mins) {
             let minsTo = mins + step;
             let interval = {
-                ref: obj,
+                ref: obj.address,
                 from: parseToMins(mins),
                 to: parseToMins(minsTo),
                 checked: false
             };
             obj['intervals']['i' + mins / step] = interval;
-            obj.intervalsLen++;
+            obj.length++;
         }
 
         callback();
+    }
+
+    find(address) {
+        if(address != undefined) {
+            if(address.length == 1)
+                return this.calendar.years[address[0]]
+            if(address.length == 2)
+                return this.calendar.years[address[0]].months[address[1]]
+            if(address.length == 3)
+                return this.calendar.years[address[0]].months[address[1]].days[address[2]]
+        }
+        return false;
     }
 }
 
