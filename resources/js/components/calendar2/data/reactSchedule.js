@@ -27,7 +27,7 @@ export default class reactCalendar {
         let y = this.calendar.cYear;
         let m = this.calendar.cMonth + 1;
         let d = this.calendar.cDay;
-        this.find(['y' + y, 'm' + m, 'd' + d]).current = true;
+        this.find(['y' + y, 'm' + m, 'd' + d], this.calendar).current = true;
     }
 
     setRegularSchedule(it) {
@@ -40,7 +40,9 @@ export default class reactCalendar {
                 name: wd,
                 checked: false,
                 intervals: {},
-                isActive: false
+                hasIntervals: false,
+                length: 0,
+                type: 'week'
             };
             it.startAllIntervals('week', weekDays[wd]);
         }
@@ -106,7 +108,8 @@ export default class reactCalendar {
                     ref: years[nameY].months['m' + m].address,
                     intervals: {},
                     length: 0,
-                    isActive: false
+                    hasIntervals: false,
+                    type: 'day'
                 };
                 monthObj.length++;
             }
@@ -167,8 +170,8 @@ export default class reactCalendar {
             }
 
             pipelineArr(arr, function (interval) {
-                let from = parseFromMins(interval.from);
-                let to = parseFromMins(interval.to);
+                let from = it.parseFromMins(interval.from);
+                let to = it.parseFromMins(interval.to);
                 let segment = it.calendar.segment;
                 day.hasIntervals = true;
                 pipelineFor(from, to, segment, function (item) {
@@ -192,8 +195,8 @@ export default class reactCalendar {
             let minsTo = mins + step;
             let interval = {
                 ref: obj.address,
-                from: parseToMins(mins),
-                to: parseToMins(minsTo),
+                from: it.parseToMins(mins),
+                to: it.parseToMins(minsTo),
                 checked: false
             };
             obj['intervals']['i' + mins / step] = interval;
@@ -203,16 +206,32 @@ export default class reactCalendar {
         callback();
     }
 
-    find(address) {
+    find(address, obj) {
         if(address != undefined) {
             if(address.length == 1)
-                return this.calendar.years[address[0]]
+                return obj.years[address[0]]
             if(address.length == 2)
-                return this.calendar.years[address[0]].months[address[1]]
+                return obj.years[address[0]].months[address[1]]
             if(address.length == 3)
-                return this.calendar.years[address[0]].months[address[1]].days[address[2]]
+                return obj.years[address[0]].months[address[1]].days[address[2]]
         }
         return false;
+    }
+
+    parseToMins(hm) {
+        let h = Math.floor(hm / 60);
+        let m = hm - h * 60;
+        h = h == 24 ? 0 : h;
+        hm = h + ':' + m;
+        return zeroToNum(h) + ':' + zeroToNum(m);
+    }
+
+    parseFromMins(hm) {
+        hm = hm.split(':');
+        let h = parseInt(hm[0]);
+        let m = parseInt(hm[1]);
+        hm = h * 60 + m;
+        return hm;
     }
 }
 
@@ -232,22 +251,6 @@ function pipelineFor(start, end, step, func) {
     for (let item = start; item < end; item += step) {
         func(item);
     }
-}
-
-function parseToMins(hm) {
-    let h = Math.floor(hm / 60);
-    let m = hm - h * 60;
-    h = h == 24 ? 0 : h;
-    hm = h + ':' + m;
-    return zeroToNum(h) + ':' + zeroToNum(m);
-}
-
-function parseFromMins(hm) {
-    hm = hm.split(':');
-    let h = parseInt(hm[0]);
-    let m = parseInt(hm[1]);
-    hm = h * 60 + m;
-    return hm;
 }
 
 function zeroToNum(num) {

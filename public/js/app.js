@@ -516,12 +516,38 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _data_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/data */ "./resources/js/components/calendar2/data/data.js");
-/* harmony import */ var _data_reactSchedule__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./data/reactSchedule */ "./resources/js/components/calendar2/data/reactSchedule.js");
-/* harmony import */ var _svg_arrow_left__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../svg/arrow-left */ "./resources/js/svg/arrow-left.vue");
-/* harmony import */ var _svg_arrow_right__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../svg/arrow-right */ "./resources/js/svg/arrow-right.vue");
+/* harmony import */ var _data_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/data */ "./resources/js/components/calendar2/data/data.js");
+/* harmony import */ var _data_reactSchedule__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/reactSchedule */ "./resources/js/components/calendar2/data/reactSchedule.js");
+/* harmony import */ var _svg_arrow_left__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../svg/arrow-left */ "./resources/js/svg/arrow-left.vue");
+/* harmony import */ var _svg_arrow_right__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../svg/arrow-right */ "./resources/js/svg/arrow-right.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -589,27 +615,37 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-var presset = _data_data__WEBPACK_IMPORTED_MODULE_2__["data"];
-var rc = new _data_reactSchedule__WEBPACK_IMPORTED_MODULE_3__["default"](presset);
+var presset = _data_data__WEBPACK_IMPORTED_MODULE_1__["data"];
+var rc = new _data_reactSchedule__WEBPACK_IMPORTED_MODULE_2__["default"](presset);
 var InsCalendar = rc.calendar;
 var InsServData = rc.data;
-var RenderCalendar = JSON.parse(JSON.stringify(InsCalendar));
-var RenderServData = JSON.parse(JSON.stringify(InsServData));
-RenderCalendar.test = 'test';
-console.log(InsCalendar, RenderCalendar);
-var cYear = RenderCalendar.years['y' + RenderCalendar.cYear];
-var cMonth = cYear.months['m' + (RenderCalendar.cMonth + 1)];
-var cDay = cMonth.days['d' + RenderCalendar.cDay];
+var RenderCalendar, RenderServData, cYear, cMonth, cDay;
+setRendered();
+
+function setRendered() {
+  RenderCalendar = JSON.parse(JSON.stringify(InsCalendar));
+  RenderServData = JSON.parse(JSON.stringify(InsServData));
+  console.log(RenderCalendar);
+  cYear = RenderCalendar.years['y' + RenderCalendar.cYear];
+  cMonth = cYear.months['m' + (RenderCalendar.cMonth + 1)];
+  cDay = cMonth.days['d' + RenderCalendar.cDay];
+}
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'calendar2',
   components: {
-    ArrowLeft: _svg_arrow_left__WEBPACK_IMPORTED_MODULE_4__["default"],
-    ArrowRight: _svg_arrow_right__WEBPACK_IMPORTED_MODULE_5__["default"]
+    ArrowLeft: _svg_arrow_left__WEBPACK_IMPORTED_MODULE_3__["default"],
+    ArrowRight: _svg_arrow_right__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
-  props: {},
+  props: {
+    stateProp: {
+      default: 'standard',
+      required: false
+    }
+  },
   data: function data() {
     return {
+      state: this.stateProp,
       year: cYear.index,
       month: cMonth,
       days: cMonth.days,
@@ -623,33 +659,20 @@ var cDay = cMonth.days['d' + RenderCalendar.cDay];
   watch: {},
   created: function created() {
     console.log(this.year, this.month, this.days);
+    this.setStateMethods();
   },
   computed: {},
   methods: {
     changeMonth: function changeMonth(side) {
-      var fromSide = rc.find(this.month[side]);
+      var fromSide = rc.find(this.month[side], RenderCalendar);
 
       if (fromSide) {
         this.month = fromSide;
         this.days = this.month.days;
-        this.year = rc.find(this.month.ref).index;
+        this.year = rc.find(this.month.ref, RenderCalendar).index;
       }
 
       console.log(this.year, this.month, this.days);
-    },
-    checkDay: function checkDay(item) {
-      if (item.date) {
-        this.removeChecked('checkedWeekDays');
-        this.checkedDays.push(item);
-      } else {
-        this.removeChecked('checkedDays');
-        this.checkedWeekDays.push(item);
-      }
-
-      var prev = rc.find(item.prev);
-      var next = rc.find(item.next);
-      item.checked = !item.checked;
-      console.log(item); // console.log(prev.intervals, item.intervals, next.intervals);
     },
     removeMarginGrid: function removeMarginGrid(n) {
       if (n == 0) return 'day_grid-ml0';
@@ -663,16 +686,114 @@ var cDay = cMonth.days['d' + RenderCalendar.cDay];
 
       this[name] = [];
     },
-    checkDayOff: function checkDayOff(day) {
-      if (day.date) {
-        var weekDay = this.weekNames[day.weekIndex];
-        if (day.isSpecial && !day.hasIntervals) return true;
-        if (this.weekDays[weekDay].hasIntervals || day.hasIntervals) return false;
-      } else {
-        if (day.hasIntervals) return false;
+    toSM: function toSM(type, item) {
+      if (this.SM[type][this.state]) return this.SM[type][this.state](item);
+    },
+    setStateMethods: function setStateMethods() {
+      var it = this;
+      it.SM = {
+        click: {
+          'standard': clickDayStandard,
+          'delete': function _delete() {},
+          'orders': clickDayOrder,
+          'client': clickDayClient
+        },
+        classes: {
+          'standard': dayClassesStandard
+        },
+        tab: {
+          'standard': changeTab,
+          'delete': changeTab,
+          'orders': changeTab
+        },
+        dayType: 'day',
+        CArr: [],
+        CI: {}
+      };
+      var SM = it.SM;
+
+      function clickDayStandard(day) {
+        day.checked = !day.checked;
+
+        if (day.checked) {
+          if (SM.dayType == day.type) {
+            SM.CArr.push(day);
+          } else {
+            it.undo();
+            if (day.address) day = rc.find(day.address, RenderCalendar);else day = it.weekDays[day.name];
+            day.checked = true;
+            SM.CArr.push(day);
+            SM.dayType = day.type;
+          }
+        } else {
+          uncheckFromArr(SM.CArr, day);
+        }
+
+        if (SM.CArr.length == 0) SM.CI = {};else if (SM.CArr.length == 1) SM.CI = SM.CArr[0].intervals;else SM.CI = emptyIntervals();
       }
 
-      return true;
+      function clickDayOrder() {}
+
+      function clickDayClient() {}
+
+      function dayClassesStandard(day) {
+        var classes = '';
+        if (day.current) classes += ' current'; // special days
+
+        if (day.isSpecial) {
+          if (day.hasIntervals) classes += ' special';else classes += ' off';
+        } // default days
+        else if (day.type == 'day') {
+            var weekName = it.weekNames[day.weekIndex];
+            if (it.weekDays[weekName].hasIntervals) classes += ' standard';else classes += ' off';
+          } // week days
+          else if (day.type == 'week') {
+              classes += ' bold';
+              if (day.hasIntervals) classes += ' standard';else classes += ' off';
+            }
+
+        return classes;
+      }
+
+      function changeTab(state) {
+        if (it.state != state) {
+          it.undo();
+          it.state = state;
+        }
+      }
+
+      function uncheckFromArr(arr, item) {
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i] == item) {
+            arr.splice(i, 1);
+            break;
+          }
+        }
+      }
+
+      function emptyIntervals() {
+        var len = 24 * 60;
+        var step = RenderServData.segment;
+        var intervals = {};
+
+        for (var i = 0; i < len; i += step) {
+          intervals['i' + i / step] = {
+            from: rc.parseToMins(len),
+            to: rc.parseToMins(len + step),
+            checked: false
+          };
+        }
+
+        return intervals;
+      }
+    },
+    undo: function undo() {
+      setRendered();
+      this.month = rc.find(['y' + this.year, 'm' + this.month.index], RenderCalendar);
+      this.days = this.month.days;
+      this.weekDays = RenderCalendar.weekDays;
+      this.SM.CArr = [];
+      this.SM.CI = {};
     }
   }
 });
@@ -20015,121 +20136,100 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "dcal" }, [
+  return _c("div", { staticClass: "dcal", class: _vm.state }, [
     _c("div", { staticClass: "main" }, [
-      _c("div", { staticClass: "YM" }, [
+      _c("div", { staticClass: "tab_grid" }, [
         _c(
           "div",
           {
-            staticClass: "arrow arrow-left",
+            staticClass: "tab tab-left",
+            class: { active: _vm.state == "standard" || _vm.state == "delete" },
             on: {
               click: function($event) {
-                return _vm.changeMonth("prev")
+                return _vm.toSM("tab", "standard")
               }
             }
           },
-          [_c("ArrowLeft")],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "YM_text YM_text-left" }, [
-          _vm._v(_vm._s(_vm.monthNames[_vm.month.index - 1]))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "YM_text YM_text-right" }, [
-          _vm._v(_vm._s(_vm.year))
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "arrow arrow-right",
-            on: {
-              click: function($event) {
-                return _vm.changeMonth("next")
-              }
-            }
-          },
-          [_c("ArrowRight")],
-          1
+          [_c("span", [_vm._v("Work hours")])]
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "hr-top" }),
+      _c("div", { staticClass: "tab_grid" }, [
+        _c(
+          "div",
+          {
+            staticClass: "tab tab-right",
+            class: { active: _vm.state == "orders" },
+            on: {
+              click: function($event) {
+                return _vm.toSM("tab", "orders")
+              }
+            }
+          },
+          [_c("span", [_vm._v("Your orders")])]
+        )
+      ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "days weekdays" },
-        _vm._l(_vm.weekDays, function(item, key, index) {
-          return _c(
+      _c("div", { staticClass: "main_content" }, [
+        _c("div", { staticClass: "YM" }, [
+          _c(
             "div",
-            { staticClass: "day_grid", class: _vm.removeMarginGrid(index) },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "day_rel",
-                  class: {
-                    day_checked: item.checked,
-                    dayOff: _vm.checkDayOff(item)
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.checkDay(item)
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "day_name bold" }, [
-                    _c("div", { staticClass: "day_name-rel" }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(item.name) +
-                          "\n                        "
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]
-          )
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "hr-bottom" }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "days main_days" },
-        [
-          _vm._l(_vm.days["d1"].weekIndex, function(n) {
-            return _c("div", {
-              staticClass: "day_grid",
-              class: _vm.removeMarginGrid(n - 1)
-            })
-          }),
+            {
+              staticClass: "arrow arrow-left",
+              on: {
+                click: function($event) {
+                  return _vm.changeMonth("prev")
+                }
+              }
+            },
+            [_c("ArrowLeft")],
+            1
+          ),
           _vm._v(" "),
-          _vm._l(_vm.days, function(item) {
+          _c("div", { staticClass: "YM_text YM_text-left" }, [
+            _vm._v(_vm._s(_vm.monthNames[_vm.month.index - 1]))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "YM_text YM_text-right" }, [
+            _vm._v(_vm._s(_vm.year))
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "arrow arrow-right",
+              on: {
+                click: function($event) {
+                  return _vm.changeMonth("next")
+                }
+              }
+            },
+            [_c("ArrowRight")],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "hr-top" }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "days weekdays" },
+          _vm._l(_vm.weekDays, function(item, key, index) {
             return _c(
               "div",
-              {
-                staticClass: "day_grid",
-                class: _vm.removeMarginGrid(item.weekIndex)
-              },
+              { staticClass: "day_grid", class: _vm.removeMarginGrid(index) },
               [
                 _c(
                   "div",
                   {
-                    staticClass: "day_rel",
-                    class: {
-                      day_checked: item.checked,
-                      current: item.current,
-                      dayOff: _vm.checkDayOff(item)
-                    },
+                    staticClass: "day",
+                    class: [
+                      _vm.toSM("classes", item),
+                      { checked: item.checked }
+                    ],
                     on: {
                       click: function($event) {
-                        return _vm.checkDay(item)
+                        return _vm.toSM("click", item)
                       }
                     }
                   },
@@ -20137,24 +20237,105 @@ var render = function() {
                     _c("div", { staticClass: "day_name" }, [
                       _c("div", { staticClass: "day_name-rel" }, [
                         _vm._v(
-                          "\n                            " +
-                            _vm._s(item.index) +
+                          "\n                                " +
+                            _vm._s(item.name) +
                             "\n                            "
-                        ),
-                        item.isSpecial && item.hasIntervals
-                          ? _c("div", { staticClass: "day_info" })
-                          : _vm._e()
+                        )
                       ])
                     ])
                   ]
                 )
               ]
             )
-          })
-        ],
-        2
-      )
-    ])
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "hr-bottom" }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "days main_days" },
+          [
+            _vm._l(_vm.days["d1"].weekIndex, function(n) {
+              return _c("div", {
+                staticClass: "day_grid",
+                class: _vm.removeMarginGrid(n - 1)
+              })
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.days, function(item) {
+              return _c(
+                "div",
+                {
+                  staticClass: "day_grid",
+                  class: _vm.removeMarginGrid(item.weekIndex)
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "day",
+                      class: [
+                        _vm.toSM("classes", item),
+                        { checked: item.checked }
+                      ],
+                      on: {
+                        click: function($event) {
+                          return _vm.toSM("click", item)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", { staticClass: "day_name" }, [
+                        _c("div", { staticClass: "day_name-rel" }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(item.index) +
+                              "\n                                "
+                          ),
+                          _c("div", { staticClass: "day_info" })
+                        ])
+                      ])
+                    ]
+                  )
+                ]
+              )
+            })
+          ],
+          2
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.SM.CArr.length
+      ? _c("div", { staticClass: "TS" }, [
+          _c("div", { staticClass: "TS_title" }, [_vm._v("Time Settings")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "TS_descr" }, [_vm._v("For April 15, 16")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "intervals" },
+            _vm._l(_vm.SM.CI, function(int) {
+              return _c("div", { staticClass: "interval" }, [
+                _c("div", { staticClass: "interval_data" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(int.from) +
+                      " - " +
+                      _vm._s(int.to) +
+                      " - " +
+                      _vm._s(int.checked) +
+                      "\n                "
+                  )
+                ])
+              ])
+            }),
+            0
+          )
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -35869,7 +36050,7 @@ function () {
       var y = this.calendar.cYear;
       var m = this.calendar.cMonth + 1;
       var d = this.calendar.cDay;
-      this.find(['y' + y, 'm' + m, 'd' + d]).current = true;
+      this.find(['y' + y, 'm' + m, 'd' + d], this.calendar).current = true;
     }
   }, {
     key: "setRegularSchedule",
@@ -35882,7 +36063,9 @@ function () {
           name: wd,
           checked: false,
           intervals: {},
-          isActive: false
+          hasIntervals: false,
+          length: 0,
+          type: 'week'
         };
         it.startAllIntervals('week', weekDays[wd]);
       }
@@ -35948,7 +36131,8 @@ function () {
             ref: years[nameY].months['m' + m].address,
             intervals: {},
             length: 0,
-            isActive: false
+            hasIntervals: false,
+            type: 'day'
           };
           monthObj.length++;
         }
@@ -36019,8 +36203,8 @@ function () {
         }
 
         pipelineArr(arr, function (interval) {
-          var from = parseFromMins(interval.from);
-          var to = parseFromMins(interval.to);
+          var from = it.parseFromMins(interval.from);
+          var to = it.parseFromMins(interval.to);
           var segment = it.calendar.segment;
           day.hasIntervals = true;
           pipelineFor(from, to, segment, function (item) {
@@ -36044,8 +36228,8 @@ function () {
         var minsTo = mins + step;
         var interval = {
           ref: obj.address,
-          from: parseToMins(mins),
-          to: parseToMins(minsTo),
+          from: it.parseToMins(mins),
+          to: it.parseToMins(minsTo),
           checked: false
         };
         obj['intervals']['i' + mins / step] = interval;
@@ -36056,14 +36240,32 @@ function () {
     }
   }, {
     key: "find",
-    value: function find(address) {
+    value: function find(address, obj) {
       if (address != undefined) {
-        if (address.length == 1) return this.calendar.years[address[0]];
-        if (address.length == 2) return this.calendar.years[address[0]].months[address[1]];
-        if (address.length == 3) return this.calendar.years[address[0]].months[address[1]].days[address[2]];
+        if (address.length == 1) return obj.years[address[0]];
+        if (address.length == 2) return obj.years[address[0]].months[address[1]];
+        if (address.length == 3) return obj.years[address[0]].months[address[1]].days[address[2]];
       }
 
       return false;
+    }
+  }, {
+    key: "parseToMins",
+    value: function parseToMins(hm) {
+      var h = Math.floor(hm / 60);
+      var m = hm - h * 60;
+      h = h == 24 ? 0 : h;
+      hm = h + ':' + m;
+      return zeroToNum(h) + ':' + zeroToNum(m);
+    }
+  }, {
+    key: "parseFromMins",
+    value: function parseFromMins(hm) {
+      hm = hm.split(':');
+      var h = parseInt(hm[0]);
+      var m = parseInt(hm[1]);
+      hm = h * 60 + m;
+      return hm;
     }
   }]);
 
@@ -36088,22 +36290,6 @@ function pipelineFor(start, end, step, func) {
   for (var item = start; item < end; item += step) {
     func(item);
   }
-}
-
-function parseToMins(hm) {
-  var h = Math.floor(hm / 60);
-  var m = hm - h * 60;
-  h = h == 24 ? 0 : h;
-  hm = h + ':' + m;
-  return zeroToNum(h) + ':' + zeroToNum(m);
-}
-
-function parseFromMins(hm) {
-  hm = hm.split(':');
-  var h = parseInt(hm[0]);
-  var m = parseInt(hm[1]);
-  hm = h * 60 + m;
-  return hm;
 }
 
 function zeroToNum(num) {
