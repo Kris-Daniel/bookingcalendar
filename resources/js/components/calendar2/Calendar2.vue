@@ -3,6 +3,37 @@
         class="dcal"
         :class="state"
     >
+        <div class="SC">
+            <div class="SC_head">
+                <div class="SC_title">Schedule</div>
+
+                <div class="SC_tab SC_tab-left" :class="{active: SCstate == 'regular'}">
+                    <span class="SC_tab-text" @click="scheduleWeekDays()">Regular</span>
+                </div>
+                <div class="SC_tab SC_tab-right" :class="{active: SCstate == 'special'}">
+                    <span class="SC_tab-text" @click="scheduleDays()">Special</span>
+                </div>
+            </div>
+
+            <div class="SC_intervals">
+                <div v-for="day in scheduleInts" class="SC_interval">
+                    <div class="SC_day">
+                        {{day.name}}
+                    </div>
+                    <div class="SC_timebox">
+                        <div v-if="day.intervals == 'day off'" class="SC_time">
+                            {{day.intervals}}
+                        </div>
+                        <template v-else>
+                            <div v-for="int in day.intervals" class="SC_time">
+                                <span v-if="int.from">{{int.from}} - {{int.to}}</span>
+                                <span v-else>{{int.intervals}}</span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="main">
             <div class="tab_grid">
                 <div
@@ -73,11 +104,13 @@
         </div>
 
         <div v-if="SM.CArr.length" class="TS">
-            <div class="TS_title">Time Settings</div>
-            <div class="TS_descr">For April 15, 16</div>
-            <div class="intervals">
-                <div class="interval" v-for="int in SM.CI">
-                    <div class="interval_data">
+            <div class="TS_head">
+                <div class="TS_title">Time Settings</div>
+                <div class="TS_descr">For April 15, 16</div>
+            </div>
+            <div class="TS_intervals">
+                <div class="TS_interval" v-for="int in SM.CI">
+                    <div class="TS_interval_data">
                         {{int.from}} - {{int.to}} - {{int.checked}}
                     </div>
                 </div>
@@ -131,6 +164,7 @@
         data() {
             return {
                 state: this.stateProp,
+                SCstate: 'regular',
                 year: cYear.index,
                 month: cMonth,
                 days: cMonth.days,
@@ -140,16 +174,19 @@
                 ],
                 weekDays: RenderCalendar.weekDays,
                 weekNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                servDays: RenderServData.days,
+                servWeekDays: RenderServData.weekDays,
                 checkedWeekDays: [],
-                checkedDays: []
+                checkedDays: [],
+                scheduleInts: []
             }
         },
         watch: {
 
         },
         created() {
-            console.log(this.year, this.month, this.days);
             this.setStateMethods();
+            this.scheduleWeekDays();
         },
         computed: {
 
@@ -176,8 +213,41 @@
                 this[name] = [];
             },
             toSM(type, item) {
+                if(this.SM[type]['all']) return this.SM[type]['all'](item);
                 if(this.SM[type][this.state]) return this.SM[type][this.state](item);
             },
+            scheduleDays() {
+                let it = this;
+                it.scheduleInts = [];
+
+                for(let int in RenderServData.days){
+                    let name = int.split('d').join('');
+                    let ints = RenderServData.days[int].length == 0 ? 'day off' : RenderServData.days[int];
+                    it.scheduleInts.push({
+                        name: name,
+                        intervals: ints
+                    });
+                }
+
+                it.SCstate = 'special';
+
+            },
+            scheduleWeekDays() {
+                let it = this;
+                it.scheduleInts = [];
+
+                for(let int in RenderServData.weekDays){
+                    it.scheduleInts.push({
+                        name: int,
+                        intervals: RenderServData.weekDays[int]
+                    });
+                }
+
+                console.log(it.scheduleInts);
+
+                it.SCstate = 'regular';
+            },
+
             setStateMethods() {
                 let it = this;
                 it.SM = {
@@ -194,6 +264,9 @@
                         'standard': changeTab,
                         'delete': changeTab,
                         'orders': changeTab
+                    },
+                    schedule: {
+                        'all': setSCstate
                     },
                     dayType: 'day',
                     CArr: [],
@@ -223,8 +296,19 @@
 
                     if(SM.CArr.length == 0)
                         SM.CI = {};
-                    else if(SM.CArr.length == 1)
+                    else if(SM.CArr.length == 1) {
+                        let dayObj = SM.CArr[0];
+                        if(
+                            dayObj.isSpecial ||
+                            dayObj.type == 'week'
+                        )
                         SM.CI = SM.CArr[0].intervals;
+                        else{
+                            let weekName = it.weekNames[dayObj.weekIndex];
+                            SM.CI = it.weekDays[weekName].intervals;
+                        }
+
+                    }
                     else
                         SM.CI = emptyIntervals();
                 }
@@ -258,6 +342,10 @@
                     return classes;
                 }
 
+                function setSCstate(SCstate) {
+                    it.SCstate = SCstate;
+                }
+
                 function changeTab(state) {
                     if(it.state != state){
                         it.undo();
@@ -280,11 +368,12 @@
                     let intervals = {};
                     for(let i = 0; i < len; i += step) {
                         intervals['i' + i / step] = {
-                            from: rc.parseToMins(len),
-                            to: rc.parseToMins(len + step),
+                            from: rc.parseToMins(i),
+                            to: rc.parseToMins(i + step),
                             checked: false
                         }
                     }
+                    console.log(intervals);
                     return intervals;
                 }
 

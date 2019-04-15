@@ -1,8 +1,17 @@
 @dark: #293143;
 @gray: #c2c9dd;
+@cyan: #00cec9;
 
-.dark{color: @dark;}
-.gray{color: @gray;}
+.interval() {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.12);
+    transition: 0.1s all linear;
+    cursor: pointer;
+    &:hover{
+        box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
+    }
+}
 
 .dcal{
     .rel();
@@ -34,14 +43,14 @@
             &-left{
                 right: 50%;
                 margin-right: 12px;
-                .dark();
+                color: @dark;
                 .size29();
             }
             &-right{
                 left: 50%;
                 margin-left: 12px;
                 margin-top: 3px;
-                .gray();
+                color: @gray;
                 .size20();
             }
         }
@@ -87,7 +96,7 @@
     .day_grid{
         .dinl-top();
         .center();
-        .dark();
+        color: @dark;
         width: 11.25%;
         min-height: 1px;
         margin: 1px 1.770833%;
@@ -115,11 +124,88 @@
             width: 24px;
             height: 18px;
             font-size: 18px;
+            margin-top: 2px;
         }
         &.off{
-            color: #c2c9dd;
+            color: @gray;
         }
     }
+
+    .SC{
+        .dinl-top();
+        .f1();
+        .center();
+        width: 100%;
+        max-width: 310px;
+        color: @gray;
+        &_head{
+            .rel();
+            height: 69px;
+        }
+        &_title{
+            .size16();
+        }
+        &_tab{
+            .y-center();
+            .center();
+            width: 50%;
+            &-left{left: 0;}
+            &-right{right: 0;}
+            &-text{
+                .rel();
+                .size20();
+                .bold();
+                cursor: pointer;
+                &:hover{
+                    color: @cyan;
+                }
+            }
+            &.active .SC_tab-text{
+                color: @cyan;
+                &::before{
+                    .abs();
+                    content: '';
+                    width: 100%;
+                    height: 2px;
+                    bottom: -8px;
+                    background: @cyan;
+                }
+            }
+        }
+        &_intervals{
+            margin-top: -10px;
+            padding: 10px 30px 0 14px;
+            overflow-y: auto;
+            height: 455px;
+            direction: rtl;
+            color: @dark;
+        }
+        &_interval{
+            .dflex();
+            .center();
+            justify-content: space-around;
+            align-items: center;
+            padding: 22px 0;
+            margin-bottom: 5px;
+            direction: ltr;
+            .interval();
+            .SC_day{
+                width: 30px;
+                .size17();
+            }
+            .SC_timebox{
+                width: 146px;
+                max-height: 64px;
+                overflow-y: auto;
+                .size13();
+                .SC_time{
+                    margin-bottom: 14px;
+                    &:last-child{margin-bottom: 0;}
+                }
+            }
+        }
+    }
+
     &.standard{
         .day{
             &:hover{
@@ -128,13 +214,13 @@
                 color: #808288;
             }
             &.current{
-                color: #00cec9;
+                color: @cyan;
                 text-shadow: 0px 3px 5px rgba(62, 69, 94, 0.25);
             }
             &.checked{
                 border: 2px solid #00b8b5;
                 color: #f4fcfc;
-                background: #00cec9;
+                background: @cyan;
             }
             &.special{
                 .day_info{
@@ -144,7 +230,7 @@
                     width: 6px;
                     height: 6px;
                     border-radius: 100%;
-                    background: #00cec9;
+                    background: @cyan;
                 }
             }
 
@@ -177,7 +263,8 @@
             border-radius: 5px 5px 0 0;
             cursor: pointer;
             z-index: 1;
-            transition: 0.15s all ease-in-out;
+            transition: 0.1s all linear;
+            box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.1);
             span{
                 .a-center();
                 .center();
@@ -191,16 +278,22 @@
                 height: 5px;
                 width: 100%;
                 background: transparent;
-                transition: 0.15s all ease-in-out;
+                transition: 0.1s all linear;
+            }
+            &:hover{
+                color: @cyan;
+                background: #fff;
+                box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
             }
             &.active{
-                color: #00cec9;
+                color: @cyan;
                 background: #fff;
                 z-index: 3;
+                box-shadow: none;
                 &:before{
                     .abs();
                     content: '';
-                    background: #00cec9;
+                    background: @cyan;
                 }
 
             }
@@ -217,44 +310,48 @@
             .center();
             width: 100%;
             max-width: 310px;
-            padding-top: 20px;
+            &_head{
+                .rel();
+                height: 69px;
+            }
             &_title{
+                .a-center;
                 .size20();
-                .semi-bold();
-                color: #293143;
+                .bold();
+                width: 100%;
+                color: @dark;
                 margin-bottom: 8px;
             }
             &_descr{
+                .x-center();
                 .size11();
                 .semi-bold();
-                color: #c2c9dd;
+                width: 100%;
+                bottom: 8px;
+                color: @gray;
             }
-            .intervals{
-                padding: 10px 30px 0 30px;
+            &_intervals{
+                margin-top: -10px;
+                padding: 10px 14px 0 30px;
                 overflow-y: auto;
                 height: 455px;
             }
-            .interval{
+            &_interval{
                 .rel();
+                .interval();
                 height: 55px;
                 width: 100%;
                 max-width: 250px;
                 margin: 0 auto  9px auto;
-                background: #fff;
-                border-radius: 6px;
-                box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.1);
-                cursor: pointer;
-                transition: 0.1s all linear;
                 z-index: 2;
                 &:hover{
-                    box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
                     z-index: 1;
                 }
                 &_data{
                     .a-center();
                     .size14();
                     width: 100%;
-                    color: #293143;
+                    color: @dark;
                 }
             }
         }

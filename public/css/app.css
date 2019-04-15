@@ -3186,12 +3186,6 @@ a {
 .justify {
   text-align: justify;
 }
-.dark {
-  color: #293143;
-}
-.gray {
-  color: #c2c9dd;
-}
 .dcal {
   position: relative;
   font-size: 0;
@@ -3317,9 +3311,108 @@ a {
   width: 24px;
   height: 18px;
   font-size: 18px;
+  margin-top: 2px;
 }
 .dcal .day.off {
   color: #c2c9dd;
+}
+.dcal .SC {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+  max-width: 310px;
+  color: #c2c9dd;
+}
+.dcal .SC_head {
+  position: relative;
+  height: 69px;
+}
+.dcal .SC_title {
+  font-size: 16px;
+  line-height: 1 !important;
+}
+.dcal .SC_tab {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  text-align: center;
+  width: 50%;
+}
+.dcal .SC_tab-left {
+  left: 0;
+}
+.dcal .SC_tab-right {
+  right: 0;
+}
+.dcal .SC_tab-text {
+  position: relative;
+  font-size: 20px;
+  line-height: 1 !important;
+  font-weight: 800;
+  cursor: pointer;
+}
+.dcal .SC_tab-text:hover {
+  color: #00cec9;
+}
+.dcal .SC_tab.active .SC_tab-text {
+  color: #00cec9;
+}
+.dcal .SC_tab.active .SC_tab-text::before {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 2px;
+  bottom: -8px;
+  background: #00cec9;
+}
+.dcal .SC_intervals {
+  margin-top: -10px;
+  padding: 10px 30px 0 14px;
+  overflow-y: auto;
+  height: 455px;
+  direction: rtl;
+  color: #293143;
+}
+.dcal .SC_interval {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  text-align: center;
+  justify-content: space-around;
+  align-items: center;
+  padding: 22px 0;
+  margin-bottom: 5px;
+  direction: ltr;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.12);
+  transition: 0.1s all linear;
+  cursor: pointer;
+}
+.dcal .SC_interval:hover {
+  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
+}
+.dcal .SC_interval .SC_day {
+  width: 30px;
+  font-size: 17px;
+  line-height: 1 !important;
+}
+.dcal .SC_interval .SC_timebox {
+  width: 146px;
+  max-height: 64px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1 !important;
+}
+.dcal .SC_interval .SC_timebox .SC_time {
+  margin-bottom: 14px;
+}
+.dcal .SC_interval .SC_timebox .SC_time:last-child {
+  margin-bottom: 0;
 }
 .dcal.standard .day:hover {
   border: 2px solid #dbdbdd;
@@ -3375,7 +3468,8 @@ a {
   border-radius: 5px 5px 0 0;
   cursor: pointer;
   z-index: 1;
-  transition: 0.15s all ease-in-out;
+  transition: 0.1s all linear;
+  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.1);
 }
 .dcal.standard .tab-left,
 .dcal.orders .tab-left,
@@ -3408,7 +3502,14 @@ a {
   height: 5px;
   width: 100%;
   background: transparent;
-  transition: 0.15s all ease-in-out;
+  transition: 0.1s all linear;
+}
+.dcal.standard .tab:hover,
+.dcal.orders .tab:hover,
+.dcal.delete .tab:hover {
+  color: #00cec9;
+  background: #fff;
+  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
 }
 .dcal.standard .tab.active,
 .dcal.orders .tab.active,
@@ -3416,6 +3517,7 @@ a {
   color: #00cec9;
   background: #fff;
   z-index: 3;
+  box-shadow: none;
 }
 .dcal.standard .tab.active:before,
 .dcal.orders .tab.active:before,
@@ -3433,56 +3535,78 @@ a {
   text-align: center;
   width: 100%;
   max-width: 310px;
-  padding-top: 20px;
+}
+.dcal.standard .TS_head,
+.dcal.delete .TS_head,
+.dcal.client .TS_head {
+  position: relative;
+  height: 69px;
 }
 .dcal.standard .TS_title,
 .dcal.delete .TS_title,
 .dcal.client .TS_title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   font-size: 20px;
   line-height: 1 !important;
-  font-weight: 600;
+  font-weight: 800;
+  width: 100%;
   color: #293143;
   margin-bottom: 8px;
 }
 .dcal.standard .TS_descr,
 .dcal.delete .TS_descr,
 .dcal.client .TS_descr {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
   font-size: 11px;
   line-height: 1 !important;
   font-weight: 600;
+  width: 100%;
+  bottom: 8px;
   color: #c2c9dd;
 }
-.dcal.standard .TS .intervals,
-.dcal.delete .TS .intervals,
-.dcal.client .TS .intervals {
-  padding: 10px 30px 0 30px;
+.dcal.standard .TS_intervals,
+.dcal.delete .TS_intervals,
+.dcal.client .TS_intervals {
+  margin-top: -10px;
+  padding: 10px 14px 0 30px;
   overflow-y: auto;
   height: 455px;
 }
-.dcal.standard .TS .interval,
-.dcal.delete .TS .interval,
-.dcal.client .TS .interval {
+.dcal.standard .TS_interval,
+.dcal.delete .TS_interval,
+.dcal.client .TS_interval {
   position: relative;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.12);
+  transition: 0.1s all linear;
+  cursor: pointer;
   height: 55px;
   width: 100%;
   max-width: 250px;
   margin: 0 auto  9px auto;
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.1);
-  cursor: pointer;
-  transition: 0.1s all linear;
   z-index: 2;
 }
-.dcal.standard .TS .interval:hover,
-.dcal.delete .TS .interval:hover,
-.dcal.client .TS .interval:hover {
+.dcal.standard .TS_interval:hover,
+.dcal.delete .TS_interval:hover,
+.dcal.client .TS_interval:hover {
   box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
+}
+.dcal.standard .TS_interval:hover,
+.dcal.delete .TS_interval:hover,
+.dcal.client .TS_interval:hover {
   z-index: 1;
 }
-.dcal.standard .TS .interval_data,
-.dcal.delete .TS .interval_data,
-.dcal.client .TS .interval_data {
+.dcal.standard .TS_interval_data,
+.dcal.delete .TS_interval_data,
+.dcal.client .TS_interval_data {
   position: absolute;
   left: 50%;
   top: 50%;

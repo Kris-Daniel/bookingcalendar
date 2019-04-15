@@ -610,6 +610,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -646,20 +679,24 @@ function setRendered() {
   data: function data() {
     return {
       state: this.stateProp,
+      SCstate: 'regular',
       year: cYear.index,
       month: cMonth,
       days: cMonth.days,
       monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December'],
       weekDays: RenderCalendar.weekDays,
       weekNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      servDays: RenderServData.days,
+      servWeekDays: RenderServData.weekDays,
       checkedWeekDays: [],
-      checkedDays: []
+      checkedDays: [],
+      scheduleInts: []
     };
   },
   watch: {},
   created: function created() {
-    console.log(this.year, this.month, this.days);
     this.setStateMethods();
+    this.scheduleWeekDays();
   },
   computed: {},
   methods: {
@@ -687,7 +724,37 @@ function setRendered() {
       this[name] = [];
     },
     toSM: function toSM(type, item) {
+      if (this.SM[type]['all']) return this.SM[type]['all'](item);
       if (this.SM[type][this.state]) return this.SM[type][this.state](item);
+    },
+    scheduleDays: function scheduleDays() {
+      var it = this;
+      it.scheduleInts = [];
+
+      for (var int in RenderServData.days) {
+        var name = int.split('d').join('');
+        var ints = RenderServData.days[int].length == 0 ? 'day off' : RenderServData.days[int];
+        it.scheduleInts.push({
+          name: name,
+          intervals: ints
+        });
+      }
+
+      it.SCstate = 'special';
+    },
+    scheduleWeekDays: function scheduleWeekDays() {
+      var it = this;
+      it.scheduleInts = [];
+
+      for (var int in RenderServData.weekDays) {
+        it.scheduleInts.push({
+          name: int,
+          intervals: RenderServData.weekDays[int]
+        });
+      }
+
+      console.log(it.scheduleInts);
+      it.SCstate = 'regular';
     },
     setStateMethods: function setStateMethods() {
       var it = this;
@@ -705,6 +772,9 @@ function setRendered() {
           'standard': changeTab,
           'delete': changeTab,
           'orders': changeTab
+        },
+        schedule: {
+          'all': setSCstate
         },
         dayType: 'day',
         CArr: [],
@@ -729,7 +799,13 @@ function setRendered() {
           uncheckFromArr(SM.CArr, day);
         }
 
-        if (SM.CArr.length == 0) SM.CI = {};else if (SM.CArr.length == 1) SM.CI = SM.CArr[0].intervals;else SM.CI = emptyIntervals();
+        if (SM.CArr.length == 0) SM.CI = {};else if (SM.CArr.length == 1) {
+          var dayObj = SM.CArr[0];
+          if (dayObj.isSpecial || dayObj.type == 'week') SM.CI = SM.CArr[0].intervals;else {
+            var weekName = it.weekNames[dayObj.weekIndex];
+            SM.CI = it.weekDays[weekName].intervals;
+          }
+        } else SM.CI = emptyIntervals();
       }
 
       function clickDayOrder() {}
@@ -755,6 +831,10 @@ function setRendered() {
         return classes;
       }
 
+      function setSCstate(SCstate) {
+        it.SCstate = SCstate;
+      }
+
       function changeTab(state) {
         if (it.state != state) {
           it.undo();
@@ -778,12 +858,13 @@ function setRendered() {
 
         for (var i = 0; i < len; i += step) {
           intervals['i' + i / step] = {
-            from: rc.parseToMins(len),
-            to: rc.parseToMins(len + step),
+            from: rc.parseToMins(i),
+            to: rc.parseToMins(i + step),
             checked: false
           };
         }
 
+        console.log(intervals);
         return intervals;
       }
     },
@@ -20137,6 +20218,98 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "dcal", class: _vm.state }, [
+    _c("div", { staticClass: "SC" }, [
+      _c("div", { staticClass: "SC_head" }, [
+        _c("div", { staticClass: "SC_title" }, [_vm._v("Schedule")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "SC_tab SC_tab-left",
+            class: { active: _vm.SCstate == "regular" }
+          },
+          [
+            _c(
+              "span",
+              {
+                staticClass: "SC_tab-text",
+                on: {
+                  click: function($event) {
+                    return _vm.scheduleWeekDays()
+                  }
+                }
+              },
+              [_vm._v("Regular")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "SC_tab SC_tab-right",
+            class: { active: _vm.SCstate == "special" }
+          },
+          [
+            _c(
+              "span",
+              {
+                staticClass: "SC_tab-text",
+                on: {
+                  click: function($event) {
+                    return _vm.scheduleDays()
+                  }
+                }
+              },
+              [_vm._v("Special")]
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "SC_intervals" },
+        _vm._l(_vm.scheduleInts, function(day) {
+          return _c("div", { staticClass: "SC_interval" }, [
+            _c("div", { staticClass: "SC_day" }, [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(day.name) +
+                  "\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "SC_timebox" },
+              [
+                day.intervals == "day off"
+                  ? _c("div", { staticClass: "SC_time" }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(day.intervals) +
+                          "\n                    "
+                      )
+                    ])
+                  : _vm._l(day.intervals, function(int) {
+                      return _c("div", { staticClass: "SC_time" }, [
+                        int.from
+                          ? _c("span", [
+                              _vm._v(_vm._s(int.from) + " - " + _vm._s(int.to))
+                            ])
+                          : _c("span", [_vm._v(_vm._s(int.intervals))])
+                      ])
+                    })
+              ],
+              2
+            )
+          ])
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "main" }, [
       _c("div", { staticClass: "tab_grid" }, [
         _c(
@@ -20310,16 +20483,14 @@ var render = function() {
     _vm._v(" "),
     _vm.SM.CArr.length
       ? _c("div", { staticClass: "TS" }, [
-          _c("div", { staticClass: "TS_title" }, [_vm._v("Time Settings")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "TS_descr" }, [_vm._v("For April 15, 16")]),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "intervals" },
+            { staticClass: "TS_intervals" },
             _vm._l(_vm.SM.CI, function(int) {
-              return _c("div", { staticClass: "interval" }, [
-                _c("div", { staticClass: "interval_data" }, [
+              return _c("div", { staticClass: "TS_interval" }, [
+                _c("div", { staticClass: "TS_interval_data" }, [
                   _vm._v(
                     "\n                    " +
                       _vm._s(int.from) +
@@ -20338,7 +20509,18 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "TS_head" }, [
+      _c("div", { staticClass: "TS_title" }, [_vm._v("Time Settings")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "TS_descr" }, [_vm._v("For April 15, 16")])
+    ])
+  }
+]
 render._withStripped = true
 
 
