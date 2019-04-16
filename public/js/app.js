@@ -505,9 +505,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar2/Calendar2.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar3/Calendar3.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar2/Calendar2.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar3/Calendar3.vue?vue&type=script&lang=js& ***!
   \******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -516,10 +516,20 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/data */ "./resources/js/components/calendar2/data/data.js");
-/* harmony import */ var _data_reactSchedule__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/reactSchedule */ "./resources/js/components/calendar2/data/reactSchedule.js");
+/* harmony import */ var _data_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/data */ "./resources/js/components/calendar3/data/data.js");
+/* harmony import */ var _data_reactSchedule__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/reactSchedule */ "./resources/js/components/calendar3/data/reactSchedule.js");
 /* harmony import */ var _svg_arrow_left__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../svg/arrow-left */ "./resources/js/svg/arrow-left.vue");
 /* harmony import */ var _svg_arrow_right__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../svg/arrow-right */ "./resources/js/svg/arrow-right.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -664,8 +674,12 @@ function setRendered() {
   cDay = cMonth.days['d' + RenderCalendar.cDay];
 }
 
+function stack() {
+  this.length = 0;
+}
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'calendar2',
+  name: 'calendar3',
   components: {
     ArrowLeft: _svg_arrow_left__WEBPACK_IMPORTED_MODULE_3__["default"],
     ArrowRight: _svg_arrow_right__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -684,19 +698,25 @@ function setRendered() {
       month: cMonth,
       days: cMonth.days,
       monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December'],
+      monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       weekDays: RenderCalendar.weekDays,
       weekNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
       servDays: RenderServData.days,
       servWeekDays: RenderServData.weekDays,
       checkedWeekDays: [],
       checkedDays: [],
-      scheduleInts: []
+      scheduleInts: [],
+      LS: {
+        state: 'regular',
+        stack: new stack(),
+        render: []
+      }
     };
   },
   watch: {},
   created: function created() {
     this.setStateMethods();
-    this.scheduleWeekDays();
+    this.toSM('renderLS');
   },
   computed: {},
   methods: {
@@ -716,45 +736,9 @@ function setRendered() {
       if (n == 6) return 'day_grid-mr0';
       return '';
     },
-    removeChecked: function removeChecked(name) {
-      for (var i = 0; i < this[name].length; i++) {
-        this[name][i].checked = false;
-      }
-
-      this[name] = [];
-    },
     toSM: function toSM(type, item) {
       if (this.SM[type]['all']) return this.SM[type]['all'](item);
       if (this.SM[type][this.state]) return this.SM[type][this.state](item);
-    },
-    scheduleDays: function scheduleDays() {
-      var it = this;
-      it.scheduleInts = [];
-
-      for (var int in RenderServData.days) {
-        var name = int.split('d').join('');
-        var ints = RenderServData.days[int].length == 0 ? 'day off' : RenderServData.days[int];
-        it.scheduleInts.push({
-          name: name,
-          intervals: ints
-        });
-      }
-
-      it.SCstate = 'special';
-    },
-    scheduleWeekDays: function scheduleWeekDays() {
-      var it = this;
-      it.scheduleInts = [];
-
-      for (var int in RenderServData.weekDays) {
-        it.scheduleInts.push({
-          name: int,
-          intervals: RenderServData.weekDays[int]
-        });
-      }
-
-      console.log(it.scheduleInts);
-      it.SCstate = 'regular';
     },
     setStateMethods: function setStateMethods() {
       var it = this;
@@ -773,14 +757,21 @@ function setRendered() {
           'delete': changeTab,
           'orders': changeTab
         },
-        schedule: {
-          'all': setSCstate
+        changeStateLS: {
+          'all': changeStateLS
+        },
+        renderLS: {
+          'all': renderLS
+        },
+        clickLS: {
+          'standard': clickStandardLS
         },
         dayType: 'day',
         CArr: [],
         CI: {}
       };
       var SM = it.SM;
+      var LS = it.LS;
 
       function clickDayStandard(day) {
         day.checked = !day.checked;
@@ -801,9 +792,14 @@ function setRendered() {
 
         if (SM.CArr.length == 0) SM.CI = {};else if (SM.CArr.length == 1) {
           var dayObj = SM.CArr[0];
-          if (dayObj.isSpecial || dayObj.type == 'week') SM.CI = SM.CArr[0].intervals;else {
+
+          if (dayObj.isSpecial || dayObj.type == 'week') {
+            SM.CI = SM.CArr[0].intervals;
+            changeStateLS('regular');
+          } else {
             var weekName = it.weekNames[dayObj.weekIndex];
             SM.CI = it.weekDays[weekName].intervals;
+            changeStateLS('special');
           }
         } else SM.CI = emptyIntervals();
       }
@@ -831,8 +827,52 @@ function setRendered() {
         return classes;
       }
 
-      function setSCstate(SCstate) {
-        it.SCstate = SCstate;
+      function changeStateLS(state) {
+        if (LS.state != state) {
+          LS.state = state;
+          LS.stack = new Stack();
+          renderLS();
+        }
+      }
+
+      function renderLS() {
+        LS.render = [];
+
+        if (LS.state == 'regular') {
+          for (var day in RenderServData.weekDays) {
+            LS.render.push({
+              name: day,
+              intervals: RenderServData.weekDays[day],
+              dayObj: RenderCalendar.weekDays[day]
+            });
+          }
+        } else if (LS.state == 'special') {
+          for (var _day in RenderServData.days) {
+            var date = new Date(_day.split('d').join(''));
+            var y = 'y' + date.getFullYear();
+            var m = 'm' + date.getMonth();
+            var d = 'd' + date.getDate();
+            var month = it.monthNamesShort[date.getMonth()];
+            var monthDay = date.getDate();
+            LS.render.push({
+              name: _day,
+              month: month,
+              day: monthDay,
+              intervals: RenderServData.days[_day],
+              dayObj: rc.find([y, m, d], RenderCalendar)
+            });
+          }
+        }
+      }
+
+      function clickStandardLS(day) {
+        day.checked = !day.checked;
+
+        if (day.checked) {
+          LS.stack[day.name] = day;
+        } else {
+          delete LS.stack[day.name];
+        }
       }
 
       function changeTab(state) {
@@ -982,7 +1022,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_calendar_Datetime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/calendar/Datetime */ "./resources/js/components/calendar/Datetime.vue");
-/* harmony import */ var _components_calendar2_Calendar2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/calendar2/Calendar2 */ "./resources/js/components/calendar2/Calendar2.vue");
+/* harmony import */ var _components_calendar3_Calendar3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/calendar3/Calendar3 */ "./resources/js/components/calendar3/Calendar3.vue");
 //
 //
 //
@@ -996,7 +1036,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'home',
   components: {
-    Calendar2: _components_calendar2_Calendar2__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Calendar3: _components_calendar3_Calendar3__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {};
@@ -20202,9 +20242,9 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar2/Calendar2.vue?vue&type=template&id=67f06304&":
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar3/Calendar3.vue?vue&type=template&id=25f15040&":
 /*!**********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar2/Calendar2.vue?vue&type=template&id=67f06304& ***!
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar3/Calendar3.vue?vue&type=template&id=25f15040& ***!
   \**********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -20226,7 +20266,7 @@ var render = function() {
           "div",
           {
             staticClass: "SC_tab SC_tab-left",
-            class: { active: _vm.SCstate == "regular" }
+            class: { active: _vm.LS.state == "regular" }
           },
           [
             _c(
@@ -20235,7 +20275,7 @@ var render = function() {
                 staticClass: "SC_tab-text",
                 on: {
                   click: function($event) {
-                    return _vm.scheduleWeekDays()
+                    return _vm.toSM("changeStateLS", "regular")
                   }
                 }
               },
@@ -20248,7 +20288,7 @@ var render = function() {
           "div",
           {
             staticClass: "SC_tab SC_tab-right",
-            class: { active: _vm.SCstate == "special" }
+            class: { active: _vm.LS.state == "special" }
           },
           [
             _c(
@@ -20257,7 +20297,7 @@ var render = function() {
                 staticClass: "SC_tab-text",
                 on: {
                   click: function($event) {
-                    return _vm.scheduleDays()
+                    return _vm.toSM("changeStateLS", "special")
                   }
                 }
               },
@@ -20270,41 +20310,63 @@ var render = function() {
       _c(
         "div",
         { staticClass: "SC_intervals" },
-        _vm._l(_vm.scheduleInts, function(day) {
-          return _c("div", { staticClass: "SC_interval" }, [
-            _c("div", { staticClass: "SC_day" }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(day.name) +
-                  "\n                "
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "SC_timebox" },
-              [
-                day.intervals == "day off"
-                  ? _c("div", { staticClass: "SC_time" }, [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(day.intervals) +
-                          "\n                    "
-                      )
+        _vm._l(_vm.LS.render, function(day) {
+          return _c(
+            "div",
+            {
+              staticClass: "SC_interval",
+              class: { checked: day.dayObj.checked },
+              on: {
+                click: function($event) {
+                  return _vm.toSM("clickLS", day)
+                }
+              }
+            },
+            [
+              _vm.LS.state == "regular"
+                ? _c("div", { staticClass: "SC_day" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(day.name) +
+                        "\n                "
+                    )
+                  ])
+                : _c("div", { staticClass: "SC_day" }, [
+                    _c("div", { staticClass: "SC_day-month" }, [
+                      _vm._v(_vm._s(day.day))
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "SC_day-day" }, [
+                      _vm._v(_vm._s(day.month))
                     ])
-                  : _vm._l(day.intervals, function(int) {
-                      return _c("div", { staticClass: "SC_time" }, [
-                        int.from
-                          ? _c("span", [
-                              _vm._v(_vm._s(int.from) + " - " + _vm._s(int.to))
-                            ])
-                          : _c("span", [_vm._v(_vm._s(int.intervals))])
+                  ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "SC_timebox" },
+                [
+                  !day.intervals[0]
+                    ? _c("div", { staticClass: "SC_time" }, [
+                        _vm._v(
+                          "\n                        day off\n                    "
+                        )
                       ])
-                    })
-              ],
-              2
-            )
-          ])
+                    : _vm._l(day.intervals, function(int) {
+                        return _c("div", { staticClass: "SC_time" }, [
+                          int.from
+                            ? _c("span", [
+                                _vm._v(
+                                  _vm._s(int.from) + " - " + _vm._s(int.to)
+                                )
+                              ])
+                            : _c("span", [_vm._v(_vm._s(int.intervals))])
+                        ])
+                      })
+                ],
+                2
+              )
+            ]
+          )
         }),
         0
       )
@@ -20686,7 +20748,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("main", [_vm._v("\n    Home here\n    \n    "), _c("calendar2")], 1)
+  return _c("main", [_vm._v("\n    Home here\n\n    "), _c("calendar3")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -36053,17 +36115,17 @@ function minutes() {
 
 /***/ }),
 
-/***/ "./resources/js/components/calendar2/Calendar2.vue":
+/***/ "./resources/js/components/calendar3/Calendar3.vue":
 /*!*********************************************************!*\
-  !*** ./resources/js/components/calendar2/Calendar2.vue ***!
+  !*** ./resources/js/components/calendar3/Calendar3.vue ***!
   \*********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Calendar2_vue_vue_type_template_id_67f06304___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Calendar2.vue?vue&type=template&id=67f06304& */ "./resources/js/components/calendar2/Calendar2.vue?vue&type=template&id=67f06304&");
-/* harmony import */ var _Calendar2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Calendar2.vue?vue&type=script&lang=js& */ "./resources/js/components/calendar2/Calendar2.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Calendar3_vue_vue_type_template_id_25f15040___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Calendar3.vue?vue&type=template&id=25f15040& */ "./resources/js/components/calendar3/Calendar3.vue?vue&type=template&id=25f15040&");
+/* harmony import */ var _Calendar3_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Calendar3.vue?vue&type=script&lang=js& */ "./resources/js/components/calendar3/Calendar3.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -36073,9 +36135,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Calendar2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Calendar2_vue_vue_type_template_id_67f06304___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Calendar2_vue_vue_type_template_id_67f06304___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Calendar3_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Calendar3_vue_vue_type_template_id_25f15040___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Calendar3_vue_vue_type_template_id_25f15040___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -36085,46 +36147,46 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/calendar2/Calendar2.vue"
+component.options.__file = "resources/js/components/calendar3/Calendar3.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/calendar2/Calendar2.vue?vue&type=script&lang=js&":
+/***/ "./resources/js/components/calendar3/Calendar3.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************!*\
-  !*** ./resources/js/components/calendar2/Calendar2.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/js/components/calendar3/Calendar3.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Calendar2.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar2/Calendar2.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar3_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Calendar3.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar3/Calendar3.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar3_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/calendar2/Calendar2.vue?vue&type=template&id=67f06304&":
+/***/ "./resources/js/components/calendar3/Calendar3.vue?vue&type=template&id=25f15040&":
 /*!****************************************************************************************!*\
-  !*** ./resources/js/components/calendar2/Calendar2.vue?vue&type=template&id=67f06304& ***!
+  !*** ./resources/js/components/calendar3/Calendar3.vue?vue&type=template&id=25f15040& ***!
   \****************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar2_vue_vue_type_template_id_67f06304___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Calendar2.vue?vue&type=template&id=67f06304& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar2/Calendar2.vue?vue&type=template&id=67f06304&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar2_vue_vue_type_template_id_67f06304___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar3_vue_vue_type_template_id_25f15040___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Calendar3.vue?vue&type=template&id=25f15040& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar3/Calendar3.vue?vue&type=template&id=25f15040&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar3_vue_vue_type_template_id_25f15040___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar2_vue_vue_type_template_id_67f06304___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Calendar3_vue_vue_type_template_id_25f15040___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/js/components/calendar2/data/data.js":
+/***/ "./resources/js/components/calendar3/data/data.js":
 /*!********************************************************!*\
-  !*** ./resources/js/components/calendar2/data/data.js ***!
+  !*** ./resources/js/components/calendar3/data/data.js ***!
   \********************************************************/
 /*! exports provided: data */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -36172,9 +36234,9 @@ var data = {
 
 /***/ }),
 
-/***/ "./resources/js/components/calendar2/data/reactSchedule.js":
+/***/ "./resources/js/components/calendar3/data/reactSchedule.js":
 /*!*****************************************************************!*\
-  !*** ./resources/js/components/calendar2/data/reactSchedule.js ***!
+  !*** ./resources/js/components/calendar3/data/reactSchedule.js ***!
   \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {

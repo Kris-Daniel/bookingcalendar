@@ -1,17 +1,17 @@
 <template>
     <main>
         Home here
-        
-        <calendar2></calendar2>
+
+        <calendar3></calendar3>
     </main>
 </template>
 
 <script>
     import Datetime from "../components/calendar/Datetime";
-    import Calendar2 from "../components/calendar2/Calendar2";
+    import Calendar3 from "../components/calendar3/Calendar3";
     export default {
         name: 'home',
-        components: {Calendar2},
+        components: {Calendar3},
         data() {
             return {
 

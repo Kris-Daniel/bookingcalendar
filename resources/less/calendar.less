@@ -12,6 +12,18 @@
         box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
     }
 }
+.scrollstyleY() {
+    overflow-y: auto;
+    &::-webkit-scrollbar{
+        width: 4px;
+        background: @gray;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: @dark;
+        max-height: 4px;
+        border-radius: 4px;
+    }
+}
 
 .dcal{
     .rel();
@@ -173,9 +185,9 @@
             }
         }
         &_intervals{
+            .scrollstyleY();
             margin-top: -10px;
             padding: 10px 30px 0 14px;
-            overflow-y: auto;
             height: 455px;
             direction: rtl;
             color: @dark;
@@ -183,20 +195,24 @@
         &_interval{
             .dflex();
             .center();
+            .interval();
+            .bold();
             justify-content: space-around;
             align-items: center;
             padding: 22px 0;
             margin-bottom: 5px;
             direction: ltr;
-            .interval();
             .SC_day{
                 width: 30px;
                 .size17();
+                &-day{
+                    .size11();
+                }
             }
             .SC_timebox{
                 width: 146px;
                 max-height: 64px;
-                overflow-y: auto;
+                .scrollstyleY();
                 .size13();
                 .SC_time{
                     margin-bottom: 14px;
@@ -331,9 +347,9 @@
                 color: @gray;
             }
             &_intervals{
+                .scrollstyleY();
                 margin-top: -10px;
                 padding: 10px 14px 0 30px;
-                overflow-y: auto;
                 height: 455px;
             }
             &_interval{

@@ -3369,12 +3369,21 @@ a {
   background: #00cec9;
 }
 .dcal .SC_intervals {
+  overflow-y: auto;
   margin-top: -10px;
   padding: 10px 30px 0 14px;
-  overflow-y: auto;
   height: 455px;
   direction: rtl;
   color: #293143;
+}
+.dcal .SC_intervals::-webkit-scrollbar {
+  width: 4px;
+  background: #c2c9dd;
+}
+.dcal .SC_intervals::-webkit-scrollbar-thumb {
+  background: #293143;
+  max-height: 4px;
+  border-radius: 4px;
 }
 .dcal .SC_interval {
   width: 100%;
@@ -3382,16 +3391,17 @@ a {
   flex-wrap: wrap;
   align-items: stretch;
   text-align: center;
-  justify-content: space-around;
-  align-items: center;
-  padding: 22px 0;
-  margin-bottom: 5px;
-  direction: ltr;
   background: #fff;
   border-radius: 6px;
   box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.12);
   transition: 0.1s all linear;
   cursor: pointer;
+  font-weight: 800;
+  justify-content: space-around;
+  align-items: center;
+  padding: 22px 0;
+  margin-bottom: 5px;
+  direction: ltr;
 }
 .dcal .SC_interval:hover {
   box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
@@ -3401,12 +3411,25 @@ a {
   font-size: 17px;
   line-height: 1 !important;
 }
+.dcal .SC_interval .SC_day-day {
+  font-size: 11px;
+  line-height: 1 !important;
+}
 .dcal .SC_interval .SC_timebox {
   width: 146px;
   max-height: 64px;
   overflow-y: auto;
   font-size: 13px;
   line-height: 1 !important;
+}
+.dcal .SC_interval .SC_timebox::-webkit-scrollbar {
+  width: 4px;
+  background: #c2c9dd;
+}
+.dcal .SC_interval .SC_timebox::-webkit-scrollbar-thumb {
+  background: #293143;
+  max-height: 4px;
+  border-radius: 4px;
 }
 .dcal .SC_interval .SC_timebox .SC_time {
   margin-bottom: 14px;
@@ -3574,10 +3597,23 @@ a {
 .dcal.standard .TS_intervals,
 .dcal.delete .TS_intervals,
 .dcal.client .TS_intervals {
+  overflow-y: auto;
   margin-top: -10px;
   padding: 10px 14px 0 30px;
-  overflow-y: auto;
   height: 455px;
+}
+.dcal.standard .TS_intervals::-webkit-scrollbar,
+.dcal.delete .TS_intervals::-webkit-scrollbar,
+.dcal.client .TS_intervals::-webkit-scrollbar {
+  width: 4px;
+  background: #c2c9dd;
+}
+.dcal.standard .TS_intervals::-webkit-scrollbar-thumb,
+.dcal.delete .TS_intervals::-webkit-scrollbar-thumb,
+.dcal.client .TS_intervals::-webkit-scrollbar-thumb {
+  background: #293143;
+  max-height: 4px;
+  border-radius: 4px;
 }
 .dcal.standard .TS_interval,
 .dcal.delete .TS_interval,
