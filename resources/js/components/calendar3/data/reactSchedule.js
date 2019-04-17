@@ -1,14 +1,16 @@
+let WEEK = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 export default class reactCalendar {
     constructor(data) {
         this.data = data;
-        this.from = new Date('2019-01-01').getTime();
-        this.to = new Date('2019-11-30').getTime();
+        this.from = new Date('2018-01-01').getTime();
+        this.to = new Date('2019-12-30').getTime();
         this.calendar = {
             cYear: data.time.getFullYear(),
             cMonth: data.time.getMonth(),
             cDay: data.time.getDate(),
             segment: data.segment,
             weekDays: {Su: {}, Mo: {}, Tu: {}, We: {}, Th: {}, Fr: {}, Sa: {}},
+            specialDays: {},
             years: {}
         };
         this.startEnv();
@@ -99,6 +101,8 @@ export default class reactCalendar {
                     name: 'd' + dateString,
                     address: [nameY, 'm' + m, 'd' + d],
                     index: d,
+                    year: y,
+                    month: m - 1,
                     weekIndex: day.getDay(),
                     date: day.getTime(),
                     dateString: dateString,
@@ -109,7 +113,8 @@ export default class reactCalendar {
                     intervals: {},
                     length: 0,
                     hasIntervals: false,
-                    type: 'day'
+                    type: 'day',
+                    sliceIntervals: []
                 };
                 monthObj.length++;
             }
@@ -161,11 +166,14 @@ export default class reactCalendar {
             if (type == 'week') {
                 if (it.data.weekDays[day.name]) {
                     arr = it.data.weekDays[day.name];
+                    day.sliceIntervals = it.data.weekDays[day.name];
                 }
             } else if (type == 'day') {
                 if (it.data.days[day.name]) {
                     arr = it.data.days[day.name];
                     day.isSpecial = true;
+                    it.calendar.specialDays[day.name] = day;
+                    day.sliceIntervals = it.data.days[day.name];
                 }
             }
 
@@ -181,7 +189,12 @@ export default class reactCalendar {
             });
         }
 
-        it.insertIntervals(day, callback);
+        if(type == 'day' && !it.data.days[day.name]) {
+            let copyIntervals = it.calendar.weekDays[WEEK[day.weekIndex]].intervals;
+            day.intervals = copyIntervals;
+        }
+        else
+            it.insertIntervals(day, callback);
     }
 
     insertIntervals(obj, callback) {

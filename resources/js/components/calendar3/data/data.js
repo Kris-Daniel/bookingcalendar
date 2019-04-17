@@ -1,4 +1,4 @@
-export var data = {
+export let data = {
     time: new Date(),
     segment: 60,
     weekDays: {

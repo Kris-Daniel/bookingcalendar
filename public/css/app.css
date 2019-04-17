@@ -3406,6 +3406,9 @@ a {
 .dcal .SC_interval:hover {
   box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
 }
+.dcal .SC_interval.checked {
+  border: 2px solid #00cec9;
+}
 .dcal .SC_interval .SC_day {
   width: 30px;
   font-size: 17px;

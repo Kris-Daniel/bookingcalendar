@@ -8,10 +8,10 @@
                 <div class="SC_title">Schedule</div>
 
                 <div class="SC_tab SC_tab-left" :class="{active: LS.state == 'regular'}">
-                    <span class="SC_tab-text" @click="toSM('changeStateLS', 'regular')">Regular</span>
+                    <span class="SC_tab-text" @click="tie('changeStateLS', 'regular')">Regular</span>
                 </div>
                 <div class="SC_tab SC_tab-right" :class="{active: LS.state == 'special'}">
-                    <span class="SC_tab-text" @click="toSM('changeStateLS', 'special')">Special</span>
+                    <span class="SC_tab-text" @click="tie('changeStateLS', 'special')">Special</span>
                 </div>
             </div>
 
@@ -19,22 +19,22 @@
                 <div
                     v-for="day in LS.render"
                     class="SC_interval"
-                    :class="{checked: day.dayObj.checked}"
-                    @click="toSM('clickLS', day)"
+                    :class="{checked: day.checked}"
+                    @click="tie('dayClickCL', day)"
                 >
                     <div v-if="LS.state == 'regular'" class="SC_day">
                         {{day.name}}
                     </div>
                     <div v-else class="SC_day">
-                        <div class="SC_day-month">{{day.day}}</div>
-                        <div class="SC_day-day">{{day.month}}</div>
+                        <div class="SC_day-month">{{day.index}}</div>
+                        <div class="SC_day-day">{{shortMONTHS[day.month]}}</div>
                     </div>
                     <div class="SC_timebox">
-                        <div v-if="!day.intervals[0]" class="SC_time">
+                        <div v-if="!day.hasIntervals" class="SC_time">
                             day off
                         </div>
                         <template v-else>
-                            <div v-for="int in day.intervals" class="SC_time">
+                            <div v-for="int in day.sliceIntervals" class="SC_time">
                                 <span v-if="int.from">{{int.from}} - {{int.to}}</span>
                                 <span v-else>{{int.intervals}}</span>
                             </div>
@@ -65,8 +65,8 @@
                     <div class="arrow arrow-left" @click="changeMonth('prev')">
                         <ArrowLeft></ArrowLeft>
                     </div>
-                    <div class="YM_text YM_text-left">{{monthNames[month.index - 1]}}</div>
-                    <div class="YM_text YM_text-right">{{year}}</div>
+                    <div class="YM_text YM_text-left">{{MONTHS[CL.month]}}</div>
+                    <div class="YM_text YM_text-right">{{CL.year}}</div>
                     <div class="arrow arrow-right" @click="changeMonth('next')">
                         <ArrowRight></ArrowRight>
                     </div>
@@ -75,15 +75,15 @@
                 <div class="hr-top"></div>
 
                 <div class="days weekdays">
-                    <div class="day_grid" :class="removeMarginGrid(index)" v-for="item, key, index in weekDays">
+                    <div class="day_grid" :class="removeMarginGrid(index)" v-for="weekDay, key, index in CL.weekDays">
                         <div
                             class="day"
-                            @click="toSM('click', item)"
-                            :class="[toSM('classes', item), {checked: item.checked}]"
+                            @click="tie('dayClickCL', weekDay)"
+                            :class="[tie('classesCL', weekDay), {checked: weekDay.checked}]"
                         >
                             <div class="day_name">
                                 <div class="day_name-rel">
-                                    {{item.name}}
+                                    {{weekDay.name}}
                                 </div>
                             </div>
                         </div>
@@ -93,16 +93,16 @@
                 <div class="hr-bottom"></div>
 
                 <div class="days main_days">
-                    <div class="day_grid" :class="removeMarginGrid(n - 1)" v-for="n in days['d1'].weekIndex"></div>
-                    <div class="day_grid" :class="removeMarginGrid(item.weekIndex)" v-for="item in days">
+                    <div class="day_grid" :class="removeMarginGrid(n - 1)" v-for="n in CL.days['d1'].weekIndex"></div>
+                    <div class="day_grid" :class="removeMarginGrid(day.weekIndex)" v-for="day in CL.days">
                         <div
                             class="day"
-                            @click="toSM('click', item)"
-                            :class="[toSM('classes', item), {checked: item.checked}]"
+                            @click="tie('dayClickCL', day)"
+                            :class="[tie('classesCL', day), {checked: day.checked}]"
                         >
                             <div class="day_name">
                                 <div class="day_name-rel">
-                                    {{item.index}}
+                                    {{day.index}}
                                     <div class="day_info"></div>
                                 </div>
                             </div>
@@ -113,13 +113,13 @@
             </div>
         </div>
 
-        <div v-if="SM.CArr.length" class="TS">
+        <div v-if="CL.store.length" class="TS">
             <div class="TS_head">
                 <div class="TS_title">Time Settings</div>
                 <div class="TS_descr">For April 15, 16</div>
             </div>
             <div class="TS_intervals">
-                <div class="TS_interval" v-for="int in SM.CI">
+                <div class="TS_interval" v-for="int in TS.render">
                     <div class="TS_interval_data">
                         {{int.from}} - {{int.to}} - {{int.checked}}
                     </div>
@@ -133,33 +133,32 @@
 
 <script>
     import Vue from 'vue';
-    import * as servSchedule from './data/data';
-    import reactCalendar from './data/reactSchedule';
     import ArrowLeft from '../../svg/arrow-left';
     import ArrowRight from '../../svg/arrow-right';
+    import * as servSchedule from './data/data';
+    import reactCalendar from './data/reactSchedule';
 
     const presset = servSchedule.data;
     let rc = new reactCalendar(presset);
 
-    let InsCalendar = rc.calendar;
-    let InsServData = rc.data;
-
-    let RenderCalendar, RenderServData, cYear, cMonth, cDay;
+    let RenderCalendar, RenderServData, cMonth;
 
     setRendered();
-    function setRendered() {
-        RenderCalendar = JSON.parse(JSON.stringify(InsCalendar));
-        RenderServData = JSON.parse(JSON.stringify(InsServData));
+    function setRendered(address) {
+        RenderCalendar = JSON.parse(JSON.stringify(rc.calendar));
+        RenderServData = JSON.parse(JSON.stringify(rc.data));
 
-        console.log(RenderCalendar);
+        if(address)
+            cMonth = rc.find(address, RenderCalendar);
+        else
+            cMonth = RenderCalendar.years['y' + RenderCalendar.cYear].months['m' + (RenderCalendar.cMonth + 1)];
 
-        cYear    = RenderCalendar.years['y' + RenderCalendar.cYear];
-        cMonth   = cYear.months['m' + (RenderCalendar.cMonth + 1)];
-        cDay     = cMonth.days['d' + RenderCalendar.cDay];
+        console.log(rc);
     }
 
-    function stack() {
+    function store(type) {
         this.length = 0;
+        if(type) this.type = type;
     }
 
     export default {
@@ -177,30 +176,32 @@
         data() {
             return {
                 state: this.stateProp,
-                SCstate: 'regular',
-                year: cYear.index,
-                month: cMonth,
-                days: cMonth.days,
-                monthNames: [
+                // Calendar
+                CL: {
+                    year: rc.find(cMonth.ref, RenderCalendar).index,
+                    month: cMonth.index - 1,
+                    days: cMonth.days,
+                    weekDays: RenderCalendar.weekDays,
+                    store: new store(),
+                },
+                // Time setting
+                TS: {
+                    state: 'standard',
+                    store: new store(),
+                    render: {}
+                },
+                // Left side
+                LS: {
+                    state: '',
+                    store: new store(),
+                    render: {}
+                },
+                // Additional
+                MONTHS: [
                     'January', 'February', 'March', 'April', 'May', 'June',
                     'Jule', 'August', 'September', 'October', 'November', 'December'
                 ],
-                monthNamesShort: [
-                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-                ],
-                weekDays: RenderCalendar.weekDays,
-                weekNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-                servDays: RenderServData.days,
-                servWeekDays: RenderServData.weekDays,
-                checkedWeekDays: [],
-                checkedDays: [],
-                scheduleInts: [],
-                LS: {
-                    state: 'regular',
-                    stack: new stack(),
-                    render: []
-                }
+                WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
             }
         },
         watch: {
@@ -208,111 +209,140 @@
         },
         created() {
             this.setStateMethods();
-            this.toSM('renderLS');
+            this.setLS('regular');
         },
         computed: {
-
+            shortMONTHS: function() {
+                let arr = [];
+                this.MONTHS.forEach(function(item) {
+                    item = item.slice(0, 3);
+                    arr.push(item);
+                });
+                return arr;
+            }
         },
         methods: {
             changeMonth(side) {
-                var fromSide = rc.find(this.month[side], RenderCalendar);
+                var fromSide = rc.find(cMonth[side], RenderCalendar);
                 if(fromSide) {
-                    this.month = fromSide;
-                    this.days  = this.month.days;
-                    this.year  = rc.find(this.month.ref, RenderCalendar).index;
+                    cMonth = fromSide;
+                    this.CL.year  = rc.find(cMonth.ref, RenderCalendar).index;
+                    this.CL.month = fromSide.index - 1;
+                    this.CL.days  = fromSide.days;
                 }
-                console.log(this.year, this.month, this.days);
+                console.log(this.CL);
             },
             removeMarginGrid(n) {
                 if(n == 0) return 'day_grid-ml0';
                 if(n == 6) return 'day_grid-mr0';
                 return '';
             },
-            toSM(type, item) {
-                if(this.SM[type]['all']) return this.SM[type]['all'](item);
-                if(this.SM[type][this.state]) return this.SM[type][this.state](item);
+            tie(method, arg) {
+                if(this.SM[method]['all']) return this.SM[method]['all'](arg);
+                if(this.SM[method][this.state]) return this.SM[method][this.state](arg);
+            },
+            setLS(state) {
+                let LS = this.LS;
+                if(state && LS.state != state){
+                    LS.state = state;
+                    if(LS.state == 'regular') {
+                        LS.render =  this.CL.weekDays;
+                    }
+                    else if(LS.state == 'special') {
+                        LS.render = {};
+                        let SpecDays = RenderCalendar.specialDays;
+                        for(let i in SpecDays) {
+                            LS.render[i] = rc.find(SpecDays[i].address, RenderCalendar);
+                        }
+                    }
+                }
+                console.log(LS);
+
             },
             setStateMethods() {
                 let it = this;
+                let CL = it.CL;
+                let LS = it.LS;
+                let TS = it.TS;
                 it.SM = {
-                    click: {
-                        'standard': clickDayStandard,
-                        'delete': function() {},
-                        'orders': clickDayOrder,
-                        'client': clickDayClient
+                    dayClickCL: {
+                        standard: standardDayClickCL
                     },
-                    classes: {
-                        'standard': dayClassesStandard,
-                    },
-                    tab: {
-                        'standard': changeTab,
-                        'delete': changeTab,
-                        'orders': changeTab
+                    classesCL: {
+                        standard: standardDayClassesCL
                     },
                     changeStateLS: {
-                        'all': changeStateLS
-                    },
-                    renderLS: {
-                        'all': renderLS
-                    },
-                    clickLS: {
-                        'standard': clickStandardLS
-                    },
-                    dayType: 'day',
-                    CArr: [],
-                    CI: {}
+                        standard: standardChangeStateLS
+                    }
+                }
 
-                };
-                let SM = it.SM;
-                let LS = it.LS;
-
-                function clickDayStandard(day) {
+                function standardDayClickCL(day) {
                     day.checked = !day.checked;
                     if(day.checked) {
-                        if(SM.dayType == day.type){
-                            SM.CArr.push(day);
-                        } else {
-                            it.undo();
-                            if(day.address)
-                                day = rc.find(day.address, RenderCalendar);
-                            else
-                                day = it.weekDays[day.name];
-                            day.checked = true;
-                            SM.CArr.push(day);
-                            SM.dayType = day.type;
-                        }
-                    } else {
-                        uncheckFromArr(SM.CArr, day);
-                    }
-
-                    if(SM.CArr.length == 0)
-                        SM.CI = {};
-                    else if(SM.CArr.length == 1) {
-                        let dayObj = SM.CArr[0];
-                        if(
-                            dayObj.isSpecial ||
-                            dayObj.type == 'week'
-                        ){
-                            SM.CI = SM.CArr[0].intervals;
-                            changeStateLS('regular');
+                        if(CL.store.type == day.type) {
+                            CL.store[day.name] = day;
+                            addToRenderLS();
                         }
                         else{
-                            let weekName = it.weekNames[dayObj.weekIndex];
-                            SM.CI = it.weekDays[weekName].intervals;
-                            changeStateLS('special');
-                        }
+                            setChangeStateLS();
+                            addToRenderLS();
 
+                            CL.store = new store(day.type);
+                            if(day.type == 'week') {
+                                day = CL.weekDays[day.name];
+                            }
+                            else if(day.type == 'day') {
+                                day = CL.days['d' + day.index];
+
+                            }
+                            day.checked = true;
+                            CL.store[day.name] = day;
+                        }
+                        CL.store.length++;
+                    } else {
+                        delete CL.store[day.name];
+                        CL.store.length--;
+                        deleteFromRenderLS();
+                    }
+
+                    if(CL.store.length == 0)
+                        TS.render = {};
+                    else if(CL.store.length == 1) {
+                        for(let key in CL.store) {
+                            if(key != 'length' && key != 'type')
+                                TS.render = CL.store[key].intervals;
+                        }
                     }
                     else
-                        SM.CI = emptyIntervals();
-                }
-                function clickDayOrder() {
+                        TS.render = emptyIntervals();
 
-                }
-                function clickDayClient() {
 
+                    function setChangeStateLS() {
+                        if(day.type == 'week') standardChangeStateLS('regular');
+                        else standardChangeStateLS('special');
+                    }
+                    function addToRenderLS() {
+                        if(day.type == 'day') {
+                            RenderCalendar.specialDays[day.name] = day;
+                            setRenderLS();
+                        }
+                    }
+                    function deleteFromRenderLS() {
+                        if(day.type == 'day' && !RenderCalendar.specialDays[day.name].isSpecial) {
+                            delete RenderCalendar.specialDays[day.name];
+                            setRenderLS();
+                        }
+                    }
+                    function setRenderLS() {
+                        LS.render = {};
+                        let SpecDays = RenderCalendar.specialDays;
+                        for(let i in SpecDays) {
+                            LS.render[i] = rc.find(SpecDays[i].address, RenderCalendar);
+                        }
+                    }
                 }
-                function dayClassesStandard(day) {
+
+                function standardDayClassesCL(day) {
                     var classes = '';
                     if(day.current) classes += ' current';
 
@@ -323,8 +353,8 @@
                     }
                     // default days
                     else if(day.type == 'day') {
-                        let weekName = it.weekNames[day.weekIndex];
-                        if(it.weekDays[weekName].hasIntervals) classes += ' standard';
+                        let weekName = it.WEEK[day.weekIndex];
+                        if(it.CL.weekDays[weekName].hasIntervals) classes += ' standard';
                         else classes += ' off';
                     }
                     // week days
@@ -336,68 +366,10 @@
                     return classes;
                 }
 
-                function changeStateLS(state) {
-                    if(LS.state != state) {
-                        LS.state = state;
-                        LS.stack = new Stack();
-                        renderLS();
-                    }
-                }
-
-                function renderLS() {
-                    LS.render = [];
-                    if(LS.state == 'regular') {
-                        for(let day in RenderServData.weekDays) {
-                            LS.render.push({
-                                name: day,
-                                intervals: RenderServData.weekDays[day],
-                                dayObj: RenderCalendar.weekDays[day]
-                            });
-                        }
-                    }
-                    else if(LS.state == 'special') {
-                        for(let day in RenderServData.days) {
-                            let date  = new Date(day.split('d').join(''));
-                            let y = 'y' + date.getFullYear();
-                            let m = 'm' + date.getMonth();
-                            let d = 'd' + date.getDate();
-
-                            let month = it.monthNamesShort[date.getMonth()];
-                            let monthDay = date.getDate();
-                            LS.render.push({
-                                name: day,
-                                month,
-                                day: monthDay,
-                                intervals: RenderServData.days[day],
-                                dayObj: rc.find([y, m, d], RenderCalendar)
-                            });
-                        }
-                    }
-                }
-
-                function clickStandardLS(day) {
-                    day.checked = !day.checked;
-                    if (day.checked) {
-                        LS.stack[day.name] = day;
-                    }
-                    else {
-                        delete LS.stack[day.name];
-                    }
-                }
-
-                function changeTab(state) {
-                    if(it.state != state){
+                function standardChangeStateLS(state) {
+                    if(state != LS.state) {
                         it.undo();
-                        it.state = state;
-                    }
-                }
-
-                function uncheckFromArr(arr, item) {
-                    for (var i = 0; i < arr.length; i++) {
-                        if(arr[i] == item) {
-                            arr.splice(i, 1);
-                            break;
-                        }
+                        it.setLS(state);
                     }
                 }
 
@@ -412,18 +384,17 @@
                             checked: false
                         }
                     }
-                    console.log(intervals);
                     return intervals;
                 }
-
             },
             undo() {
-                setRendered();
-                this.month = rc.find(['y' + this.year, 'm' + this.month.index], RenderCalendar);
-                this.days  = this.month.days;
-                this.weekDays = RenderCalendar.weekDays;
-                this.SM.CArr = [];
-                this.SM.CI = {};
+                setRendered([
+                    'y' + this.CL.year,
+                    'm' + (this.CL.month + 1)
+                ]);
+                this.CL.days = cMonth.days;
+                this.CL.weekDays = RenderCalendar.weekDays;
+                this.CL.store = new store('day');
             }
         }
     }

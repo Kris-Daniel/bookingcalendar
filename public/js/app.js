@@ -516,10 +516,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _data_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./data/data */ "./resources/js/components/calendar3/data/data.js");
-/* harmony import */ var _data_reactSchedule__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./data/reactSchedule */ "./resources/js/components/calendar3/data/reactSchedule.js");
-/* harmony import */ var _svg_arrow_left__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../svg/arrow-left */ "./resources/js/svg/arrow-left.vue");
-/* harmony import */ var _svg_arrow_right__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../svg/arrow-right */ "./resources/js/svg/arrow-right.vue");
+/* harmony import */ var _svg_arrow_left__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../svg/arrow-left */ "./resources/js/svg/arrow-left.vue");
+/* harmony import */ var _svg_arrow_right__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../svg/arrow-right */ "./resources/js/svg/arrow-right.vue");
+/* harmony import */ var _data_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./data/data */ "./resources/js/components/calendar3/data/data.js");
+/* harmony import */ var _data_reactSchedule__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./data/reactSchedule */ "./resources/js/components/calendar3/data/reactSchedule.js");
 //
 //
 //
@@ -658,31 +658,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var presset = _data_data__WEBPACK_IMPORTED_MODULE_1__["data"];
-var rc = new _data_reactSchedule__WEBPACK_IMPORTED_MODULE_2__["default"](presset);
-var InsCalendar = rc.calendar;
-var InsServData = rc.data;
-var RenderCalendar, RenderServData, cYear, cMonth, cDay;
+var presset = _data_data__WEBPACK_IMPORTED_MODULE_3__["data"];
+var rc = new _data_reactSchedule__WEBPACK_IMPORTED_MODULE_4__["default"](presset);
+var RenderCalendar, RenderServData, cMonth;
 setRendered();
 
-function setRendered() {
-  RenderCalendar = JSON.parse(JSON.stringify(InsCalendar));
-  RenderServData = JSON.parse(JSON.stringify(InsServData));
-  console.log(RenderCalendar);
-  cYear = RenderCalendar.years['y' + RenderCalendar.cYear];
-  cMonth = cYear.months['m' + (RenderCalendar.cMonth + 1)];
-  cDay = cMonth.days['d' + RenderCalendar.cDay];
+function setRendered(address) {
+  RenderCalendar = JSON.parse(JSON.stringify(rc.calendar));
+  RenderServData = JSON.parse(JSON.stringify(rc.data));
+  if (address) cMonth = rc.find(address, RenderCalendar);else cMonth = RenderCalendar.years['y' + RenderCalendar.cYear].months['m' + (RenderCalendar.cMonth + 1)];
+  console.log(rc);
 }
 
-function stack() {
+function store(type) {
   this.length = 0;
+  if (type) this.type = type;
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'calendar3',
   components: {
-    ArrowLeft: _svg_arrow_left__WEBPACK_IMPORTED_MODULE_3__["default"],
-    ArrowRight: _svg_arrow_right__WEBPACK_IMPORTED_MODULE_4__["default"]
+    ArrowLeft: _svg_arrow_left__WEBPACK_IMPORTED_MODULE_1__["default"],
+    ArrowRight: _svg_arrow_right__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: {
     stateProp: {
@@ -693,122 +690,169 @@ function stack() {
   data: function data() {
     return {
       state: this.stateProp,
-      SCstate: 'regular',
-      year: cYear.index,
-      month: cMonth,
-      days: cMonth.days,
-      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December'],
-      monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      weekDays: RenderCalendar.weekDays,
-      weekNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-      servDays: RenderServData.days,
-      servWeekDays: RenderServData.weekDays,
-      checkedWeekDays: [],
-      checkedDays: [],
-      scheduleInts: [],
+      // Calendar
+      CL: {
+        year: rc.find(cMonth.ref, RenderCalendar).index,
+        month: cMonth.index - 1,
+        days: cMonth.days,
+        weekDays: RenderCalendar.weekDays,
+        store: new store()
+      },
+      // Time setting
+      TS: {
+        state: 'standard',
+        store: new store(),
+        render: {}
+      },
+      // Left side
       LS: {
-        state: 'regular',
-        stack: new stack(),
-        render: []
-      }
+        state: '',
+        store: new store(),
+        render: {}
+      },
+      // Additional
+      MONTHS: ['January', 'February', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December'],
+      WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
     };
   },
   watch: {},
   created: function created() {
     this.setStateMethods();
-    this.toSM('renderLS');
+    this.setLS('regular');
   },
-  computed: {},
+  computed: {
+    shortMONTHS: function shortMONTHS() {
+      var arr = [];
+      this.MONTHS.forEach(function (item) {
+        item = item.slice(0, 3);
+        arr.push(item);
+      });
+      return arr;
+    }
+  },
   methods: {
     changeMonth: function changeMonth(side) {
-      var fromSide = rc.find(this.month[side], RenderCalendar);
+      var fromSide = rc.find(cMonth[side], RenderCalendar);
 
       if (fromSide) {
-        this.month = fromSide;
-        this.days = this.month.days;
-        this.year = rc.find(this.month.ref, RenderCalendar).index;
+        cMonth = fromSide;
+        this.CL.year = rc.find(cMonth.ref, RenderCalendar).index;
+        this.CL.month = fromSide.index - 1;
+        this.CL.days = fromSide.days;
       }
 
-      console.log(this.year, this.month, this.days);
+      console.log(this.CL);
     },
     removeMarginGrid: function removeMarginGrid(n) {
       if (n == 0) return 'day_grid-ml0';
       if (n == 6) return 'day_grid-mr0';
       return '';
     },
-    toSM: function toSM(type, item) {
-      if (this.SM[type]['all']) return this.SM[type]['all'](item);
-      if (this.SM[type][this.state]) return this.SM[type][this.state](item);
+    tie: function tie(method, arg) {
+      if (this.SM[method]['all']) return this.SM[method]['all'](arg);
+      if (this.SM[method][this.state]) return this.SM[method][this.state](arg);
+    },
+    setLS: function setLS(state) {
+      var LS = this.LS;
+
+      if (state && LS.state != state) {
+        LS.state = state;
+
+        if (LS.state == 'regular') {
+          LS.render = this.CL.weekDays;
+        } else if (LS.state == 'special') {
+          LS.render = {};
+          var SpecDays = RenderCalendar.specialDays;
+
+          for (var i in SpecDays) {
+            LS.render[i] = rc.find(SpecDays[i].address, RenderCalendar);
+          }
+        }
+      }
+
+      console.log(LS);
     },
     setStateMethods: function setStateMethods() {
       var it = this;
+      var CL = it.CL;
+      var LS = it.LS;
+      var TS = it.TS;
       it.SM = {
-        click: {
-          'standard': clickDayStandard,
-          'delete': function _delete() {},
-          'orders': clickDayOrder,
-          'client': clickDayClient
+        dayClickCL: {
+          standard: standardDayClickCL
         },
-        classes: {
-          'standard': dayClassesStandard
-        },
-        tab: {
-          'standard': changeTab,
-          'delete': changeTab,
-          'orders': changeTab
+        classesCL: {
+          standard: standardDayClassesCL
         },
         changeStateLS: {
-          'all': changeStateLS
-        },
-        renderLS: {
-          'all': renderLS
-        },
-        clickLS: {
-          'standard': clickStandardLS
-        },
-        dayType: 'day',
-        CArr: [],
-        CI: {}
+          standard: standardChangeStateLS
+        }
       };
-      var SM = it.SM;
-      var LS = it.LS;
 
-      function clickDayStandard(day) {
+      function standardDayClickCL(day) {
         day.checked = !day.checked;
 
         if (day.checked) {
-          if (SM.dayType == day.type) {
-            SM.CArr.push(day);
+          if (CL.store.type == day.type) {
+            CL.store[day.name] = day;
+            addToRenderLS();
           } else {
-            it.undo();
-            if (day.address) day = rc.find(day.address, RenderCalendar);else day = it.weekDays[day.name];
+            setChangeStateLS();
+            addToRenderLS();
+            CL.store = new store(day.type);
+
+            if (day.type == 'week') {
+              day = CL.weekDays[day.name];
+            } else if (day.type == 'day') {
+              day = CL.days['d' + day.index];
+            }
+
             day.checked = true;
-            SM.CArr.push(day);
-            SM.dayType = day.type;
+            CL.store[day.name] = day;
           }
+
+          CL.store.length++;
         } else {
-          uncheckFromArr(SM.CArr, day);
+          delete CL.store[day.name];
+          CL.store.length--;
+          deleteFromRenderLS();
         }
 
-        if (SM.CArr.length == 0) SM.CI = {};else if (SM.CArr.length == 1) {
-          var dayObj = SM.CArr[0];
-
-          if (dayObj.isSpecial || dayObj.type == 'week') {
-            SM.CI = SM.CArr[0].intervals;
-            changeStateLS('regular');
-          } else {
-            var weekName = it.weekNames[dayObj.weekIndex];
-            SM.CI = it.weekDays[weekName].intervals;
-            changeStateLS('special');
+        if (CL.store.length == 0) TS.render = {};else if (CL.store.length == 1) {
+          for (var key in CL.store) {
+            if (key != 'length' && key != 'type') TS.render = CL.store[key].intervals;
           }
-        } else SM.CI = emptyIntervals();
+        } else TS.render = emptyIntervals();
+
+        function setChangeStateLS() {
+          if (day.type == 'week') standardChangeStateLS('regular');else standardChangeStateLS('special');
+        }
+
+        function addToRenderLS() {
+          if (day.type == 'day') {
+            RenderCalendar.specialDays[day.name] = day;
+            setRenderLS();
+          }
+        }
+
+        function deleteFromRenderLS() {
+          if (day.type == 'day' && !RenderCalendar.specialDays[day.name].isSpecial) {
+            delete RenderCalendar.specialDays[day.name];
+            setRenderLS();
+          }
+        }
+
+        function setRenderLS() {
+          LS.render = {};
+          var SpecDays = RenderCalendar.specialDays;
+
+          for (var i in SpecDays) {
+            LS.render[i] = rc.find(SpecDays[i].address, RenderCalendar);
+          }
+        }
       }
 
-      function clickDayOrder() {}
-
-      function clickDayClient() {}
-
-      function dayClassesStandard(day) {
+      function standardDayClassesCL(day) {
         var classes = '';
         if (day.current) classes += ' current'; // special days
 
@@ -816,8 +860,8 @@ function stack() {
           if (day.hasIntervals) classes += ' special';else classes += ' off';
         } // default days
         else if (day.type == 'day') {
-            var weekName = it.weekNames[day.weekIndex];
-            if (it.weekDays[weekName].hasIntervals) classes += ' standard';else classes += ' off';
+            var weekName = it.WEEK[day.weekIndex];
+            if (it.CL.weekDays[weekName].hasIntervals) classes += ' standard';else classes += ' off';
           } // week days
           else if (day.type == 'week') {
               classes += ' bold';
@@ -827,67 +871,10 @@ function stack() {
         return classes;
       }
 
-      function changeStateLS(state) {
-        if (LS.state != state) {
-          LS.state = state;
-          LS.stack = new Stack();
-          renderLS();
-        }
-      }
-
-      function renderLS() {
-        LS.render = [];
-
-        if (LS.state == 'regular') {
-          for (var day in RenderServData.weekDays) {
-            LS.render.push({
-              name: day,
-              intervals: RenderServData.weekDays[day],
-              dayObj: RenderCalendar.weekDays[day]
-            });
-          }
-        } else if (LS.state == 'special') {
-          for (var _day in RenderServData.days) {
-            var date = new Date(_day.split('d').join(''));
-            var y = 'y' + date.getFullYear();
-            var m = 'm' + date.getMonth();
-            var d = 'd' + date.getDate();
-            var month = it.monthNamesShort[date.getMonth()];
-            var monthDay = date.getDate();
-            LS.render.push({
-              name: _day,
-              month: month,
-              day: monthDay,
-              intervals: RenderServData.days[_day],
-              dayObj: rc.find([y, m, d], RenderCalendar)
-            });
-          }
-        }
-      }
-
-      function clickStandardLS(day) {
-        day.checked = !day.checked;
-
-        if (day.checked) {
-          LS.stack[day.name] = day;
-        } else {
-          delete LS.stack[day.name];
-        }
-      }
-
-      function changeTab(state) {
-        if (it.state != state) {
+      function standardChangeStateLS(state) {
+        if (state != LS.state) {
           it.undo();
-          it.state = state;
-        }
-      }
-
-      function uncheckFromArr(arr, item) {
-        for (var i = 0; i < arr.length; i++) {
-          if (arr[i] == item) {
-            arr.splice(i, 1);
-            break;
-          }
+          it.setLS(state);
         }
       }
 
@@ -904,17 +891,14 @@ function stack() {
           };
         }
 
-        console.log(intervals);
         return intervals;
       }
     },
     undo: function undo() {
-      setRendered();
-      this.month = rc.find(['y' + this.year, 'm' + this.month.index], RenderCalendar);
-      this.days = this.month.days;
-      this.weekDays = RenderCalendar.weekDays;
-      this.SM.CArr = [];
-      this.SM.CI = {};
+      setRendered(['y' + this.CL.year, 'm' + (this.CL.month + 1)]);
+      this.CL.days = cMonth.days;
+      this.CL.weekDays = RenderCalendar.weekDays;
+      this.CL.store = new store('day');
     }
   }
 });
@@ -20275,7 +20259,7 @@ var render = function() {
                 staticClass: "SC_tab-text",
                 on: {
                   click: function($event) {
-                    return _vm.toSM("changeStateLS", "regular")
+                    return _vm.tie("changeStateLS", "regular")
                   }
                 }
               },
@@ -20297,7 +20281,7 @@ var render = function() {
                 staticClass: "SC_tab-text",
                 on: {
                   click: function($event) {
-                    return _vm.toSM("changeStateLS", "special")
+                    return _vm.tie("changeStateLS", "special")
                   }
                 }
               },
@@ -20315,10 +20299,10 @@ var render = function() {
             "div",
             {
               staticClass: "SC_interval",
-              class: { checked: day.dayObj.checked },
+              class: { checked: day.checked },
               on: {
                 click: function($event) {
-                  return _vm.toSM("clickLS", day)
+                  return _vm.tie("dayClickCL", day)
                 }
               }
             },
@@ -20333,11 +20317,11 @@ var render = function() {
                   ])
                 : _c("div", { staticClass: "SC_day" }, [
                     _c("div", { staticClass: "SC_day-month" }, [
-                      _vm._v(_vm._s(day.day))
+                      _vm._v(_vm._s(day.index))
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "SC_day-day" }, [
-                      _vm._v(_vm._s(day.month))
+                      _vm._v(_vm._s(_vm.shortMONTHS[day.month]))
                     ])
                   ]),
               _vm._v(" "),
@@ -20345,13 +20329,13 @@ var render = function() {
                 "div",
                 { staticClass: "SC_timebox" },
                 [
-                  !day.intervals[0]
+                  !day.hasIntervals
                     ? _c("div", { staticClass: "SC_time" }, [
                         _vm._v(
                           "\n                        day off\n                    "
                         )
                       ])
-                    : _vm._l(day.intervals, function(int) {
+                    : _vm._l(day.sliceIntervals, function(int) {
                         return _c("div", { staticClass: "SC_time" }, [
                           int.from
                             ? _c("span", [
@@ -20422,11 +20406,11 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "YM_text YM_text-left" }, [
-            _vm._v(_vm._s(_vm.monthNames[_vm.month.index - 1]))
+            _vm._v(_vm._s(_vm.MONTHS[_vm.CL.month]))
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "YM_text YM_text-right" }, [
-            _vm._v(_vm._s(_vm.year))
+            _vm._v(_vm._s(_vm.CL.year))
           ]),
           _vm._v(" "),
           _c(
@@ -20449,7 +20433,7 @@ var render = function() {
         _c(
           "div",
           { staticClass: "days weekdays" },
-          _vm._l(_vm.weekDays, function(item, key, index) {
+          _vm._l(_vm.CL.weekDays, function(weekDay, key, index) {
             return _c(
               "div",
               { staticClass: "day_grid", class: _vm.removeMarginGrid(index) },
@@ -20459,12 +20443,12 @@ var render = function() {
                   {
                     staticClass: "day",
                     class: [
-                      _vm.toSM("classes", item),
-                      { checked: item.checked }
+                      _vm.tie("classesCL", weekDay),
+                      { checked: weekDay.checked }
                     ],
                     on: {
                       click: function($event) {
-                        return _vm.toSM("click", item)
+                        return _vm.tie("dayClickCL", weekDay)
                       }
                     }
                   },
@@ -20473,7 +20457,7 @@ var render = function() {
                       _c("div", { staticClass: "day_name-rel" }, [
                         _vm._v(
                           "\n                                " +
-                            _vm._s(item.name) +
+                            _vm._s(weekDay.name) +
                             "\n                            "
                         )
                       ])
@@ -20492,19 +20476,19 @@ var render = function() {
           "div",
           { staticClass: "days main_days" },
           [
-            _vm._l(_vm.days["d1"].weekIndex, function(n) {
+            _vm._l(_vm.CL.days["d1"].weekIndex, function(n) {
               return _c("div", {
                 staticClass: "day_grid",
                 class: _vm.removeMarginGrid(n - 1)
               })
             }),
             _vm._v(" "),
-            _vm._l(_vm.days, function(item) {
+            _vm._l(_vm.CL.days, function(day) {
               return _c(
                 "div",
                 {
                   staticClass: "day_grid",
-                  class: _vm.removeMarginGrid(item.weekIndex)
+                  class: _vm.removeMarginGrid(day.weekIndex)
                 },
                 [
                   _c(
@@ -20512,12 +20496,12 @@ var render = function() {
                     {
                       staticClass: "day",
                       class: [
-                        _vm.toSM("classes", item),
-                        { checked: item.checked }
+                        _vm.tie("classesCL", day),
+                        { checked: day.checked }
                       ],
                       on: {
                         click: function($event) {
-                          return _vm.toSM("click", item)
+                          return _vm.tie("dayClickCL", day)
                         }
                       }
                     },
@@ -20526,7 +20510,7 @@ var render = function() {
                         _c("div", { staticClass: "day_name-rel" }, [
                           _vm._v(
                             "\n                                " +
-                              _vm._s(item.index) +
+                              _vm._s(day.index) +
                               "\n                                "
                           ),
                           _c("div", { staticClass: "day_info" })
@@ -20543,14 +20527,14 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm.SM.CArr.length
+    _vm.CL.store.length
       ? _c("div", { staticClass: "TS" }, [
           _vm._m(0),
           _vm._v(" "),
           _c(
             "div",
             { staticClass: "TS_intervals" },
-            _vm._l(_vm.SM.CI, function(int) {
+            _vm._l(_vm.TS.render, function(int) {
               return _c("div", { staticClass: "TS_interval" }, [
                 _c("div", { staticClass: "TS_interval_data" }, [
                   _vm._v(
@@ -36250,6 +36234,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var WEEK = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
 var reactCalendar =
 /*#__PURE__*/
 function () {
@@ -36257,8 +36243,8 @@ function () {
     _classCallCheck(this, reactCalendar);
 
     this.data = data;
-    this.from = new Date('2019-01-01').getTime();
-    this.to = new Date('2019-11-30').getTime();
+    this.from = new Date('2018-01-01').getTime();
+    this.to = new Date('2019-12-30').getTime();
     this.calendar = {
       cYear: data.time.getFullYear(),
       cMonth: data.time.getMonth(),
@@ -36273,6 +36259,7 @@ function () {
         Fr: {},
         Sa: {}
       },
+      specialDays: {},
       years: {}
     };
     this.startEnv();
@@ -36366,6 +36353,8 @@ function () {
             name: 'd' + dateString,
             address: [nameY, 'm' + m, 'd' + d],
             index: d,
+            year: y,
+            month: m - 1,
             weekIndex: day.getDay(),
             date: day.getTime(),
             dateString: dateString,
@@ -36376,7 +36365,8 @@ function () {
             intervals: {},
             length: 0,
             hasIntervals: false,
-            type: 'day'
+            type: 'day',
+            sliceIntervals: []
           };
           monthObj.length++;
         }
@@ -36438,11 +36428,14 @@ function () {
         if (type == 'week') {
           if (it.data.weekDays[day.name]) {
             arr = it.data.weekDays[day.name];
+            day.sliceIntervals = it.data.weekDays[day.name];
           }
         } else if (type == 'day') {
           if (it.data.days[day.name]) {
             arr = it.data.days[day.name];
             day.isSpecial = true;
+            it.calendar.specialDays[day.name] = day;
+            day.sliceIntervals = it.data.days[day.name];
           }
         }
 
@@ -36458,7 +36451,10 @@ function () {
         });
       }
 
-      it.insertIntervals(day, callback);
+      if (type == 'day' && !it.data.days[day.name]) {
+        var copyIntervals = it.calendar.weekDays[WEEK[day.weekIndex]].intervals;
+        day.intervals = copyIntervals;
+      } else it.insertIntervals(day, callback);
     }
   }, {
     key: "insertIntervals",
