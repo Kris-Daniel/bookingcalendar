@@ -44,7 +44,8 @@ export default class reactCalendar {
                 intervals: {},
                 hasIntervals: false,
                 length: 0,
-                type: 'week'
+                type: 'week',
+                sliceIntervals: []
             };
             it.startAllIntervals('week', weekDays[wd]);
         }
@@ -163,18 +164,15 @@ export default class reactCalendar {
 
         function callback() {
             let arr = [];
-            if (type == 'week') {
-                if (it.data.weekDays[day.name]) {
-                    arr = it.data.weekDays[day.name];
-                    day.sliceIntervals = it.data.weekDays[day.name];
-                }
-            } else if (type == 'day') {
-                if (it.data.days[day.name]) {
-                    arr = it.data.days[day.name];
-                    day.isSpecial = true;
-                    it.calendar.specialDays[day.name] = day;
-                    day.sliceIntervals = it.data.days[day.name];
-                }
+            if (type == 'week' && it.data.weekDays[day.name]) {
+                arr = it.data.weekDays[day.name];
+                day.sliceIntervals = it.data.weekDays[day.name];
+            }
+            else if (type == 'day' && it.data.days[day.name]) {
+                arr = it.data.days[day.name];
+                day.isSpecial = true;
+                it.calendar.specialDays[day.name] = day;
+                day.sliceIntervals = it.data.days[day.name];
             }
 
             pipelineArr(arr, function (interval) {
@@ -190,11 +188,14 @@ export default class reactCalendar {
         }
 
         if(type == 'day' && !it.data.days[day.name]) {
-            let copyIntervals = it.calendar.weekDays[WEEK[day.weekIndex]].intervals;
-            day.intervals = copyIntervals;
+            let fromWeek = it.calendar.weekDays[WEEK[day.weekIndex]];
+            day.hasIntervals = fromWeek.hasIntervals;
+            day.intervals = fromWeek.intervals;
+            day.sliceIntervals = fromWeek.sliceIntervals;
         }
-        else
+        else {
             it.insertIntervals(day, callback);
+        }
     }
 
     insertIntervals(obj, callback) {
@@ -245,6 +246,31 @@ export default class reactCalendar {
         let m = parseInt(hm[1]);
         hm = h * 60 + m;
         return hm;
+    }
+
+    sliceIntervals(ints) {
+        let sliced = [];
+        let start, end;
+        let inside = false;
+        for(let i in ints) {
+            if(ints[i].checked && !inside) {
+                inside = true;
+                start = ints[i].from;
+                end = ints[i].to;
+            }
+            else if(ints[i].checked && inside) {
+                end = ints[i].to;
+            }
+            else if(!ints[i].checked && inside) {
+                inside = false;
+                sliced.push({
+                    from: start,
+                    to: end
+                });
+            }
+        }
+
+        return sliced;
     }
 }
 

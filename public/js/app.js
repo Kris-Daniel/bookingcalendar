@@ -653,6 +653,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -660,19 +672,19 @@ __webpack_require__.r(__webpack_exports__);
 
 var presset = _data_data__WEBPACK_IMPORTED_MODULE_3__["data"];
 var rc = new _data_reactSchedule__WEBPACK_IMPORTED_MODULE_4__["default"](presset);
-var RenderCalendar, RenderServData, cMonth;
+var RenderCalendar, cMonth;
 setRendered();
 
 function setRendered(address) {
   RenderCalendar = JSON.parse(JSON.stringify(rc.calendar));
-  RenderServData = JSON.parse(JSON.stringify(rc.data));
   if (address) cMonth = rc.find(address, RenderCalendar);else cMonth = RenderCalendar.years['y' + RenderCalendar.cYear].months['m' + (RenderCalendar.cMonth + 1)];
-  console.log(rc);
 }
 
+console.log(rc);
+
 function store(type) {
+  this.items = {};
   this.length = 0;
-  if (type) this.type = type;
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -706,19 +718,20 @@ function store(type) {
       },
       // Left side
       LS: {
-        state: '',
-        store: new store(),
-        render: {}
+        render: RenderCalendar.weekDays
+      },
+      LS_CL: {
+        state: 'week'
       },
       // Additional
       MONTHS: ['January', 'February', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December'],
-      WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+      WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      multiselect: false
     };
   },
   watch: {},
   created: function created() {
     this.setStateMethods();
-    this.setLS('regular');
   },
   computed: {
     shortMONTHS: function shortMONTHS() {
@@ -740,116 +753,139 @@ function store(type) {
         this.CL.month = fromSide.index - 1;
         this.CL.days = fromSide.days;
       }
-
-      console.log(this.CL);
+    },
+    changeTab: function changeTab(tab) {
+      if (this.state != tab) {
+        this.undo();
+        this.state = tab;
+        var daysLS = this.LS_CL.state == 'week' ? RenderCalendar.weekDays : RenderCalendar.specialDays;
+        this.LS.render = daysLS;
+      }
     },
     removeMarginGrid: function removeMarginGrid(n) {
       if (n == 0) return 'day_grid-ml0';
       if (n == 6) return 'day_grid-mr0';
       return '';
     },
+    setLS_CL: function setLS_CL(state) {
+      var LS_CL = this.LS_CL;
+
+      if (state && LS_CL.state != state) {
+        this.undo();
+        LS_CL.state = state;
+
+        if (LS_CL.state == 'week') {
+          this.LS.render = this.CL.weekDays;
+        } else if (LS_CL.state == 'day') {
+          this.setRenderSpecLS();
+        } //this.CL.store = new store();
+
+      }
+    },
+    setRenderSpecLS: function setRenderSpecLS() {
+      this.LS.render = [];
+      var SpecDays = RenderCalendar.specialDays;
+
+      for (var i in SpecDays) {
+        this.LS.render.push(rc.find(SpecDays[i].address, RenderCalendar));
+      }
+
+      this.LS.render.sort(function (a, b) {
+        if (a.date > b.date) {
+          return 1;
+        }
+
+        if (a.date < b.date) {
+          return -1;
+        }
+
+        return 0;
+      });
+    },
     tie: function tie(method, arg) {
       if (this.SM[method]['all']) return this.SM[method]['all'](arg);
       if (this.SM[method][this.state]) return this.SM[method][this.state](arg);
-    },
-    setLS: function setLS(state) {
-      var LS = this.LS;
-
-      if (state && LS.state != state) {
-        LS.state = state;
-
-        if (LS.state == 'regular') {
-          LS.render = this.CL.weekDays;
-        } else if (LS.state == 'special') {
-          LS.render = {};
-          var SpecDays = RenderCalendar.specialDays;
-
-          for (var i in SpecDays) {
-            LS.render[i] = rc.find(SpecDays[i].address, RenderCalendar);
-          }
-        }
-      }
-
-      console.log(LS);
     },
     setStateMethods: function setStateMethods() {
       var it = this;
       var CL = it.CL;
       var LS = it.LS;
       var TS = it.TS;
+      var LS_CL = it.LS_CL;
       it.SM = {
         dayClickCL: {
           standard: standardDayClickCL
+        },
+        dayClickLS: {
+          standard: standardDayClickCL,
+          orders: function orders(arg) {
+            it.state = 'standard';
+            standardDayClickCL(arg);
+          }
         },
         classesCL: {
           standard: standardDayClassesCL
         },
         changeStateLS: {
-          standard: standardChangeStateLS
+          standard: it.setLS_CL,
+          orders: it.setLS_CL
+        },
+        clickIntTS: {
+          standard: standardClickIntTS
         }
       };
 
       function standardDayClickCL(day) {
-        day.checked = !day.checked;
+        if (CL.store.length >= 10 && !day.checked) return false;
+        day.checked = !day.checked; // check action
 
         if (day.checked) {
-          if (CL.store.type == day.type) {
-            CL.store[day.name] = day;
-            addToRenderLS();
-          } else {
-            setChangeStateLS();
-            addToRenderLS();
-            CL.store = new store(day.type);
-
-            if (day.type == 'week') {
-              day = CL.weekDays[day.name];
-            } else if (day.type == 'day') {
-              day = CL.days['d' + day.index];
+          if (LS_CL.state == day.type) {
+            if (!it.multiselect) {
+              it.undo();
             }
 
-            day.checked = true;
-            CL.store[day.name] = day;
+            pushDayLS_CL(day);
+          } else {
+            it.setLS_CL(day.type);
+            pushDayLS_CL(day);
           }
+        } // uncheck action
+        else {
+            delete CL.store.items[day.name];
+            CL.store.length--;
 
-          CL.store.length++;
+            if (day.type == 'day' && !RenderCalendar.specialDays[day.name].isSpecial) {
+              delete RenderCalendar.specialDays[day.name];
+              it.setRenderSpecLS();
+            }
+          } // insert interval
+
+
+        if (CL.store.length == 0) {
+          TS.render = {};
+        } else if (CL.store.length == 1) {
+          for (var key in CL.store.items) {
+            TS.render = CL.store.items[key].intervals;
+          }
         } else {
-          delete CL.store[day.name];
-          CL.store.length--;
-          deleteFromRenderLS();
+          TS.render = emptyIntervals();
+        }
+      }
+
+      function pushDayLS_CL(day) {
+        if (day.type == 'week') {
+          day = CL.weekDays[day.name];
+          LS.render = CL.weekDays;
+        } else if (day.type == 'day') {
+          day = CL.days['d' + day.index];
+          RenderCalendar.specialDays[day.name] = day;
+          it.setRenderSpecLS();
         }
 
-        if (CL.store.length == 0) TS.render = {};else if (CL.store.length == 1) {
-          for (var key in CL.store) {
-            if (key != 'length' && key != 'type') TS.render = CL.store[key].intervals;
-          }
-        } else TS.render = emptyIntervals();
-
-        function setChangeStateLS() {
-          if (day.type == 'week') standardChangeStateLS('regular');else standardChangeStateLS('special');
-        }
-
-        function addToRenderLS() {
-          if (day.type == 'day') {
-            RenderCalendar.specialDays[day.name] = day;
-            setRenderLS();
-          }
-        }
-
-        function deleteFromRenderLS() {
-          if (day.type == 'day' && !RenderCalendar.specialDays[day.name].isSpecial) {
-            delete RenderCalendar.specialDays[day.name];
-            setRenderLS();
-          }
-        }
-
-        function setRenderLS() {
-          LS.render = {};
-          var SpecDays = RenderCalendar.specialDays;
-
-          for (var i in SpecDays) {
-            LS.render[i] = rc.find(SpecDays[i].address, RenderCalendar);
-          }
-        }
+        day.checked = true;
+        CL.store.items[day.name] = day;
+        CL.store.length++;
       }
 
       function standardDayClassesCL(day) {
@@ -871,16 +907,9 @@ function store(type) {
         return classes;
       }
 
-      function standardChangeStateLS(state) {
-        if (state != LS.state) {
-          it.undo();
-          it.setLS(state);
-        }
-      }
-
       function emptyIntervals() {
         var len = 24 * 60;
-        var step = RenderServData.segment;
+        var step = RenderCalendar.segment;
         var intervals = {};
 
         for (var i = 0; i < len; i += step) {
@@ -893,12 +922,33 @@ function store(type) {
 
         return intervals;
       }
+
+      function standardClickIntTS(int) {
+        int.checked = !int.checked;
+        var sliced = rc.sliceIntervals(TS.render);
+
+        for (var i in CL.store.items) {
+          CL.store.items[i].hasIntervals = sliced.length > 0 ? true : false;
+          CL.store.items[i].sliceIntervals = sliced;
+          CL.store.items[i].intervals = TS.render;
+        }
+      }
     },
     undo: function undo() {
       setRendered(['y' + this.CL.year, 'm' + (this.CL.month + 1)]);
       this.CL.days = cMonth.days;
       this.CL.weekDays = RenderCalendar.weekDays;
-      this.CL.store = new store('day');
+      this.CL.store = new store();
+    },
+    save: function save() {
+      var daysLS = this.LS.render;
+
+      for (var i in daysLS) {
+        daysLS[i].checked = false;
+      }
+
+      rc.calendar = JSON.parse(JSON.stringify(RenderCalendar));
+      this.undo();
     }
   }
 });
@@ -20242,24 +20292,24 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "dcal", class: _vm.state }, [
-    _c("div", { staticClass: "SC" }, [
-      _c("div", { staticClass: "SC_head" }, [
-        _c("div", { staticClass: "SC_title" }, [_vm._v("Schedule")]),
+    _c("div", { staticClass: "LS" }, [
+      _c("div", { staticClass: "LS_head" }, [
+        _c("div", { staticClass: "LS_title" }, [_vm._v("Schedule")]),
         _vm._v(" "),
         _c(
           "div",
           {
-            staticClass: "SC_tab SC_tab-left",
-            class: { active: _vm.LS.state == "regular" }
+            staticClass: "LS_tab LS_tab-left",
+            class: { active: _vm.LS_CL.state == "week" }
           },
           [
             _c(
               "span",
               {
-                staticClass: "SC_tab-text",
+                staticClass: "LS_tab-text",
                 on: {
                   click: function($event) {
-                    return _vm.tie("changeStateLS", "regular")
+                    return _vm.tie("changeStateLS", "week")
                   }
                 }
               },
@@ -20271,17 +20321,17 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "SC_tab SC_tab-right",
-            class: { active: _vm.LS.state == "special" }
+            staticClass: "LS_tab LS_tab-right",
+            class: { active: _vm.LS_CL.state == "day" }
           },
           [
             _c(
               "span",
               {
-                staticClass: "SC_tab-text",
+                staticClass: "LS_tab-text",
                 on: {
                   click: function($event) {
-                    return _vm.tie("changeStateLS", "special")
+                    return _vm.tie("changeStateLS", "day")
                   }
                 }
               },
@@ -20293,50 +20343,50 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "SC_intervals" },
+        { staticClass: "LS_intervals" },
         _vm._l(_vm.LS.render, function(day) {
           return _c(
             "div",
             {
-              staticClass: "SC_interval",
+              staticClass: "LS_interval",
               class: { checked: day.checked },
               on: {
                 click: function($event) {
-                  return _vm.tie("dayClickCL", day)
+                  return _vm.tie("dayClickLS", day)
                 }
               }
             },
             [
-              _vm.LS.state == "regular"
-                ? _c("div", { staticClass: "SC_day" }, [
+              _vm.LS_CL.state == "week"
+                ? _c("div", { staticClass: "LS_day" }, [
                     _vm._v(
                       "\n                    " +
                         _vm._s(day.name) +
                         "\n                "
                     )
                   ])
-                : _c("div", { staticClass: "SC_day" }, [
-                    _c("div", { staticClass: "SC_day-month" }, [
+                : _c("div", { staticClass: "LS_day" }, [
+                    _c("div", { staticClass: "LS_day-month" }, [
                       _vm._v(_vm._s(day.index))
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "SC_day-day" }, [
+                    _c("div", { staticClass: "LS_day-day" }, [
                       _vm._v(_vm._s(_vm.shortMONTHS[day.month]))
                     ])
                   ]),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "SC_timebox" },
+                { staticClass: "LS_timebox" },
                 [
                   !day.hasIntervals
-                    ? _c("div", { staticClass: "SC_time" }, [
+                    ? _c("div", { staticClass: "LS_time" }, [
                         _vm._v(
                           "\n                        day off\n                    "
                         )
                       ])
                     : _vm._l(day.sliceIntervals, function(int) {
-                        return _c("div", { staticClass: "SC_time" }, [
+                        return _c("div", { staticClass: "LS_time" }, [
                           int.from
                             ? _c("span", [
                                 _vm._v(
@@ -20365,7 +20415,7 @@ var render = function() {
             class: { active: _vm.state == "standard" || _vm.state == "delete" },
             on: {
               click: function($event) {
-                return _vm.toSM("tab", "standard")
+                return _vm.changeTab("standard")
               }
             }
           },
@@ -20381,7 +20431,7 @@ var render = function() {
             class: { active: _vm.state == "orders" },
             on: {
               click: function($event) {
-                return _vm.toSM("tab", "orders")
+                return _vm.changeTab("orders")
               }
             }
           },
@@ -20535,22 +20585,47 @@ var render = function() {
             "div",
             { staticClass: "TS_intervals" },
             _vm._l(_vm.TS.render, function(int) {
-              return _c("div", { staticClass: "TS_interval" }, [
-                _c("div", { staticClass: "TS_interval_data" }, [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(int.from) +
-                      " - " +
-                      _vm._s(int.to) +
-                      " - " +
-                      _vm._s(int.checked) +
-                      "\n                "
-                  )
-                ])
-              ])
+              return _c(
+                "div",
+                {
+                  staticClass: "TS_interval",
+                  class: [{ checked: int.checked }],
+                  on: {
+                    click: function($event) {
+                      return _vm.tie("clickIntTS", int)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "TS_interval_data" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(int.from) +
+                        " - " +
+                        _vm._s(int.to) +
+                        "\n                "
+                    )
+                  ])
+                ]
+              )
             }),
             0
-          )
+          ),
+          _vm._v(" "),
+          _vm.state == "standard"
+            ? _c(
+                "div",
+                {
+                  staticClass: "TS_save",
+                  on: {
+                    click: function($event) {
+                      return _vm.save()
+                    }
+                  }
+                },
+                [_vm._v("\n            Save\n        ")]
+              )
+            : _vm._e()
         ])
       : _vm._e()
   ])
@@ -36296,7 +36371,8 @@ function () {
           intervals: {},
           hasIntervals: false,
           length: 0,
-          type: 'week'
+          type: 'week',
+          sliceIntervals: []
         };
         it.startAllIntervals('week', weekDays[wd]);
       }
@@ -36425,18 +36501,14 @@ function () {
       function callback() {
         var arr = [];
 
-        if (type == 'week') {
-          if (it.data.weekDays[day.name]) {
-            arr = it.data.weekDays[day.name];
-            day.sliceIntervals = it.data.weekDays[day.name];
-          }
-        } else if (type == 'day') {
-          if (it.data.days[day.name]) {
-            arr = it.data.days[day.name];
-            day.isSpecial = true;
-            it.calendar.specialDays[day.name] = day;
-            day.sliceIntervals = it.data.days[day.name];
-          }
+        if (type == 'week' && it.data.weekDays[day.name]) {
+          arr = it.data.weekDays[day.name];
+          day.sliceIntervals = it.data.weekDays[day.name];
+        } else if (type == 'day' && it.data.days[day.name]) {
+          arr = it.data.days[day.name];
+          day.isSpecial = true;
+          it.calendar.specialDays[day.name] = day;
+          day.sliceIntervals = it.data.days[day.name];
         }
 
         pipelineArr(arr, function (interval) {
@@ -36452,9 +36524,13 @@ function () {
       }
 
       if (type == 'day' && !it.data.days[day.name]) {
-        var copyIntervals = it.calendar.weekDays[WEEK[day.weekIndex]].intervals;
-        day.intervals = copyIntervals;
-      } else it.insertIntervals(day, callback);
+        var fromWeek = it.calendar.weekDays[WEEK[day.weekIndex]];
+        day.hasIntervals = fromWeek.hasIntervals;
+        day.intervals = fromWeek.intervals;
+        day.sliceIntervals = fromWeek.sliceIntervals;
+      } else {
+        it.insertIntervals(day, callback);
+      }
     }
   }, {
     key: "insertIntervals",
@@ -36506,6 +36582,31 @@ function () {
       var m = parseInt(hm[1]);
       hm = h * 60 + m;
       return hm;
+    }
+  }, {
+    key: "sliceIntervals",
+    value: function sliceIntervals(ints) {
+      var sliced = [];
+      var start, end;
+      var inside = false;
+
+      for (var i in ints) {
+        if (ints[i].checked && !inside) {
+          inside = true;
+          start = ints[i].from;
+          end = ints[i].to;
+        } else if (ints[i].checked && inside) {
+          end = ints[i].to;
+        } else if (!ints[i].checked && inside) {
+          inside = false;
+          sliced.push({
+            from: start,
+            to: end
+          });
+        }
+      }
+
+      return sliced;
     }
   }]);
 

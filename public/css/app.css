@@ -3316,7 +3316,7 @@ a {
 .dcal .day.off {
   color: #c2c9dd;
 }
-.dcal .SC {
+.dcal .LS {
   display: inline-block;
   vertical-align: top;
   font-size: 16px;
@@ -3325,15 +3325,15 @@ a {
   max-width: 310px;
   color: #c2c9dd;
 }
-.dcal .SC_head {
+.dcal .LS_head {
   position: relative;
   height: 69px;
 }
-.dcal .SC_title {
+.dcal .LS_title {
   font-size: 16px;
   line-height: 1 !important;
 }
-.dcal .SC_tab {
+.dcal .LS_tab {
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
@@ -3341,26 +3341,26 @@ a {
   text-align: center;
   width: 50%;
 }
-.dcal .SC_tab-left {
+.dcal .LS_tab-left {
   left: 0;
 }
-.dcal .SC_tab-right {
+.dcal .LS_tab-right {
   right: 0;
 }
-.dcal .SC_tab-text {
+.dcal .LS_tab-text {
   position: relative;
   font-size: 20px;
   line-height: 1 !important;
   font-weight: 800;
   cursor: pointer;
 }
-.dcal .SC_tab-text:hover {
+.dcal .LS_tab-text:hover {
   color: #00cec9;
 }
-.dcal .SC_tab.active .SC_tab-text {
+.dcal .LS_tab.active .LS_tab-text {
   color: #00cec9;
 }
-.dcal .SC_tab.active .SC_tab-text::before {
+.dcal .LS_tab.active .LS_tab-text::before {
   position: absolute;
   content: '';
   width: 100%;
@@ -3368,7 +3368,7 @@ a {
   bottom: -8px;
   background: #00cec9;
 }
-.dcal .SC_intervals {
+.dcal .LS_intervals {
   overflow-y: auto;
   margin-top: -10px;
   padding: 10px 30px 0 14px;
@@ -3376,16 +3376,16 @@ a {
   direction: rtl;
   color: #293143;
 }
-.dcal .SC_intervals::-webkit-scrollbar {
+.dcal .LS_intervals::-webkit-scrollbar {
   width: 4px;
   background: #c2c9dd;
 }
-.dcal .SC_intervals::-webkit-scrollbar-thumb {
+.dcal .LS_intervals::-webkit-scrollbar-thumb {
   background: #293143;
   max-height: 4px;
   border-radius: 4px;
 }
-.dcal .SC_interval {
+.dcal .LS_interval {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -3397,47 +3397,48 @@ a {
   transition: 0.1s all linear;
   cursor: pointer;
   font-weight: 800;
+  min-height: 57px;
   justify-content: space-around;
   align-items: center;
-  padding: 22px 0;
-  margin-bottom: 5px;
+  padding: 20px 0;
+  margin-bottom: 7px;
   direction: ltr;
 }
-.dcal .SC_interval:hover {
+.dcal .LS_interval:hover {
   box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
 }
-.dcal .SC_interval.checked {
+.dcal .LS_interval.checked {
   border: 2px solid #00cec9;
 }
-.dcal .SC_interval .SC_day {
+.dcal .LS_interval .LS_day {
   width: 30px;
   font-size: 17px;
   line-height: 1 !important;
 }
-.dcal .SC_interval .SC_day-day {
+.dcal .LS_interval .LS_day-day {
   font-size: 11px;
   line-height: 1 !important;
 }
-.dcal .SC_interval .SC_timebox {
+.dcal .LS_interval .LS_timebox {
   width: 146px;
   max-height: 64px;
   overflow-y: auto;
   font-size: 13px;
   line-height: 1 !important;
 }
-.dcal .SC_interval .SC_timebox::-webkit-scrollbar {
+.dcal .LS_interval .LS_timebox::-webkit-scrollbar {
   width: 4px;
   background: #c2c9dd;
 }
-.dcal .SC_interval .SC_timebox::-webkit-scrollbar-thumb {
+.dcal .LS_interval .LS_timebox::-webkit-scrollbar-thumb {
   background: #293143;
   max-height: 4px;
   border-radius: 4px;
 }
-.dcal .SC_interval .SC_timebox .SC_time {
+.dcal .LS_interval .LS_timebox .LS_time {
   margin-bottom: 14px;
 }
-.dcal .SC_interval .SC_timebox .SC_time:last-child {
+.dcal .LS_interval .LS_timebox .LS_time:last-child {
   margin-bottom: 0;
 }
 .dcal.standard .day:hover {
@@ -3655,4 +3656,25 @@ a {
   line-height: 1 !important;
   width: 100%;
   color: #293143;
+}
+.dcal.standard .TS_interval.checked,
+.dcal.delete .TS_interval.checked,
+.dcal.client .TS_interval.checked {
+  border: 2px solid #00cec9;
+  color: #00cec9;
+}
+.TS_save {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.12);
+  transition: 0.1s all linear;
+  cursor: pointer;
+  max-width: 250px;
+  padding: 20px 0;
+  margin: 20px auto 0 auto;
+  border: 2px solid lime;
+  color: #00cec9;
+}
+.TS_save:hover {
+  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
 }
