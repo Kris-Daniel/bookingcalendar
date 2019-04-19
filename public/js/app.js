@@ -837,7 +837,8 @@ function store(type) {
 
       function standardDayClickCL(day) {
         if (CL.store.length >= 10 && !day.checked) return false;
-        day.checked = !day.checked; // check action
+        day.checked = !day.checked;
+        var changedLS_CL = false; // check action
 
         if (day.checked) {
           if (LS_CL.state == day.type) {
@@ -849,6 +850,7 @@ function store(type) {
           } else {
             it.setLS_CL(day.type);
             pushDayLS_CL(day);
+            changedLS_CL = true;
           }
         } // uncheck action
         else {
@@ -880,21 +882,23 @@ function store(type) {
           it.TS.startEdit = false;
           insertFromRenderToCL();
         } else if (CL.store.length == 1) {
-          if (!it.TS.startEdit && day.checked) {
-            if (day.type == 'day' && !day.isSpecial) {
-              var weekName = it.WEEK[day.weekIndex];
+          var items = CL.store.items;
+
+          for (var i in items) {
+            if (items[i].type == 'day' && !items[i].isSpecial) {
+              var weekName = it.WEEK[items[i].weekIndex];
               TS.render = it.CL.weekDays[weekName].intervals;
-              insertFromRenderToCL();
             } else {
-              TS.render = day.intervals;
+              TS.render = items[i].intervals;
             }
-          } else {
+
             insertFromRenderToCL();
           }
         } else {
           if (!it.TS.startEdit) {
             TS.render = emptyIntervals();
-          } else if (it.TS.startEdit && day.checked) {
+            insertDaysIntervalsToLS(day);
+          } else if (it.TS.startEdit) {
             insertFromRenderToCL();
           }
         }
@@ -967,6 +971,20 @@ function store(type) {
 
           if (LS_CL.state == 'day') {
             CL.store.items[i].isSpecial = true;
+          }
+        }
+      }
+
+      function insertDaysIntervalsToLS(day) {
+        if (LS_CL.state == 'day') {
+          var items = CL.store.items;
+
+          for (var i in items) {
+            if (!items[i].isSpecial) {
+              var weekName = it.WEEK[items[i].weekIndex];
+              items[i].sliceIntervals = CL.weekDays[weekName].sliceIntervals;
+              items[i].hasIntervals = CL.weekDays[weekName].hasIntervals;
+            }
           }
         }
       }
@@ -36306,40 +36324,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "data", function() { return data; });
 var data = {
   time: new Date(),
-  segment: 60,
-  weekDays: {
-    Su: [{
-      from: '09:00',
-      to: '18:00'
-    }],
-    Mo: [{
-      from: '09:00',
-      to: '11:00'
-    }, {
-      from: '12:00',
-      to: '13:00'
-    }, {
-      from: '14:00',
-      to: '15:00'
-    }, {
-      from: '16:00',
-      to: '18:00'
-    }],
-    Tu: [{
-      from: '00:00',
-      to: '11:00'
-    }, {
-      from: '12:00',
-      to: '18:00'
-    }]
-  },
-  days: {
-    'd2019-04-04': [{
-      from: '10:00',
-      to: '15:00'
-    }],
-    'd2019-04-09': []
-  }
+  segment: 15,
+  weekDays: {},
+  days: {}
 };
 
 /***/ }),

@@ -322,6 +322,9 @@
                 function standardDayClickCL(day) {
                     if(CL.store.length >= 10 && !day.checked) return false;
                     day.checked = !day.checked;
+
+                    let changedLS_CL = false;
+
                     // check action
                     if(day.checked) {
                         if(LS_CL.state == day.type) {
@@ -333,6 +336,7 @@
                         else{
                             it.setLS_CL(day.type);
                             pushDayLS_CL(day);
+                            changedLS_CL = true;
                         }
                     }
                     // uncheck action
@@ -365,25 +369,24 @@
                         insertFromRenderToCL();
                     }
                     else if(CL.store.length == 1) {
-                        if(!it.TS.startEdit && day.checked) {
-                            if(day.type == 'day' && !day.isSpecial) {
-                                let weekName = it.WEEK[day.weekIndex];
+                        let items = CL.store.items;
+                        for(let i in items) {
+                            if(items[i].type == 'day' && !items[i].isSpecial) {
+                                let weekName = it.WEEK[items[i].weekIndex];
                                 TS.render = it.CL.weekDays[weekName].intervals;
-                                insertFromRenderToCL();
                             }
                             else {
-                                TS.render = day.intervals;
+                                TS.render = items[i].intervals;
                             }
-                        }
-                        else {
                             insertFromRenderToCL();
                         }
                     }
                     else {
                         if(!it.TS.startEdit) {
                             TS.render = emptyIntervals();
+                            insertDaysIntervalsToLS(day);
                         }
-                        else if(it.TS.startEdit && day.checked){
+                        else if(it.TS.startEdit){
                             insertFromRenderToCL();
                         }
                     }
@@ -451,6 +454,18 @@
                         CL.store.items[i].intervals = TS.render;
                         if(LS_CL.state == 'day') {
                             CL.store.items[i].isSpecial = true;
+                        }
+                    }
+                }
+                function insertDaysIntervalsToLS(day) {
+                    if(LS_CL.state == 'day') {
+                        let items = CL.store.items;
+                        for(let i in items) {
+                            if(!items[i].isSpecial) {
+                                let weekName = it.WEEK[items[i].weekIndex];
+                                items[i].sliceIntervals = CL.weekDays[weekName].sliceIntervals;
+                                items[i].hasIntervals = CL.weekDays[weekName].hasIntervals;
+                            }
                         }
                     }
                 }
