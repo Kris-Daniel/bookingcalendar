@@ -714,7 +714,8 @@ function store(type) {
       TS: {
         state: 'standard',
         store: new store(),
-        render: {}
+        render: {},
+        startEdit: false
       },
       // Left side
       LS: {
@@ -726,7 +727,7 @@ function store(type) {
       // Additional
       MONTHS: ['January', 'February', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December'],
       WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-      multiselect: false
+      multiselect: true
     };
   },
   watch: {},
@@ -778,8 +779,7 @@ function store(type) {
           this.LS.render = this.CL.weekDays;
         } else if (LS_CL.state == 'day') {
           this.setRenderSpecLS();
-        } //this.CL.store = new store();
-
+        }
       }
     },
     setRenderSpecLS: function setRenderSpecLS() {
@@ -852,6 +852,18 @@ function store(type) {
           }
         } // uncheck action
         else {
+            var refDay;
+
+            if (day.type == 'day') {
+              refDay = rc.find(day.address, rc.calendar);
+            } else {
+              refDay = rc.calendar.weekDays[day.name];
+            }
+
+            day.hasIntervals = refDay.hasIntervals;
+            day.intervals = refDay.intervals;
+            day.isSpecial = refDay.isSpecial;
+            day.sliceIntervals = refDay.sliceIntervals;
             delete CL.store.items[day.name];
             CL.store.length--;
 
@@ -864,12 +876,27 @@ function store(type) {
 
         if (CL.store.length == 0) {
           TS.render = {};
+          it.undo();
+          it.TS.startEdit = false;
+          insertFromRenderToCL();
         } else if (CL.store.length == 1) {
-          for (var key in CL.store.items) {
-            TS.render = CL.store.items[key].intervals;
+          if (!it.TS.startEdit && day.checked) {
+            if (day.type == 'day' && !day.isSpecial) {
+              var weekName = it.WEEK[day.weekIndex];
+              TS.render = it.CL.weekDays[weekName].intervals;
+              insertFromRenderToCL();
+            } else {
+              TS.render = day.intervals;
+            }
+          } else {
+            insertFromRenderToCL();
           }
         } else {
-          TS.render = emptyIntervals();
+          if (!it.TS.startEdit) {
+            TS.render = emptyIntervals();
+          } else if (it.TS.startEdit && day.checked) {
+            insertFromRenderToCL();
+          }
         }
       }
 
@@ -893,7 +920,8 @@ function store(type) {
         if (day.current) classes += ' current'; // special days
 
         if (day.isSpecial) {
-          if (day.hasIntervals) classes += ' special';else classes += ' off';
+          classes += ' special';
+          if (!day.hasIntervals) classes += ' off';
         } // default days
         else if (day.type == 'day') {
             var weekName = it.WEEK[day.weekIndex];
@@ -925,12 +953,21 @@ function store(type) {
 
       function standardClickIntTS(int) {
         int.checked = !int.checked;
+        it.TS.startEdit = true;
+        insertFromRenderToCL();
+      }
+
+      function insertFromRenderToCL() {
         var sliced = rc.sliceIntervals(TS.render);
 
         for (var i in CL.store.items) {
           CL.store.items[i].hasIntervals = sliced.length > 0 ? true : false;
           CL.store.items[i].sliceIntervals = sliced;
           CL.store.items[i].intervals = TS.render;
+
+          if (LS_CL.state == 'day') {
+            CL.store.items[i].isSpecial = true;
+          }
         }
       }
     },
@@ -941,13 +978,27 @@ function store(type) {
       this.CL.store = new store();
     },
     save: function save() {
-      var daysLS = this.LS.render;
+      var days = this.CL.store.items;
 
-      for (var i in daysLS) {
-        daysLS[i].checked = false;
+      for (var day in days) {
+        days[day].intervals = this.TS.render;
+        days[day].checked = false;
+        days[day].hasIntervals = false;
+
+        for (var i in this.TS.render) {
+          if (this.TS.render[i].checked == true) {
+            days[day].hasIntervals = true;
+            break;
+          }
+        }
+
+        if (this.LS_CL.state == 'day') {
+          days[day].isSpecial = true;
+        }
       }
 
       rc.calendar = JSON.parse(JSON.stringify(RenderCalendar));
+      this.TS.startEdit = false;
       this.undo();
     }
   }
@@ -36521,16 +36572,15 @@ function () {
             day.intervals[index].checked = true;
           });
         });
-      }
+      } // if(type == 'day' && !it.data.days[day.name]) {
+      // let fromWeek = it.calendar.weekDays[WEEK[day.weekIndex]];
+      // day.hasIntervals = fromWeek.hasIntervals;
+      // day.intervals = fromWeek.intervals;
+      // day.sliceIntervals = fromWeek.sliceIntervals;
+      // }
 
-      if (type == 'day' && !it.data.days[day.name]) {
-        var fromWeek = it.calendar.weekDays[WEEK[day.weekIndex]];
-        day.hasIntervals = fromWeek.hasIntervals;
-        day.intervals = fromWeek.intervals;
-        day.sliceIntervals = fromWeek.sliceIntervals;
-      } else {
-        it.insertIntervals(day, callback);
-      }
+
+      it.insertIntervals(day, callback);
     }
   }, {
     key: "insertIntervals",

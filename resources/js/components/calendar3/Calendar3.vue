@@ -199,7 +199,8 @@
                 TS: {
                     state: 'standard',
                     store: new store(),
-                    render: {}
+                    render: {},
+                    startEdit: false
                 },
                 // Left side
                 LS: {
@@ -214,7 +215,7 @@
                     'Jule', 'August', 'September', 'October', 'November', 'December'
                 ],
                 WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-                multiselect: false
+                multiselect: true
             }
         },
         watch: {
@@ -267,7 +268,6 @@
                     else if(LS_CL.state == 'day') {
                         this.setRenderSpecLS();
                     }
-                    //this.CL.store = new store();
                 }
             },
             setRenderSpecLS() {
@@ -337,6 +337,18 @@
                     }
                     // uncheck action
                     else {
+                        let refDay;
+                        if(day.type == 'day') {
+                            refDay = rc.find(day.address, rc.calendar);
+                        }
+                        else {
+                            refDay = rc.calendar.weekDays[day.name];
+                        }
+                        day.hasIntervals = refDay.hasIntervals;
+                        day.intervals = refDay.intervals;
+                        day.isSpecial = refDay.isSpecial;
+                        day.sliceIntervals = refDay.sliceIntervals;
+
                         delete CL.store.items[day.name];
                         CL.store.length--;
                         if(day.type == 'day' && !RenderCalendar.specialDays[day.name].isSpecial) {
@@ -348,14 +360,32 @@
                     // insert interval
                     if(CL.store.length == 0) {
                         TS.render = {};
+                        it.undo();
+                        it.TS.startEdit = false;
+                        insertFromRenderToCL();
                     }
                     else if(CL.store.length == 1) {
-                        for(let key in CL.store.items) {
-                            TS.render = CL.store.items[key].intervals;
+                        if(!it.TS.startEdit && day.checked) {
+                            if(day.type == 'day' && !day.isSpecial) {
+                                let weekName = it.WEEK[day.weekIndex];
+                                TS.render = it.CL.weekDays[weekName].intervals;
+                                insertFromRenderToCL();
+                            }
+                            else {
+                                TS.render = day.intervals;
+                            }
+                        }
+                        else {
+                            insertFromRenderToCL();
                         }
                     }
                     else {
-                        TS.render = emptyIntervals();
+                        if(!it.TS.startEdit) {
+                            TS.render = emptyIntervals();
+                        }
+                        else if(it.TS.startEdit && day.checked){
+                            insertFromRenderToCL();
+                        }
                     }
                 }
                 function pushDayLS_CL(day) {
@@ -378,8 +408,8 @@
 
                     // special days
                     if(day.isSpecial) {
-                        if(day.hasIntervals) classes += ' special';
-                        else classes += ' off';
+                        classes += ' special';
+                        if(!day.hasIntervals) classes += ' off';
                     }
                     // default days
                     else if(day.type == 'day') {
@@ -410,11 +440,18 @@
                 }
                 function standardClickIntTS(int) {
                     int.checked = !int.checked;
+                    it.TS.startEdit = true;
+                    insertFromRenderToCL();
+                }
+                function insertFromRenderToCL() {
                     let sliced = rc.sliceIntervals(TS.render);
                     for(let i in CL.store.items) {
                         CL.store.items[i].hasIntervals = sliced.length > 0 ? true : false;
                         CL.store.items[i].sliceIntervals = sliced;
                         CL.store.items[i].intervals = TS.render;
+                        if(LS_CL.state == 'day') {
+                            CL.store.items[i].isSpecial = true;
+                        }
                     }
                 }
             },
@@ -429,11 +466,23 @@
 
             },
             save() {
-                let daysLS = this.LS.render;
-                for(let i in daysLS) {
-                    daysLS[i].checked = false;
+                let days = this.CL.store.items;
+                for(let day in days) {
+                    days[day].intervals = this.TS.render;
+                    days[day].checked = false;
+                    days[day].hasIntervals = false;
+                    for(let i in this.TS.render) {
+                        if(this.TS.render[i].checked == true) {
+                            days[day].hasIntervals = true;
+                            break;
+                        }
+                    }
+                    if(this.LS_CL.state == 'day') {
+                        days[day].isSpecial = true;
+                    }
                 }
                 rc.calendar = JSON.parse(JSON.stringify(RenderCalendar));
+                this.TS.startEdit = false;
                 this.undo();
             }
         }

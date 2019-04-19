@@ -187,15 +187,13 @@ export default class reactCalendar {
             });
         }
 
-        if(type == 'day' && !it.data.days[day.name]) {
-            let fromWeek = it.calendar.weekDays[WEEK[day.weekIndex]];
-            day.hasIntervals = fromWeek.hasIntervals;
-            day.intervals = fromWeek.intervals;
-            day.sliceIntervals = fromWeek.sliceIntervals;
-        }
-        else {
-            it.insertIntervals(day, callback);
-        }
+        // if(type == 'day' && !it.data.days[day.name]) {
+            // let fromWeek = it.calendar.weekDays[WEEK[day.weekIndex]];
+            // day.hasIntervals = fromWeek.hasIntervals;
+            // day.intervals = fromWeek.intervals;
+            // day.sliceIntervals = fromWeek.sliceIntervals;
+        // }
+        it.insertIntervals(day, callback);
     }
 
     insertIntervals(obj, callback) {

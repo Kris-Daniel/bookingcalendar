@@ -3357,12 +3357,19 @@ a {
 .dcal .LS_tab-text:hover {
   color: #00cec9;
 }
+.dcal .LS_tab-text::before {
+  position: absolute;
+  content: '';
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  width: 20%;
+  transition: 0.4s all ease;
+}
 .dcal .LS_tab.active .LS_tab-text {
   color: #00cec9;
 }
 .dcal .LS_tab.active .LS_tab-text::before {
-  position: absolute;
-  content: '';
   width: 100%;
   height: 2px;
   bottom: -8px;
