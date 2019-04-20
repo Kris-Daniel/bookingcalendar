@@ -665,6 +665,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -837,8 +839,7 @@ function store(type) {
 
       function standardDayClickCL(day) {
         if (CL.store.length >= 10 && !day.checked) return false;
-        day.checked = !day.checked;
-        var changedLS_CL = false; // check action
+        day.checked = !day.checked; // check action
 
         if (day.checked) {
           if (LS_CL.state == day.type) {
@@ -850,7 +851,6 @@ function store(type) {
           } else {
             it.setLS_CL(day.type);
             pushDayLS_CL(day);
-            changedLS_CL = true;
           }
         } // uncheck action
         else {
@@ -897,7 +897,7 @@ function store(type) {
         } else {
           if (!it.TS.startEdit) {
             TS.render = emptyIntervals();
-            insertDaysIntervalsToLS(day);
+            insertSlicedIntervalsToLS(day);
           } else if (it.TS.startEdit) {
             insertFromRenderToCL();
           }
@@ -975,7 +975,7 @@ function store(type) {
         }
       }
 
-      function insertDaysIntervalsToLS(day) {
+      function insertSlicedIntervalsToLS(day) {
         if (LS_CL.state == 'day') {
           var items = CL.store.items;
 
@@ -20365,54 +20365,53 @@ var render = function() {
       _c("div", { staticClass: "LS_head" }, [
         _c("div", { staticClass: "LS_title" }, [_vm._v("Schedule")]),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "LS_tab LS_tab-left",
-            class: { active: _vm.LS_CL.state == "week" }
-          },
-          [
-            _c(
-              "span",
-              {
-                staticClass: "LS_tab-text",
-                on: {
-                  click: function($event) {
-                    return _vm.tie("changeStateLS", "week")
+        _c("div", { staticClass: "LS_tabs" }, [
+          _c(
+            "div",
+            {
+              staticClass: "tab",
+              class: { active: _vm.LS_CL.state == "week" }
+            },
+            [
+              _c(
+                "span",
+                {
+                  staticClass: "name",
+                  on: {
+                    click: function($event) {
+                      return _vm.tie("changeStateLS", "week")
+                    }
                   }
-                }
-              },
-              [_vm._v("Regular")]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "LS_tab LS_tab-right",
-            class: { active: _vm.LS_CL.state == "day" }
-          },
-          [
-            _c(
-              "span",
-              {
-                staticClass: "LS_tab-text",
-                on: {
-                  click: function($event) {
-                    return _vm.tie("changeStateLS", "day")
+                },
+                [_vm._v("Regular")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "tab", class: { active: _vm.LS_CL.state == "day" } },
+            [
+              _c(
+                "span",
+                {
+                  staticClass: "name",
+                  on: {
+                    click: function($event) {
+                      return _vm.tie("changeStateLS", "day")
+                    }
                   }
-                }
-              },
-              [_vm._v("Special")]
-            )
-          ]
-        )
+                },
+                [_vm._v("Special")]
+              )
+            ]
+          )
+        ])
       ]),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "LS_intervals" },
+        { staticClass: "intervals" },
         _vm._l(_vm.LS.render, function(day) {
           return _c(
             "div",
@@ -20475,7 +20474,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "main" }, [
+    _c("div", { staticClass: "CL" }, [
       _c("div", { staticClass: "tab_grid" }, [
         _c(
           "div",
@@ -20508,7 +20507,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "main_content" }, [
+      _c("div", { staticClass: "CL_content" }, [
         _c("div", { staticClass: "YM" }, [
           _c(
             "div",
@@ -20593,7 +20592,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "days main_days" },
+          { staticClass: "days CL_days" },
           [
             _vm._l(_vm.CL.days["d1"].weekIndex, function(n) {
               return _c("div", {
@@ -36324,9 +36323,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "data", function() { return data; });
 var data = {
   time: new Date(),
-  segment: 15,
-  weekDays: {},
-  days: {}
+  segment: 60,
+  weekDays: {
+    Su: [{
+      from: '09:00',
+      to: '18:00'
+    }],
+    Mo: [{
+      from: '09:00',
+      to: '11:00'
+    }, {
+      from: '12:00',
+      to: '13:00'
+    }, {
+      from: '14:00',
+      to: '15:00'
+    }, {
+      from: '16:00',
+      to: '18:00'
+    }],
+    Tu: [{
+      from: '00:00',
+      to: '11:00'
+    }, {
+      from: '12:00',
+      to: '18:00'
+    }]
+  },
+  days: {
+    'd2019-04-04': [{
+      from: '10:00',
+      to: '15:00'
+    }],
+    'd2019-04-09': []
+  }
 };
 
 /***/ }),

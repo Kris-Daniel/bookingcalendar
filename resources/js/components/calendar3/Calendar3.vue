@@ -6,16 +6,18 @@
         <div class="LS">
             <div class="LS_head">
                 <div class="LS_title">Schedule</div>
+                <div class="LS_tabs">
+                    <div class="tab" :class="{active: LS_CL.state == 'week'}">
+                        <span class="name" @click="tie('changeStateLS', 'week')">Regular</span>
+                    </div>
+                    <div class="tab" :class="{active: LS_CL.state == 'day'}">
+                        <span class="name" @click="tie('changeStateLS', 'day')">Special</span>
+                    </div>
+                </div>
 
-                <div class="LS_tab LS_tab-left" :class="{active: LS_CL.state == 'week'}">
-                    <span class="LS_tab-text" @click="tie('changeStateLS', 'week')">Regular</span>
-                </div>
-                <div class="LS_tab LS_tab-right" :class="{active: LS_CL.state == 'day'}">
-                    <span class="LS_tab-text" @click="tie('changeStateLS', 'day')">Special</span>
-                </div>
             </div>
 
-            <div class="LS_intervals">
+            <div class="intervals">
                 <div
                     v-for="day in LS.render"
                     class="LS_interval"
@@ -44,7 +46,7 @@
             </div>
         </div>
 
-        <div class="main">
+        <div class="CL">
             <div class="tab_grid">
                 <div
                     class="tab tab-left"
@@ -59,7 +61,7 @@
                     @click="changeTab('orders')"
                 ><span>Your orders</span></div>
             </div>
-            <div class="main_content">
+            <div class="CL_content">
 
                 <div class="YM">
                     <div class="arrow arrow-left" @click="changeMonth('prev')">
@@ -92,7 +94,7 @@
 
                 <div class="hr-bottom"></div>
 
-                <div class="days main_days">
+                <div class="days CL_days">
                     <div class="day_grid" :class="removeMarginGrid(n - 1)" v-for="n in CL.days['d1'].weekIndex"></div>
                     <div class="day_grid" :class="removeMarginGrid(day.weekIndex)" v-for="day in CL.days">
                         <div
@@ -323,8 +325,6 @@
                     if(CL.store.length >= 10 && !day.checked) return false;
                     day.checked = !day.checked;
 
-                    let changedLS_CL = false;
-
                     // check action
                     if(day.checked) {
                         if(LS_CL.state == day.type) {
@@ -336,7 +336,6 @@
                         else{
                             it.setLS_CL(day.type);
                             pushDayLS_CL(day);
-                            changedLS_CL = true;
                         }
                     }
                     // uncheck action
@@ -384,7 +383,7 @@
                     else {
                         if(!it.TS.startEdit) {
                             TS.render = emptyIntervals();
-                            insertDaysIntervalsToLS(day);
+                            insertSlicedIntervalsToLS(day);
                         }
                         else if(it.TS.startEdit){
                             insertFromRenderToCL();
@@ -457,7 +456,7 @@
                         }
                     }
                 }
-                function insertDaysIntervalsToLS(day) {
+                function insertSlicedIntervalsToLS(day) {
                     if(LS_CL.state == 'day') {
                         let items = CL.store.items;
                         for(let i in items) {
