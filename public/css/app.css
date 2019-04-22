@@ -3186,18 +3186,188 @@ a {
 .justify {
   text-align: justify;
 }
+body {
+  background: #fcfcfe;
+}
 .dcal {
   position: relative;
   font-size: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   font-family: 'LatoWeb', sans-serif;
 }
-.dcal .CL .CL_content {
+.dcal .LS,
+.dcal .TS {
+  display: inline-block;
+  vertical-align: top;
+  width: 27.678571%;
+  max-width: 310px;
+  min-width: 240px;
+}
+.dcal .LS_head,
+.dcal .TS_head {
+  position: relative;
+  text-align: center;
+  height: 69px;
+}
+.dcal .CL {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 0;
+  width: 44.642857%;
+  max-width: 500px;
+  min-width: 320px;
+}
+.dcal .CL .tabs {
+  display: block;
+  font-size: 0;
+}
+.dcal .CL .tab_grid {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 16px;
+  width: 50%;
+}
+.dcal .CL .tab {
+  position: relative;
+  font-size: 23px;
+  line-height: 1 !important;
+  font-weight: 600;
+  height: 69px;
+  color: #808288;
+  background: #f3f3f6;
+  overflow: hidden;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  transition: 0.1s all linear;
+  box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.1);
+}
+.dcal .CL .tab-left {
+  margin-right: 4px;
+}
+.dcal .CL .tab-right {
+  margin-left: 4px;
+}
+.dcal .CL .tab span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+}
+.dcal .CL .tab:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background: transparent;
+  transition: 0.1s all linear;
+}
+.dcal .CL .tab:hover {
+  color: #00cec9;
+  background: #fff;
+}
+.dcal .CL .tab.active {
+  color: #00cec9;
+  background: #fff;
+}
+.dcal .CL .tab.active:before {
+  background: #00cec9;
+}
+.dcal .CL_content {
   position: relative;
   font-size: 16px;
   background: #fff;
   border-radius: 0 0 4px 4px;
+}
+.dcal .CL:before {
+  content: '';
+  position: absolute;
+  top: 89px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.1);
-  z-index: 2;
+}
+.dcal .LS_title {
+  font-size: 16px;
+  line-height: 1 !important;
+  color: #c2c9dd;
+}
+.dcal .LS_tabs {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-size: 0;
+  width: 100%;
+}
+.dcal .LS_tabs .tab {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+}
+.dcal .LS_tabs .tab .name {
+  position: relative;
+  font-size: 20px;
+  line-height: 1 !important;
+  font-weight: 800;
+  color: #c2c9dd;
+  cursor: pointer;
+}
+.dcal .LS_tabs .tab .name:hover,
+.dcal .LS_tabs .tab.active .name {
+  color: #00cec9;
+}
+.dcal .LS_tabs .tab .name:before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  transition: 0.3s all cubic-bezier(0.79, 0.34, 0.28, 1.15);
+  width: 0%;
+  height: 2px;
+  bottom: -8px;
+  background: #00cec9;
+}
+.dcal .LS_tabs .tab.active .name:before {
+  width: 100%;
+}
+.dcal .TS_title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 20px;
+  line-height: 1 !important;
+  font-weight: 800;
+  width: 100%;
+  color: #293143;
+  margin-bottom: 8px;
+}
+.dcal .TS_descr {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  font-size: 11px;
+  line-height: 1 !important;
+  font-weight: 600;
+  width: 100%;
+  bottom: 8px;
+  color: #c2c9dd;
 }
 .dcal .YM {
   font-size: 0;
@@ -3281,10 +3451,11 @@ a {
 }
 .dcal .day {
   position: relative;
-  cursor: pointer;
   padding-top: calc(100% - 4px);
   border-radius: 100%;
   border: 2px solid transparent;
+  transition: 0.05s all linear;
+  cursor: pointer;
 }
 .dcal .day .day_name {
   position: absolute;
@@ -3305,87 +3476,195 @@ a {
 .dcal .day.off {
   color: #c2c9dd;
 }
-.dcal .LS_intervals {
+.dcal .intervals {
   overflow-y: auto;
-  margin-top: -10px;
-  padding: 10px 30px 0 14px;
-  height: 455px;
-  direction: rtl;
+  height: 450px;
+  padding: 8px 0;
+  margin-top: -8px;
   color: #293143;
 }
-.dcal .LS_intervals::-webkit-scrollbar {
+.dcal .intervals::-webkit-scrollbar {
   width: 4px;
   background: #c2c9dd;
 }
-.dcal .LS_intervals::-webkit-scrollbar-thumb {
+.dcal .intervals::-webkit-scrollbar-thumb {
   background: #293143;
   max-height: 4px;
   border-radius: 4px;
 }
-.dcal .LS_interval {
+.dcal .LS .intervals {
+  direction: rtl;
+}
+.dcal .interval {
+  position: relative;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
   text-align: center;
+  align-items: center;
+  width: 84.459459%;
   max-width: 250px;
   margin: 0 auto;
   background: #fff;
-  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.12);
-  cursor: pointer;
+  box-shadow: 0px 0px 6px 1px rgba(62, 69, 94, 0.12);
   border: 2px solid transparent;
-  font-weight: 800;
-  min-height: 57px;
-  justify-content: space-around;
-  align-items: center;
-  padding: 20px 0;
-  margin-bottom: 7px;
+  transition: 0.05s all linear;
   direction: ltr;
+  cursor: pointer;
 }
-.dcal .LS_interval:hover {
+.dcal .interval:hover {
+  color: #808288;
   border: 2px solid #c2c9dd;
-  background: #f3f3f6;
+  background: rgba(41, 41, 44, 0.07);
 }
-.dcal .LS_interval.checked {
-  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
-  border: 2px solid #00cec9;
+.dcal .interval.checked {
+  color: #00cec9;
 }
-.dcal .LS_interval:first-child {
-  border-radius: 6px 6px 0 0;
+.dcal .interval:first-child {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
-.dcal .LS_interval:last-child {
-  border-radius: 0 0 6px 6px;
+.dcal .interval:last-child {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  margin-bottom: 0;
 }
-.dcal .LS_interval .LS_day {
-  width: 30px;
+.dcal .interval .edit {
+  position: absolute;
+  transition: 0.3s all cubic-bezier(0.79, 0.34, 0.28, 1.15);
+  top: 3px;
+  right: 3px;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+.dcal .interval .edit svg {
+  height: 13px;
+  width: 13px;
+}
+.dcal .interval .edit svg * {
+  fill: #808288;
+}
+.dcal .interval-sch {
+  justify-content: space-around;
+  min-height: 54px;
+  margin-bottom: 5px;
+  padding: 20px 0;
+}
+.dcal .interval-sch .dateBox {
   font-size: 17px;
   line-height: 1 !important;
+  font-weight: 800;
+  width: 12%;
 }
-.dcal .LS_interval .LS_day-day {
+.dcal .interval-sch .dateBox_month {
   font-size: 11px;
   line-height: 1 !important;
+  margin-top: 2px;
 }
-.dcal .LS_interval .LS_timebox {
-  width: 146px;
-  max-height: 64px;
+.dcal .interval-sch .timeBox {
   overflow-y: auto;
-  font-size: 13px;
-  line-height: 1 !important;
+  width: 60%;
+  max-height: 59px;
 }
-.dcal .LS_interval .LS_timebox::-webkit-scrollbar {
+.dcal .interval-sch .timeBox::-webkit-scrollbar {
   width: 4px;
   background: #c2c9dd;
 }
-.dcal .LS_interval .LS_timebox::-webkit-scrollbar-thumb {
+.dcal .interval-sch .timeBox::-webkit-scrollbar-thumb {
   background: #293143;
   max-height: 4px;
   border-radius: 4px;
 }
-.dcal .LS_interval .LS_timebox .LS_time {
+.dcal .interval-sch .timeBox_time {
+  font-size: 13px;
+  line-height: 1 !important;
+  font-weight: 600;
   margin-bottom: 10px;
 }
-.dcal .LS_interval .LS_timebox .LS_time:last-child {
+.dcal .interval-sch .timeBox_time:last-child {
   margin-bottom: 0;
+}
+.dcal .interval-sch:hover .edit {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.dcal .interval-sch.checked {
+  border: 2px solid #00cec9;
+  background: rgba(0, 206, 201, 0.07);
+}
+.dcal .interval .icon {
+  transition: 0.3s all cubic-bezier(0.79, 0.34, 0.28, 1.15);
+  width: 0%;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+.dcal .interval .icon svg {
+  width: 14px;
+  height: 14px;
+}
+.dcal .interval .icon .icon_plus,
+.dcal .interval .icon .icon_mark {
+  display: none;
+}
+.dcal .interval .icon .icon_plus svg * {
+  fill: #808288;
+}
+.dcal .interval .icon .icon_mark svg * {
+  fill: #00cec9;
+}
+.dcal .interval:hover .icon,
+.dcal .interval.checked .icon {
+  width: 30px;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.dcal .interval:hover .icon_plus {
+  display: block;
+}
+.dcal .interval.checked .icon_plus {
+  display: none;
+}
+.dcal .interval.checked .icon_mark {
+  display: block;
+}
+.dcal .interval-hours {
+  justify-content: center;
+  height: 54px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+.dcal .interval-hours .timeBox {
+  font-size: 13px;
+  line-height: 1 !important;
+  font-weight: 600;
+  padding: 0 4px;
+}
+.dcal .interval-hours.checked .timeBox {
+  font-weight: 800;
+  color: #00cec9;
+}
+.dcal .interval .timeBox_time-off {
+  color: #c2c9dd;
+}
+.dcal .btn-save {
+  text-align: center;
+  font-size: 15px;
+  line-height: 1 !important;
+  font-weight: 600;
+  transition: 0.1s all linear;
+  width: 84.459459%;
+  max-width: 250px;
+  margin: 25px auto 0 auto;
+  background: #92e8dc;
+  color: #fff;
+  padding: 14px 0;
+  border-radius: 6px;
+  box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.25);
+  cursor: pointer;
+}
+.dcal .btn-save:hover {
+  background: #00cec9;
 }
 .dcal.standard .day:hover {
   border: 2px solid #dbdbdd;
@@ -3409,334 +3688,4 @@ a {
   height: 6px;
   border-radius: 100%;
   background: #00cec9;
-}
-.dcal .tabs {
-  display: none;
-}
-.dcal.standard .CL .tabs,
-.dcal.orders .CL .tabs,
-.dcal.delete .CL .tabs {
-  display: block;
-  font-size: 0;
-}
-.dcal.standard .CL .tab_grid,
-.dcal.orders .CL .tab_grid,
-.dcal.delete .CL .tab_grid {
-  display: inline-block;
-  vertical-align: top;
-  font-size: 16px;
-  width: 50%;
-}
-.dcal.standard .CL .tab,
-.dcal.orders .CL .tab,
-.dcal.delete .CL .tab {
-  position: relative;
-  font-size: 23px;
-  line-height: 1 !important;
-  font-weight: 600;
-  height: 69px;
-  color: #9198ae;
-  background: #f3f3f6;
-  overflow: hidden;
-  border-radius: 5px 5px 0 0;
-  cursor: pointer;
-  z-index: 1;
-  transition: 0.1s all linear;
-  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.1);
-}
-.dcal.standard .CL .tab-left,
-.dcal.orders .CL .tab-left,
-.dcal.delete .CL .tab-left {
-  margin-right: 12px;
-}
-.dcal.standard .CL .tab-right,
-.dcal.orders .CL .tab-right,
-.dcal.delete .CL .tab-right {
-  margin-left: 12px;
-}
-.dcal.standard .CL .tab span,
-.dcal.orders .CL .tab span,
-.dcal.delete .CL .tab span {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  text-align: center;
-  width: 100%;
-}
-.dcal.standard .CL .tab:before,
-.dcal.orders .CL .tab:before,
-.dcal.delete .CL .tab:before {
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  height: 5px;
-  width: 100%;
-  background: transparent;
-  transition: 0.1s all linear;
-}
-.dcal.standard .CL .tab:hover,
-.dcal.orders .CL .tab:hover,
-.dcal.delete .CL .tab:hover {
-  color: #00cec9;
-  background: #fff;
-  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
-}
-.dcal.standard .CL .tab.active,
-.dcal.orders .CL .tab.active,
-.dcal.delete .CL .tab.active {
-  color: #00cec9;
-  background: #fff;
-  z-index: 3;
-  box-shadow: none;
-}
-.dcal.standard .CL .tab.active:before,
-.dcal.orders .CL .tab.active:before,
-.dcal.delete .CL .tab.active:before {
-  position: absolute;
-  content: '';
-  background: #00cec9;
-}
-.dcal.standard .TS,
-.dcal.delete .TS,
-.dcal.client .TS {
-  display: inline-block;
-  vertical-align: top;
-  font-size: 16px;
-  text-align: center;
-  width: 100%;
-  max-width: 310px;
-}
-.dcal.standard .TS_head,
-.dcal.delete .TS_head,
-.dcal.client .TS_head {
-  position: relative;
-  height: 69px;
-}
-.dcal.standard .TS_title,
-.dcal.delete .TS_title,
-.dcal.client .TS_title {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  font-size: 20px;
-  line-height: 1 !important;
-  font-weight: 800;
-  width: 100%;
-  color: #293143;
-  margin-bottom: 8px;
-}
-.dcal.standard .TS_descr,
-.dcal.delete .TS_descr,
-.dcal.client .TS_descr {
-  position: absolute;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  font-size: 11px;
-  line-height: 1 !important;
-  font-weight: 600;
-  width: 100%;
-  bottom: 8px;
-  color: #c2c9dd;
-}
-.dcal.standard .TS_intervals,
-.dcal.delete .TS_intervals,
-.dcal.client .TS_intervals {
-  overflow-y: auto;
-  margin-top: -10px;
-  padding: 10px 14px 0 30px;
-  height: 455px;
-}
-.dcal.standard .TS_intervals::-webkit-scrollbar,
-.dcal.delete .TS_intervals::-webkit-scrollbar,
-.dcal.client .TS_intervals::-webkit-scrollbar {
-  width: 4px;
-  background: #c2c9dd;
-}
-.dcal.standard .TS_intervals::-webkit-scrollbar-thumb,
-.dcal.delete .TS_intervals::-webkit-scrollbar-thumb,
-.dcal.client .TS_intervals::-webkit-scrollbar-thumb {
-  background: #293143;
-  max-height: 4px;
-  border-radius: 4px;
-}
-.dcal.standard .TS_interval,
-.dcal.delete .TS_interval,
-.dcal.client .TS_interval {
-  position: relative;
-  margin: 0 auto;
-  background: #fff;
-  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.12);
-  cursor: pointer;
-  border: 2px solid transparent;
-  height: 55px;
-  width: 100%;
-  max-width: 250px;
-  margin: 0 auto  9px auto;
-  z-index: 2;
-}
-.dcal.standard .TS_interval:hover,
-.dcal.delete .TS_interval:hover,
-.dcal.client .TS_interval:hover {
-  border: 2px solid #c2c9dd;
-  background: #f3f3f6;
-}
-.dcal.standard .TS_interval.checked,
-.dcal.delete .TS_interval.checked,
-.dcal.client .TS_interval.checked {
-  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
-  border: 2px solid #00cec9;
-}
-.dcal.standard .TS_interval:first-child,
-.dcal.delete .TS_interval:first-child,
-.dcal.client .TS_interval:first-child {
-  border-radius: 6px 6px 0 0;
-}
-.dcal.standard .TS_interval:last-child,
-.dcal.delete .TS_interval:last-child,
-.dcal.client .TS_interval:last-child {
-  border-radius: 0 0 6px 6px;
-}
-.dcal.standard .TS_interval:hover,
-.dcal.delete .TS_interval:hover,
-.dcal.client .TS_interval:hover {
-  z-index: 1;
-}
-.dcal.standard .TS_interval_data,
-.dcal.delete .TS_interval_data,
-.dcal.client .TS_interval_data {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  font-size: 14px;
-  line-height: 1 !important;
-  width: 100%;
-  color: #293143;
-}
-.TS_save {
-  margin: 0 auto;
-  background: #fff;
-  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.12);
-  cursor: pointer;
-  border: 2px solid transparent;
-  max-width: 250px;
-  padding: 20px 0;
-  margin: 20px auto 0 auto;
-  border: 2px solid lime;
-  color: #00cec9;
-}
-.TS_save:hover {
-  border: 2px solid #c2c9dd;
-  background: #f3f3f6;
-}
-.TS_save.checked {
-  box-shadow: 0px 0px 6px 0px rgba(62, 69, 94, 0.5);
-  border: 2px solid #00cec9;
-}
-.TS_save:first-child {
-  border-radius: 6px 6px 0 0;
-}
-.TS_save:last-child {
-  border-radius: 0 0 6px 6px;
-}
-.dcal {
-  max-width: 1120px;
-  margin: 0 auto;
-}
-.dcal .LS,
-.dcal .TS {
-  display: inline-block;
-  vertical-align: top;
-  width: 27.678571%;
-  max-width: 310px;
-  min-width: 240px;
-}
-.dcal .LS_head,
-.dcal .TS_head {
-  position: relative;
-  height: 69px;
-}
-.dcal .CL {
-  display: inline-block;
-  vertical-align: top;
-  font-size: 0;
-  width: 44.642857%;
-  max-width: 500px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-.dcal .LS_title {
-  text-align: center;
-  font-size: 16px;
-  line-height: 1 !important;
-  color: #c2c9dd;
-}
-.dcal .LS_tabs {
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  font-size: 0;
-  width: 100%;
-}
-.dcal .LS_tabs .tab {
-  display: inline-block;
-  vertical-align: top;
-  text-align: center;
-  width: 50%;
-}
-.dcal .LS_tabs .tab .name {
-  position: relative;
-  font-size: 20px;
-  line-height: 1 !important;
-  font-weight: 800;
-  color: #c2c9dd;
-  cursor: pointer;
-}
-.dcal .LS_tabs .tab .name:hover,
-.dcal .LS_tabs .tab.active .name {
-  color: #00cec9;
-}
-.dcal .LS_tabs .tab .name:before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  transition: 0.3s all cubic-bezier(0.79, 0.34, 0.28, 1.15);
-  width: 0%;
-  height: 2px;
-  bottom: -8px;
-  background: #00cec9;
-}
-.dcal .LS_tabs .tab.active .name:before {
-  width: 100%;
-}
-.dcal .intervals {
-  overflow-y: auto;
-  height: 455px;
-  padding: 4px 0 0 0;
-  margin-top: -4px;
-  color: #293143;
-}
-.dcal .intervals::-webkit-scrollbar {
-  width: 4px;
-  background: #c2c9dd;
-}
-.dcal .intervals::-webkit-scrollbar-thumb {
-  background: #293143;
-  max-height: 4px;
-  border-radius: 4px;
-}
-.dcal .LS .intervals {
-  direction: rtl;
 }

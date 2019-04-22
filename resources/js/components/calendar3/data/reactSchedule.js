@@ -251,14 +251,17 @@ export default class reactCalendar {
         let start, end;
         let inside = false;
         for(let i in ints) {
+            // inside
             if(ints[i].checked && !inside) {
                 inside = true;
                 start = ints[i].from;
                 end = ints[i].to;
             }
+            // still inside
             else if(ints[i].checked && inside) {
                 end = ints[i].to;
             }
+            // exit
             else if(!ints[i].checked && inside) {
                 inside = false;
                 sliced.push({
@@ -267,7 +270,12 @@ export default class reactCalendar {
                 });
             }
         }
-
+        if(inside) {
+            sliced.push({
+                from: start,
+                to: end
+            });
+        }
         return sliced;
     }
 }

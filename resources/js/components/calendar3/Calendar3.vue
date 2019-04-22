@@ -20,27 +20,30 @@
             <div class="intervals">
                 <div
                     v-for="day in LS.render"
-                    class="LS_interval"
+                    class="interval interval-sch"
                     :class="{checked: day.checked}"
                     @click="tie('dayClickLS', day)"
                 >
-                    <div v-if="LS_CL.state == 'week'" class="LS_day">
+                    <div v-if="LS_CL.state == 'week'" class="dateBox">
                         {{day.name}}
                     </div>
-                    <div v-else class="LS_day">
-                        <div class="LS_day-month">{{day.index}}</div>
-                        <div class="LS_day-day">{{shortMONTHS[day.month]}}</div>
+                    <div v-else class="dateBox">
+                        <div class="dateBox_day">{{day.index}}</div>
+                        <div class="dateBox_month">{{shortMONTHS[day.month]}}</div>
                     </div>
-                    <div class="LS_timebox">
-                        <div v-if="!day.hasIntervals" class="LS_time">
+                    <div class="timeBox">
+                        <div v-if="!day.hasIntervals" class="timeBox_time timeBox_time-off">
                             day off
                         </div>
                         <template v-else>
-                            <div v-for="int in day.sliceIntervals" class="LS_time">
+                            <div v-for="int in day.sliceIntervals" class="timeBox_time">
                                 <span v-if="int.from">{{int.from}} - {{int.to}}</span>
                                 <span v-else>{{int.intervals}}</span>
                             </div>
                         </template>
+                    </div>
+                    <div class="edit">
+                        <Pencil></Pencil>
                     </div>
                 </div>
             </div>
@@ -120,24 +123,28 @@
                 <div class="TS_title">Time Settings</div>
                 <div class="TS_descr">For April 15, 16</div>
             </div>
-            <div class="TS_intervals">
+            <div class="intervals">
                 <div
                     v-for="int in TS.render"
-                    class="TS_interval"
+                    class="interval interval-hours"
                     :class="[{checked: int.checked}]"
                     @click="tie('clickIntTS', int)"
                 >
-                    <div class="TS_interval_data">
+                    <div class="icon">
+                        <div class="icon_plus"><Plus></Plus></div>
+                        <div class="icon_mark"><Mark></Mark></div>
+                    </div>
+                    <div class="timeBox">
                         {{int.from}} - {{int.to}}
                     </div>
                 </div>
             </div>
             <div
-                class="TS_save"
+                class="btn-save"
                 @click="save()"
                 v-if="state == 'standard'"
             >
-                Save
+                Schedule
             </div>
         </div>
 
@@ -149,6 +156,9 @@
     import Vue from 'vue';
     import ArrowLeft from '../../svg/arrow-left';
     import ArrowRight from '../../svg/arrow-right';
+    import Pencil from '../../svg/pencil';
+    import Mark from '../../svg/mark';
+    import Plus from '../../svg/plus';
     import * as servSchedule from './data/data';
     import reactCalendar from './data/reactSchedule';
 
@@ -178,7 +188,10 @@
         name: 'calendar3',
         components: {
             ArrowLeft,
-            ArrowRight
+            ArrowRight,
+            Pencil,
+            Mark,
+            Plus
         },
         props: {
             stateProp: {
