@@ -725,7 +725,7 @@ function store(type) {
         year: rc.find(cMonth.ref, RenderCalendar).index,
         month: cMonth.index - 1,
         days: cMonth.days,
-        weekDays: RenderCalendar.weekDays,
+        weekDays: '',
         store: new store()
       },
       // Time setting
@@ -737,7 +737,7 @@ function store(type) {
       },
       // Left side
       LS: {
-        render: RenderCalendar.weekDays
+        render: ''
       },
       LS_CL: {
         state: 'week'
@@ -745,12 +745,19 @@ function store(type) {
       // Additional
       MONTHS: ['January', 'February', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December'],
       WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-      multiselect: true
+      multiselect: true,
+      weekSetting: {
+        mondayFirst: true,
+        offset: 0
+      },
+      hoursFormat: '12h'
     };
   },
   watch: {},
   created: function created() {
-    this.setStateMethods();
+    var it = this;
+    it.setStateMethods();
+    it.setWeekSetting();
   },
   computed: {
     shortMONTHS: function shortMONTHS() {
@@ -763,6 +770,57 @@ function store(type) {
     }
   },
   methods: {
+    setWeekSetting: function setWeekSetting() {
+      var wk = this.weekSetting;
+      wk.offset = this.CL.days['d1'].weekIndex;
+
+      if (wk.mondayFirst) {
+        wk.offset--;
+        wk.offset = wk.offset < 0 ? 6 : wk.offset;
+      }
+
+      var seq = this.WEEK;
+      var temp = undefined;
+
+      if (this.weekSetting.mondayFirst) {
+        seq = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+      }
+
+      for (var i = 0; i < seq.length; i++) {
+        temp = RenderCalendar.weekDays[seq[i]];
+        delete RenderCalendar.weekDays[seq[i]];
+        RenderCalendar.weekDays[seq[i]] = temp;
+      }
+
+      if (this.LS_CL.state == 'week') {
+        this.LS.render = RenderCalendar.weekDays;
+        this.CL.weekDays = RenderCalendar.weekDays;
+      }
+    },
+    toHoursFormat: function toHoursFormat(time) {
+      var format = '';
+
+      if (this.hoursFormat == '12h') {
+        time = time.split(':');
+        var h = parseInt(time[0]);
+
+        if (h == 0) {
+          h = 12;
+          format = ' AM';
+        } else if (h < 12) {
+          format = ' AM';
+        } else if (h == 12) {
+          format = ' PM';
+        } else if (h > 12) {
+          h -= 12;
+          format = ' PM';
+        }
+
+        time[0] = h;
+      }
+
+      return time.join(':') + format;
+    },
     changeMonth: function changeMonth(side) {
       var fromSide = rc.find(cMonth[side], RenderCalendar);
 
@@ -772,6 +830,8 @@ function store(type) {
         this.CL.month = fromSide.index - 1;
         this.CL.days = fromSide.days;
       }
+
+      this.setWeekSetting();
     },
     changeTab: function changeTab(tab) {
       if (this.state != tab) {
@@ -780,11 +840,6 @@ function store(type) {
         var daysLS = this.LS_CL.state == 'week' ? RenderCalendar.weekDays : RenderCalendar.specialDays;
         this.LS.render = daysLS;
       }
-    },
-    removeMarginGrid: function removeMarginGrid(n) {
-      if (n == 0) return 'day_grid-ml0';
-      if (n == 6) return 'day_grid-mr0';
-      return '';
     },
     setLS_CL: function setLS_CL(state) {
       var LS_CL = this.LS_CL;
@@ -854,7 +909,7 @@ function store(type) {
       };
 
       function standardDayClickCL(day) {
-        if (CL.store.length >= 10 && !day.checked) return false;
+        if (CL.store.length >= 10 && !day.checked && it.LS_CL.state == day.type) return false;
         day.checked = !day.checked; // check action
 
         if (day.checked) {
@@ -1007,6 +1062,7 @@ function store(type) {
     },
     undo: function undo() {
       setRendered(['y' + this.CL.year, 'm' + (this.CL.month + 1)]);
+      this.setWeekSetting();
       this.CL.days = cMonth.days;
       this.CL.weekDays = RenderCalendar.weekDays;
       this.CL.store = new store();
@@ -1034,7 +1090,8 @@ function store(type) {
       rc.calendar = JSON.parse(JSON.stringify(RenderCalendar));
       this.TS.startEdit = false;
       this.undo();
-    }
+    },
+    setWeekDaysSequence: function setWeekDaysSequence() {}
   }
 });
 
@@ -20805,38 +20862,34 @@ var render = function() {
           "div",
           { staticClass: "days weekdays" },
           _vm._l(_vm.CL.weekDays, function(weekDay, key, index) {
-            return _c(
-              "div",
-              { staticClass: "day_grid", class: _vm.removeMarginGrid(index) },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "day",
-                    class: [
-                      _vm.tie("classesCL", weekDay),
-                      { checked: weekDay.checked }
-                    ],
-                    on: {
-                      click: function($event) {
-                        return _vm.tie("dayClickCL", weekDay)
-                      }
+            return _c("div", { staticClass: "day_grid" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "day",
+                  class: [
+                    _vm.tie("classesCL", weekDay),
+                    { checked: weekDay.checked }
+                  ],
+                  on: {
+                    click: function($event) {
+                      return _vm.tie("dayClickCL", weekDay)
                     }
-                  },
-                  [
-                    _c("div", { staticClass: "day_name" }, [
-                      _c("div", { staticClass: "day_name-rel" }, [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(weekDay.name) +
-                            "\n                            "
-                        )
-                      ])
+                  }
+                },
+                [
+                  _c("div", { staticClass: "day_name" }, [
+                    _c("div", { staticClass: "day_name-rel" }, [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(weekDay.name) +
+                          "\n                            "
+                      )
                     ])
-                  ]
-                )
-              ]
-            )
+                  ])
+                ]
+              )
+            ])
           }),
           0
         ),
@@ -20847,50 +20900,40 @@ var render = function() {
           "div",
           { staticClass: "days CL_days" },
           [
-            _vm._l(_vm.CL.days["d1"].weekIndex, function(n) {
-              return _c("div", {
-                staticClass: "day_grid",
-                class: _vm.removeMarginGrid(n - 1)
-              })
+            _vm._l(_vm.weekSetting.offset, function(n) {
+              return _c("div", { staticClass: "day_grid" })
             }),
             _vm._v(" "),
             _vm._l(_vm.CL.days, function(day) {
-              return _c(
-                "div",
-                {
-                  staticClass: "day_grid",
-                  class: _vm.removeMarginGrid(day.weekIndex)
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "day",
-                      class: [
-                        _vm.tie("classesCL", day),
-                        { checked: day.checked }
-                      ],
-                      on: {
-                        click: function($event) {
-                          return _vm.tie("dayClickCL", day)
-                        }
+              return _c("div", { staticClass: "day_grid" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "day",
+                    class: [
+                      _vm.tie("classesCL", day),
+                      { checked: day.checked }
+                    ],
+                    on: {
+                      click: function($event) {
+                        return _vm.tie("dayClickCL", day)
                       }
-                    },
-                    [
-                      _c("div", { staticClass: "day_name" }, [
-                        _c("div", { staticClass: "day_name-rel" }, [
-                          _vm._v(
-                            "\n                                " +
-                              _vm._s(day.index) +
-                              "\n                                "
-                          ),
-                          _c("div", { staticClass: "day_info" })
-                        ])
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "day_name" }, [
+                      _c("div", { staticClass: "day_name-rel" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(day.index) +
+                            "\n                                "
+                        ),
+                        _c("div", { staticClass: "day_info" })
                       ])
-                    ]
-                  )
-                ]
-              )
+                    ])
+                  ]
+                )
+              ])
             })
           ],
           2
@@ -20927,9 +20970,9 @@ var render = function() {
                   _c("div", { staticClass: "timeBox" }, [
                     _vm._v(
                       "\n                    " +
-                        _vm._s(int.from) +
+                        _vm._s(_vm.toHoursFormat(int.from)) +
                         " - " +
-                        _vm._s(int.to) +
+                        _vm._s(_vm.toHoursFormat(int.to)) +
                         "\n                "
                     )
                   ])

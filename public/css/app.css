@@ -3449,6 +3449,12 @@ body {
 .dcal .day_grid.day_grid-mr0 {
   margin-right: 0;
 }
+.dcal .day_grid:nth-child(7n + 1) {
+  margin-left: 0;
+}
+.dcal .day_grid:nth-child(7n) {
+  margin-right: 0;
+}
 .dcal .day {
   position: relative;
   padding-top: calc(100% - 4px);

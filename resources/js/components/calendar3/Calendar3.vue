@@ -80,7 +80,7 @@
                 <div class="hr-top"></div>
 
                 <div class="days weekdays">
-                    <div class="day_grid" :class="removeMarginGrid(index)" v-for="weekDay, key, index in CL.weekDays">
+                    <div class="day_grid" v-for="weekDay, key, index in CL.weekDays">
                         <div
                             class="day"
                             @click="tie('dayClickCL', weekDay)"
@@ -98,8 +98,8 @@
                 <div class="hr-bottom"></div>
 
                 <div class="days CL_days">
-                    <div class="day_grid" :class="removeMarginGrid(n - 1)" v-for="n in CL.days['d1'].weekIndex"></div>
-                    <div class="day_grid" :class="removeMarginGrid(day.weekIndex)" v-for="day in CL.days">
+                    <div class="day_grid" v-for="n in weekSetting.offset"></div>
+                    <div class="day_grid" v-for="day in CL.days">
                         <div
                             class="day"
                             @click="tie('dayClickCL', day)"
@@ -135,7 +135,7 @@
                         <div class="icon_mark"><Mark></Mark></div>
                     </div>
                     <div class="timeBox">
-                        {{int.from}} - {{int.to}}
+                        {{toHoursFormat(int.from)}} - {{toHoursFormat(int.to)}}
                     </div>
                 </div>
             </div>
@@ -207,7 +207,7 @@
                     year: rc.find(cMonth.ref, RenderCalendar).index,
                     month: cMonth.index - 1,
                     days: cMonth.days,
-                    weekDays: RenderCalendar.weekDays,
+                    weekDays: '',
                     store: new store(),
                 },
                 // Time setting
@@ -219,7 +219,7 @@
                 },
                 // Left side
                 LS: {
-                    render: RenderCalendar.weekDays
+                    render: ''
                 },
                 LS_CL: {
                     state: 'week',
@@ -230,14 +230,21 @@
                     'Jule', 'August', 'September', 'October', 'November', 'December'
                 ],
                 WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-                multiselect: true
+                multiselect: true,
+                weekSetting: {
+                    mondayFirst: true,
+                    offset: 0
+                },
+                hoursFormat: '12h'
             }
         },
         watch: {
 
         },
         created() {
-            this.setStateMethods();
+            let it = this;
+            it.setStateMethods();
+            it.setWeekSetting();
         },
         computed: {
             shortMONTHS: function() {
@@ -250,6 +257,52 @@
             }
         },
         methods: {
+            setWeekSetting() {
+                let wk = this.weekSetting;
+                wk.offset = this.CL.days['d1'].weekIndex;
+                if(wk.mondayFirst) {
+                    wk.offset--;
+                    wk.offset = wk.offset < 0 ? 6 : wk.offset;
+                }
+
+                let seq = this.WEEK;
+                let temp = undefined;
+                if(this.weekSetting.mondayFirst) {
+                    seq = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+                }
+                for(let i = 0; i < seq.length; i++) {
+                    temp = RenderCalendar.weekDays[seq[i]];
+                    delete RenderCalendar.weekDays[seq[i]];
+                    RenderCalendar.weekDays[seq[i]] = temp;
+                }
+                if(this.LS_CL.state == 'week') {
+                    this.LS.render = RenderCalendar.weekDays;
+                    this.CL.weekDays = RenderCalendar.weekDays;
+                }
+            },
+            toHoursFormat(time) {
+                let format = '';
+                if(this.hoursFormat == '12h') {
+                    time = time.split(':');
+                    let h = parseInt(time[0]);
+                    if(h == 0) {
+                        h = 12;
+                        format = ' AM'
+                    }
+                    else if(h < 12) {
+                        format = ' AM'
+                    }
+                    else if(h == 12) {
+                        format = ' PM'
+                    }
+                    else if(h > 12) {
+                        h -= 12;
+                        format = ' PM'
+                    }
+                    time[0] = h;
+                }
+                return (time.join(':') + format);
+            },
             changeMonth(side) {
                 var fromSide = rc.find(cMonth[side], RenderCalendar);
                 if(fromSide) {
@@ -258,6 +311,7 @@
                     this.CL.month = fromSide.index - 1;
                     this.CL.days  = fromSide.days;
                 }
+                this.setWeekSetting();
             },
             changeTab(tab) {
                 if(this.state != tab) {
@@ -266,11 +320,6 @@
                     let daysLS = this.LS_CL.state == 'week' ? RenderCalendar.weekDays : RenderCalendar.specialDays;
                     this.LS.render = daysLS;
                 }
-            },
-            removeMarginGrid(n) {
-                if(n == 0) return 'day_grid-ml0';
-                if(n == 6) return 'day_grid-mr0';
-                return '';
             },
             setLS_CL(state) {
                 let LS_CL = this.LS_CL;
@@ -335,7 +384,7 @@
                 }
 
                 function standardDayClickCL(day) {
-                    if(CL.store.length >= 10 && !day.checked) return false;
+                    if(CL.store.length >= 10 && !day.checked && it.LS_CL.state == day.type) return false;
                     day.checked = !day.checked;
 
                     // check action
@@ -487,10 +536,10 @@
                     'y' + this.CL.year,
                     'm' + (this.CL.month + 1)
                 ]);
+                this.setWeekSetting();
                 this.CL.days = cMonth.days;
                 this.CL.weekDays = RenderCalendar.weekDays;
                 this.CL.store = new store();
-
             },
             save() {
                 let days = this.CL.store.items;
@@ -511,6 +560,9 @@
                 rc.calendar = JSON.parse(JSON.stringify(RenderCalendar));
                 this.TS.startEdit = false;
                 this.undo();
+            },
+            setWeekDaysSequence() {
+
             }
         }
     }
