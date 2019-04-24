@@ -48,3 +48,46 @@ export let data = {
             'd2019-04-09': [],
         }
 };
+
+export let bookings = [
+	{
+		date: '2019-04-04',
+		bookings: [
+			{
+				idClient: 123,
+                name: 'John Doe',
+				from: '08:30',
+				to: '09:00'
+			},
+			{
+				idClient: 124,
+                name: 'Micle Doe',
+				from: '08:30',
+				to: '09:00'
+			}
+		]
+	},
+    {
+		date: '2019-04-10',
+		bookings: [
+            {
+				idClient: 124,
+                name: 'Helen Doe',
+				from: '08:30',
+				to: '09:00'
+			},
+			{
+				idClient: 123,
+                name: 'Cameron Doe',
+				from: '11:30',
+				to: '12:00'
+			},
+            {
+				idClient: 124,
+                name: 'Elizabeth Doe',
+				from: '12:30',
+				to: '13:00'
+			}
+		]
+	}
+];

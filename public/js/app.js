@@ -677,6 +677,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -686,7 +690,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var presset = _data_data__WEBPACK_IMPORTED_MODULE_6__["data"];
+var bookings = _data_data__WEBPACK_IMPORTED_MODULE_6__["bookings"];
 var rc = new _data_reactSchedule__WEBPACK_IMPORTED_MODULE_7__["default"](presset);
+rc.addBookings(bookings);
 var RenderCalendar, cMonth;
 setRendered();
 
@@ -887,24 +893,34 @@ function store(type) {
       var LS_CL = it.LS_CL;
       it.SM = {
         dayClickCL: {
-          standard: standardDayClickCL
+          standard: standardDayClickCL,
+          orders: ordersDayClickCL
         },
         dayClickLS: {
           standard: standardDayClickCL,
           orders: function orders(arg) {
             it.state = 'standard';
+
+            for (var i in CL.store.items) {
+              CL.store.items[i].checked = false;
+              delete CL.store.items[i];
+              CL.store.length--;
+            }
+
             standardDayClickCL(arg);
           }
         },
         classesCL: {
-          standard: standardDayClassesCL
+          standard: standardDayClassesCL,
+          orders: ordersDayClassesCL
         },
         changeStateLS: {
           standard: it.setLS_CL,
           orders: it.setLS_CL
         },
         clickIntTS: {
-          standard: standardClickIntTS
+          standard: standardClickIntTS,
+          orders: ordersClickIntTS
         }
       };
 
@@ -975,6 +991,32 @@ function store(type) {
         }
       }
 
+      function ordersDayClickCL(day) {
+        if (day.bookings) {
+          day.checked = !day.checked;
+
+          if (day.checked) {
+            it.undo();
+            day = rc.find(day.address, RenderCalendar);
+            day.checked = true;
+
+            if (CL.store.length >= 1) {
+              for (var i in CL.store.items) {
+                CL.store.items[i].checked = false;
+                delete CL.store.items[i];
+              }
+            }
+
+            CL.store.items[day.name] = day;
+            CL.store.length = 1;
+            TS.render = day.bookings;
+          } else {
+            delete CL.store.items[day.name];
+            CL.store.length--;
+          }
+        }
+      }
+
       function pushDayLS_CL(day) {
         if (day.type == 'week') {
           day = CL.weekDays[day.name];
@@ -1010,6 +1052,20 @@ function store(type) {
         return classes;
       }
 
+      function ordersDayClassesCL(day) {
+        var classes = '';
+
+        if (day.type == 'week') {
+          classes += ' bold';
+        } else if (day.bookings) {
+          classes += '';
+        } else {
+          classes += ' off';
+        }
+
+        return classes;
+      }
+
       function emptyIntervals() {
         var len = 24 * 60;
         var step = RenderCalendar.segment;
@@ -1030,6 +1086,14 @@ function store(type) {
         int.checked = !int.checked;
         it.TS.startEdit = true;
         insertFromRenderToCL();
+      }
+
+      function ordersClickIntTS(int) {
+        for (var i = 0; i < TS.render.length; i++) {
+          TS.render[i].checked = false;
+        }
+
+        int.checked = !int.checked;
       }
 
       function insertFromRenderToCL() {
@@ -1065,7 +1129,7 @@ function store(type) {
       this.setWeekSetting();
       this.CL.days = cMonth.days;
       this.CL.weekDays = RenderCalendar.weekDays;
-      this.CL.store = new store();
+      this.CL.store = new store(); // this.TS.render = new store();
     },
     save: function save() {
       var days = this.CL.store.items;
@@ -1090,8 +1154,7 @@ function store(type) {
       rc.calendar = JSON.parse(JSON.stringify(RenderCalendar));
       this.TS.startEdit = false;
       this.undo();
-    },
-    setWeekDaysSequence: function setWeekDaysSequence() {}
+    }
   }
 });
 
@@ -20873,7 +20936,7 @@ var render = function() {
                   ],
                   on: {
                     click: function($event) {
-                      return _vm.tie("dayClickCL", weekDay)
+                      return _vm.tie("dayClickLS", weekDay)
                     }
                   }
                 },
@@ -20928,9 +20991,17 @@ var render = function() {
                             _vm._s(day.index) +
                             "\n                                "
                         ),
-                        _c("div", { staticClass: "day_info" })
+                        _vm.state == "standard"
+                          ? _c("div", { staticClass: "day_info" })
+                          : _vm._e()
                       ])
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.state == "orders" && day.bookLength
+                      ? _c("div", { staticClass: "day_bookCount" }, [
+                          _vm._v(_vm._s(day.bookLength))
+                        ])
+                      : _vm._e()
                   ]
                 )
               ])
@@ -20961,11 +21032,28 @@ var render = function() {
                   }
                 },
                 [
-                  _c("div", { staticClass: "icon" }, [
-                    _c("div", { staticClass: "icon_plus" }, [_c("Plus")], 1),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "icon_mark" }, [_c("Mark")], 1)
-                  ]),
+                  _vm.state == "orders"
+                    ? _c("div", { staticClass: "interval_title" }, [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(int.name) +
+                            "\n                "
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.state == "standard"
+                    ? _c("div", { staticClass: "icon" }, [
+                        _c(
+                          "div",
+                          { staticClass: "icon_plus" },
+                          [_c("Plus")],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "icon_mark" }, [_c("Mark")], 1)
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("div", { staticClass: "timeBox" }, [
                     _vm._v(
@@ -36778,12 +36866,13 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************!*\
   !*** ./resources/js/components/calendar3/data/data.js ***!
   \********************************************************/
-/*! exports provided: data */
+/*! exports provided: data, bookings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "data", function() { return data; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bookings", function() { return bookings; });
 var data = {
   time: new Date(),
   segment: 60,
@@ -36821,6 +36910,38 @@ var data = {
     'd2019-04-09': []
   }
 };
+var bookings = [{
+  date: '2019-04-04',
+  bookings: [{
+    idClient: 123,
+    name: 'John Doe',
+    from: '08:30',
+    to: '09:00'
+  }, {
+    idClient: 124,
+    name: 'Micle Doe',
+    from: '08:30',
+    to: '09:00'
+  }]
+}, {
+  date: '2019-04-10',
+  bookings: [{
+    idClient: 124,
+    name: 'Helen Doe',
+    from: '08:30',
+    to: '09:00'
+  }, {
+    idClient: 123,
+    name: 'Cameron Doe',
+    from: '11:30',
+    to: '12:00'
+  }, {
+    idClient: 124,
+    name: 'Elizabeth Doe',
+    from: '12:30',
+    to: '13:00'
+  }]
+}];
 
 /***/ }),
 
@@ -37147,6 +37268,23 @@ function () {
       }
 
       return sliced;
+    }
+  }, {
+    key: "addBookings",
+    value: function addBookings(bookings) {
+      var it = this;
+      pipelineArr(bookings, function (day) {
+        var date = day.date.split('-');
+        var y = 'y' + parseInt(date[0]);
+        var m = 'm' + parseInt(date[1]);
+        var d = 'd' + parseInt(date[2]);
+        var dayCL = it.find([y, m, d], it.calendar);
+        pipelineArr(day.bookings, function (int) {
+          int.checked = false;
+        });
+        dayCL.bookings = day.bookings;
+        if (day.bookings.length > 0) dayCL.bookLength = day.bookings.length;
+      });
     }
   }]);
 

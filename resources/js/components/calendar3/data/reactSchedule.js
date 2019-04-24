@@ -278,6 +278,22 @@ export default class reactCalendar {
         }
         return sliced;
     }
+    addBookings(bookings) {
+        let it = this;
+        pipelineArr(bookings, function(day) {
+            let date = day.date.split('-');
+            let y = 'y' + parseInt(date[0]);
+            let m = 'm' + parseInt(date[1]);
+            let d = 'd' + parseInt(date[2]);
+            let dayCL = it.find([y, m, d], it.calendar);
+            pipelineArr(day.bookings, function(int) {
+                int.checked = false;
+            });
+            dayCL.bookings = day.bookings;
+            if(day.bookings.length > 0)
+                dayCL.bookLength = day.bookings.length;
+        });
+    }
 }
 
 function pipelineArr(arr, func) {

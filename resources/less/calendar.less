@@ -273,6 +273,7 @@ body{
         &.off{
             color: @gray;
         }
+
     }
 
     .intervals{
@@ -347,6 +348,7 @@ body{
                 .scrollstyleY();
                 width: 60%;
                 max-height: 59px;
+                min-height: 14px;
                 &_time{
                     .size13();
                     .semi-bold();
@@ -394,9 +396,10 @@ body{
 
         &-hours{
             justify-content: center;
-            height: 54px;
+            min-height: 54px;
             margin-bottom: 10px;
             border-radius: 6px;
+            padding: 18px 0;
             .timeBox{
                 .size13();
                 .semi-bold();
@@ -410,7 +413,20 @@ body{
         .timeBox_time-off{
             color: @gray;
         }
+        &_title{
+            .center();
+            .bold();
+            .size15();
+            width: 100%;
+            margin-bottom: 12px;
+        }
     }
+
+    &.orders .interval.checked{
+        border: 2px solid @cyan;
+        background: rgba(0, 206, 201, 0.07);
+    }
+
     .btn-save{
         .center();
         .size15();
@@ -431,33 +447,49 @@ body{
     }
 
     &.standard{
-        .day{
-            &:hover{
-                border: 2px solid #dbdbdd;
-                background: #f0f0f0;
-                color: #808288;
-            }
-            &.current{
-                color: @cyan;
-                text-shadow: 0px 3px 5px rgba(62, 69, 94, 0.25);
-            }
-            &.checked{
-                border: 2px solid #00b8b5;
-                color: #f4fcfc;
+    }
+    .day{
+        &:hover{
+            border: 2px solid #dbdbdd;
+            background: #f0f0f0;
+            color: #808288;
+        }
+        &.current{
+            color: @cyan;
+            text-shadow: 0px 3px 5px rgba(62, 69, 94, 0.25);
+        }
+        &.checked{
+            border: 2px solid #00b8b5;
+            color: #f4fcfc;
+            background: @cyan;
+        }
+        &.special{
+            .day_info{
+                .abs();
+                right: -6px;
+                top: -6px;
+                width: 6px;
+                height: 6px;
+                border-radius: 100%;
                 background: @cyan;
             }
-            &.special{
-                .day_info{
-                    .abs();
-                    right: -6px;
-                    top: -6px;
-                    width: 6px;
-                    height: 6px;
-                    border-radius: 100%;
-                    background: @cyan;
-                }
-            }
-
+        }
+        &_bookCount{
+            .abs();
+            .center();
+            .size10();
+            right: 0;
+            top: 0;
+            min-width: 18px;
+            color: #fff;
+            background: @cyan;
+            border-radius: 100%;
+            padding: 2px 1px 2px 0px;
+            border: 2px solid @cyan;
+        }
+        &.checked .day_bookCount{
+            background: #fff;
+            color: @cyan;
         }
     }
 }

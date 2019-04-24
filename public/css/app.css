@@ -3572,6 +3572,7 @@ body {
   overflow-y: auto;
   width: 60%;
   max-height: 59px;
+  min-height: 14px;
 }
 .dcal .interval-sch .timeBox::-webkit-scrollbar {
   width: 4px;
@@ -3636,9 +3637,10 @@ body {
 }
 .dcal .interval-hours {
   justify-content: center;
-  height: 54px;
+  min-height: 54px;
   margin-bottom: 10px;
   border-radius: 6px;
+  padding: 18px 0;
 }
 .dcal .interval-hours .timeBox {
   font-size: 13px;
@@ -3652,6 +3654,18 @@ body {
 }
 .dcal .interval .timeBox_time-off {
   color: #c2c9dd;
+}
+.dcal .interval_title {
+  text-align: center;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1 !important;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.dcal.orders .interval.checked {
+  border: 2px solid #00cec9;
+  background: rgba(0, 206, 201, 0.07);
 }
 .dcal .btn-save {
   text-align: center;
@@ -3672,21 +3686,21 @@ body {
 .dcal .btn-save:hover {
   background: #00cec9;
 }
-.dcal.standard .day:hover {
+.dcal .day:hover {
   border: 2px solid #dbdbdd;
   background: #f0f0f0;
   color: #808288;
 }
-.dcal.standard .day.current {
+.dcal .day.current {
   color: #00cec9;
   text-shadow: 0px 3px 5px rgba(62, 69, 94, 0.25);
 }
-.dcal.standard .day.checked {
+.dcal .day.checked {
   border: 2px solid #00b8b5;
   color: #f4fcfc;
   background: #00cec9;
 }
-.dcal.standard .day.special .day_info {
+.dcal .day.special .day_info {
   position: absolute;
   right: -6px;
   top: -6px;
@@ -3694,4 +3708,22 @@ body {
   height: 6px;
   border-radius: 100%;
   background: #00cec9;
+}
+.dcal .day_bookCount {
+  position: absolute;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1 !important;
+  right: 0;
+  top: 0;
+  min-width: 18px;
+  color: #fff;
+  background: #00cec9;
+  border-radius: 100%;
+  padding: 2px 1px 2px 0px;
+  border: 2px solid #00cec9;
+}
+.dcal .day.checked .day_bookCount {
+  background: #fff;
+  color: #00cec9;
 }

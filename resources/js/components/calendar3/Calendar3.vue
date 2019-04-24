@@ -83,7 +83,7 @@
                     <div class="day_grid" v-for="weekDay, key, index in CL.weekDays">
                         <div
                             class="day"
-                            @click="tie('dayClickCL', weekDay)"
+                            @click="tie('dayClickLS', weekDay)"
                             :class="[tie('classesCL', weekDay), {checked: weekDay.checked}]"
                         >
                             <div class="day_name">
@@ -108,9 +108,10 @@
                             <div class="day_name">
                                 <div class="day_name-rel">
                                     {{day.index}}
-                                    <div class="day_info"></div>
+                                    <div v-if="state == 'standard'" class="day_info"></div>
                                 </div>
                             </div>
+                            <div v-if="state == 'orders' && day.bookLength" class="day_bookCount">{{day.bookLength}}</div>
                         </div>
                     </div>
                 </div>
@@ -130,7 +131,10 @@
                     :class="[{checked: int.checked}]"
                     @click="tie('clickIntTS', int)"
                 >
-                    <div class="icon">
+                    <div v-if="state == 'orders'" class="interval_title">
+                        {{int.name}}
+                    </div>
+                    <div v-if="state == 'standard'" class="icon">
                         <div class="icon_plus"><Plus></Plus></div>
                         <div class="icon_mark"><Mark></Mark></div>
                     </div>
@@ -163,7 +167,9 @@
     import reactCalendar from './data/reactSchedule';
 
     const presset = servSchedule.data;
+    const bookings = servSchedule.bookings;
     let rc = new reactCalendar(presset);
+    rc.addBookings(bookings);
 
     let RenderCalendar, cMonth;
 
@@ -363,23 +369,31 @@
                 it.SM = {
                     dayClickCL: {
                         standard: standardDayClickCL,
+                        orders: ordersDayClickCL
                     },
                     dayClickLS: {
                         standard: standardDayClickCL,
                         orders: function(arg) {
                             it.state = 'standard';
+                            for(let i in CL.store.items) {
+                                CL.store.items[i].checked = false;
+                                delete CL.store.items[i];
+                                CL.store.length--;
+                            }
                             standardDayClickCL(arg);
                         }
                     },
                     classesCL: {
-                        standard: standardDayClassesCL
+                        standard: standardDayClassesCL,
+                        orders: ordersDayClassesCL
                     },
                     changeStateLS: {
                         standard: it.setLS_CL,
                         orders: it.setLS_CL
                     },
                     clickIntTS: {
-                        standard: standardClickIntTS
+                        standard: standardClickIntTS,
+                        orders: ordersClickIntTS
                     }
                 }
 
@@ -452,6 +466,28 @@
                         }
                     }
                 }
+                function ordersDayClickCL(day) {
+                    if(day.bookings) {
+                        day.checked = !day.checked;
+                        if(day.checked) {
+                            it.undo();
+                            day = rc.find(day.address, RenderCalendar);
+                            day.checked = true;
+                            if(CL.store.length >= 1) {
+                                for(let i in CL.store.items) {
+                                    CL.store.items[i].checked = false;
+                                    delete CL.store.items[i];
+                                }
+                            }
+                            CL.store.items[day.name] = day;
+                            CL.store.length = 1;
+                            TS.render = day.bookings;
+                        } else {
+                            delete CL.store.items[day.name];
+                            CL.store.length--;
+                        }
+                    }
+                }
                 function pushDayLS_CL(day) {
                     if(day.type == 'week') {
                         day = CL.weekDays[day.name];
@@ -489,6 +525,18 @@
                     }
                     return classes;
                 }
+                function ordersDayClassesCL(day) {
+                    let classes = '';
+                    if(day.type == 'week') {
+                        classes += ' bold';
+                    }
+                    else if(day.bookings) {
+                        classes += '';
+                    } else{
+                        classes += ' off'
+                    }
+                    return classes;
+                }
                 function emptyIntervals() {
                     let len  = 24 * 60;
                     let step = RenderCalendar.segment;
@@ -506,6 +554,12 @@
                     int.checked = !int.checked;
                     it.TS.startEdit = true;
                     insertFromRenderToCL();
+                }
+                function ordersClickIntTS(int) {
+                    for(let i = 0; i < TS.render.length; i++) {
+                        TS.render[i].checked = false;
+                    }
+                    int.checked = !int.checked;
                 }
                 function insertFromRenderToCL() {
                     let sliced = rc.sliceIntervals(TS.render);
@@ -540,6 +594,7 @@
                 this.CL.days = cMonth.days;
                 this.CL.weekDays = RenderCalendar.weekDays;
                 this.CL.store = new store();
+                // this.TS.render = new store();
             },
             save() {
                 let days = this.CL.store.items;
@@ -561,9 +616,6 @@
                 this.TS.startEdit = false;
                 this.undo();
             },
-            setWeekDaysSequence() {
-
-            }
         }
     }
 </script>
