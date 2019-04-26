@@ -117,6 +117,33 @@
                 </div>
 
             </div>
+            <div
+                v-if="TS.client"
+                @click="tie('clearClient')"
+                class="client_mask"
+            ></div>
+            <div
+                class="client"
+                :class="{active: TS.client}"
+            >
+                <div class="client_box">
+                    <div
+                        @click="tie('clearClient')"
+                        class="client_x"
+                    >
+                        <X></X>
+                    </div>
+                    <div class="client_img">
+
+                    </div>
+                    <div class="client_name">{{TS.client.name}}</div>
+                    <div class="client_hr"></div>
+                    <div class="client_info">
+                        <div class="client_icon"></div>
+                        <div class="client_text"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div v-if="CL.store.length" class="TS">
@@ -163,6 +190,7 @@
     import Pencil from '../../svg/pencil';
     import Mark from '../../svg/mark';
     import Plus from '../../svg/plus';
+    import X from '../../svg/x';
     import * as servSchedule from './data/data';
     import reactCalendar from './data/reactSchedule';
 
@@ -197,7 +225,8 @@
             ArrowRight,
             Pencil,
             Mark,
-            Plus
+            Plus,
+            X
         },
         props: {
             stateProp: {
@@ -221,7 +250,8 @@
                     state: 'standard',
                     store: new store(),
                     render: {},
-                    startEdit: false
+                    startEdit: false,
+                    client: false
                 },
                 // Left side
                 LS: {
@@ -394,10 +424,14 @@
                     clickIntTS: {
                         standard: standardClickIntTS,
                         orders: ordersClickIntTS
+                    },
+                    clearClient: {
+                        orders: ordersClearClient
                     }
                 }
 
                 function standardDayClickCL(day) {
+                    ordersClearClient();
                     if(CL.store.length >= 10 && !day.checked && it.LS_CL.state == day.type) return false;
                     day.checked = !day.checked;
 
@@ -560,6 +594,14 @@
                         TS.render[i].checked = false;
                     }
                     int.checked = !int.checked;
+                    TS.client = false;
+                    TS.client = int;
+                }
+                function ordersClearClient() {
+                    for(let i = 0; i < TS.render.length; i++) {
+                        TS.render[i].checked = false;
+                    }
+                    TS.client = false;
                 }
                 function insertFromRenderToCL() {
                     let sliced = rc.sliceIntervals(TS.render);
@@ -594,6 +636,7 @@
                 this.CL.days = cMonth.days;
                 this.CL.weekDays = RenderCalendar.weekDays;
                 this.CL.store = new store();
+                this.TS.client = false;
                 // this.TS.render = new store();
             },
             save() {
