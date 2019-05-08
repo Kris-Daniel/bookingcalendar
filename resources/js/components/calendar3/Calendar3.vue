@@ -278,9 +278,9 @@
 
         },
         created() {
-            let it = this;
-            it.setStateMethods();
-            it.setWeekSetting();
+
+            this.setStateMethods();
+            this.setWeekSetting();
         },
         computed: {
             shortMONTHS: function() {

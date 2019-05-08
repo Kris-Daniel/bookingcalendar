@@ -39,19 +39,19 @@ export let data = {
     },
     days:
         {
-            'd2019-04-04': [
+            'd2019-05-04': [
                 {
                     from: '10:00',
                     to: '15:00'
                 }
             ],
-            'd2019-04-09': [],
+            'd2019-05-09': [],
         }
 };
 
 export let bookings = [
 	{
-		date: '2019-04-04',
+		date: '2019-05-04',
 		bookings: [
 			{
 				idClient: 123,
@@ -68,7 +68,7 @@ export let bookings = [
 		]
 	},
     {
-		date: '2019-04-10',
+		date: '2019-05-10',
 		bookings: [
             {
 				idClient: 124,

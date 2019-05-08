@@ -10,13 +10,13 @@
 .scrollstyleY() {
     overflow-y: auto;
     &::-webkit-scrollbar{
-        width: 4px;
-        background: @gray;
+        width: 2px;
+        background: #e9ebed;
     }
     &::-webkit-scrollbar-thumb{
-        background: @dark;
-        max-height: 4px;
-        border-radius: 4px;
+        background: #adbfcc;
+        max-height: 2px;
+        border-radius: 2px;
     }
 }
 
@@ -278,7 +278,7 @@ body{
 
     .intervals{
         .scrollstyleY();
-        height: 450px;
+        height: 451px;
         padding: 8px 0;
         margin-top: -8px;
         color: @dark;
@@ -333,8 +333,8 @@ body{
         &-sch{
             justify-content: space-around;
             min-height: 54px;
-            margin-bottom: 5px;
-            padding: 20px 0;
+            margin-bottom: 6px;
+            padding: 18px 0;
             .dateBox{
                 .size17();
                 .bold();
@@ -484,7 +484,7 @@ body{
             color: #fff;
             background: @cyan;
             border-radius: 100%;
-            padding: 2px 1px 2px 0px;
+            padding: 2px 0px 2px 0px;
             border: 2px solid @cyan;
         }
         &.checked .day_bookCount{

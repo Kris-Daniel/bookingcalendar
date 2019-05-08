@@ -3484,19 +3484,19 @@ body {
 }
 .dcal .intervals {
   overflow-y: auto;
-  height: 450px;
+  height: 451px;
   padding: 8px 0;
   margin-top: -8px;
   color: #293143;
 }
 .dcal .intervals::-webkit-scrollbar {
-  width: 4px;
-  background: #c2c9dd;
+  width: 2px;
+  background: #e9ebed;
 }
 .dcal .intervals::-webkit-scrollbar-thumb {
-  background: #293143;
-  max-height: 4px;
-  border-radius: 4px;
+  background: #adbfcc;
+  max-height: 2px;
+  border-radius: 2px;
 }
 .dcal .LS .intervals {
   direction: rtl;
@@ -3554,8 +3554,8 @@ body {
 .dcal .interval-sch {
   justify-content: space-around;
   min-height: 54px;
-  margin-bottom: 5px;
-  padding: 20px 0;
+  margin-bottom: 6px;
+  padding: 18px 0;
 }
 .dcal .interval-sch .dateBox {
   font-size: 17px;
@@ -3575,13 +3575,13 @@ body {
   min-height: 14px;
 }
 .dcal .interval-sch .timeBox::-webkit-scrollbar {
-  width: 4px;
-  background: #c2c9dd;
+  width: 2px;
+  background: #e9ebed;
 }
 .dcal .interval-sch .timeBox::-webkit-scrollbar-thumb {
-  background: #293143;
-  max-height: 4px;
-  border-radius: 4px;
+  background: #adbfcc;
+  max-height: 2px;
+  border-radius: 2px;
 }
 .dcal .interval-sch .timeBox_time {
   font-size: 13px;
@@ -3720,7 +3720,7 @@ body {
   color: #fff;
   background: #00cec9;
   border-radius: 100%;
-  padding: 2px 1px 2px 0px;
+  padding: 2px 0px 2px 0px;
   border: 2px solid #00cec9;
 }
 .dcal .day.checked .day_bookCount {

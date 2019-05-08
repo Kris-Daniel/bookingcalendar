@@ -2,16 +2,16 @@
     <main>
         Home here
 
-        <calendar3></calendar3>
+        <calendar4></calendar4>
     </main>
 </template>
 
 <script>
     import Datetime from "../components/calendar/Datetime";
-    import Calendar3 from "../components/calendar3/Calendar3";
+    import calendar4 from "../components/calendar4/Calendar4";
     export default {
         name: 'home',
-        components: {Calendar3},
+        components: {calendar4},
         data() {
             return {
 
