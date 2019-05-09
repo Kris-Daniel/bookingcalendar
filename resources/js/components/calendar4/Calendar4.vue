@@ -1,29 +1,23 @@
 <template>
-    <div class="hi">
+    <div class="dcal">
         hello
+        <CL></CL>
     </div>
 </template>
 
 <script>
+import CL from './parts/CL/CL';
 
-import CalendarClass from './services/GetCalendar';
-// import RenderCalendar from './services/GetCalendar';
-let InsCalendar = new CalendarClass();
-let RenderCalendar = new CalendarClass();
+import Store from './services/Store';
 
 export default {
     name: 'calendar4',
+    components: {
+        CL,
+    },
     data: function() {
         return {
-            store: {
-                settings: RenderCalendar.settings,
-                state: 'standard',
-                LS_CL: {
-                    state: 'week',
-                },
-                schedule: RenderCalendar.schedule,
-                bookings: RenderCalendar.bookings
-            }
+            store: Store
         }
     },
     created: function()
