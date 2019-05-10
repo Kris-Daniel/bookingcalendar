@@ -37061,7 +37061,13 @@ function standardDayClick(day) {
   console.log(day);
 }
 
-function ordersDayClick(day) {}
+function ordersDayClick(day) {
+  if (day.intervals) {
+    _Store__WEBPACK_IMPORTED_MODULE_2__["default"].state = 'standard';
+    standardDayClick(day);
+    return false;
+  }
+}
 
 /***/ }),
 

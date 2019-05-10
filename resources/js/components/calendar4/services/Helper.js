@@ -122,5 +122,9 @@ function standardDayClick(day)
 }
 function ordersDayClick(day)
 {
-
+    if(day.intervals) {
+        Store.state = 'standard';
+        standardDayClick(day);
+        return false;
+    }
 }
