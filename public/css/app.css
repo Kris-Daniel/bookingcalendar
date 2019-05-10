@@ -3710,6 +3710,7 @@ body {
   background: #00cec9;
 }
 .dcal .day_bookCount {
+  display: none;
   position: absolute;
   text-align: center;
   font-size: 10px;
@@ -3720,8 +3721,11 @@ body {
   color: #fff;
   background: #00cec9;
   border-radius: 100%;
-  padding: 2px 0px 2px 0px;
+  padding: 2px 1px 2px 0px;
   border: 2px solid #00cec9;
+}
+.dcal .day.active .day_bookCount {
+  display: block;
 }
 .dcal .day.checked .day_bookCount {
   background: #fff;

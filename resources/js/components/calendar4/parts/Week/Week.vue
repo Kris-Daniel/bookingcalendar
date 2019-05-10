@@ -24,7 +24,7 @@ export default {
     },
     created()
     {
-        
+
     },
     computed: {
         weekDays: function() {
@@ -36,11 +36,9 @@ export default {
 function fillWeekDaysArr()
 {
     let weekDays = [];
-    for(let i = 0; i < Store.WEEK.length; i++) {
-        weekDays.push({
-            name: Store.WEEK[i],
-            type: 'week'
-        });
+    let WD = Store.schedule.weekDays;
+    for(let d in WD) {
+        weekDays.push(Helper.fillWeekDay(d, WD));
     }
     if(Store.mondayFirst) {
         let Su = weekDays[0];

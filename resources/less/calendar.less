@@ -475,6 +475,7 @@ body{
             }
         }
         &_bookCount{
+            .dn();
             .abs();
             .center();
             .size10();
@@ -484,8 +485,11 @@ body{
             color: #fff;
             background: @cyan;
             border-radius: 100%;
-            padding: 2px 0px 2px 0px;
+            padding: 2px 1px 2px 0px;
             border: 2px solid @cyan;
+        }
+        &.active .day_bookCount{
+            .db();
         }
         &.checked .day_bookCount{
             background: #fff;

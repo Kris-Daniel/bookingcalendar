@@ -31,7 +31,7 @@
             <div class="hr-top"></div>
             <Week></Week>
             <div class="hr-bottom"></div>
-            <Month :year="year" :month="month" :store="store"></Month>
+            <Month :year="year" :month="month"></Month>
 
         </div>
     </div>
@@ -40,6 +40,7 @@
 <script>
 import Vue from 'vue';
 import Store from '../../services/Store';
+import Helper from '../../services/Helper';
 import ArrowLeft from '../../../../svg/arrow-left';
 import ArrowRight from '../../../../svg/arrow-right';
 
@@ -68,19 +69,16 @@ export default {
     },
     created: function()
     {
-        let it = this;
         setTimeout(function() {
-            Vue.set(it.store.schedule.days, 'd2019-05-04', []);
-            it.store.test = {test: 'test'};
-            it.store = Store;
-            console.log(it.store.schedule.days);
+            Vue.set(Store.schedule.days, 'd2019-05-23', []);
+            // console.log(Store.schedule.days);
         }, 2000)
     },
     methods: {
         changeTab(tab)
         {
             if(Store.state != tab) {
-                // this.undo();
+                Helper.undo();
                 Store.state = tab;
                 // let daysLS = this.LS_CL.state == 'week' ? RenderCalendar.weekDays : RenderCalendar.specialDays;
                 // this.LS.render = daysLS;

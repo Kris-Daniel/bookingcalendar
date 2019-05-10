@@ -1,7 +1,8 @@
 <template>
     <div
         class="day"
-        :class="setClassNames"
+        :class="[setClassNames, {checked: data.checked}]"
+        @click="dayClick()"
     >
         <div class="day_name">
             <div class="day_name-rel">
@@ -9,22 +10,33 @@
                 <div class="day_info"></div>
             </div>
         </div>
-        <!-- <div v-if="state == 'orders' && day.bookLength" class="day_bookCount">{{day.bookLength}}</div> -->
+        <div v-if="bookLength > 0" class="day_bookCount">{{bookLength}}</div>
     </div>
 </template>
 
 <script>
+import Vue from 'vue';
+import Helper from '../../services/Helper';
 import Store from '../../services/Store';
 
 export default {
     name: 'Day',
     props: ['data'],
+    data: function() {
+        return {
+            bookLength: 0
+        }
+    },
     computed: {
         setClassNames() {
-            return dayClasses[Store.state + 'ClassNames'](this.data);
+            return dayClasses[Store.state + 'ClassNames'](this.data, this);
         }
     },
     methods: {
+        dayClick()
+        {
+            Helper.dayClick(this.data, Store.state);
+        }
     }
 }
 
@@ -51,8 +63,19 @@ let dayClasses = {
         }
         return classes;
     },
-    ordersClassNames(day) {
-
+    ordersClassNames(day, obj) {
+        let classes = '';
+        if(day.type == 'week')
+            classes += ' bold';
+        else if(Store.bookings[day.ref]) {
+            // obj.bookLength = Store.bookings[day.ref].length;
+            Vue.set(obj, 'bookLength', Store.bookings[day.ref].length);
+            console.log(day);
+            classes += ' active';
+        }
+        else
+            classes += ' off';
+        return classes;
     },
     clientClassNames(day) {
 
