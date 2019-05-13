@@ -24,8 +24,8 @@
                     {{day.name}}
                 </div>
                 <div v-else class="dateBox">
-                    <div class="dateBox_day">{{day.day}}</div>
-                    <div class="dateBox_month">{{day.monthName}}</div>
+                    <div class="dateBox_day">{{day.name}}</div>
+                    <div class="dateBox_month">{{day.monthName.slice(0, 3)}}</div>
                 </div>
                 <div class="timeBox">
                     <div v-for="int in day.intervals" class="timeBox_time">
@@ -63,8 +63,10 @@ export default {
             let days = [];
             if(this.tab == 'week') {
                 let WD = Store.schedule.weekDays;
-                for(let d in WD) {
-                    days.push(Helper.fillWeekDay(d, WD));
+                for(let ref in WD) {
+                    let day = Helper.fillWeekDay(ref, WD);
+                    day.checked = Store.state == 'standard' ? day.checked : false;
+                    days.push(day);
                 }
                 if(Store.mondayFirst) {
                     let Su = days[0];
@@ -74,16 +76,15 @@ export default {
             }
             else {
                 let SD = Store.schedule.days;
-                for(let d in SD) {
-                    days.push(Helper.fillSpecialDay(d, SD));
+                for(let ref in SD) {
+                    let day = Helper.fillSpecialDay(ref);
+                    day.checked = Store.state == 'standard' ? day.checked : false;
+                    day.toStandard = true;
+                    days.push(day);
                 }
                 days.sort(function (a, b) {
-                    if (a.date > b.date) {
-                        return 1;
-                    }
-                    if (a.date < b.date) {
-                        return -1;
-                    }
+                    if (a.date > b.date) return 1;
+                    if (a.date < b.date) return -1;
                     return 0;
                 });
             }

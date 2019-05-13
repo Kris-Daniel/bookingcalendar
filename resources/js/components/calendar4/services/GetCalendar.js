@@ -98,5 +98,8 @@ export default class {
         let WD = this.schedule.weekDays;
         for(let i = 0; i < WEEK.length; i++)
             if(!WD[WEEK[i]]) WD[WEEK[i]] = [];
+
+        for(let i in this.bookings)
+            this.bookings.checked = false;
     }
 };

@@ -3192,7 +3192,7 @@ body {
 .dcal {
   position: relative;
   font-size: 0;
-  max-width: 1200px;
+  max-width: 810px;
   margin: 0 auto;
   padding: 100px 0;
   -webkit-user-select: none;
@@ -3201,16 +3201,15 @@ body {
           user-select: none;
   font-family: 'LatoWeb', sans-serif;
 }
-.dcal .LS,
-.dcal .TS {
+.dcal .LS {
   display: inline-block;
   vertical-align: top;
-  width: 27.678571%;
+  width: 38.271604%;
   max-width: 310px;
   min-width: 240px;
 }
-.dcal .LS_head,
-.dcal .TS_head {
+.dcal .TS_head,
+.dcal .LS_head {
   position: relative;
   text-align: center;
   height: 69px;
@@ -3220,7 +3219,7 @@ body {
   display: inline-block;
   vertical-align: top;
   font-size: 0;
-  width: 44.642857%;
+  width: 61.728395%;
   max-width: 500px;
   min-width: 320px;
 }
@@ -3482,6 +3481,51 @@ body {
 .dcal .day.off {
   color: #c2c9dd;
 }
+.dcal .day:hover {
+  border: 2px solid #dbdbdd;
+  background: #f0f0f0;
+  color: #808288;
+}
+.dcal .day.current {
+  color: #00cec9;
+  text-shadow: 0px 3px 5px rgba(62, 69, 94, 0.25);
+}
+.dcal .day.checked {
+  border: 2px solid #00b8b5;
+  color: #f4fcfc;
+  background: #00cec9;
+}
+.dcal .day.special .day_info {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  background: #00cec9;
+}
+.dcal .day_bookCount {
+  display: none;
+  position: absolute;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1 !important;
+  right: 0;
+  top: 0;
+  min-width: 18px;
+  color: #fff;
+  background: #00cec9;
+  border-radius: 100%;
+  padding: 2px 1px 2px 0px;
+  border: 2px solid #00cec9;
+}
+.dcal .day.active .day_bookCount {
+  display: block;
+}
+.dcal .day.checked .day_bookCount {
+  background: #fff;
+  color: #00cec9;
+}
 .dcal .intervals {
   overflow-y: auto;
   height: 451px;
@@ -3686,51 +3730,6 @@ body {
 .dcal .btn-save:hover {
   background: #00cec9;
 }
-.dcal .day:hover {
-  border: 2px solid #dbdbdd;
-  background: #f0f0f0;
-  color: #808288;
-}
-.dcal .day.current {
-  color: #00cec9;
-  text-shadow: 0px 3px 5px rgba(62, 69, 94, 0.25);
-}
-.dcal .day.checked {
-  border: 2px solid #00b8b5;
-  color: #f4fcfc;
-  background: #00cec9;
-}
-.dcal .day.special .day_info {
-  position: absolute;
-  right: -6px;
-  top: -6px;
-  width: 6px;
-  height: 6px;
-  border-radius: 100%;
-  background: #00cec9;
-}
-.dcal .day_bookCount {
-  display: none;
-  position: absolute;
-  text-align: center;
-  font-size: 10px;
-  line-height: 1 !important;
-  right: 0;
-  top: 0;
-  min-width: 18px;
-  color: #fff;
-  background: #00cec9;
-  border-radius: 100%;
-  padding: 2px 1px 2px 0px;
-  border: 2px solid #00cec9;
-}
-.dcal .day.active .day_bookCount {
-  display: block;
-}
-.dcal .day.checked .day_bookCount {
-  background: #fff;
-  color: #00cec9;
-}
 .dcal .client {
   position: absolute;
   left: 50%;
@@ -3808,4 +3807,17 @@ body {
   height: 100%;
   z-index: 1;
   background: rgba(255, 255, 255, 0.85);
+}
+.dcal .TS_float {
+  transition: 0.3s all cubic-bezier(0.79, 0.34, 0.28, 1.15);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: -300px;
+  width: 300px;
+  background: #fff;
+  border-left: 2px solid #c2c9dd;
+}
+.dcal .TS_float.active {
+  right: 0;
 }

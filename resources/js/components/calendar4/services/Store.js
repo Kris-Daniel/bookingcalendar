@@ -9,10 +9,13 @@ let Store = new Vue({
             state: 'standard',
             LS_CL: {
                 state: 'week',
-                stack: {}
+                stack: {},
             },
             LS: {
                 state: 'week'
+            },
+            TS: {
+                state: false
             },
             schedule: Helper.RenderCalendar.schedule,
             bookings: Helper.RenderCalendar.bookings,
@@ -25,7 +28,5 @@ let Store = new Vue({
         }
     }
 });
-
-console.log(Store);
 
 export default Store;

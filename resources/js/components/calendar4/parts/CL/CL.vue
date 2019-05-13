@@ -53,7 +53,7 @@ export default {
         ArrowLeft,
         ArrowRight,
         Month,
-        Week
+        Week,
     },
     props: {
 
@@ -80,8 +80,6 @@ export default {
             if(Store.state != tab) {
                 Helper.undo();
                 Store.state = tab;
-                // let daysLS = this.LS_CL.state == 'week' ? RenderCalendar.weekDays : RenderCalendar.specialDays;
-                // this.LS.render = daysLS;
             }
         },
         changeMonth(side)

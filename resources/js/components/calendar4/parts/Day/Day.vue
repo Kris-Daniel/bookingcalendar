@@ -70,7 +70,6 @@ let dayClasses = {
         else if(Store.bookings[day.ref]) {
             // obj.bookLength = Store.bookings[day.ref].length;
             Vue.set(obj, 'bookLength', Store.bookings[day.ref].length);
-            console.log(day);
             classes += ' active';
         }
         else

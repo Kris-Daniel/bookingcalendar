@@ -26,18 +26,20 @@ body{
 .dcal{
     .rel();
     .f0();
-    max-width: 1200px;
+    max-width: 810px;
     margin: 0 auto;
     padding: 100px 0;
     user-select: none;
     font-family: 'LatoWeb', sans-serif;
 
-    .LS,
-    .TS{
+    .LS{
         .dinl-top();
-        width: 27.678571%;
+        width: 38.271604%;
         max-width: 310px;
         min-width: 240px;
+    }
+    .TS,
+    .LS{
         &_head{
             .rel();
             .center();
@@ -48,7 +50,7 @@ body{
         .rel();
         .dinl-top();
         .f0();
-        width: 44.642857%;
+        width: 61.728395%;
         max-width: 500px;
         min-width: 320px;
         .tabs{
@@ -273,7 +275,52 @@ body{
         &.off{
             color: @gray;
         }
-
+        &:hover{
+            border: 2px solid #dbdbdd;
+            background: #f0f0f0;
+            color: #808288;
+        }
+        &.current{
+            color: @cyan;
+            text-shadow: 0px 3px 5px rgba(62, 69, 94, 0.25);
+        }
+        &.checked{
+            border: 2px solid #00b8b5;
+            color: #f4fcfc;
+            background: @cyan;
+        }
+        &.special{
+            .day_info{
+                .abs();
+                right: -6px;
+                top: -6px;
+                width: 6px;
+                height: 6px;
+                border-radius: 100%;
+                background: @cyan;
+            }
+        }
+        &_bookCount{
+            .dn();
+            .abs();
+            .center();
+            .size10();
+            right: 0;
+            top: 0;
+            min-width: 18px;
+            color: #fff;
+            background: @cyan;
+            border-radius: 100%;
+            padding: 2px 1px 2px 0px;
+            border: 2px solid @cyan;
+        }
+        &.active .day_bookCount{
+            .db();
+        }
+        &.checked .day_bookCount{
+            background: #fff;
+            color: @cyan;
+        }
     }
 
     .intervals{
@@ -448,54 +495,6 @@ body{
 
     &.standard{
     }
-    .day{
-        &:hover{
-            border: 2px solid #dbdbdd;
-            background: #f0f0f0;
-            color: #808288;
-        }
-        &.current{
-            color: @cyan;
-            text-shadow: 0px 3px 5px rgba(62, 69, 94, 0.25);
-        }
-        &.checked{
-            border: 2px solid #00b8b5;
-            color: #f4fcfc;
-            background: @cyan;
-        }
-        &.special{
-            .day_info{
-                .abs();
-                right: -6px;
-                top: -6px;
-                width: 6px;
-                height: 6px;
-                border-radius: 100%;
-                background: @cyan;
-            }
-        }
-        &_bookCount{
-            .dn();
-            .abs();
-            .center();
-            .size10();
-            right: 0;
-            top: 0;
-            min-width: 18px;
-            color: #fff;
-            background: @cyan;
-            border-radius: 100%;
-            padding: 2px 1px 2px 0px;
-            border: 2px solid @cyan;
-        }
-        &.active .day_bookCount{
-            .db();
-        }
-        &.checked .day_bookCount{
-            background: #fff;
-            color: @cyan;
-        }
-    }
     .client{
         .x-center();
         transition: all 0.35s ease;
@@ -562,6 +561,20 @@ body{
             .full-abs();
             z-index: 1;
             background: rgba(255, 255, 255, 0.85);
+        }
+    }
+
+    .TS_float{
+        .curve();
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: -300px;
+        width: 300px;
+        background: #fff;
+        border-left: 2px solid @gray;
+        &.active{
+            right: 0;
         }
     }
 }
