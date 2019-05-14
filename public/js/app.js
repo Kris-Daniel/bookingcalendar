@@ -699,8 +699,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    dayClick: function dayClick() {
-      _services_Helper__WEBPACK_IMPORTED_MODULE_1__["default"].dayClick(this.data, _services_Store__WEBPACK_IMPORTED_MODULE_2__["default"].state);
+    click: function click() {
+      _services_Helper__WEBPACK_IMPORTED_MODULE_1__["default"].dayClick(this.data);
     }
   }
 });
@@ -738,6 +738,63 @@ var dayClasses = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar4/services/Store.js");
+/* harmony import */ var _services_Helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Helper */ "./resources/js/components/calendar4/services/Helper.js");
+/* harmony import */ var _svg_pencil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../svg/pencil */ "./resources/js/svg/pencil.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'IntervalLS',
+  props: ['data', 'tab'],
+  components: {
+    Pencil: _svg_pencil__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  methods: {
+    click: function click(day) {
+      _services_Helper__WEBPACK_IMPORTED_MODULE_1__["default"].dayClick(day);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar4/parts/LS/LS.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar4/parts/LS/LS.vue?vue&type=script&lang=js& ***!
@@ -751,29 +808,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar4/services/Store.js");
 /* harmony import */ var _services_Helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/Helper */ "./resources/js/components/calendar4/services/Helper.js");
-/* harmony import */ var _svg_pencil__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../svg/pencil */ "./resources/js/svg/pencil.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _IntervalLS__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./IntervalLS */ "./resources/js/components/calendar4/parts/LS/IntervalLS.vue");
 //
 //
 //
@@ -805,7 +840,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'LS',
   components: {
-    Pencil: _svg_pencil__WEBPACK_IMPORTED_MODULE_3__["default"]
+    IntervalLS: _IntervalLS__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   computed: {
     tab: function tab() {
@@ -853,9 +888,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     changeTab: function changeTab(tab) {
       _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].LS.state = tab;
-    },
-    dayClick: function dayClick(day) {
-      _services_Helper__WEBPACK_IMPORTED_MODULE_2__["default"].dayClick(day, _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].state);
     }
   }
 });
@@ -942,20 +974,8 @@ function fillDaysArr(year, month) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _services_Helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/Helper */ "./resources/js/components/calendar4/services/Helper.js");
-/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar4/services/Store.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar4/services/Store.js");
+/* harmony import */ var _IntervalTS__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./IntervalTS */ "./resources/js/components/calendar4/parts/TS/IntervalTS.vue");
 //
 //
 //
@@ -977,45 +997,26 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ClientsTS',
+  components: {
+    IntervalTS: _IntervalTS__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
-      checkedClient: false
+      clientItems: []
     };
   },
   computed: {
-    state: function state() {
-      return _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].state;
-    },
     flag: function flag() {
-      return _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].TS.state;
+      return _services_Store__WEBPACK_IMPORTED_MODULE_0__["default"].TS.state == 'clients' && _services_Store__WEBPACK_IMPORTED_MODULE_0__["default"].state == 'orders';
     },
     day: function day() {
-      var day = {};
-      if (_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].state == 'orders') for (var i in _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].LS_CL.stack) {
-        day = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].LS_CL.stack[i];
-      }
-      return day;
+      if (_services_Store__WEBPACK_IMPORTED_MODULE_0__["default"].state == 'orders') return _services_Store__WEBPACK_IMPORTED_MODULE_0__["default"].stackLS_CL.getFirst();
+      return {};
     },
     clients: function clients() {
-      this.checkedClient = false;
       var clients = [];
-      if (_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].bookings[this.day.ref]) clients = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].bookings[this.day.ref];
+      if (_services_Store__WEBPACK_IMPORTED_MODULE_0__["default"].bookings[this.day.ref]) clients = _services_Store__WEBPACK_IMPORTED_MODULE_0__["default"].bookings[this.day.ref];
       return clients;
-    }
-  },
-  methods: {
-    toHoursFormat: function toHoursFormat(time) {
-      return time ? _services_Helper__WEBPACK_IMPORTED_MODULE_0__["default"].toHoursFormat(time) : '';
-    },
-    clientClick: function clientClick(ci) {
-      this.checkedClient = this.$refs.clientItems[ci];
-    },
-    getClient: function getClient(ci) {
-      if (this.$refs.clientItems) {
-        return this.$refs.clientItems[ci];
-      }
-
-      return true;
     }
   }
 });
@@ -1056,6 +1057,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'EditDayTS'
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_Helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/Helper */ "./resources/js/components/calendar4/services/Helper.js");
+/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar4/services/Store.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'IntervalTS',
+  props: ['client', 'index'],
+  computed: {
+    isChecked: function isChecked() {
+      if (_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackTS.inStack({
+        ref: 'client' + this.index
+      })) return true;
+      return false;
+    }
+  },
+  methods: {
+    toHoursFormat: function toHoursFormat(time) {
+      return time ? _services_Helper__WEBPACK_IMPORTED_MODULE_0__["default"].toHoursFormat(time) : '';
+    },
+    click: function click() {
+      var ref = 'client' + this.index;
+      _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackTS.addRemoveOnce({
+        ref: ref
+      }, _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackTS);
+    },
+    getRefClient: function getRefClient(ci) {
+      if (this.$refs.clientItems) return this.$refs.clientItems[ci];
+      return false;
+    }
+  }
 });
 
 /***/ }),
@@ -20725,7 +20784,7 @@ var render = function() {
       class: [_vm.setClassNames, { checked: _vm.data.checked }],
       on: {
         click: function($event) {
-          return _vm.dayClick()
+          return _vm.click()
         }
       }
     },
@@ -20742,6 +20801,77 @@ var render = function() {
             _vm._v(_vm._s(_vm.bookLength))
           ])
         : _vm._e()
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=template&id=1d1b029e&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=template&id=1d1b029e&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "interval interval-sch",
+      class: { checked: _vm.data.checked },
+      on: {
+        click: function($event) {
+          return _vm.click(_vm.data)
+        }
+      }
+    },
+    [
+      _vm.tab == "week"
+        ? _c("div", { staticClass: "dateBox" }, [
+            _vm._v("\n        " + _vm._s(_vm.data.name) + "\n    ")
+          ])
+        : _c("div", { staticClass: "dateBox" }, [
+            _c("div", { staticClass: "dateBox_day" }, [
+              _vm._v(_vm._s(_vm.data.name))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "dateBox_month" }, [
+              _vm._v(_vm._s(_vm.data.monthName.slice(0, 3)))
+            ])
+          ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "timeBox" },
+        [
+          _vm._l(_vm.data.intervals, function(int) {
+            return _c("div", { staticClass: "timeBox_time" }, [
+              _c("span", [_vm._v(_vm._s(int.from) + " - " + _vm._s(int.to))])
+            ])
+          }),
+          _vm._v(" "),
+          !_vm.data.intervals.length
+            ? _c("div", { staticClass: "timeBox_time timeBox_time-off" }, [
+                _vm._v("\n            day off\n        ")
+              ])
+            : _vm._e()
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "edit" }, [_c("Pencil")], 1)
     ]
   )
 }
@@ -20811,67 +20941,12 @@ var render = function() {
     _c(
       "div",
       { staticClass: "intervals" },
-      _vm._l(_vm.renderDays, function(day) {
-        return _c(
-          "div",
-          {
-            staticClass: "interval interval-sch",
-            class: { checked: day.checked },
-            on: {
-              click: function($event) {
-                return _vm.dayClick(day)
-              }
-            }
-          },
-          [
-            _vm.tab == "week"
-              ? _c("div", { staticClass: "dateBox" }, [
-                  _vm._v(
-                    "\n                " + _vm._s(day.name) + "\n            "
-                  )
-                ])
-              : _c("div", { staticClass: "dateBox" }, [
-                  _c("div", { staticClass: "dateBox_day" }, [
-                    _vm._v(_vm._s(day.name))
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "dateBox_month" }, [
-                    _vm._v(_vm._s(day.monthName.slice(0, 3)))
-                  ])
-                ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "timeBox" },
-              [
-                _vm._l(day.intervals, function(int) {
-                  return _c("div", { staticClass: "timeBox_time" }, [
-                    _c("span", [
-                      _vm._v(_vm._s(int.from) + " - " + _vm._s(int.to))
-                    ])
-                  ])
-                }),
-                _vm._v(" "),
-                !day.intervals.length
-                  ? _c(
-                      "div",
-                      { staticClass: "timeBox_time timeBox_time-off" },
-                      [
-                        _vm._v(
-                          "\n                    day off\n                "
-                        )
-                      ]
-                    )
-                  : _vm._e()
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "edit" }, [_c("Pencil")], 1)
-          ]
-        )
-      }),
-      0
+      [
+        _vm._l(_vm.renderDays, function(day) {
+          return [_c("IntervalLS", { attrs: { data: day, tab: _vm.tab } })]
+        })
+      ],
+      2
     )
   ])
 }
@@ -20939,68 +21014,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "TS_float",
-      class: { active: _vm.flag == "clients" && _vm.state == "orders" }
-    },
-    [
-      _c("div", { staticClass: "TS_head" }, [
-        _c("div", { staticClass: "TS_title" }, [_vm._v("Clients")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "TS_descr" }, [
-          _vm._v(
-            "For " +
-              _vm._s(_vm.day.monthName) +
-              " " +
-              _vm._s(_vm.day.name) +
-              " " +
-              _vm._s(_vm.day.year)
-          )
-        ])
-      ]),
+  return _c("div", { staticClass: "TS_float", class: { active: _vm.flag } }, [
+    _c("div", { staticClass: "TS_head" }, [
+      _c("div", { staticClass: "TS_title" }, [_vm._v("Clients")]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "intervals" },
+      _c("div", { staticClass: "TS_descr" }, [
+        _vm._v(
+          "For " +
+            _vm._s(_vm.day.monthName) +
+            " " +
+            _vm._s(_vm.day.name) +
+            " " +
+            _vm._s(_vm.day.year)
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "intervals" },
+      [
         _vm._l(_vm.clients, function(client, index) {
-          return _c(
-            "div",
-            {
-              ref: "clientItems",
-              refInFor: true,
-              staticClass: "interval interval-hours",
-              class: { checked: _vm.checkedClient == _vm.getClient(index) },
-              on: {
-                click: function($event) {
-                  return _vm.clientClick(index)
-                }
-              }
-            },
-            [
-              _c("div", { staticClass: "interval_title" }, [
-                _vm._v(
-                  "\n                " + _vm._s(client.name) + "\n            "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "timeBox" }, [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.toHoursFormat(client.from)) +
-                    " - " +
-                    _vm._s(_vm.toHoursFormat(client.to)) +
-                    "\n            "
-                )
-              ])
-            ]
-          )
-        }),
-        0
-      )
-    ]
-  )
+          return [_c("IntervalTS", { attrs: { client: client, index: index } })]
+        })
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -21049,6 +21089,56 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=template&id=f72f989e&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=template&id=f72f989e&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "interval interval-hours",
+      class: { checked: _vm.isChecked },
+      on: {
+        click: function($event) {
+          return _vm.click()
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "interval_title" }, [
+        _vm._v("\n        " + _vm._s(_vm.client.name) + "\n    ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "timeBox" }, [
+        _vm._v(
+          "\n        " +
+            _vm._s(_vm.toHoursFormat(_vm.client.from)) +
+            " - " +
+            _vm._s(_vm.toHoursFormat(_vm.client.to)) +
+            "\n    "
+        )
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -36926,6 +37016,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/calendar4/parts/LS/IntervalLS.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/calendar4/parts/LS/IntervalLS.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _IntervalLS_vue_vue_type_template_id_1d1b029e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IntervalLS.vue?vue&type=template&id=1d1b029e&scoped=true& */ "./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=template&id=1d1b029e&scoped=true&");
+/* harmony import */ var _IntervalLS_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./IntervalLS.vue?vue&type=script&lang=js& */ "./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _IntervalLS_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _IntervalLS_vue_vue_type_template_id_1d1b029e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _IntervalLS_vue_vue_type_template_id_1d1b029e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "1d1b029e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/calendar4/parts/LS/IntervalLS.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IntervalLS_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./IntervalLS.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IntervalLS_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=template&id=1d1b029e&scoped=true&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=template&id=1d1b029e&scoped=true& ***!
+  \**************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IntervalLS_vue_vue_type_template_id_1d1b029e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./IntervalLS.vue?vue&type=template&id=1d1b029e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar4/parts/LS/IntervalLS.vue?vue&type=template&id=1d1b029e&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IntervalLS_vue_vue_type_template_id_1d1b029e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IntervalLS_vue_vue_type_template_id_1d1b029e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/calendar4/parts/LS/LS.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/components/calendar4/parts/LS/LS.vue ***!
@@ -37271,6 +37430,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/calendar4/parts/TS/IntervalTS.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/calendar4/parts/TS/IntervalTS.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _IntervalTS_vue_vue_type_template_id_f72f989e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IntervalTS.vue?vue&type=template&id=f72f989e&scoped=true& */ "./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=template&id=f72f989e&scoped=true&");
+/* harmony import */ var _IntervalTS_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./IntervalTS.vue?vue&type=script&lang=js& */ "./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _IntervalTS_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _IntervalTS_vue_vue_type_template_id_f72f989e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _IntervalTS_vue_vue_type_template_id_f72f989e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "f72f989e",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/calendar4/parts/TS/IntervalTS.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IntervalTS_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./IntervalTS.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IntervalTS_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=template&id=f72f989e&scoped=true&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=template&id=f72f989e&scoped=true& ***!
+  \**************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IntervalTS_vue_vue_type_template_id_f72f989e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./IntervalTS.vue?vue&type=template&id=f72f989e&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar4/parts/TS/IntervalTS.vue?vue&type=template&id=f72f989e&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IntervalTS_vue_vue_type_template_id_f72f989e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_IntervalTS_vue_vue_type_template_id_f72f989e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/calendar4/parts/TS/TS.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/components/calendar4/parts/TS/TS.vue ***!
@@ -37569,8 +37797,8 @@ function () {
     }
   }, {
     key: "dayClick",
-    value: function dayClick(day, state) {
-      switch (state) {
+    value: function dayClick(day) {
+      switch (_Store__WEBPACK_IMPORTED_MODULE_2__["default"].state) {
         case 'standard':
           standardDayClick(day);
           break;
@@ -37583,7 +37811,9 @@ function () {
   }, {
     key: "fillWeekDay",
     value: function fillWeekDay(ref, WD) {
-      var checked = _Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL.stack[ref] ? true : false;
+      var checked = _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.inStack({
+        ref: ref
+      }) ? true : false;
       return {
         ref: ref,
         name: ref,
@@ -37619,7 +37849,9 @@ function () {
       }
 
       current = dateMS / 86400000 == Math.floor(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].settings.time.getTime() / 86400000);
-      checked = _Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL.stack[ref] ? true : false;
+      checked = _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.inStack({
+        ref: ref
+      });
       type = 'day';
       return {
         ref: ref,
@@ -37670,8 +37902,9 @@ function () {
       this.RenderCalendar = new _GetCalendar__WEBPACK_IMPORTED_MODULE_1__["default"]();
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"], 'schedule', this.RenderCalendar.schedule);
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"], 'bookings', this.RenderCalendar.bookings);
-      vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL, 'stack', {});
-      vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].TS, 'state', false);
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].TS, 'state', false); // Vue.set(Store.LS_CL, 'stack', {});
+
+      _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.reset();
     }
   }]);
 
@@ -37682,53 +37915,46 @@ var Helper = new ForHelp();
 /* harmony default export */ __webpack_exports__["default"] = (Helper);
 
 function standardDayClick(day) {
-  // check for undo
-  if (_Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL.state != day.type) {
+  console.log(day); // check for undo
+
+  if (_Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.state != day.type) {
     Helper.undo();
-    vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL, 'state', day.type); // Store.LS_CL.state = day.type;
+    _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.state = day.type;
+    _Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS.state = day.type;
   } // add | remove from stack
 
 
-  var stack = _Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL.stack;
-
-  if (!stack[day.ref]) {
-    if (_Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS.state != day.type) _Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS.state = day.type;
-    vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(stack, day.ref, day);
-  } else vue__WEBPACK_IMPORTED_MODULE_0___default.a.delete(stack, day.ref); // add | remove special days
-
+  if (!_Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.inStack(day)) _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.add(day, _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL);else _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.remove(day, _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL); // add | remove special days in RenderCalendar
 
   if (day.type == 'day' && !Helper.InsCalendar.schedule.days[day.ref]) {
     if (!day.checked) {
       var intervals = _Store__WEBPACK_IMPORTED_MODULE_2__["default"].schedule.weekDays[day.weekName];
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].schedule.days, day.ref, intervals);
-    } else if (day.checked) vue__WEBPACK_IMPORTED_MODULE_0___default.a.delete(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].schedule.days, day.ref);
+    } else vue__WEBPACK_IMPORTED_MODULE_0___default.a.delete(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].schedule.days, day.ref);
   }
 
-  console.log(stack);
+  console.log(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL);
 }
 
 function ordersDayClick(day) {
-  // to standard state
+  _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackTS.resetVue(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackTS); // to standard state
+
   if (day.toStandard) {
     _Store__WEBPACK_IMPORTED_MODULE_2__["default"].state = 'standard';
     Helper.undo();
     standardDayClick(day);
-    return false;
   } // show | hide clients
   else if (Helper.InsCalendar.bookings[day.ref]) {
-      var stack = _Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL.stack;
-
-      if (!_Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL.stack[day.ref]) {
-        vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL, 'stack', {});
-        vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL.stack, day.ref, day);
+      if (!_Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.inStack(day)) {
+        _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.addOnce(day, _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].TS, 'state', 'clients');
       } else {
+        _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.remove(day, _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].TS, 'state', false);
-        vue__WEBPACK_IMPORTED_MODULE_0___default.a.delete(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].LS_CL.stack, day.ref);
       }
     }
 
-  console.log(day);
+  console.log(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL);
 }
 
 /***/ }),
@@ -37753,58 +37979,56 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var Store = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
-  name: 'Store',
-  data: function data() {
-    return {
-      settings: _Helper__WEBPACK_IMPORTED_MODULE_0__["default"].RenderCalendar.settings,
-      state: 'standard',
-      LS_CL: {
-        state: 'week',
-        stack: {}
-      },
-      LS: {
-        state: 'week'
-      },
-      TS: {
-        state: false,
-        client: false
-      },
-      schedule: _Helper__WEBPACK_IMPORTED_MODULE_0__["default"].RenderCalendar.schedule,
-      bookings: _Helper__WEBPACK_IMPORTED_MODULE_0__["default"].RenderCalendar.bookings,
-      MONTHS: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-      mondayFirst: true
-    };
-  }
-});
 
 var Stack =
 /*#__PURE__*/
 function () {
   function Stack() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
     _classCallCheck(this, Stack);
 
-    this.state = 'week';
+    this.state = state;
     this.items = {};
     this.length = 0;
   }
 
   _createClass(Stack, [{
     key: "add",
-    value: function add(item) {
+    value: function add(item, obj) {
       if (!this.inStack(item)) {
-        this.items[item.ref] = item;
+        vue__WEBPACK_IMPORTED_MODULE_1___default.a.set(obj.items, item.ref, item);
         this.length++;
       }
     }
   }, {
+    key: "addOnce",
+    value: function addOnce(item, obj) {
+      if (!this.inStack(item)) {
+        this.reset();
+        this.add(item, obj);
+      }
+    }
+  }, {
     key: "remove",
-    value: function remove(item) {
+    value: function remove(item, obj) {
       if (this.inStack(item)) {
-        delete this.items[item.ref];
+        vue__WEBPACK_IMPORTED_MODULE_1___default.a.delete(obj.items, item.ref);
         this.length--;
       }
+    }
+  }, {
+    key: "addRemove",
+    value: function addRemove(item, obj) {
+      if (!this.inStack(item)) this.add(item, obj);else this.remove(item, obj);
+    }
+  }, {
+    key: "addRemoveOnce",
+    value: function addRemoveOnce(item, obj) {
+      if (!this.inStack(item)) {
+        this.reset();
+        this.add(item, obj);
+      } else this.remove(item, obj);
     }
   }, {
     key: "inStack",
@@ -37820,11 +38044,52 @@ function () {
         delete this.items[i];
       }
     }
+  }, {
+    key: "resetVue",
+    value: function resetVue(obj) {
+      this.length = 0;
+
+      for (var i in obj.items) {
+        vue__WEBPACK_IMPORTED_MODULE_1___default.a.delete(obj.items, i);
+      }
+    }
+  }, {
+    key: "getFirst",
+    value: function getFirst() {
+      for (var i in this.items) {
+        return this.items[i];
+      }
+
+      return {};
+    }
   }]);
 
   return Stack;
 }();
 
+var Store = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
+  name: 'Store',
+  data: function data() {
+    return {
+      settings: _Helper__WEBPACK_IMPORTED_MODULE_0__["default"].RenderCalendar.settings,
+      state: 'standard',
+      stackLS_CL: new Stack('week'),
+      stackTS: new Stack('clients'),
+      LS: {
+        state: 'week'
+      },
+      TS: {
+        state: false,
+        client: false
+      },
+      schedule: _Helper__WEBPACK_IMPORTED_MODULE_0__["default"].RenderCalendar.schedule,
+      bookings: _Helper__WEBPACK_IMPORTED_MODULE_0__["default"].RenderCalendar.bookings,
+      MONTHS: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      mondayFirst: true
+    };
+  }
+});
 /* harmony default export */ __webpack_exports__["default"] = (Store);
 
 /***/ }),

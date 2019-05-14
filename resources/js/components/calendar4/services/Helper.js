@@ -28,9 +28,9 @@ class ForHelp {
         });
         return arr;
     }
-    dayClick(day, state)
+    dayClick(day)
     {
-        switch (state) {
+        switch (Store.state) {
             case 'standard':
                 standardDayClick(day);
                 break;
@@ -41,7 +41,7 @@ class ForHelp {
     }
     fillWeekDay(ref, WD)
     {
-        let checked = Store.LS_CL.stack[ref] ? true : false;
+        let checked = Store.stackLS_CL.inStack({ref}) ? true : false;
         return {
             ref: ref,
             name: ref,
@@ -79,7 +79,7 @@ class ForHelp {
             isSpecial = false;
         }
         current = (dateMS / 86400000) == Math.floor(Store.settings.time.getTime() / 86400000);
-        checked = Store.LS_CL.stack[ref] ? true : false;
+        checked = Store.stackLS_CL.inStack({ref});
         type = 'day';
 
         return {
@@ -128,64 +128,59 @@ class ForHelp {
         this.RenderCalendar = new CalendarClass();
         Vue.set(Store, 'schedule', this.RenderCalendar.schedule);
         Vue.set(Store, 'bookings', this.RenderCalendar.bookings);
-        Vue.set(Store.LS_CL, 'stack', {});
         Vue.set(Store.TS, 'state', false);
+        // Vue.set(Store.LS_CL, 'stack', {});
+        Store.stackLS_CL.reset();
     }
 }
 let Helper = new ForHelp();
 export default Helper;
 
 function standardDayClick(day) {
+    console.log(day);
     // check for undo
-    if(Store.LS_CL.state != day.type) {
+    if(Store.stackLS_CL.state != day.type) {
         Helper.undo();
-        Vue.set(Store.LS_CL, 'state', day.type);
-        // Store.LS_CL.state = day.type;
+        Store.stackLS_CL.state = day.type;
+        Store.LS.state = day.type;
     }
 
     // add | remove from stack
-    let stack = Store.LS_CL.stack;
-    if(!stack[day.ref]) {
-        if(Store.LS.state != day.type)
-            Store.LS.state = day.type;
-        Vue.set(stack, day.ref, day);
-    }
+    if(!Store.stackLS_CL.inStack(day))
+        Store.stackLS_CL.add(day, Store.stackLS_CL);
     else
-        Vue.delete(stack, day.ref);
+        Store.stackLS_CL.remove(day, Store.stackLS_CL);
 
-    // add | remove special days
+    // add | remove special days in RenderCalendar
     if(day.type == 'day' && !Helper.InsCalendar.schedule.days[day.ref]) {
         if(!day.checked) {
             let intervals = Store.schedule.weekDays[day.weekName];
             Vue.set(Store.schedule.days, day.ref, intervals);
         }
-        else if(day.checked)
+        else
             Vue.delete(Store.schedule.days, day.ref);
     }
-    console.log(stack);
+    console.log(Store.stackLS_CL);
 }
 
 function ordersDayClick(day)
 {
+    Store.stackTS.resetVue(Store.stackTS);
     // to standard state
     if(day.toStandard) {
         Store.state = 'standard';
         Helper.undo();
         standardDayClick(day);
-        return false;
     }
     // show | hide clients
     else if(Helper.InsCalendar.bookings[day.ref]) {
-        let stack = Store.LS_CL.stack;
-        if(!Store.LS_CL.stack[day.ref]) {
-            Vue.set(Store.LS_CL, 'stack', {});
-            Vue.set(Store.LS_CL.stack, day.ref, day);
+        if(!Store.stackLS_CL.inStack(day)) {
+            Store.stackLS_CL.addOnce(day, Store.stackLS_CL);
             Vue.set(Store.TS, 'state', 'clients');
-        }
-        else {
+        } else {
+            Store.stackLS_CL.remove(day, Store.stackLS_CL);
             Vue.set(Store.TS, 'state', false);
-            Vue.delete(Store.LS_CL.stack, day.ref);
         }
     }
-    console.log(day);
+    console.log(Store.stackLS_CL);
 }

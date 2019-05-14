@@ -1,16 +1,72 @@
 import Helper from './Helper';
 import Vue from 'vue';
-
+class Stack {
+    constructor(state = 0) {
+        this.state = state;
+        this.items = {};
+        this.length = 0;
+    }
+    add(item, obj) {
+        if(!this.inStack(item)) {
+            Vue.set(obj.items, item.ref, item);
+            this.length++;
+        }
+    }
+    addOnce(item, obj) {
+        if(!this.inStack(item)) {
+            this.reset();
+            this.add(item, obj);
+        }
+    }
+    remove(item, obj) {
+        if(this.inStack(item)) {
+            Vue.delete(obj.items, item.ref);
+            this.length--;
+        }
+    }
+    addRemove(item, obj) {
+        if(!this.inStack(item))
+            this.add(item, obj);
+        else
+            this.remove(item, obj)
+    }
+    addRemoveOnce(item, obj) {
+        if(!this.inStack(item)) {
+            this.reset();
+            this.add(item, obj);
+        }
+        else
+            this.remove(item, obj)
+    }
+    inStack(item) {
+        if(this.items[item.ref])
+            return true
+        else return false;
+    }
+    reset() {
+        this.length = 0;
+        for(let i in this.items)
+            delete this.items[i];
+    }
+    resetVue(obj) {
+        this.length = 0;
+        for(let i in obj.items)
+            Vue.delete(obj.items, i);
+    }
+    getFirst() {
+        for(let i in this.items)
+            return this.items[i];
+        return {};
+    }
+}
 let Store = new Vue({
     name: 'Store',
     data: function() {
         return {
             settings: Helper.RenderCalendar.settings,
             state: 'standard',
-            LS_CL: {
-                state: 'week',
-                stack: {},
-            },
+            stackLS_CL: new Stack('week'),
+            stackTS: new Stack('clients'),
             LS: {
                 state: 'week'
             },
@@ -29,33 +85,5 @@ let Store = new Vue({
         }
     }
 });
-class Stack {
-    constructor() {
-        this.state = 'week';
-        this.items = {};
-        this.length = 0;
-    }
-    add(item) {
-        if(!this.inStack(item)) {
-            this.items[item.ref] = item;
-            this.length++;
-        }
-    }
-    remove(item) {
-        if(this.inStack(item)) {
-            delete this.items[item.ref];
-            this.length--;
-        }
-    }
-    inStack(item) {
-        if(this.items[item.ref])
-            return true
-        else return false;
-    }
-    reset() {
-        this.length = 0;
-        for(let i in this.items)
-            delete this.items[i];
-    }
-}
+
 export default Store;

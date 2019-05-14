@@ -2,7 +2,7 @@
     <div
         class="day"
         :class="[setClassNames, {checked: data.checked}]"
-        @click="dayClick()"
+        @click="click()"
     >
         <div class="day_name">
             <div class="day_name-rel">
@@ -33,9 +33,9 @@ export default {
         }
     },
     methods: {
-        dayClick()
+        click()
         {
-            Helper.dayClick(this.data, Store.state);
+            Helper.dayClick(this.data);
         }
     }
 }

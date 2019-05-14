@@ -14,31 +14,9 @@
         </div>
 
         <div class="intervals">
-            <div
-                v-for="day in renderDays"
-                class="interval interval-sch"
-                :class="{checked: day.checked}"
-                @click="dayClick(day)"
-            >
-                <div v-if="tab == 'week'" class="dateBox">
-                    {{day.name}}
-                </div>
-                <div v-else class="dateBox">
-                    <div class="dateBox_day">{{day.name}}</div>
-                    <div class="dateBox_month">{{day.monthName.slice(0, 3)}}</div>
-                </div>
-                <div class="timeBox">
-                    <div v-for="int in day.intervals" class="timeBox_time">
-                        <span>{{int.from}} - {{int.to}}</span>
-                    </div>
-                    <div v-if="!day.intervals.length" class="timeBox_time timeBox_time-off">
-                        day off
-                    </div>
-                </div>
-                <div class="edit">
-                    <Pencil></Pencil>
-                </div>
-            </div>
+            <template v-for="day in renderDays">
+                <IntervalLS :data="day" :tab="tab"></IntervalLS>
+            </template>
         </div>
 
     </div>
@@ -48,12 +26,12 @@
 import Vue from 'vue';
 import Store from '../../services/Store';
 import Helper from '../../services/Helper';
-import Pencil from '../../../../svg/pencil';
+import IntervalLS from './IntervalLS';
 
 export default {
     name: 'LS',
     components: {
-        Pencil
+        IntervalLS
     },
     computed: {
         tab() {
@@ -96,13 +74,8 @@ export default {
 
     },
     methods: {
-        changeTab(tab)
-        {
+        changeTab(tab) {
             Store.LS.state = tab;
-        },
-        dayClick(day)
-        {
-            Helper.dayClick(day, Store.state);
         }
     }
 
