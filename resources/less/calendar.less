@@ -27,7 +27,7 @@ body{
     .rel();
     .f0();
     max-width: 810px;
-    margin: 0 auto;
+    // margin: 0 auto;
     padding: 100px 0;
     user-select: none;
     font-family: 'LatoWeb', sans-serif;
@@ -46,11 +46,14 @@ body{
             height: 69px;
         }
     }
-    .CL{
+    .CL_grid{
         .rel();
         .dinl-top();
         .f0();
         width: 61.728395%;
+    }
+    .CL{
+        .rel();
         max-width: 500px;
         min-width: 320px;
         .tabs{
@@ -311,7 +314,7 @@ body{
             color: #fff;
             background: @cyan;
             border-radius: 100%;
-            padding: 2px 1px 2px 0px;
+            padding: 2px 0px 2px 0px;
             border: 2px solid @cyan;
         }
         &.active .day_bookCount{
@@ -474,24 +477,6 @@ body{
         background: rgba(0, 206, 201, 0.07);
     }
 
-    .btn-save{
-        .center();
-        .size15();
-        .semi-bold();
-        transition: 0.1s all linear;
-        width: 84.459459%;
-        max-width: 250px;
-        margin: 25px auto 0 auto;
-        background: #92e8dc;
-        color: #fff;
-        padding: 14px 0;
-        border-radius: 6px;
-        box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.25);
-        cursor: pointer;
-        &:hover{
-            background: @cyan;
-        }
-    }
 
     &.standard{
     }
@@ -577,4 +562,71 @@ body{
             right: 0;
         }
     }
+
+    .cl_btn{
+        &-right{
+            margin-left: 4px;
+        }
+        &-left{
+            margin-right: 4px;
+        }
+    }
+    .btn-save{
+        .center();
+        .size15();
+        .semi-bold();
+        transition: 0.1s all linear;
+        // width: 84.459459%;
+        // margin: 25px auto 0 auto;
+        max-width: 250px;
+        background: #92e8dc;
+        color: #fff;
+        padding: 14px 0;
+        border-radius: 6px;
+        box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.25);
+        cursor: pointer;
+        &:hover{
+            background: @cyan;
+        }
+    }
+    .inputTime{
+
+    }
+}
+
+input[type="time"]{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+    &::-webkit-search-cancel-button {
+        -webkit-appearance: none !important;
+    }
+    /* Hide the magnifying glass */
+    &::-webkit-search-results-button {
+         -webkit-appearance: none !important;
+    }
+}
+input[type="time"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none !important;
+    -webkit-appearance: none !important;
+}
+.intervalInput{
+    .size16();
+    color: #4D5055;
+    width: 42px;
+    padding: 11px 14px;
+    border: 1px solid @gray;
+    border-radius: 4px;
+    &:focus{
+        outline: none;
+        border: 1px solid @cyan;
+    }
+}
+.delimiter{
+    .a-center();
+    height: 1px;
+    width: 6px;
+    background: @gray;
 }

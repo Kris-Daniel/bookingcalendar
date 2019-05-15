@@ -1,13 +1,13 @@
 <template>
-    <div class="clientPopup">
+    <div class="popupClient">
         <div
-            v-if="TS.client"
+            v-if="client.ref"
             @click="close()"
             class="client_mask"
         ></div>
         <div
             class="client"
-            :class="{active: TS.client}"
+            :class="{active: client.ref}"
         >
             <div class="client_box">
                 <div
@@ -19,24 +19,37 @@
                 <div class="client_img">
 
                 </div>
-                <div class="client_name">{{TS.client.name}}</div>
-                <div class="client_hr"></div>
-                <div class="client_info">
-                    <div class="client_icon"></div>
-                    <div class="client_text"></div>
-                </div>
+                <template v-if="client.data">
+                    <div class="client_name">{{client.data.name}}</div>
+                    <div class="client_hr"></div>
+                    <div class="client_info">
+                        <div class="client_icon"></div>
+                        <div class="client_text"></div>
+                    </div>
+                </template>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import X from '../../../../svg/x';
+import Store from '../../services/Store';
+
 export default {
     name: 'PopupClient',
+    components: {
+        X
+    },
     methods: {
         close()
         {
-
+            Store.stackTS.resetVue(Store.stackTS);
+        }
+    },
+    computed: {
+        client() {
+            return Store.stackTS.getFirst();
         }
     }
 }

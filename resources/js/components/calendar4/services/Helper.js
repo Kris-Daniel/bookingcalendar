@@ -132,6 +132,10 @@ class ForHelp {
         // Vue.set(Store.LS_CL, 'stack', {});
         Store.stackLS_CL.reset();
     }
+    save(intervals)
+    {
+        console.log('saved', intervals);
+    }
 }
 let Helper = new ForHelp();
 export default Helper;
@@ -151,6 +155,10 @@ function standardDayClick(day) {
     else
         Store.stackLS_CL.remove(day, Store.stackLS_CL);
 
+    // hide TS
+    if(Store.stackLS_CL.length == 0)
+        Vue.set(Store.TS, 'state', false);
+
     // add | remove special days in RenderCalendar
     if(day.type == 'day' && !Helper.InsCalendar.schedule.days[day.ref]) {
         if(!day.checked) {
@@ -160,7 +168,7 @@ function standardDayClick(day) {
         else
             Vue.delete(Store.schedule.days, day.ref);
     }
-    console.log(Store.stackLS_CL);
+    // console.log(Store.stackLS_CL);
 }
 
 function ordersDayClick(day)
@@ -182,5 +190,5 @@ function ordersDayClick(day)
             Vue.set(Store.TS, 'state', false);
         }
     }
-    console.log(Store.stackLS_CL);
+    // console.log(Store.stackLS_CL);
 }

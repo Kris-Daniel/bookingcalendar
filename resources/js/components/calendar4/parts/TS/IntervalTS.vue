@@ -33,7 +33,10 @@ export default {
         },
         click() {
             let ref = 'client' + this.index;
-            Store.stackTS.addRemoveOnce({ref}, Store.stackTS);
+            Store.stackTS.addRemoveOnce({
+                ref,
+                data: this.client
+            }, Store.stackTS);
         },
         getRefClient(ci) {
             if(this.$refs.clientItems)

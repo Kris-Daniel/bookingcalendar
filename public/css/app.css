@@ -389,78 +389,93 @@ a {
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 0px;
+  overflow: hidden;
+  height: 0px;
+  padding: 0 !important;
 }
 .a-1 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 8.333333%;
 }
 .a-2 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 16.666666%;
 }
 .a-3 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 25%;
 }
 .a-4 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 33.333333%;
 }
 .a-5 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 41.666666%;
 }
 .a-6 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 50%;
 }
 .a-7 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 58.333333%;
 }
 .a-8 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 66.666666%;
 }
 .a-9 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 75%;
 }
 .a-10 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 83.333333%;
 }
 .a-11 {
   width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 91.666666%;
 }
 .a-12 {
-  width: 100%;
   font-size: 16px;
   display: inline-block;
   vertical-align: top;
+  width: 100%;
 }
 .lg-0 {
   display: inline-block;
@@ -3193,7 +3208,6 @@ body {
   position: relative;
   font-size: 0;
   max-width: 810px;
-  margin: 0 auto;
   padding: 100px 0;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -3214,12 +3228,15 @@ body {
   text-align: center;
   height: 69px;
 }
-.dcal .CL {
+.dcal .CL_grid {
   position: relative;
   display: inline-block;
   vertical-align: top;
   font-size: 0;
   width: 61.728395%;
+}
+.dcal .CL {
+  position: relative;
   max-width: 500px;
   min-width: 320px;
 }
@@ -3516,7 +3533,7 @@ body {
   color: #fff;
   background: #00cec9;
   border-radius: 100%;
-  padding: 2px 1px 2px 0px;
+  padding: 2px 0px 2px 0px;
   border: 2px solid #00cec9;
 }
 .dcal .day.active .day_bookCount {
@@ -3711,25 +3728,6 @@ body {
   border: 2px solid #00cec9;
   background: rgba(0, 206, 201, 0.07);
 }
-.dcal .btn-save {
-  text-align: center;
-  font-size: 15px;
-  line-height: 1 !important;
-  font-weight: 600;
-  transition: 0.1s all linear;
-  width: 84.459459%;
-  max-width: 250px;
-  margin: 25px auto 0 auto;
-  background: #92e8dc;
-  color: #fff;
-  padding: 14px 0;
-  border-radius: 6px;
-  box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.25);
-  cursor: pointer;
-}
-.dcal .btn-save:hover {
-  background: #00cec9;
-}
 .dcal .client {
   position: absolute;
   left: 50%;
@@ -3820,4 +3818,68 @@ body {
 }
 .dcal .TS_float.active {
   right: 0;
+}
+.dcal .cl_btn-right {
+  margin-left: 4px;
+}
+.dcal .cl_btn-left {
+  margin-right: 4px;
+}
+.dcal .btn-save {
+  text-align: center;
+  font-size: 15px;
+  line-height: 1 !important;
+  font-weight: 600;
+  transition: 0.1s all linear;
+  max-width: 250px;
+  background: #92e8dc;
+  color: #fff;
+  padding: 14px 0;
+  border-radius: 6px;
+  box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.25);
+  cursor: pointer;
+}
+.dcal .btn-save:hover {
+  background: #00cec9;
+}
+input[type="time"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+  /* Hide the magnifying glass */
+}
+input[type="time"]::-webkit-search-cancel-button {
+  -webkit-appearance: none !important;
+}
+input[type="time"]::-webkit-search-results-button {
+  -webkit-appearance: none !important;
+}
+input[type="time"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none !important;
+  -webkit-appearance: none !important;
+}
+.intervalInput {
+  font-size: 16px;
+  line-height: 1 !important;
+  color: #4D5055;
+  width: 42px;
+  padding: 11px 14px;
+  border: 1px solid #c2c9dd;
+  border-radius: 4px;
+}
+.intervalInput:focus {
+  outline: none;
+  border: 1px solid #00cec9;
+}
+.delimiter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  height: 1px;
+  width: 6px;
+  background: #c2c9dd;
 }
