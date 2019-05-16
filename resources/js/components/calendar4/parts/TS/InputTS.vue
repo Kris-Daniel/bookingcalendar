@@ -1,7 +1,8 @@
 <template>
     <div>
-        <cleave v-model="card" :options="options" class="intervalInput"></cleave>
-        <input type="hidden" :value="tt">
+        <cleave v-model="value" :options="options" class="intervalInput" @input="changeValue($event)"></cleave>
+        <input type="hidden" :value="timeWatcher">
+        <input type="hidden" :value="temp">
     </div>
 </template>
 
@@ -17,23 +18,36 @@ export default {
     },
     data: function() {
         return {
-            card: this.time,
+            value: this.time,
+            temp: this.time,
             options: {
                 time: true,
                 timeFormat: '24',
                 timePattern: ['h', 'm']
-            }
+            },
+            refreshFlag: true
         }
     },
     computed: {
-        tt() {
-            console.log(this.card, 'time input');
-            this.$emit('timeUpdated', this.card);
-            return this.card;
+        timeWatcher() {
+            this.value = this.time;
+            // this.refreshFlag = false;
+            console.log(this.time, 'time updated');
+            return this.time;
         }
     },
     mounted() {
-        console.log(this.time, 'time input 1');
+        this.refreshFlag = false;
+    },
+    methods: {
+        changeValue($event) {
+            if(this.refreshFlag) {
+                this.$emit('timeUpdated', this.value);
+                this.$emit('inEditSet');
+                console.log($event, 'key');
+            }
+            this.refreshFlag = true;
+        }
     }
 }
 </script>

@@ -14,18 +14,18 @@
                 <div class="box0 mt10 rel">
                     <div class="delimiter"></div>
                     <div class="a-6">
-                        <InputTS @timeUpdated="int.from=$event" :time="int.from"></InputTS>
+                        <InputTS @timeUpdated="int.from = $event" @inEditSet="changeInputValue()" :time="int.from"></InputTS>
                     </div>
                     <div class="a-6">
-                        <InputTS @timeUpdated="int.to=$event" :time="int.to"></InputTS>
+                        <InputTS @timeUpdated="int.to = $event" @inEditSet="changeInputValue()" :time="int.to"></InputTS>
                     </div>
                 </div>
             </template>
         </div>
         <div
             @click="save()"
-            class="cl_btn cl_btn-right btn-save mv20"
-            >
+            class="TS_btn btn-save"
+        >
             Save
         </div>
         <input type="hidden" name="" :value="intervalsWatcher">
@@ -45,9 +45,9 @@ export default {
     },
     data: function() {
         return {
-            intervals: [
-                {from: '00:00', to: '00:00'}
-            ]
+            intervals: this.emptyIntervals(),
+            inSaving: false,
+            inEdit: false,
         }
     },
     computed: {
@@ -60,25 +60,41 @@ export default {
             return {};
         },
         intervalsWatcher() {
-            let ints = [
-                {from: '01:00', to: '01:00'}
-            ];
-            if(Store.stackLS_CL.length == 1) {
-                ints = Store.stackLS_CL.getFirst().intervals;
+            let ints;
+            let len = Store.stackLS_CL.length;
+
+            this.inEdit = (len == 0) ? false : this.inEdit;
+
+
+            // console.log(this.inEdit, 'inedit');
+            if(!this.inEdit && !this.inSaving) {
+                if(len == 1) {
+                    ints = JSON.parse(JSON.stringify(Store.stackLS_CL.getFirst().intervals));
+                    if(ints.length == 0)
+                        ints = this.emptyIntervals();
+                    console.log('refresh to first');
+                }
+                else
+                    ints = this.emptyIntervals();
+                Vue.set(this, 'intervals', ints);
             }
-            this.intervals = ints;
-            return (Store.stackLS_CL.length == 1);
+
+            console.log(this.intervals, len, 'intervals updated');
+            return len;
         }
     },
     created() {
 
     },
     methods: {
-        timeChange(elem) {
-            console.log(elem, 'elem');
+        changeInputValue() {
+            this.inEdit = true;
         },
         save() {
-            Helper.save(this.intervals);
+            Helper.saveSchedule(this);
+        },
+        emptyIntervals() {
+            return [{from: '00:00', to: '00:00'}]
         }
     }
 }

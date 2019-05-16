@@ -3825,6 +3825,10 @@ body {
 .dcal .cl_btn-left {
   margin-right: 4px;
 }
+.dcal .TS_btn {
+  width: 84.459459%;
+  margin: 20px auto;
+}
 .dcal .btn-save {
   text-align: center;
   font-size: 15px;

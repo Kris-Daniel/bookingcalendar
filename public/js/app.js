@@ -1199,10 +1199,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      intervals: [{
-        from: '00:00',
-        to: '00:00'
-      }]
+      intervals: this.emptyIntervals(),
+      inSaving: false,
+      inEdit: false
     };
   },
   computed: {
@@ -1214,26 +1213,37 @@ __webpack_require__.r(__webpack_exports__);
       return {};
     },
     intervalsWatcher: function intervalsWatcher() {
-      var ints = [{
-        from: '01:00',
-        to: '01:00'
-      }];
+      var ints;
+      var len = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.length;
+      this.inEdit = len == 0 ? false : this.inEdit; // console.log(this.inEdit, 'inedit');
 
-      if (_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.length == 1) {
-        ints = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.getFirst().intervals;
+      if (!this.inEdit && !this.inSaving) {
+        if (len == 1) {
+          ints = JSON.parse(JSON.stringify(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.getFirst().intervals));
+          if (ints.length == 0) ints = this.emptyIntervals();
+          console.log('refresh to first');
+        } else ints = this.emptyIntervals();
+
+        vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this, 'intervals', ints);
       }
 
-      this.intervals = ints;
-      return _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.length == 1;
+      console.log(this.intervals, len, 'intervals updated');
+      return len;
     }
   },
   created: function created() {},
   methods: {
-    timeChange: function timeChange(elem) {
-      console.log(elem, 'elem');
+    changeInputValue: function changeInputValue() {
+      this.inEdit = true;
     },
     save: function save() {
-      _services_Helper__WEBPACK_IMPORTED_MODULE_2__["default"].save(this.intervals);
+      _services_Helper__WEBPACK_IMPORTED_MODULE_2__["default"].saveSchedule(this);
+    },
+    emptyIntervals: function emptyIntervals() {
+      return [{
+        from: '00:00',
+        to: '00:00'
+      }];
     }
   }
 });
@@ -1258,6 +1268,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
  // Vue.use(Cleave);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1268,23 +1279,37 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      card: this.time,
+      value: this.time,
+      temp: this.time,
       options: {
         time: true,
         timeFormat: '24',
         timePattern: ['h', 'm']
-      }
+      },
+      refreshFlag: true
     };
   },
   computed: {
-    tt: function tt() {
-      console.log(this.card, 'time input');
-      this.$emit('timeUpdated', this.card);
-      return this.card;
+    timeWatcher: function timeWatcher() {
+      this.value = this.time; // this.refreshFlag = false;
+
+      console.log(this.time, 'time updated');
+      return this.time;
     }
   },
   mounted: function mounted() {
-    console.log(this.time, 'time input 1');
+    this.refreshFlag = false;
+  },
+  methods: {
+    changeValue: function changeValue($event) {
+      if (this.refreshFlag) {
+        this.$emit('timeUpdated', this.value);
+        this.$emit('inEditSet');
+        console.log($event, 'key');
+      }
+
+      this.refreshFlag = true;
+    }
   }
 });
 
@@ -23054,6 +23079,9 @@ var render = function() {
                       on: {
                         timeUpdated: function($event) {
                           int.from = $event
+                        },
+                        inEditSet: function($event) {
+                          return _vm.changeInputValue()
                         }
                       }
                     })
@@ -23070,6 +23098,9 @@ var render = function() {
                       on: {
                         timeUpdated: function($event) {
                           int.to = $event
+                        },
+                        inEditSet: function($event) {
+                          return _vm.changeInputValue()
                         }
                       }
                     })
@@ -23086,7 +23117,7 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "cl_btn cl_btn-right btn-save mv20",
+          staticClass: "TS_btn btn-save",
           on: {
             click: function($event) {
               return _vm.save()
@@ -23142,16 +23173,26 @@ var render = function() {
       _c("cleave", {
         staticClass: "intervalInput",
         attrs: { options: _vm.options },
+        on: {
+          input: function($event) {
+            return _vm.changeValue($event)
+          }
+        },
         model: {
-          value: _vm.card,
+          value: _vm.value,
           callback: function($$v) {
-            _vm.card = $$v
+            _vm.value = $$v
           },
-          expression: "card"
+          expression: "value"
         }
       }),
       _vm._v(" "),
-      _c("input", { attrs: { type: "hidden" }, domProps: { value: _vm.tt } })
+      _c("input", {
+        attrs: { type: "hidden" },
+        domProps: { value: _vm.timeWatcher }
+      }),
+      _vm._v(" "),
+      _c("input", { attrs: { type: "hidden" }, domProps: { value: _vm.temp } })
     ],
     1
   )
@@ -40086,7 +40127,7 @@ function () {
   }, {
     key: "fillSpecialDay",
     value: function fillSpecialDay(ref) {
-      var dateString, date, dateMS, times, monthName, year, month, name, weekIndex, weekName, type, isSpecial, current, intervals, checked;
+      var dateString, date, dateMS, times, monthName, year, month, name, weekIndex, weekName, type, isSpecial, current, intervals, resetIntervals, checked;
       dateString = ref.substring(1);
       date = new Date(dateString);
       dateMS = date.getTime();
@@ -40159,7 +40200,7 @@ function () {
   }, {
     key: "undo",
     value: function undo() {
-      this.RenderCalendar = new _GetCalendar__WEBPACK_IMPORTED_MODULE_1__["default"]();
+      this.RenderCalendar = JSON.parse(JSON.stringify(this.InsCalendar));
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"], 'schedule', this.RenderCalendar.schedule);
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"], 'bookings', this.RenderCalendar.bookings);
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].TS, 'state', false); // Vue.set(Store.LS_CL, 'stack', {});
@@ -40167,9 +40208,18 @@ function () {
       _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.reset();
     }
   }, {
-    key: "save",
-    value: function save(intervals) {
-      console.log('saved', intervals);
+    key: "saveSchedule",
+    value: function saveSchedule(TS) {
+      var ints = TS.intervals;
+      TS.inSaving = true;
+      _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.map(function (day) {
+        day.intervals = ints;
+        vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].schedule.days, day.ref, ints);
+      });
+      TS.inSaving = false;
+      TS.intervals = TS.emptyIntervals();
+      this.InsCalendar = JSON.parse(JSON.stringify(this.RenderCalendar));
+      this.undo();
     }
   }]);
 
@@ -40189,7 +40239,7 @@ function standardDayClick(day) {
   } // add | remove from stack
 
 
-  if (!_Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.inStack(day)) _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.add(day, _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL);else _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.remove(day, _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL); // hide TS
+  _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.addRemove(day, _Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL); // hide TS
 
   if (_Store__WEBPACK_IMPORTED_MODULE_2__["default"].stackLS_CL.length == 0) vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_2__["default"].TS, 'state', false); // add | remove special days in RenderCalendar
 
@@ -40326,6 +40376,13 @@ function () {
       }
 
       return {};
+    }
+  }, {
+    key: "map",
+    value: function map(callback) {
+      for (var i in this.items) {
+        callback(this.items[i], i);
+      }
     }
   }]);
 

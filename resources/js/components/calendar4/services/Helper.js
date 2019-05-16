@@ -55,7 +55,7 @@ class ForHelp {
     {
         let dateString, date, dateMS, times, monthName,
         year, month, name, weekIndex, weekName,
-        type, isSpecial, current, intervals, checked;
+        type, isSpecial, current, intervals, resetIntervals, checked;
 
         dateString = ref.substring(1);
         date = new Date(dateString);
@@ -125,16 +125,26 @@ class ForHelp {
     }
     undo()
     {
-        this.RenderCalendar = new CalendarClass();
+        this.RenderCalendar = JSON.parse(JSON.stringify(this.InsCalendar));
         Vue.set(Store, 'schedule', this.RenderCalendar.schedule);
         Vue.set(Store, 'bookings', this.RenderCalendar.bookings);
         Vue.set(Store.TS, 'state', false);
         // Vue.set(Store.LS_CL, 'stack', {});
         Store.stackLS_CL.reset();
     }
-    save(intervals)
+    saveSchedule(TS)
     {
-        console.log('saved', intervals);
+        let ints = TS.intervals;
+        TS.inSaving = true;
+        Store.stackLS_CL.map((day) => {
+            day.intervals = ints;
+            Vue.set(Store.schedule.days, day.ref, ints);
+        });
+        TS.inSaving = false;
+        TS.intervals = TS.emptyIntervals();
+
+        this.InsCalendar = JSON.parse(JSON.stringify(this.RenderCalendar));
+        this.undo();
     }
 }
 let Helper = new ForHelp();
@@ -150,10 +160,7 @@ function standardDayClick(day) {
     }
 
     // add | remove from stack
-    if(!Store.stackLS_CL.inStack(day))
-        Store.stackLS_CL.add(day, Store.stackLS_CL);
-    else
-        Store.stackLS_CL.remove(day, Store.stackLS_CL);
+    Store.stackLS_CL.addRemove(day, Store.stackLS_CL);
 
     // hide TS
     if(Store.stackLS_CL.length == 0)

@@ -58,6 +58,10 @@ class Stack {
             return this.items[i];
         return {};
     }
+    map(callback) {
+        for(let i in this.items)
+            callback(this.items[i], i);
+    }
 }
 let Store = new Vue({
     name: 'Store',
