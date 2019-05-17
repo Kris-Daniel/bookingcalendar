@@ -3043,6 +3043,9 @@ a {
     font-size: 24px;
   }
 }
+.pointer-hover {
+  cursor: pointer;
+}
 .text-underline {
   border-bottom: 2px solid currentColor;
 }
@@ -3200,6 +3203,18 @@ a {
 }
 .justify {
   text-align: justify;
+}
+.dark {
+  color: #293143;
+}
+.gray {
+  color: #c2c9dd;
+}
+.grayColor {
+  color: #808288;
+}
+.cyan {
+  color: #00cec9;
 }
 body {
   background: #fcfcfe;
@@ -3886,4 +3901,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   height: 1px;
   width: 6px;
   background: #c2c9dd;
+}
+.TS_inside {
+  padding: 0 25px;
 }
