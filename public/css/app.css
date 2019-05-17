@@ -3883,7 +3883,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   font-size: 16px;
   line-height: 1 !important;
   color: #4D5055;
-  width: 42px;
+  width: 72px;
+  box-sizing: border-box;
   padding: 11px 14px;
   border: 1px solid #c2c9dd;
   border-radius: 4px;
