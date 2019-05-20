@@ -12,8 +12,10 @@
         <div class="client_img">
 
         </div>
+        <div class="pv10"></div>
         <template v-if="client.name">
             <div class="client_name">{{client.name}}</div>
+            <div class="pv10"></div>
             <div class="client_hr"></div>
             <div class="client_info">
                 <div class="client_icon"></div>

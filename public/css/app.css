@@ -3255,7 +3255,6 @@ a {
 .dcal {
   position: relative;
   font-size: 0;
-  padding: 100px 0;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -3285,6 +3284,7 @@ a {
   z-index: 2;
 }
 .dcal .LS {
+  position: relative;
   display: inline-block;
   vertical-align: top;
   width: 38.271604%;
@@ -3328,22 +3328,24 @@ a {
   z-index: 3;
 }
 .dcal .client {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   position: fixed;
+  top: calc(50% - 60px);
+  left: calc(50% - 140px);
   background: #fff;
   padding: 22px;
   min-height: 400px;
-  top: calc(50% - 60px);
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  width: 90%;
+  min-width: 280px;
+  max-width: 400px;
   transition: all 0.35s ease;
   visibility: hidden;
   opacity: 0;
-  width: 95%;
-  min-width: 280px;
-  max-width: 373px;
   z-index: 4;
-  box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.3);
 }
 .dcal .client.active {
   top: 50%;
@@ -3355,7 +3357,7 @@ a {
   border-radius: 100%;
   width: 100px;
   height: 100px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto;
   box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.3);
 }
 .dcal .client_name {
@@ -3364,7 +3366,6 @@ a {
   text-align: center;
   font-weight: 800;
   color: #293143;
-  margin-bottom: 20px;
 }
 .dcal .client_hr {
   max-width: 234px;
@@ -3390,18 +3391,8 @@ a {
   fill: #97a1bb;
 }
 .dcal .client_x:hover svg {
-  -webkit-transform: scale(1.2);
-          transform: scale(1.2);
-}
-.dcal .client_mask {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background: rgba(255, 255, 255, 0.85);
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 .dcal .hr-top {
   margin: 0 22px;
@@ -3478,7 +3469,7 @@ a {
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  margin-top: 3px;
+  margin-top: 2px;
 }
 .dcal .day_center_rel {
   position: relative;
@@ -3568,7 +3559,10 @@ a {
   margin-bottom: 0;
 }
 .dcal .interval_date-grid {
-  width: 12%;
+  padding-left: 10px;
+}
+.dcal .interval--day {
+  padding: 10px 0;
 }
 .dcal .interval--sch {
   margin-bottom: 6px;
@@ -3598,7 +3592,7 @@ a {
 }
 .dcal .interval_box {
   overflow-y: auto;
-  width: 60%;
+  width: 54%;
   max-height: 59px;
   min-height: 14px;
 }
@@ -3610,6 +3604,14 @@ a {
   background: #adbfcc;
   max-height: 2px;
   border-radius: 2px;
+}
+.dcal .interval_week {
+  position: absolute;
+  font-size: 10px;
+  line-height: 1 !important;
+  color: #c2c9dd;
+  top: 2px;
+  left: 2px;
 }
 .dcal .interval_text {
   font-size: 13px;
@@ -3854,4 +3856,30 @@ a {
   width: 16px;
   height: 16px;
   cursor: pointer;
+}
+.dcal .square-date {
+  position: relative;
+  text-align: center;
+  font-weight: 800;
+}
+.dcal .square-date_day {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 20px;
+  line-height: 1 !important;
+  padding-left: 8px;
+}
+.dcal .square-date_month {
+  position: absolute;
+  font-size: 10px;
+  line-height: 1 !important;
+  right: calc(100% - 10px);
+  top: 2px;
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+}
+.dcal .square-date_year {
+  font-size: 13px;
+  line-height: 1 !important;
 }

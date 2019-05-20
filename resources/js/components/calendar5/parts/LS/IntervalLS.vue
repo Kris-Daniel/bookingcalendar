@@ -1,9 +1,10 @@
 <template>
     <div
         class="interval interval--sch"
-        :class="{checked: InLS_CL()}"
+        :class="{checked: InLS_CL(), 'interval--day': data.type == 'day'}"
         @click="AddRemoveFromLS_CL()"
     >
+        <div v-if="data.type == 'day'" class="interval_week">{{data.weekName}}</div>
         <div class="interval_date-grid">
             <div v-if="state == 'week'" class="size17 bold">
                 {{data.name}}
@@ -12,7 +13,7 @@
         </div>
         <div class="interval_box">
             <div v-for="int in data.intervals" class="interval_text">
-                <span>{{int.from}} - {{int.to}}</span>
+                <span>{{toHoursFormat(int.from)}} - {{toHoursFormat(int.to)}}</span>
             </div>
             <div v-if="!data.intervals.length" class="interval_text interval_text--off">
                 day off
@@ -45,6 +46,9 @@ export default {
             let checked = Store.stackLS_CL.inStack(this.data) ? true : false;
             checked = (Store.state == 'standard') ? checked : false;
             return checked;
+        },
+        toHoursFormat(time) {
+            return Helper.toHoursFormat(time);
         }
     }
 }

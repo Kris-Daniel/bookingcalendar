@@ -1,9 +1,9 @@
 <template>
     <div class="square-date f1">
-        <div class="dinl">
-            <div class="square-date_month">{{data.monthName.slice(0, 3)}}</div>
-            <div class="square-date_day">{{data.name}}</div>
-        </div>
+            <div class="square-date_day">
+                <div class="square-date_month">{{data.monthName.slice(0, 3)}}</div>
+                {{data.name}}
+            </div>
         <div class="square-date_year">{{data.year}}</div>
     </div>
 </template>

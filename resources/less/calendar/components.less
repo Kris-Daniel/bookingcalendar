@@ -63,7 +63,7 @@
     }
     .day_center{
         .a-center();
-        margin-top: 3px;
+        margin-top: 2px;
     }
     .day_center_rel{
         .rel();
@@ -144,7 +144,10 @@
     }
 
     .interval_date-grid{
-        width: 12%;
+        padding-left: 10px;
+    }
+    .interval--day{
+        padding: 10px 0;
     }
     .interval--sch{
         margin-bottom: 6px;
@@ -172,9 +175,17 @@
         }
     .interval_box{
         .scrollstyleY();
-        width: 60%;
+        width: 54%;
         max-height: 59px;
         min-height: 14px;
+    }
+    .interval_week{
+        .abs();
+        .size10();
+        .gray();
+        top: 2px;
+        left: 2px;
+
     }
     .interval_text{
         .size13();
@@ -389,5 +400,29 @@
             height: 16px;
             cursor: pointer;
         }
+    }
+
+    // Square Date
+
+    .square-date{
+        .rel();
+        .center();
+        .bold();
+    }
+    .square-date_day{
+        .rel();
+        .dinl-top();
+        .size20();
+        padding-left: 8px;
+    }
+    .square-date_month{
+       .abs();
+        .size10();
+        right: calc(100% - 10px);
+        top: 2px;
+        transform: rotate(270deg);
+    }
+    .square-date_year{
+        .size13();
     }
 }

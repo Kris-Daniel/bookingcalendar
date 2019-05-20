@@ -886,6 +886,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -905,6 +906,9 @@ __webpack_require__.r(__webpack_exports__);
       var checked = _services_Store__WEBPACK_IMPORTED_MODULE_0__["default"].stackLS_CL.inStack(this.data) ? true : false;
       checked = _services_Store__WEBPACK_IMPORTED_MODULE_0__["default"].state == 'standard' ? checked : false;
       return checked;
+    },
+    toHoursFormat: function toHoursFormat(time) {
+      return _services_Helper__WEBPACK_IMPORTED_MODULE_1__["default"].toHoursFormat(time);
     }
   }
 });
@@ -1159,6 +1163,8 @@ function fillDaysArr(year, month) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _svg_x__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../svg/x */ "./resources/js/svg/x.vue");
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar5/services/Store.js");
+//
+//
 //
 //
 //
@@ -22969,7 +22975,10 @@ var render = function() {
     "div",
     {
       staticClass: "interval interval--sch",
-      class: { checked: _vm.InLS_CL() },
+      class: {
+        checked: _vm.InLS_CL(),
+        "interval--day": _vm.data.type == "day"
+      },
       on: {
         click: function($event) {
           return _vm.AddRemoveFromLS_CL()
@@ -22977,6 +22986,12 @@ var render = function() {
       }
     },
     [
+      _vm.data.type == "day"
+        ? _c("div", { staticClass: "interval_week" }, [
+            _vm._v(_vm._s(_vm.data.weekName))
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "interval_date-grid" },
@@ -22996,7 +23011,13 @@ var render = function() {
         [
           _vm._l(_vm.data.intervals, function(int) {
             return _c("div", { staticClass: "interval_text" }, [
-              _c("span", [_vm._v(_vm._s(int.from) + " - " + _vm._s(int.to))])
+              _c("span", [
+                _vm._v(
+                  _vm._s(_vm.toHoursFormat(int.from)) +
+                    " - " +
+                    _vm._s(_vm.toHoursFormat(int.to))
+                )
+              ])
             ])
           }),
           _vm._v(" "),
@@ -23087,14 +23108,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "square-date f1" }, [
-    _c("div", { staticClass: "dinl" }, [
+    _c("div", { staticClass: "square-date_day" }, [
       _c("div", { staticClass: "square-date_month" }, [
         _vm._v(_vm._s(_vm.data.monthName.slice(0, 3)))
       ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "square-date_day" }, [
-        _vm._v(_vm._s(_vm.data.name))
-      ])
+      _vm._v("\n            " + _vm._s(_vm.data.name) + "\n        ")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "square-date_year" }, [
@@ -23257,11 +23275,15 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "client_img" }),
       _vm._v(" "),
+      _c("div", { staticClass: "pv10" }),
+      _vm._v(" "),
       _vm.client.name
         ? [
             _c("div", { staticClass: "client_name" }, [
               _vm._v(_vm._s(_vm.client.name))
             ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "pv10" }),
             _vm._v(" "),
             _c("div", { staticClass: "client_hr" }),
             _vm._v(" "),
