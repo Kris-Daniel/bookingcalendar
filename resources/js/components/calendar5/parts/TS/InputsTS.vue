@@ -1,6 +1,6 @@
 <template>
     <div
-        class="TS_float center"
+        class="calendar-side calendar-side--right center"
         :class="{active: flag}"
     >
         <div class="TS_head">
@@ -8,16 +8,23 @@
             <div class="TS_descr"></div>
         </div>
         <div class="box0 center">
-            <div class="a-6 f1 bold">From</div>
-            <div class="a-6 f1 bold">To</div>
-            <template v-for="int in intervals">
-                <div ref="segments" class="box0 mt10 rel">
+            <div class="a-5 text-left f1 bold">From</div>
+            <div class="a-5 text-left f1 bold">To</div>
+            <template v-for="int, index in intervals">
+                <div ref="inputs" class="box0 mt10 rel">
                     <div class="delimiter"></div>
-                    <div ref="froms" class="a-6">
-                        <cleave v-model="int.from" :options="options" class="intervalInput"></cleave>
+                    <div ref="froms" class="a-5">
+                        <cleave v-model="int.from" :options="options" class="input"></cleave>
                     </div>
-                    <div ref="tos" class="a-6">
-                        <cleave v-model="int.to" :options="options" class="intervalInput"></cleave>
+                    <div ref="tos" class="a-5">
+                        <cleave v-model="int.to" :options="options" class="input"></cleave>
+                    </div>
+                    <div class="a-2">
+                        <div class="inputs_x">
+                            <div class="inputs_x_svg" @click="removeInterval(index)">
+                                <X></X>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </template>
@@ -30,11 +37,29 @@
                 + New Interval
             </div>
             <div
-            @click="save()"
-            class="btn-save"
+                @click="save()"
+                class="btn"
             >
-            Save
-        </div>
+                Save
+            </div>
+            <template v-if="SDinLS_CL && OneInLS_CL">
+                <div class="pv10"></div>
+                <div
+                    @click="ApplyToWeekday()"
+                    class="btn"
+                >
+                    Apply to {{OneInLS_CL}}
+                </div>
+            </template>
+            <template v-if="SDinLS_CL">
+                <div class="pv10"></div>
+                <div
+                    @click="removeFromSpecial()"
+                    class="btn btn--red"
+                >
+                    Remove from Special
+                </div>
+            </template>
         </div>
         <input type="hidden" name="" :value="observerStackLS_CL">
     </div>
@@ -45,17 +70,20 @@ import Vue from 'vue';
 import Store from '../../services/Store';
 import Helper from '../../services/Helper';
 import Cleave from 'vue-cleave-component';
-// import InputTS from './InputTS';
+import X from '../../../../svg/x';
 
 export default {
     name: 'InputsTS',
     components: {
-        Cleave
+        Cleave,
+        X
     },
     data: function() {
         return {
             inSaving: false,
             inEdit: false,
+            SDinLS_CL: false,
+            OneInLS_CL: false,
             valid: true,
             intervals: [],
             options: {
@@ -72,18 +100,21 @@ export default {
 
         observerStackLS_CL() {
             let ints = this.intervals;
-            if(this.flag) {
-                ints = [];
-                let len = Store.stackLS_CL.length;
-                if(len == 1) {
-                    let first = Store.stackLS_CL.getFirst().intervals;
-                    first.forEach(function(item, index) {
-                        ints.push({from: item.from, to: item.to})
-                    });
-                }
-                if(!ints.length)
-                    ints.push(this.emptyIntervals());
+            this.OneInLS_CL = false;
+
+            ints = [];
+            let len = Store.stackLS_CL.length;
+            if(len == 1) {
+                let first = Store.stackLS_CL.getFirst();
+                this.OneInLS_CL = Store.WEEKNAMES[first.weekIndex];
+                first.intervals.forEach(function(item, index) {
+                    ints.push({from: item.from, to: item.to})
+                });
             }
+            if(!ints.length)
+                ints.push(this.emptyIntervals());
+
+            this.SDinLS_CL = Store.stackLS_CL.state == 'day' ? true : false;
             this.intervals = ints;
             return ints.length;
         }
@@ -97,13 +128,7 @@ export default {
         },
         save() {
             let it = this;
-            let savedIntervals = [];
-            for(let i = 0; i < this.intervals.length; i++) {
-                savedIntervals.push({});
-                savedIntervals[i].from = it.addSemicolon(this.intervals[i].from);
-                savedIntervals[i].to = it.addSemicolon(this.intervals[i].to);
-            }
-
+            let savedIntervals = this.makeSavedIntervals();
             let ptr = {
                 'week': 'WD',
                 'day': 'SD'
@@ -111,17 +136,46 @@ export default {
             Store.stackLS_CL.map(function(item) {
                 Vue.set(Store[ptr[item.type]], item.ref, savedIntervals);
             });
+
             Store.stackTS.state = false;
             Store.stackLS_CL.resetVue(Store.stackLS_CL);
             console.log(this.$refs.segments, 'segments');
             console.log(this.$refs.froms, 'froms');
             console.log(this.$refs.tos, 'tos');
         },
+        removeFromSpecial() {
+            if(Store.stackLS_CL.state == 'day') {
+                let it = this;
+                Store.stackLS_CL.map(function(item) {
+                    Vue.delete(Store.SD, item.ref);
+                });
+                Store.stackLS_CL.resetVue(Store.stackLS_CL);
+            }
+        },
+        ApplyToWeekday() {
+            let first = Store.stackLS_CL.getFirst();
+            let savedIntervals = this.makeSavedIntervals();
+            Vue.set(Store.WD, first.weekName, savedIntervals);
+            Store.stackLS_CL.resetVue(Store.stackLS_CL);
+        },
+        makeSavedIntervals() {
+            let it = this;
+            let savedIntervals = [];
+            for(let i = 0; i < this.intervals.length; i++) {
+                savedIntervals.push({});
+                savedIntervals[i].from = it.addSemicolon(this.intervals[i].from);
+                savedIntervals[i].to = it.addSemicolon(this.intervals[i].to);
+            }
+            return savedIntervals;
+        },
+        removeInterval(index) {
+            this.intervals.splice(index, 1);
+            console.log(index, this.intervals);
+        },
         addSemicolon(str) {
             str = str.split('');
             str.splice(2, 0, ":");
             str = str.join('');
-            console.log(str);
             return str;
         },
         addInterval() {

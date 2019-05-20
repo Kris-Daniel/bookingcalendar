@@ -1,14 +1,16 @@
 <template>
     <div
-        class="interval interval-hours"
+        class="interval interval--client"
         :class="{checked: inStackTS}"
         @click="addToStackTS()"
     >
-        <div class="interval_title">
-            {{client.name}}
-        </div>
-        <div class="timeBox">
-            {{toHoursFormat(client.from)}} - {{toHoursFormat(client.to)}}
+        <div>
+            <div class="size15 bold mb10">
+                {{client.name}}
+            </div>
+            <div class="size13 semi-bold">
+                {{toHoursFormat(client.from)}} - {{toHoursFormat(client.to)}}
+            </div>
         </div>
     </div>
 </template>

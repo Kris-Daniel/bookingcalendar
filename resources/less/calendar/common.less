@@ -1,0 +1,56 @@
+@dark: #293143;
+@gray: #c2c9dd;
+@grayer: #808288;
+@cyan: #00cec9;
+
+.dark{color: @dark;}
+.gray{color: @gray;}
+.grayer{color: @grayer;}
+.cyan{color: @cyan;}
+
+.dark_bg{background-color: @dark;}
+.gray_bg{background-color: @gray;}
+.grayer_bg{background-color: @grayer;}
+.cyan_bg{background-color: @cyan;}
+
+.curve() {
+    transition: 0.3s all cubic-bezier(0.79, 0.34, 0.28, 1.15);
+}
+
+.scrollstyleY() {
+    overflow-y: auto;
+    &::-webkit-scrollbar{
+        width: 2px;
+        background: #e9ebed;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: #adbfcc;
+        max-height: 2px;
+        border-radius: 2px;
+    }
+}
+
+.calendar-side{
+    .curve();
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: -300px;
+    width: 300px;
+    padding: 0 22px;
+    background: #fff;
+    border-left: 2px solid @gray;
+    z-index: 3;
+    &--left{
+        left: -300px;
+        &.active{
+            left: 0;
+        }
+    }
+    &--right{
+        right: -300px;
+        &.active{
+            right: 0;
+        }
+    }
+}

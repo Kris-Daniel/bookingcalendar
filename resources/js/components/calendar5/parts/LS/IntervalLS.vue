@@ -1,25 +1,24 @@
 <template>
     <div
-        class="interval interval-sch"
+        class="interval interval--sch"
         :class="{checked: InLS_CL()}"
         @click="AddRemoveFromLS_CL()"
     >
-        <div v-if="state == 'week'" class="dateBox">
-            {{data.name}}
+        <div class="interval_date-grid">
+            <div v-if="state == 'week'" class="size17 bold">
+                {{data.name}}
+            </div>
+            <SquareDate v-else :data="data"></SquareDate>
         </div>
-        <div v-else class="dateBox">
-            <div class="dateBox_day">{{data.name}}</div>
-            <div class="dateBox_month">{{data.monthName.slice(0, 3)}}</div>
-        </div>
-        <div class="timeBox">
-            <div v-for="int in data.intervals" class="timeBox_time">
+        <div class="interval_box">
+            <div v-for="int in data.intervals" class="interval_text">
                 <span>{{int.from}} - {{int.to}}</span>
             </div>
-            <div v-if="!data.intervals.length" class="timeBox_time timeBox_time-off">
+            <div v-if="!data.intervals.length" class="interval_text interval_text--off">
                 day off
             </div>
         </div>
-        <div class="edit">
+        <div class="interval_edit">
             <Pencil></Pencil>
         </div>
     </div>
@@ -29,12 +28,14 @@
 import Store from '../../services/Store';
 import Helper from '../../services/Helper';
 import Pencil from '../../../../svg/pencil';
+import SquareDate from './SquareDate';
 
 export default {
     name: 'IntervalLS',
     props: ['data', 'state'],
     components: {
-        Pencil
+        Pencil,
+        SquareDate
     },
     methods: {
         AddRemoveFromLS_CL() {

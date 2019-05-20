@@ -1,5 +1,5 @@
 <template>
-    <div class="days weekdays">
+    <div class="days days--week">
         <div class="day_grid" v-for="day in weekDays">
             <Day :data="day"></Day>
         </div>

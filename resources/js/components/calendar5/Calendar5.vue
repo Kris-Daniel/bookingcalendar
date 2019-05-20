@@ -1,5 +1,7 @@
 <template>
-    <div class="dcal">
+    <div class="dcal" :class="state">
+        <div class="dcal_mask" @click="removeOverlay()"></div>
+        <PopupClient></PopupClient>
         <LS></LS>
         <CL></CL>
         <TS></TS>
@@ -10,6 +12,7 @@
 import CL from './parts/CL/CL';
 import LS from './parts/LS/LS';
 import TS from './parts/TS/TS';
+import PopupClient from './parts/Popup/Client';
 
 import Store from './services/Store';
 
@@ -18,16 +21,19 @@ export default {
     components: {
         CL,
         LS,
-        TS
+        TS,
+        PopupClient
     },
-    data: function() {
-        return {
-            store: Store
+    computed: {
+        state() {
+            return Store.state;
         }
     },
-    created: function()
-    {
-        console.log(this.store);
+    methods: {
+        removeOverlay() {
+            Store.stackTS.state = false;
+            Store.stackTS.resetVue(Store.stackTS);
+        }
     }
 }
 </script>

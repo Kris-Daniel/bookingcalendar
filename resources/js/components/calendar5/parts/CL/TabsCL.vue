@@ -1,18 +1,22 @@
 <template>
-    <div class="tabsCL">
-        <div class="tab_grid">
+    <div class="CL_tabs">
+        <div class="CL_tab-grid">
             <div
-                class="tab tab-left"
+                class="CL_tab CL_tab--left"
                 :class="{active: tabObserver == 'standard'}"
                 @click="changeTab('standard')"
-            ><span>Work hours</span></div>
+            >
+                <span class="CL_tab_text">Work hours</span>
+            </div>
         </div>
-        <div class="tab_grid">
+        <div class="CL_tab-grid">
             <div
-                class="tab tab-right"
+                class="CL_tab CL_tab--right"
                 :class="{active: tabObserver == 'orders'}"
                 @click="changeTab('orders')"
-            ><span>Your orders</span></div>
+            >
+                <span class="CL_tab_text">Bookings</span>
+            </div>
         </div>
         <input type="hidden" name="" :value="tabObserver">
     </div>

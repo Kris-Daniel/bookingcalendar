@@ -1,17 +1,16 @@
 <template>
-    <div class="CL_grid">
-        <div class="CL">
-            <PopupClient></PopupClient>
+    <div class="CL">
+        <div class="CL_box">
             <TabsCL></TabsCL>
             <div class="CL_content">
 
                 <div class="YM">
-                    <div class="arrow arrow-left" @click="changeMonth('prev')">
+                    <div class="YM_arrow YM_arrow--left" @click="changeMonth('prev')">
                         <ArrowLeft></ArrowLeft>
                     </div>
-                    <div class="YM_text YM_text-left">{{store.MONTHS[month]}}</div>
-                    <div class="YM_text YM_text-right">{{year}}</div>
-                    <div class="arrow arrow-right" @click="changeMonth('next')">
+                    <div class="YM_text YM_text--left">{{store.MONTHS[month]}}</div>
+                    <div class="YM_text YM_text--right">{{year}}</div>
+                    <div class="YM_arrow YM_arrow--right" @click="changeMonth('next')">
                         <ArrowRight></ArrowRight>
                     </div>
                 </div>
@@ -24,10 +23,8 @@
             </div>
 
         </div>
-        <div class="box0 pt20">
-            <div class="a-6">
-
-            </div>
+        <div class="box0 pv20">
+            <div class="a-6"></div>
             <div class="a-6">
                 <BtnEditTS></BtnEditTS>
             </div>
@@ -42,7 +39,6 @@ import Helper from '../../services/Helper';
 import ArrowLeft from '../../../../svg/arrow-left';
 import ArrowRight from '../../../../svg/arrow-right';
 
-import PopupClient from '../Popup/Client';
 import TabsCL from './TabsCL';
 import BtnEditTS from './BtnEditTS';
 import Month from '../Month/Month';
@@ -55,7 +51,6 @@ export default {
         ArrowRight,
         Month,
         Week,
-        PopupClient,
         TabsCL,
         BtnEditTS
     },
@@ -75,7 +70,6 @@ export default {
     {
         setTimeout(function() {
             Vue.set(Store.SD, 'd2019-05-23', []);
-            // console.log(Store.schedule.days);
         }, 2000)
     },
     methods: {

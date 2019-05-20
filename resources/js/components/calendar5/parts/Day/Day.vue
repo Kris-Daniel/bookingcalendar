@@ -4,13 +4,18 @@
         :class="[setClassNames, {checked: InLS_CL(), special: inStoreSD()}]"
         @click="click()"
     >
-        <div class="day_name">
-            <div class="day_name-rel">
+        <div class="day_center">
+            <div class="day_center_rel">
                 {{data.name}}
-                <div class="day_info"></div>
+                <div class="day_circle"></div>
             </div>
         </div>
-        <div v-if="data.bookingsAmount > 0" class="day_bookCount">{{data.bookingsAmount}}</div>
+        <div
+            v-if="data.bookingsAmount > 0"
+            class="day_book-count"
+        >
+            {{data.bookingsAmount}}
+        </div>
     </div>
 </template>
 
@@ -67,12 +72,10 @@ let dayClasses = {
         return classes;
     },
     ordersClassNames(day, obj) {
-        let classes = '';
+        let classes = ' day--order';
         if(day.type == 'week')
             classes += ' bold';
-        else if(day.bookingsAmount)
-            classes += ' active';
-        else
+        else if(!day.bookingsAmount)
             classes += ' off';
         return classes;
     },

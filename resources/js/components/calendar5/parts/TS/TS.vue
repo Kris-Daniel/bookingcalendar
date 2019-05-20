@@ -25,8 +25,15 @@ export default {
     },
     computed: {
         observerStackLS_CL() {
-            if(Store.stackLS_CL.length == 0)
+            let dcal = document.querySelector('.dcal');
+            if(Store.stackLS_CL.length == 0) {
                 Store.stackTS.state = false;
+            }
+            if(!Store.stackTS.state && dcal) {
+                dcal.className = 'dcal';
+            } else if(dcal) {
+                dcal.className = 'dcal overlay';
+            }
             return Store.stackLS_CL.length;
         }
     }

@@ -1,7 +1,7 @@
 <template>
     <div
         @click="changeStateTS()"
-        class="cl_btn cl_btn-right btn-save"
+        class="btn CL_btn--right"
         v-if="showEdit"
     >
         {{text}}

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="TS_float"
+        class="calendar-side calendar-side--right"
         :class="{active: flag}"
     >
         <div class="TS_head">

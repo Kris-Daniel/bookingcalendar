@@ -1,5 +1,5 @@
 <template>
-    <div class="days CL_days">
+    <div class="days days--month">
         <div class="day_grid" v-for="n in offset"></div>
         <div class="day_grid" v-for="day in days">
             <Day :data="day"></Day>

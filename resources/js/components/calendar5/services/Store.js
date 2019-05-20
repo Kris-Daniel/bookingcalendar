@@ -83,6 +83,7 @@ let Store = new Vue({
                 'July', 'August', 'September', 'October', 'November', 'December'
             ],
             WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+            WEEKNAMES: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
             mondayFirst: true
         }
     }

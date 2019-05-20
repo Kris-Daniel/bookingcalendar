@@ -517,7 +517,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _parts_CL_CL__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./parts/CL/CL */ "./resources/js/components/calendar5/parts/CL/CL.vue");
 /* harmony import */ var _parts_LS_LS__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parts/LS/LS */ "./resources/js/components/calendar5/parts/LS/LS.vue");
 /* harmony import */ var _parts_TS_TS__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./parts/TS/TS */ "./resources/js/components/calendar5/parts/TS/TS.vue");
-/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/Store */ "./resources/js/components/calendar5/services/Store.js");
+/* harmony import */ var _parts_Popup_Client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./parts/Popup/Client */ "./resources/js/components/calendar5/parts/Popup/Client.vue");
+/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/Store */ "./resources/js/components/calendar5/services/Store.js");
 //
 //
 //
@@ -526,6 +527,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 
@@ -535,15 +539,19 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     CL: _parts_CL_CL__WEBPACK_IMPORTED_MODULE_0__["default"],
     LS: _parts_LS_LS__WEBPACK_IMPORTED_MODULE_1__["default"],
-    TS: _parts_TS_TS__WEBPACK_IMPORTED_MODULE_2__["default"]
+    TS: _parts_TS_TS__WEBPACK_IMPORTED_MODULE_2__["default"],
+    PopupClient: _parts_Popup_Client__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  data: function data() {
-    return {
-      store: _services_Store__WEBPACK_IMPORTED_MODULE_3__["default"]
-    };
+  computed: {
+    state: function state() {
+      return _services_Store__WEBPACK_IMPORTED_MODULE_4__["default"].state;
+    }
   },
-  created: function created() {
-    console.log(this.store);
+  methods: {
+    removeOverlay: function removeOverlay() {
+      _services_Store__WEBPACK_IMPORTED_MODULE_4__["default"].stackTS.state = false;
+      _services_Store__WEBPACK_IMPORTED_MODULE_4__["default"].stackTS.resetVue(_services_Store__WEBPACK_IMPORTED_MODULE_4__["default"].stackTS);
+    }
   }
 });
 
@@ -608,11 +616,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_Helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/Helper */ "./resources/js/components/calendar5/services/Helper.js");
 /* harmony import */ var _svg_arrow_left__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../svg/arrow-left */ "./resources/js/svg/arrow-left.vue");
 /* harmony import */ var _svg_arrow_right__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../svg/arrow-right */ "./resources/js/svg/arrow-right.vue");
-/* harmony import */ var _Popup_Client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Popup/Client */ "./resources/js/components/calendar5/parts/Popup/Client.vue");
-/* harmony import */ var _TabsCL__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./TabsCL */ "./resources/js/components/calendar5/parts/CL/TabsCL.vue");
-/* harmony import */ var _BtnEditTS__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./BtnEditTS */ "./resources/js/components/calendar5/parts/CL/BtnEditTS.vue");
-/* harmony import */ var _Month_Month__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Month/Month */ "./resources/js/components/calendar5/parts/Month/Month.vue");
-/* harmony import */ var _Week_Week__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Week/Week */ "./resources/js/components/calendar5/parts/Week/Week.vue");
+/* harmony import */ var _TabsCL__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./TabsCL */ "./resources/js/components/calendar5/parts/CL/TabsCL.vue");
+/* harmony import */ var _BtnEditTS__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BtnEditTS */ "./resources/js/components/calendar5/parts/CL/BtnEditTS.vue");
+/* harmony import */ var _Month_Month__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Month/Month */ "./resources/js/components/calendar5/parts/Month/Month.vue");
+/* harmony import */ var _Week_Week__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Week/Week */ "./resources/js/components/calendar5/parts/Week/Week.vue");
 //
 //
 //
@@ -647,10 +654,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-
 
 
 
@@ -665,11 +668,10 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     ArrowLeft: _svg_arrow_left__WEBPACK_IMPORTED_MODULE_3__["default"],
     ArrowRight: _svg_arrow_right__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Month: _Month_Month__WEBPACK_IMPORTED_MODULE_8__["default"],
-    Week: _Week_Week__WEBPACK_IMPORTED_MODULE_9__["default"],
-    PopupClient: _Popup_Client__WEBPACK_IMPORTED_MODULE_5__["default"],
-    TabsCL: _TabsCL__WEBPACK_IMPORTED_MODULE_6__["default"],
-    BtnEditTS: _BtnEditTS__WEBPACK_IMPORTED_MODULE_7__["default"]
+    Month: _Month_Month__WEBPACK_IMPORTED_MODULE_7__["default"],
+    Week: _Week_Week__WEBPACK_IMPORTED_MODULE_8__["default"],
+    TabsCL: _TabsCL__WEBPACK_IMPORTED_MODULE_5__["default"],
+    BtnEditTS: _BtnEditTS__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   props: {},
   data: function data() {
@@ -683,7 +685,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     setTimeout(function () {
-      vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].SD, 'd2019-05-23', []); // console.log(Store.schedule.days);
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].SD, 'd2019-05-23', []);
     }, 2000);
   },
   methods: {
@@ -713,6 +715,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar5/services/Store.js");
+//
+//
+//
+//
 //
 //
 //
@@ -783,6 +789,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -827,8 +838,8 @@ var dayClasses = {
     return classes;
   },
   ordersClassNames: function ordersClassNames(day, obj) {
-    var classes = '';
-    if (day.type == 'week') classes += ' bold';else if (day.bookingsAmount) classes += ' active';else classes += ' off';
+    var classes = ' day--order';
+    if (day.type == 'week') classes += ' bold';else if (!day.bookingsAmount) classes += ' off';
     return classes;
   },
   clientClassNames: function clientClassNames(day) {}
@@ -848,6 +859,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar5/services/Store.js");
 /* harmony import */ var _services_Helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Helper */ "./resources/js/components/calendar5/services/Helper.js");
 /* harmony import */ var _svg_pencil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../svg/pencil */ "./resources/js/svg/pencil.vue");
+/* harmony import */ var _SquareDate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SquareDate */ "./resources/js/components/calendar5/parts/LS/SquareDate.vue");
 //
 //
 //
@@ -874,7 +886,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
 
 
 
@@ -882,7 +894,8 @@ __webpack_require__.r(__webpack_exports__);
   name: 'IntervalLS',
   props: ['data', 'state'],
   components: {
-    Pencil: _svg_pencil__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Pencil: _svg_pencil__WEBPACK_IMPORTED_MODULE_2__["default"],
+    SquareDate: _SquareDate__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   methods: {
     AddRemoveFromLS_CL: function AddRemoveFromLS_CL() {
@@ -988,6 +1001,32 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {},
   methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'SquareDate',
+  props: ['data']
 });
 
 /***/ }),
@@ -1145,15 +1184,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1186,6 +1216,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_Helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/Helper */ "./resources/js/components/calendar5/services/Helper.js");
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar5/services/Store.js");
+//
+//
 //
 //
 //
@@ -1325,6 +1357,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_Helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/Helper */ "./resources/js/components/calendar5/services/Helper.js");
 /* harmony import */ var vue_cleave_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-cleave-component */ "./node_modules/vue-cleave-component/dist/vue-cleave.min.js");
 /* harmony import */ var vue_cleave_component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_cleave_component__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _svg_x__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../svg/x */ "./resources/js/svg/x.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1370,17 +1428,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
- // import InputTS from './InputTS';
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'InputsTS',
   components: {
-    Cleave: vue_cleave_component__WEBPACK_IMPORTED_MODULE_3___default.a
+    Cleave: vue_cleave_component__WEBPACK_IMPORTED_MODULE_3___default.a,
+    X: _svg_x__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
       inSaving: false,
       inEdit: false,
+      SDinLS_CL: false,
+      OneInLS_CL: false,
       valid: true,
       intervals: [],
       options: {
@@ -1396,24 +1457,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     observerStackLS_CL: function observerStackLS_CL() {
       var ints = this.intervals;
+      this.OneInLS_CL = false;
+      ints = [];
+      var len = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.length;
 
-      if (this.flag) {
-        ints = [];
-        var len = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.length;
-
-        if (len == 1) {
-          var first = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.getFirst().intervals;
-          first.forEach(function (item, index) {
-            ints.push({
-              from: item.from,
-              to: item.to
-            });
+      if (len == 1) {
+        var first = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.getFirst();
+        this.OneInLS_CL = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].WEEKNAMES[first.weekIndex];
+        first.intervals.forEach(function (item, index) {
+          ints.push({
+            from: item.from,
+            to: item.to
           });
-        }
-
-        if (!ints.length) ints.push(this.emptyIntervals());
+        });
       }
 
+      if (!ints.length) ints.push(this.emptyIntervals());
+      this.SDinLS_CL = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.state == 'day' ? true : false;
       this.intervals = ints;
       return ints.length;
     }
@@ -1425,14 +1485,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       var it = this;
-      var savedIntervals = [];
-
-      for (var i = 0; i < this.intervals.length; i++) {
-        savedIntervals.push({});
-        savedIntervals[i].from = it.addSemicolon(this.intervals[i].from);
-        savedIntervals[i].to = it.addSemicolon(this.intervals[i].to);
-      }
-
+      var savedIntervals = this.makeSavedIntervals();
       var ptr = {
         'week': 'WD',
         'day': 'SD'
@@ -1446,11 +1499,41 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.$refs.froms, 'froms');
       console.log(this.$refs.tos, 'tos');
     },
+    removeFromSpecial: function removeFromSpecial() {
+      if (_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.state == 'day') {
+        var it = this;
+        _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.map(function (item) {
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.delete(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].SD, item.ref);
+        });
+        _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.resetVue(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL);
+      }
+    },
+    ApplyToWeekday: function ApplyToWeekday() {
+      var first = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.getFirst();
+      var savedIntervals = this.makeSavedIntervals();
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].WD, first.weekName, savedIntervals);
+      _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.resetVue(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL);
+    },
+    makeSavedIntervals: function makeSavedIntervals() {
+      var it = this;
+      var savedIntervals = [];
+
+      for (var i = 0; i < this.intervals.length; i++) {
+        savedIntervals.push({});
+        savedIntervals[i].from = it.addSemicolon(this.intervals[i].from);
+        savedIntervals[i].to = it.addSemicolon(this.intervals[i].to);
+      }
+
+      return savedIntervals;
+    },
+    removeInterval: function removeInterval(index) {
+      this.intervals.splice(index, 1);
+      console.log(index, this.intervals);
+    },
     addSemicolon: function addSemicolon(str) {
       str = str.split('');
       str.splice(2, 0, ":");
       str = str.join('');
-      console.log(str);
       return str;
     },
     addInterval: function addInterval() {
@@ -1503,7 +1586,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     observerStackLS_CL: function observerStackLS_CL() {
-      if (_services_Store__WEBPACK_IMPORTED_MODULE_3__["default"].stackLS_CL.length == 0) _services_Store__WEBPACK_IMPORTED_MODULE_3__["default"].stackTS.state = false;
+      var dcal = document.querySelector('.dcal');
+
+      if (_services_Store__WEBPACK_IMPORTED_MODULE_3__["default"].stackLS_CL.length == 0) {
+        _services_Store__WEBPACK_IMPORTED_MODULE_3__["default"].stackTS.state = false;
+      }
+
+      if (!_services_Store__WEBPACK_IMPORTED_MODULE_3__["default"].stackTS.state && dcal) {
+        dcal.className = 'dcal';
+      } else if (dcal) {
+        dcal.className = 'dcal overlay';
+      }
+
       return _services_Store__WEBPACK_IMPORTED_MODULE_3__["default"].stackLS_CL.length;
     }
   }
@@ -22585,8 +22679,25 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "dcal" },
-    [_c("LS"), _vm._v(" "), _c("CL"), _vm._v(" "), _c("TS")],
+    { staticClass: "dcal", class: _vm.state },
+    [
+      _c("div", {
+        staticClass: "dcal_mask",
+        on: {
+          click: function($event) {
+            return _vm.removeOverlay()
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("PopupClient"),
+      _vm._v(" "),
+      _c("LS"),
+      _vm._v(" "),
+      _c("CL"),
+      _vm._v(" "),
+      _c("TS")
+    ],
     1
   )
 }
@@ -22616,7 +22727,7 @@ var render = function() {
     ? _c(
         "div",
         {
-          staticClass: "cl_btn cl_btn-right btn-save",
+          staticClass: "btn CL_btn--right",
           on: {
             click: function($event) {
               return _vm.changeStateTS()
@@ -22649,13 +22760,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "CL_grid" }, [
+  return _c("div", { staticClass: "CL" }, [
     _c(
       "div",
-      { staticClass: "CL" },
+      { staticClass: "CL_box" },
       [
-        _c("PopupClient"),
-        _vm._v(" "),
         _c("TabsCL"),
         _vm._v(" "),
         _c(
@@ -22666,7 +22775,7 @@ var render = function() {
               _c(
                 "div",
                 {
-                  staticClass: "arrow arrow-left",
+                  staticClass: "YM_arrow YM_arrow--left",
                   on: {
                     click: function($event) {
                       return _vm.changeMonth("prev")
@@ -22677,18 +22786,18 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "YM_text YM_text-left" }, [
+              _c("div", { staticClass: "YM_text YM_text--left" }, [
                 _vm._v(_vm._s(_vm.store.MONTHS[_vm.month]))
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "YM_text YM_text-right" }, [
+              _c("div", { staticClass: "YM_text YM_text--right" }, [
                 _vm._v(_vm._s(_vm.year))
               ]),
               _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass: "arrow arrow-right",
+                  staticClass: "YM_arrow YM_arrow--right",
                   on: {
                     click: function($event) {
                       return _vm.changeMonth("next")
@@ -22714,7 +22823,7 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "box0 pt20" }, [
+    _c("div", { staticClass: "box0 pv20" }, [
       _c("div", { staticClass: "a-6" }),
       _vm._v(" "),
       _c("div", { staticClass: "a-6" }, [_c("BtnEditTS")], 1)
@@ -22743,12 +22852,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "tabsCL" }, [
-    _c("div", { staticClass: "tab_grid" }, [
+  return _c("div", { staticClass: "CL_tabs" }, [
+    _c("div", { staticClass: "CL_tab-grid" }, [
       _c(
         "div",
         {
-          staticClass: "tab tab-left",
+          staticClass: "CL_tab CL_tab--left",
           class: { active: _vm.tabObserver == "standard" },
           on: {
             click: function($event) {
@@ -22756,15 +22865,15 @@ var render = function() {
             }
           }
         },
-        [_c("span", [_vm._v("Work hours")])]
+        [_c("span", { staticClass: "CL_tab_text" }, [_vm._v("Work hours")])]
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "tab_grid" }, [
+    _c("div", { staticClass: "CL_tab-grid" }, [
       _c(
         "div",
         {
-          staticClass: "tab tab-right",
+          staticClass: "CL_tab CL_tab--right",
           class: { active: _vm.tabObserver == "orders" },
           on: {
             click: function($event) {
@@ -22772,7 +22881,7 @@ var render = function() {
             }
           }
         },
-        [_c("span", [_vm._v("Your orders")])]
+        [_c("span", { staticClass: "CL_tab_text" }, [_vm._v("Bookings")])]
       )
     ]),
     _vm._v(" "),
@@ -22819,16 +22928,16 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "day_name" }, [
-        _c("div", { staticClass: "day_name-rel" }, [
+      _c("div", { staticClass: "day_center" }, [
+        _c("div", { staticClass: "day_center_rel" }, [
           _vm._v("\n            " + _vm._s(_vm.data.name) + "\n            "),
-          _c("div", { staticClass: "day_info" })
+          _c("div", { staticClass: "day_circle" })
         ])
       ]),
       _vm._v(" "),
       _vm.data.bookingsAmount > 0
-        ? _c("div", { staticClass: "day_bookCount" }, [
-            _vm._v(_vm._s(_vm.data.bookingsAmount))
+        ? _c("div", { staticClass: "day_book-count" }, [
+            _vm._v("\n        " + _vm._s(_vm.data.bookingsAmount) + "\n    ")
           ])
         : _vm._e()
     ]
@@ -22859,7 +22968,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "interval interval-sch",
+      staticClass: "interval interval--sch",
       class: { checked: _vm.InLS_CL() },
       on: {
         click: function($event) {
@@ -22868,32 +22977,31 @@ var render = function() {
       }
     },
     [
-      _vm.state == "week"
-        ? _c("div", { staticClass: "dateBox" }, [
-            _vm._v("\n        " + _vm._s(_vm.data.name) + "\n    ")
-          ])
-        : _c("div", { staticClass: "dateBox" }, [
-            _c("div", { staticClass: "dateBox_day" }, [
-              _vm._v(_vm._s(_vm.data.name))
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "dateBox_month" }, [
-              _vm._v(_vm._s(_vm.data.monthName.slice(0, 3)))
-            ])
-          ]),
+      _c(
+        "div",
+        { staticClass: "interval_date-grid" },
+        [
+          _vm.state == "week"
+            ? _c("div", { staticClass: "size17 bold" }, [
+                _vm._v("\n            " + _vm._s(_vm.data.name) + "\n        ")
+              ])
+            : _c("SquareDate", { attrs: { data: _vm.data } })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "timeBox" },
+        { staticClass: "interval_box" },
         [
           _vm._l(_vm.data.intervals, function(int) {
-            return _c("div", { staticClass: "timeBox_time" }, [
+            return _c("div", { staticClass: "interval_text" }, [
               _c("span", [_vm._v(_vm._s(int.from) + " - " + _vm._s(int.to))])
             ])
           }),
           _vm._v(" "),
           !_vm.data.intervals.length
-            ? _c("div", { staticClass: "timeBox_time timeBox_time-off" }, [
+            ? _c("div", { staticClass: "interval_text interval_text--off" }, [
                 _vm._v("\n            day off\n        ")
               ])
             : _vm._e()
@@ -22901,7 +23009,7 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "edit" }, [_c("Pencil")], 1)
+      _c("div", { staticClass: "interval_edit" }, [_c("Pencil")], 1)
     ]
   )
 }
@@ -22963,6 +23071,44 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=template&id=2a421991&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=template&id=2a421991&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "square-date f1" }, [
+    _c("div", { staticClass: "dinl" }, [
+      _c("div", { staticClass: "square-date_month" }, [
+        _vm._v(_vm._s(_vm.data.monthName.slice(0, 3)))
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "square-date_day" }, [
+        _vm._v(_vm._s(_vm.data.name))
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "square-date_year" }, [
+      _vm._v(_vm._s(_vm.data.year))
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar5/parts/LS/TabsLS.vue?vue&type=template&id=a206baaa&scoped=true&":
 /*!****************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar5/parts/LS/TabsLS.vue?vue&type=template&id=a206baaa&scoped=true& ***!
@@ -22979,17 +23125,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "LS_head" }, [
-    _c("div", { staticClass: "LS_title" }, [_vm._v("Schedule")]),
+    _c("div", { staticClass: "size16 gray" }, [_vm._v("Schedule")]),
     _vm._v(" "),
     _c("div", { staticClass: "LS_tabs" }, [
       _c(
         "div",
-        { staticClass: "tab", class: { active: _vm.observerTab == "week" } },
+        { staticClass: "LS_tab", class: { active: _vm.observerTab == "week" } },
         [
           _c(
             "span",
             {
-              staticClass: "name",
+              staticClass: "LS_tab_text",
               on: {
                 click: function($event) {
                   return _vm.changeTab("week")
@@ -23003,12 +23149,12 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "tab", class: { active: _vm.observerTab == "day" } },
+        { staticClass: "LS_tab", class: { active: _vm.observerTab == "day" } },
         [
           _c(
             "span",
             {
-              staticClass: "name",
+              staticClass: "LS_tab_text",
               on: {
                 click: function($event) {
                   return _vm.changeTab("day")
@@ -23051,7 +23197,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "days CL_days" },
+    { staticClass: "days days--month" },
     [
       _vm._l(_vm.offset, function(n) {
         return _c("div", { staticClass: "day_grid" })
@@ -23091,55 +23237,40 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "popupClient" }, [
-    _vm.client.ref
-      ? _c("div", {
-          staticClass: "client_mask",
+  return _c(
+    "div",
+    { staticClass: "client", class: { active: _vm.client.ref } },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "client_x",
           on: {
             click: function($event) {
               return _vm.close()
             }
           }
-        })
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "client", class: { active: _vm.client.ref } }, [
-      _c(
-        "div",
-        { staticClass: "client_box" },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "client_x",
-              on: {
-                click: function($event) {
-                  return _vm.close()
-                }
-              }
-            },
-            [_c("X")],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "client_img" }),
-          _vm._v(" "),
-          _vm.client.name
-            ? [
-                _c("div", { staticClass: "client_name" }, [
-                  _vm._v(_vm._s(_vm.client.name))
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "client_hr" }),
-                _vm._v(" "),
-                _vm._m(0)
-              ]
-            : _vm._e()
-        ],
-        2
-      )
-    ])
-  ])
+        },
+        [_c("X")],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "client_img" }),
+      _vm._v(" "),
+      _vm.client.name
+        ? [
+            _c("div", { staticClass: "client_name" }, [
+              _vm._v(_vm._s(_vm.client.name))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "client_hr" }),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        : _vm._e()
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
@@ -23177,7 +23308,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "interval interval-hours",
+      staticClass: "interval interval--client",
       class: { checked: _vm.inStackTS },
       on: {
         click: function($event) {
@@ -23186,18 +23317,20 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "interval_title" }, [
-        _vm._v("\n        " + _vm._s(_vm.client.name) + "\n    ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "timeBox" }, [
-        _vm._v(
-          "\n        " +
-            _vm._s(_vm.toHoursFormat(_vm.client.from)) +
-            " - " +
-            _vm._s(_vm.toHoursFormat(_vm.client.to)) +
-            "\n    "
-        )
+      _c("div", [
+        _c("div", { staticClass: "size15 bold mb10" }, [
+          _vm._v("\n            " + _vm._s(_vm.client.name) + "\n        ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "size13 semi-bold" }, [
+          _vm._v(
+            "\n            " +
+              _vm._s(_vm.toHoursFormat(_vm.client.from)) +
+              " - " +
+              _vm._s(_vm.toHoursFormat(_vm.client.to)) +
+              "\n        "
+          )
+        ])
       ])
     ]
   )
@@ -23224,33 +23357,40 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "TS_float", class: { active: _vm.flag } }, [
-    _c("div", { staticClass: "TS_head" }, [
-      _c("div", { staticClass: "TS_title" }, [_vm._v("Clients")]),
+  return _c(
+    "div",
+    {
+      staticClass: "calendar-side calendar-side--right",
+      class: { active: _vm.flag }
+    },
+    [
+      _c("div", { staticClass: "TS_head" }, [
+        _c("div", { staticClass: "TS_title" }, [_vm._v("Clients")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "TS_descr" }, [
+          _vm._v(
+            "For " +
+              _vm._s(_vm.day.monthName) +
+              " " +
+              _vm._s(_vm.day.name) +
+              " " +
+              _vm._s(_vm.day.year)
+          )
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "TS_descr" }, [
-        _vm._v(
-          "For " +
-            _vm._s(_vm.day.monthName) +
-            " " +
-            _vm._s(_vm.day.name) +
-            " " +
-            _vm._s(_vm.day.year)
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "intervals" },
-      [
-        _vm._l(_vm.clients, function(client) {
-          return [_c("ClientTS", { attrs: { client: client } })]
-        })
-      ],
-      2
-    )
-  ])
+      _c(
+        "div",
+        { staticClass: "intervals" },
+        [
+          _vm._l(_vm.clients, function(client) {
+            return [_c("ClientTS", { attrs: { client: client } })]
+          })
+        ],
+        2
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -23300,7 +23440,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "TS_float center", class: { active: _vm.flag } },
+    {
+      staticClass: "calendar-side calendar-side--right center",
+      class: { active: _vm.flag }
+    },
     [
       _vm._m(0),
       _vm._v(" "),
@@ -23308,28 +23451,24 @@ var render = function() {
         "div",
         { staticClass: "box0 center" },
         [
-          _c("div", { staticClass: "a-6 f1 bold" }, [_vm._v("From")]),
+          _c("div", { staticClass: "a-5 text-left f1 bold" }, [_vm._v("From")]),
           _vm._v(" "),
-          _c("div", { staticClass: "a-6 f1 bold" }, [_vm._v("To")]),
+          _c("div", { staticClass: "a-5 text-left f1 bold" }, [_vm._v("To")]),
           _vm._v(" "),
-          _vm._l(_vm.intervals, function(int) {
+          _vm._l(_vm.intervals, function(int, index) {
             return [
               _c(
                 "div",
-                {
-                  ref: "segments",
-                  refInFor: true,
-                  staticClass: "box0 mt10 rel"
-                },
+                { ref: "inputs", refInFor: true, staticClass: "box0 mt10 rel" },
                 [
                   _c("div", { staticClass: "delimiter" }),
                   _vm._v(" "),
                   _c(
                     "div",
-                    { ref: "froms", refInFor: true, staticClass: "a-6" },
+                    { ref: "froms", refInFor: true, staticClass: "a-5" },
                     [
                       _c("cleave", {
-                        staticClass: "intervalInput",
+                        staticClass: "input",
                         attrs: { options: _vm.options },
                         model: {
                           value: int.from,
@@ -23345,10 +23484,10 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { ref: "tos", refInFor: true, staticClass: "a-6" },
+                    { ref: "tos", refInFor: true, staticClass: "a-5" },
                     [
                       _c("cleave", {
-                        staticClass: "intervalInput",
+                        staticClass: "input",
                         attrs: { options: _vm.options },
                         model: {
                           value: int.to,
@@ -23360,7 +23499,25 @@ var render = function() {
                       })
                     ],
                     1
-                  )
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "a-2" }, [
+                    _c("div", { staticClass: "inputs_x" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "inputs_x_svg",
+                          on: {
+                            click: function($event) {
+                              return _vm.removeInterval(index)
+                            }
+                          }
+                        },
+                        [_c("X")],
+                        1
+                      )
+                    ])
+                  ])
                 ]
               )
             ]
@@ -23369,33 +23526,86 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "TS_inside f1 text-left" }, [
-        _c(
-          "div",
-          {
-            staticClass: "cyan underline-hover size14 mv20 pointer-hover",
-            on: {
-              click: function($event) {
-                return _vm.addInterval()
+      _c(
+        "div",
+        { staticClass: "TS_inside f1 text-left" },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "cyan underline-hover size14 mv20 pointer-hover",
+              on: {
+                click: function($event) {
+                  return _vm.addInterval()
+                }
               }
-            }
-          },
-          [_vm._v("\n            + New Interval\n        ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "btn-save",
-            on: {
-              click: function($event) {
-                return _vm.save()
+            },
+            [_vm._v("\n            + New Interval\n        ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "btn",
+              on: {
+                click: function($event) {
+                  return _vm.save()
+                }
               }
-            }
-          },
-          [_vm._v("\n        Save\n    ")]
-        )
-      ]),
+            },
+            [_vm._v("\n            Save\n        ")]
+          ),
+          _vm._v(" "),
+          _vm.SDinLS_CL && _vm.OneInLS_CL
+            ? [
+                _c("div", { staticClass: "pv10" }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "btn",
+                    on: {
+                      click: function($event) {
+                        return _vm.ApplyToWeekday()
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                Apply to " +
+                        _vm._s(_vm.OneInLS_CL) +
+                        "\n            "
+                    )
+                  ]
+                )
+              ]
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.SDinLS_CL
+            ? [
+                _c("div", { staticClass: "pv10" }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "btn btn--red",
+                    on: {
+                      click: function($event) {
+                        return _vm.removeFromSpecial()
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                Remove from Special\n            "
+                    )
+                  ]
+                )
+              ]
+            : _vm._e()
+        ],
+        2
+      ),
       _vm._v(" "),
       _c("input", {
         attrs: { type: "hidden", name: "" },
@@ -23479,7 +23689,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "days weekdays" },
+    { staticClass: "days days--week" },
     _vm._l(_vm.weekDays, function(day) {
       return _c(
         "div",
@@ -39628,6 +39838,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/calendar5/parts/LS/SquareDate.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/calendar5/parts/LS/SquareDate.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SquareDate_vue_vue_type_template_id_2a421991_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SquareDate.vue?vue&type=template&id=2a421991&scoped=true& */ "./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=template&id=2a421991&scoped=true&");
+/* harmony import */ var _SquareDate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SquareDate.vue?vue&type=script&lang=js& */ "./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SquareDate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SquareDate_vue_vue_type_template_id_2a421991_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SquareDate_vue_vue_type_template_id_2a421991_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "2a421991",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/calendar5/parts/LS/SquareDate.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SquareDate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SquareDate.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SquareDate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=template&id=2a421991&scoped=true&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=template&id=2a421991&scoped=true& ***!
+  \**************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SquareDate_vue_vue_type_template_id_2a421991_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SquareDate.vue?vue&type=template&id=2a421991&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar5/parts/LS/SquareDate.vue?vue&type=template&id=2a421991&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SquareDate_vue_vue_type_template_id_2a421991_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SquareDate_vue_vue_type_template_id_2a421991_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/calendar5/parts/LS/TabsLS.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/calendar5/parts/LS/TabsLS.vue ***!
@@ -40676,6 +40955,7 @@ var Store = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       BK: RenderCalendar.bookings,
       MONTHS: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+      WEEKNAMES: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       mondayFirst: true
     };
   }
