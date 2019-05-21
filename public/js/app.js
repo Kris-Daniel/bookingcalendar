@@ -1223,6 +1223,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1230,14 +1233,14 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     X: _svg_x__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: {
-    close: function close() {
-      _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackTS.resetVue(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackTS);
-    }
-  },
   computed: {
     client: function client() {
       return _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackTS.getFirst();
+    }
+  },
+  methods: {
+    close: function close() {
+      _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackTS.resetVue(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackTS);
     }
   }
 });
@@ -33935,44 +33938,57 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "client", class: { active: _vm.client.ref } },
-    [
-      _c(
-        "div",
-        {
-          staticClass: "client_x",
+  return _c("div", { staticClass: "client-box" }, [
+    _vm.client.ref
+      ? _c("div", {
+          staticClass: "client-overlay",
           on: {
             click: function($event) {
               return _vm.close()
             }
           }
-        },
-        [_c("X")],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "client_img" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "pv10" }),
-      _vm._v(" "),
-      _vm.client.name
-        ? [
-            _c("div", { staticClass: "client_name" }, [
-              _vm._v(_vm._s(_vm.client.name))
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "pv10" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "client_hr" }),
-            _vm._v(" "),
-            _vm._m(0)
-          ]
-        : _vm._e()
-    ],
-    2
-  )
+        })
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "client", class: { active: _vm.client.ref } },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "client_x",
+            on: {
+              click: function($event) {
+                return _vm.close()
+              }
+            }
+          },
+          [_c("X")],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "client_img" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "pv10" }),
+        _vm._v(" "),
+        _vm.client.name
+          ? [
+              _c("div", { staticClass: "client_name" }, [
+                _vm._v(_vm._s(_vm.client.name))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "pv10" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "client_hr" }),
+              _vm._v(" "),
+              _vm._m(0)
+            ]
+          : _vm._e()
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
