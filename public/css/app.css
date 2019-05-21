@@ -3716,7 +3716,7 @@ a {
 }
 .dcal .interval_box {
   overflow-y: auto;
-  width: 54%;
+  width: 60%;
   max-height: 59px;
   min-height: 14px;
 }

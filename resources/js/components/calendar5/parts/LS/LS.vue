@@ -9,6 +9,7 @@
         <div class="center pt100 show-in-mobile">
             <BtnEditTS></BtnEditTS>
         </div>
+        <div class="pv80"></div>
         <input type="hidden" name="" :value="stateObserver">
     </div>
 </template>

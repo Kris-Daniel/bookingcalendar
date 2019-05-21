@@ -970,6 +970,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -1327,6 +1328,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1403,6 +1405,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_cleave_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-cleave-component */ "./node_modules/vue-cleave-component/dist/vue-cleave.min.js");
 /* harmony import */ var vue_cleave_component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_cleave_component__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _svg_x__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../svg/x */ "./resources/js/svg/x.vue");
+//
 //
 //
 //
@@ -33760,6 +33763,8 @@ var render = function() {
         1
       ),
       _vm._v(" "),
+      _c("div", { staticClass: "pv80" }),
+      _vm._v(" "),
       _c("input", {
         attrs: { type: "hidden", name: "" },
         domProps: { value: _vm.stateObserver }
@@ -34106,7 +34111,9 @@ var render = function() {
           })
         ],
         2
-      )
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "pv80" })
     ]
   )
 }
@@ -34324,6 +34331,8 @@ var render = function() {
         ],
         2
       ),
+      _vm._v(" "),
+      _c("div", { staticClass: "pv80" }),
       _vm._v(" "),
       _c("input", {
         attrs: { type: "hidden", name: "" },
