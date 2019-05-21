@@ -139,10 +139,6 @@ function standardDayClick(day) {
 
     // add | remove from stack
     Store.stackLS_CL.addRemove(day, Store.stackLS_CL);
-
-    // hide TS
-    // if(Store.stackLS_CL.length == 0)
-    //     Vue.set(Store.TS, 'state', false);
 }
 
 function ordersDayClick(day)

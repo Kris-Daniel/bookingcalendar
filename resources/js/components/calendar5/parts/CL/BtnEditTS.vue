@@ -1,7 +1,7 @@
 <template>
     <div
         @click="changeStateTS()"
-        class="btn CL_btn--right"
+        class="btn"
         v-if="showEdit"
     >
         {{text}}
@@ -27,8 +27,10 @@ export default {
     },
     methods: {
         changeStateTS() {
-            let val = (Store.stackTS.state == Store.state) ? false : Store.state;
-            Vue.set(Store.stackTS, 'state', val);
+            Store.showTS = true;
+            Store.showLS = false;
+            Store.overlay = true;
+            Vue.set(Store.stackTS, 'state', Store.state);
         }
     }
 }

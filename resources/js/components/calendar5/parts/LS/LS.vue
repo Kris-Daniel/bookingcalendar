@@ -1,10 +1,13 @@
 <template>
-    <div class="LS">
+    <div class="LS" :class="{active: showLS}">
         <TabsLS></TabsLS>
         <div class="intervals">
             <template v-for="day in renderDays">
                 <IntervalLS :data="day" :state="stateObserver"></IntervalLS>
             </template>
+        </div>
+        <div class="center pt100 show-in-mobile">
+            <BtnEditTS></BtnEditTS>
         </div>
         <input type="hidden" name="" :value="stateObserver">
     </div>
@@ -16,14 +19,19 @@ import Store from '../../services/Store';
 import Helper from '../../services/Helper';
 import IntervalLS from './IntervalLS';
 import TabsLS from './TabsLS';
+import BtnEditTS from '../CL/BtnEditTS';
 
 export default {
     name: 'LS',
     components: {
         IntervalLS,
-        TabsLS
+        TabsLS,
+        BtnEditTS
     },
     computed: {
+        showLS() {
+            return Store.showLS;
+        },
         stateObserver() {
             return Store.stackLS_CL.state;
         },

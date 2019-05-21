@@ -31,26 +31,33 @@
 }
 
 .calendar-side{
-    .curve();
+    .scrollstyleY();
     position: fixed;
     top: 0;
-    bottom: 0;
-    right: -300px;
-    width: 300px;
+    width: 300px !important;
+    height: 100vh;
     padding: 0 22px;
     background: #fff;
-    border-left: 2px solid @gray;
     z-index: 3;
-    &--left{
-        left: -300px;
-        &.active{
-            left: 0;
-        }
-    }
-    &--right{
+    transition: 0.3s all ease;
+}
+.calendar-side--right{
         right: -300px;
+        border-left: 2px solid @gray;
         &.active{
             right: 0;
         }
     }
+.calendar-side--left{
+    left: -300px;
+    border-right: 2px solid @gray;
+    padding: 22px 22px 0 22px;
+    &.active{
+        left: 0;
+    }
+}
+.show-in-mobile{
+    .from(768px, {
+        display: none !important;
+    });
 }

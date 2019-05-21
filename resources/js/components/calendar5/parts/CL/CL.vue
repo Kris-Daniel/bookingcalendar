@@ -23,9 +23,11 @@
             </div>
 
         </div>
-        <div class="box0 pv20">
-            <div class="a-6"></div>
-            <div class="a-6">
+        <div class="CL_btns-box">
+            <div class="CL_btns-grid CL_btns-grid--left" @click="showLS()">
+                <div class="btn show-in-mobile">View Schedule</div>
+            </div>
+            <div class="CL_btns-grid CL_btns-grid--right">
                 <BtnEditTS></BtnEditTS>
             </div>
         </div>
@@ -86,6 +88,11 @@ export default {
                 Vue.set(Store.TS, 'state', 'editSchedule');
             else
                 Vue.set(Store.TS, 'state', false);
+        },
+        showLS()
+        {
+            Store.showLS = true;
+            Store.overlay = true;
         }
     }
 }

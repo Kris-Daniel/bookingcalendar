@@ -75,6 +75,9 @@ let Store = new Vue({
             stackLS_CL: new Stack('week'),
             stackTS: new Stack(false),
             settings: RenderCalendar.settings,
+            overlay: false,
+            showLS: false, // mobile
+            showTS: false,
             SD: RenderCalendar.schedule.days,
             WD: RenderCalendar.schedule.weekDays,
             BK: RenderCalendar.bookings,

@@ -1,7 +1,7 @@
 <template>
     <div
         class="calendar-side calendar-side--right center"
-        :class="{active: flag}"
+        :class="{active: showTS && flag}"
     >
         <div class="TS_head">
             <div class="TS_title">Time Setting</div>
@@ -97,7 +97,9 @@ export default {
         flag() {
             return (Store.stackTS.state == 'standard');
         },
-
+        showTS() {
+            return Store.showTS;
+        },
         observerStackLS_CL() {
             let ints = this.intervals;
             this.OneInLS_CL = false;
@@ -137,26 +139,27 @@ export default {
                 Vue.set(Store[ptr[item.type]], item.ref, savedIntervals);
             });
 
-            Store.stackTS.state = false;
+            // Store.stackTS.state = false;
             Store.stackLS_CL.resetVue(Store.stackLS_CL);
+            this.success();
             console.log(this.$refs.segments, 'segments');
             console.log(this.$refs.froms, 'froms');
             console.log(this.$refs.tos, 'tos');
         },
         removeFromSpecial() {
-            if(Store.stackLS_CL.state == 'day') {
-                let it = this;
-                Store.stackLS_CL.map(function(item) {
-                    Vue.delete(Store.SD, item.ref);
-                });
-                Store.stackLS_CL.resetVue(Store.stackLS_CL);
-            }
+            let it = this;
+            Store.stackLS_CL.map(function(item) {
+                Vue.delete(Store.SD, item.ref);
+            });
+            Store.stackLS_CL.resetVue(Store.stackLS_CL);
+            this.success();
         },
         ApplyToWeekday() {
             let first = Store.stackLS_CL.getFirst();
             let savedIntervals = this.makeSavedIntervals();
             Vue.set(Store.WD, first.weekName, savedIntervals);
             Store.stackLS_CL.resetVue(Store.stackLS_CL);
+            this.success();
         },
         makeSavedIntervals() {
             let it = this;
@@ -183,6 +186,10 @@ export default {
         },
         emptyIntervals() {
             return {from: '00:00', to: '00:00'};
+        },
+        success() {
+            Store.overlay = false;
+            Store.showTS = false;
         }
     }
 }

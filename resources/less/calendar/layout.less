@@ -4,6 +4,10 @@
     user-select: none;
     font-family: 'LatoWeb', sans-serif;
     min-height: 2000px;
+    padding: 20px;
+    .to(540px, {
+        padding: 20px 0;
+    });
     &.overlay{
         min-height: auto;
         overflow: hidden;
@@ -27,6 +31,10 @@
         width: 38.271604%;
         max-width: 310px;
         min-width: 240px;
+        .to(767px, {
+            .calendar-side();
+            .calendar-side--left();
+        });
     }
 
     .CL{
@@ -36,6 +44,10 @@
         width: 61.728395%;
         max-width: 500px;
         min-width: 320px;
+        .to(767px, {
+            width: 100%;
+            max-width: none;
+        });
     }
 
     .CL_box{
@@ -55,6 +67,23 @@
         .f1();
         background: #fff;
         border-radius: 0 0 4px 4px;
+    }
+    .CL_btns-box{
+        .box0();
+        padding: 20px 0;
+        .to(540px, {
+            padding: 20px 10px;
+        });
+    }
+    .CL_btns-grid{
+        .a-6();
+        &--left{
+            padding-right: 4px;
+        }
+        &--right{
+            .text-right();
+            padding-left: 4px;
+        }
     }
 
     .TS_head,

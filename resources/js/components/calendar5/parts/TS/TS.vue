@@ -13,6 +13,7 @@
 import ClientsTS from './ClientsTS';
 import DayIntervalsTS from './DayIntervalsTS';
 import InputsTS from './InputsTS';
+import * as $ from 'jquery';
 
 import Store from '../../services/Store';
 
@@ -25,14 +26,11 @@ export default {
     },
     computed: {
         observerStackLS_CL() {
-            let dcal = document.querySelector('.dcal');
+            let $dcal = $('.dcal');
+            let $body = $('body');
             if(Store.stackLS_CL.length == 0) {
                 Store.stackTS.state = false;
-            }
-            if(!Store.stackTS.state && dcal) {
-                dcal.className = 'dcal';
-            } else if(dcal) {
-                dcal.className = 'dcal overlay';
+                Store.showTS = false;
             }
             return Store.stackLS_CL.length;
         }

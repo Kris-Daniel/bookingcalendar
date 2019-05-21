@@ -1,5 +1,5 @@
 <template>
-    <div class="dcal" :class="state">
+    <div class="dcal" :class="[state, {overlay}]">
         <div class="dcal_mask" @click="removeOverlay()"></div>
         <PopupClient></PopupClient>
         <LS></LS>
@@ -9,10 +9,12 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import CL from './parts/CL/CL';
 import LS from './parts/LS/LS';
 import TS from './parts/TS/TS';
 import PopupClient from './parts/Popup/Client';
+import * as $ from 'jquery';
 
 import Store from './services/Store';
 
@@ -27,13 +29,27 @@ export default {
     computed: {
         state() {
             return Store.state;
+        },
+        overlay() {
+            if(Store.overlay)
+                $('body').addClass('overflow-hidden');
+            else
+                $('body').removeClass('overflow-hidden');
+            return Store.overlay;
         }
     },
     methods: {
         removeOverlay() {
-            Store.stackTS.state = false;
+            Vue.set(Store, 'showTS', false);
+            Vue.set(Store, 'showLS', false);
+            Vue.set(Store, 'overlay', false);
             Store.stackTS.resetVue(Store.stackTS);
         }
+    },
+    created() {
+        // $("body").on("swipe",function(){
+        //   console.log('swiped');
+        // });
     }
 }
 </script>

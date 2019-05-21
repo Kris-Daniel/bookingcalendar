@@ -1,7 +1,7 @@
 <template>
     <div
         class="calendar-side calendar-side--right"
-        :class="{active: flag}"
+        :class="{active: showTS && flag}"
     >
         <div class="TS_head">
             <div class="TS_title">Clients</div>
@@ -32,6 +32,9 @@ export default {
     computed: {
         flag() {
             return (Store.stackTS.state == 'orders');
+        },
+        showTS() {
+            return Store.showTS;
         },
         day() {
             if(Store.state == 'orders')
