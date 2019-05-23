@@ -3243,7 +3243,6 @@ a {
   padding: 0 22px;
   background: #fff;
   z-index: 3;
-  transition: 0.3s all ease;
 }
 .calendar-side::-webkit-scrollbar {
   width: 2px;
@@ -3330,7 +3329,6 @@ a {
     padding: 0 22px;
     background: #fff;
     z-index: 3;
-    transition: 0.3s all ease;
     left: -300px;
     border-right: 2px solid #c2c9dd;
     padding: 22px;

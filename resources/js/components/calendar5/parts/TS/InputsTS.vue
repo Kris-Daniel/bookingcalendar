@@ -89,7 +89,7 @@ export default {
             intervals: [],
             options: {
                 time: true,
-                timeFormat: '24',
+                timeFormat: '12',
                 timePattern: ['h', 'm']
             }
         }

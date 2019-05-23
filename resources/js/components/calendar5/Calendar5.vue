@@ -1,5 +1,5 @@
 <template>
-    <div class="dcal" :class="[state, {overlay}]">
+    <div class="dcal" ref="dcal" :class="[state, {overlay}]">
         <div class="dcal_mask" @click="removeOverlay()"></div>
         <PopupClient></PopupClient>
         <LS></LS>
@@ -15,8 +15,8 @@ import LS from './parts/LS/LS';
 import TS from './parts/TS/TS';
 import PopupClient from './parts/Popup/Client';
 import * as $ from 'jquery';
-
 import Store from './services/Store';
+import Swipable from './services/Swipe';
 
 export default {
     name: 'calendar5',
@@ -25,6 +25,10 @@ export default {
         LS,
         TS,
         PopupClient
+    },
+    mounted() {
+        let box = this.$refs.dcal;
+        // Swipable(box, '.LS', $);
     },
     computed: {
         state() {

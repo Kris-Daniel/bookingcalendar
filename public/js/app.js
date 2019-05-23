@@ -523,6 +523,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/Store */ "./resources/js/components/calendar5/services/Store.js");
+/* harmony import */ var _services_Swipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/Swipe */ "./resources/js/components/calendar5/services/Swipe.js");
 //
 //
 //
@@ -533,6 +534,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -547,6 +549,9 @@ __webpack_require__.r(__webpack_exports__);
     LS: _parts_LS_LS__WEBPACK_IMPORTED_MODULE_2__["default"],
     TS: _parts_TS_TS__WEBPACK_IMPORTED_MODULE_3__["default"],
     PopupClient: _parts_Popup_Client__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  mounted: function mounted() {
+    var box = this.$refs.dcal; // Swipable(box, '.LS', $);
   },
   computed: {
     state: function state() {
@@ -1494,7 +1499,7 @@ __webpack_require__.r(__webpack_exports__);
       intervals: [],
       options: {
         time: true,
-        timeFormat: '24',
+        timeFormat: '12',
         timePattern: ['h', 'm']
       }
     };
@@ -33344,7 +33349,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "dcal", class: [_vm.state, { overlay: _vm.overlay }] },
+    {
+      ref: "dcal",
+      staticClass: "dcal",
+      class: [_vm.state, { overlay: _vm.overlay }]
+    },
     [
       _c("div", {
         staticClass: "dcal_mask",
@@ -51690,6 +51699,142 @@ var Store = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (Store);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar5/services/Swipe.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/calendar5/services/Swipe.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Swipable; });
+/* harmony import */ var _Store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Store */ "./resources/js/components/calendar5/services/Store.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+function Swipable(box, drag, $) {
+  // globals
+  var cursorX = 0,
+      cursorY = 0,
+      indent;
+
+  function setCursors() {
+    var event = window.event;
+    cursorX = event.touches[0].clientX;
+    cursorY = event.touches[0].clientY;
+  } // events
+
+
+  $(box).on('touchstart', function () {
+    setCursors();
+    $(box).bind('touchmove', function (e) {
+      e.preventDefault();
+      cursorX = e.touches[0].clientX;
+      cursorY = e.touches[0].clientY;
+    });
+    var $drag = $(this).find(drag);
+    indent = $drag.outerWidth();
+    console.log($drag, indent);
+    var swipe = new Swipe($drag);
+    $(this).on('touchend', function () {
+      $(box).off('touchmove');
+      $(this).off('touchend');
+      swipe.end();
+    });
+  });
+
+  var Swipe =
+  /*#__PURE__*/
+  function () {
+    function Swipe($drag) {
+      _classCallCheck(this, Swipe);
+
+      this.$drag = $drag;
+      this.x1 = cursorX;
+      this.y1 = cursorY;
+      this.xDif = '';
+      this.yDif = '';
+      this.swipeIndent = 0;
+      this.start();
+    }
+
+    _createClass(Swipe, [{
+      key: "reset",
+      value: function reset() {
+        var it = this;
+
+        if (it.swipeIndent == indent || it.swipeIndent == -indent) {
+          it.$drag.css({
+            transform: ''
+          });
+        } else {
+          it.$drag.css({
+            transition: '0.3s all ease',
+            transform: ''
+          });
+          this.resetTimeout = setTimeout(function () {
+            it.$drag.css({
+              transition: ''
+            });
+          }, 300);
+        }
+      }
+    }, {
+      key: "start",
+      value: function start() {
+        var it = this;
+        this.swipeInterval = setInterval(function () {
+          it.xDif = cursorX - it.x1;
+          it.yDif = cursorY - it.y1;
+          it.swipeIndent = it.setIndent(it.xDif);
+          it.$drag.css({
+            'transform': 'translateX(' + it.swipeIndent + 'px)'
+          });
+        }, 0.0001);
+      }
+    }, {
+      key: "end",
+      value: function end() {
+        clearInterval(this.swipeInterval);
+
+        if (this.$drag.hasClass('active')) {
+          if (this.xDif < -indent / 4) this.$drag.removeClass('active');
+          _Store__WEBPACK_IMPORTED_MODULE_0__["default"].showLS = false;
+          _Store__WEBPACK_IMPORTED_MODULE_0__["default"].overlay = false;
+        } else {
+          if (this.xDif > indent / 4) this.$drag.addClass('active');
+          _Store__WEBPACK_IMPORTED_MODULE_0__["default"].showLS = true;
+          _Store__WEBPACK_IMPORTED_MODULE_0__["default"].overlay = true;
+        }
+
+        this.reset();
+      }
+    }, {
+      key: "setIndent",
+      value: function setIndent(len) {
+        if (this.$drag.hasClass('active')) {
+          if (len < -indent) return -indent;
+          if (len > 0) return 0;
+          return len;
+        } else {
+          if (len > indent) return indent;
+          if (len < 0) return 0;
+          return len;
+        }
+      }
+    }]);
+
+    return Swipe;
+  }();
+}
 
 /***/ }),
 
