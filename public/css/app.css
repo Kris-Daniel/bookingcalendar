@@ -3243,6 +3243,8 @@ a {
   padding: 0 22px;
   background: #fff;
   z-index: 3;
+  transition: 0.3s all ease;
+  background: #fcfcfe;
 }
 .calendar-side::-webkit-scrollbar {
   width: 2px;
@@ -3284,6 +3286,7 @@ a {
   font-family: 'LatoWeb', sans-serif;
   min-height: 2000px;
   padding: 20px;
+  background: #fcfcfe;
 }
 @media screen and (max-width: 540px) {
   .dcal {
@@ -3329,6 +3332,8 @@ a {
     padding: 0 22px;
     background: #fff;
     z-index: 3;
+    transition: 0.3s all ease;
+    background: #fcfcfe;
     left: -300px;
     border-right: 2px solid #c2c9dd;
     padding: 22px;
@@ -3949,17 +3954,19 @@ a {
   background: #ff6d9e;
 }
 .dcal .input {
-  font-size: 16px;
+  font-size: 13px;
   line-height: 1 !important;
-  color: #4D5055;
-  width: 72px;
+  text-align: center;
+  color: #a2a5a6;
+  width: 64px;
   box-sizing: border-box;
   padding: 11px 14px;
   border: 1px solid #c2c9dd;
-  border-radius: 4px;
+  border-radius: 18px;
 }
 .dcal .input:focus {
   outline: none;
+  color: #00cec9;
   border: 1px solid #00cec9;
 }
 .dcal .inputs_x {
