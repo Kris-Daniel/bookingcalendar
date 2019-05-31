@@ -112,6 +112,13 @@ class ForHelp {
         }
         return (time.join(':') + format);
     }
+    showTS()
+    {
+        Store.showTS = true;
+        Store.showLS = false;
+        Store.overlay = true;
+        Vue.set(Store.stackTS, 'state', Store.state);
+    }
     undo()
     {
         // this.RenderCalendar = JSON.parse(JSON.stringify(this.InsCalendar));
@@ -154,6 +161,8 @@ function ordersDayClick(day)
     // show | hide clients
     else if(day.bookingsAmount) {
         Store.stackLS_CL.addRemoveOnce(day, Store.stackLS_CL);
+        Helper.showTS();
     }
+
     // console.log(Store.stackLS_CL);
 }

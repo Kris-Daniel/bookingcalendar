@@ -568,6 +568,7 @@ __webpack_require__.r(__webpack_exports__);
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_6__["default"], 'showLS', false);
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_6__["default"], 'overlay', false);
       _services_Store__WEBPACK_IMPORTED_MODULE_6__["default"].stackTS.resetVue(_services_Store__WEBPACK_IMPORTED_MODULE_6__["default"].stackTS);
+      if (_services_Store__WEBPACK_IMPORTED_MODULE_6__["default"].state == 'orders') _services_Store__WEBPACK_IMPORTED_MODULE_6__["default"].stackLS_CL.resetVue(_services_Store__WEBPACK_IMPORTED_MODULE_6__["default"].stackLS_CL);
     }
   },
   created: function created() {// $("body").on("swipe",function(){
@@ -590,6 +591,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar5/services/Store.js");
+/* harmony import */ var _services_Helper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/Helper */ "./resources/js/components/calendar5/services/Helper.js");
 //
 //
 //
@@ -600,6 +602,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -609,15 +612,12 @@ __webpack_require__.r(__webpack_exports__);
       if (_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].state == 'standard') return 'Edit';else return 'Show';
     },
     showEdit: function showEdit() {
-      return _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.length ? true : false;
+      return _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.length && _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].state == 'standard';
     }
   },
   methods: {
     changeStateTS: function changeStateTS() {
-      _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].showTS = true;
-      _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].showLS = false;
-      _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].overlay = true;
-      vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackTS, 'state', _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].state);
+      _services_Helper__WEBPACK_IMPORTED_MODULE_2__["default"].showTS();
     }
   }
 });
@@ -676,9 +676,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -689,7 +686,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'CL',
+  name: "CL",
   components: {
     ArrowLeft: _svg_arrow_left__WEBPACK_IMPORTED_MODULE_3__["default"],
     ArrowRight: _svg_arrow_right__WEBPACK_IMPORTED_MODULE_4__["default"],
@@ -708,20 +705,19 @@ __webpack_require__.r(__webpack_exports__);
       store: _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"]
     };
   },
-  created: function created() {
-    setTimeout(function () {
-      vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].SD, 'd2019-05-23', []);
-    }, 2000);
+  created: function created() {// setTimeout(function() {
+    //   Vue.set(Store.SD, "d2019-05-23", []);
+    // }, 2000);
   },
   methods: {
     changeMonth: function changeMonth(side) {
-      var adder = side == 'next' ? 1 : -1;
+      var adder = side == "next" ? 1 : -1;
       this.date.setMonth(this.date.getMonth() + adder);
       this.year = this.date.getFullYear();
       this.month = this.date.getMonth();
     },
     editDays: function editDays() {
-      if (_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].TS.state != 'editSchedule') vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].TS, 'state', 'editSchedule');else vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].TS, 'state', false);
+      if (_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].TS.state != "editSchedule") vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].TS, "state", "editSchedule");else vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].TS, "state", false);
     },
     showLS: function showLS() {
       _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].showLS = true;
@@ -33559,7 +33555,7 @@ var render = function() {
             }
           }
         },
-        [_c("span", { staticClass: "CL_tab_text" }, [_vm._v("Work hours")])]
+        [_c("span", { staticClass: "CL_tab_text" }, [_vm._v("Schedule")])]
       )
     ]),
     _vm._v(" "),
@@ -33840,7 +33836,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "LS_head" }, [
-    _c("div", { staticClass: "size16 gray" }, [_vm._v("Schedule")]),
+    _c("div", { staticClass: "size16 gray" }, [_vm._v("Settings")]),
     _vm._v(" "),
     _c("div", { staticClass: "LS_tabs" }, [
       _c(
@@ -33857,7 +33853,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Regular")]
+            [_vm._v("Schedule")]
           )
         ]
       ),
@@ -33876,7 +33872,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Special")]
+            [_vm._v("Custom Days")]
           )
         ]
       )
@@ -51313,15 +51309,15 @@ var _default = function _default() {
       }]
     },
     days: {
-      'd2019-05-04': [{
+      'd2019-06-04': [{
         from: '10:00',
         to: '15:00'
       }],
-      'd2019-05-08': []
+      'd2019-06-08': []
     }
   };
   this.bookings = {
-    'd2019-05-04': [{
+    'd2019-06-04': [{
       idClient: 123,
       name: 'John Doe',
       from: '08:30',
@@ -51332,7 +51328,7 @@ var _default = function _default() {
       from: '08:30',
       to: '09:00'
     }],
-    'd2019-05-10': [{
+    'd2019-06-10': [{
       idClient: 124,
       name: 'Helen Doe',
       from: '08:30',
@@ -51510,6 +51506,14 @@ function () {
       return time.join(':') + format;
     }
   }, {
+    key: "showTS",
+    value: function showTS() {
+      _Store__WEBPACK_IMPORTED_MODULE_1__["default"].showTS = true;
+      _Store__WEBPACK_IMPORTED_MODULE_1__["default"].showLS = false;
+      _Store__WEBPACK_IMPORTED_MODULE_1__["default"].overlay = true;
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackTS, 'state', _Store__WEBPACK_IMPORTED_MODULE_1__["default"].state);
+    }
+  }, {
     key: "undo",
     value: function undo() {// this.RenderCalendar = JSON.parse(JSON.stringify(this.InsCalendar));
       // Vue.set(Store, 'schedule', this.RenderCalendar.schedule);
@@ -51552,6 +51556,7 @@ function ordersDayClick(day) {
   } // show | hide clients
   else if (day.bookingsAmount) {
       _Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL.addRemoveOnce(day, _Store__WEBPACK_IMPORTED_MODULE_1__["default"].stackLS_CL);
+      Helper.showTS();
     } // console.log(Store.stackLS_CL);
 
 }

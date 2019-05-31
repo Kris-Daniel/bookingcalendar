@@ -6,7 +6,7 @@
                 :class="{active: tabObserver == 'standard'}"
                 @click="changeTab('standard')"
             >
-                <span class="CL_tab_text">Work hours</span>
+                <span class="CL_tab_text">Schedule</span>
             </div>
         </div>
         <div class="CL_tab-grid">

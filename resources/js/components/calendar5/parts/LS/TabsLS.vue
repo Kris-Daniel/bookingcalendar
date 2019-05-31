@@ -1,12 +1,12 @@
 <template>
     <div class="LS_head">
-        <div class="size16 gray">Schedule</div>
+        <div class="size16 gray">Settings</div>
         <div class="LS_tabs">
             <div class="LS_tab" :class="{active: observerTab == 'week'}">
-                <span class="LS_tab_text" @click="changeTab('week')">Regular</span>
+                <span class="LS_tab_text" @click="changeTab('week')">Schedule</span>
             </div>
             <div class="LS_tab" :class="{active: observerTab == 'day'}">
-                <span class="LS_tab_text" @click="changeTab('day')">Special</span>
+                <span class="LS_tab_text" @click="changeTab('day')">Custom Days</span>
             </div>
         </div>
         <input type="hidden" name="" :value="observerTab">

@@ -11,6 +11,7 @@
 <script>
 import Vue from 'vue';
 import Store from '../../services/Store';
+import Helper from '../../services/Helper';
 
 export default {
     name: 'BtnEditTS',
@@ -22,15 +23,12 @@ export default {
                 return 'Show'
         },
         showEdit() {
-            return Store.stackLS_CL.length ? true : false;
+            return (Store.stackLS_CL.length && Store.state == 'standard');
         }
     },
     methods: {
         changeStateTS() {
-            Store.showTS = true;
-            Store.showLS = false;
-            Store.overlay = true;
-            Vue.set(Store.stackTS, 'state', Store.state);
+            Helper.showTS();
         }
     }
 }

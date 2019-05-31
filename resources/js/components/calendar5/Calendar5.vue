@@ -48,6 +48,8 @@ export default {
             Vue.set(Store, 'showLS', false);
             Vue.set(Store, 'overlay', false);
             Store.stackTS.resetVue(Store.stackTS);
+            if(Store.state == 'orders')
+                Store.stackLS_CL.resetVue(Store.stackLS_CL);
         }
     },
     created() {
