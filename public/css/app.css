@@ -3515,6 +3515,16 @@ a {
   border-bottom: 1px solid #fbfbfc;
   border-top: 1px solid #f5f4f8;
 }
+.CC {
+  margin: 20px;
+  padding: 100px 20px;
+  border: 1px solid #00cec9;
+}
+.CC .RC {
+  margin: 0 auto;
+  max-width: 1024px;
+  border: 1px solid #00cec9;
+}
 .dcal .days {
   font-size: 0;
   padding: 0 10px;
