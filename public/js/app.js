@@ -561,6 +561,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HelperCL__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HelperCL */ "./resources/js/components/calendar6/parts/CL/HelperCL.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Slide__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Slide */ "./resources/js/components/calendar6/parts/CL/Slide.vue");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -574,14 +583,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide__WEBPACK_IMPORTED_MODULE_4__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CL",
+  components: {
+    Slide: _Slide__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
   props: ["state", "extended"],
   data: function data() {
     return {
       oldState: this.state,
       time: _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].settings.time,
       slides: [],
+      renderSlides: [],
       slideIndex: 1
     };
   },
@@ -592,16 +607,17 @@ __webpack_require__.r(__webpack_exports__);
     this.currentYear = this.time.getFullYear();
     this.dayN = this.currentDay;
     this.monthN = this.currentYear * 12 + this.currentMonth;
-    this.setSlides();
   },
   mounted: function mounted() {
-    console.log(this.oldState);
+    this.setSlides();
+    console.log(this.oldState, "mounted");
   },
   computed: {
     stateObserver: function stateObserver() {
       if (this.oldState != this.state) {
         this.oldState = this.state;
         this.slides = [];
+        vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this, "renderSlides", []);
         this.slideIndex = 1;
         this.dayN = this.currentDay;
         this.monthN = this.currentYear * 12 + this.currentMonth;
@@ -622,6 +638,12 @@ __webpack_require__.r(__webpack_exports__);
           this.slides.push(_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getWeek(_i));
         }
       }
+
+      for (var _i2 = 0; _i2 < 3; _i2++) {
+        var SlideInstance = this.getSlide(_i2);
+        this.$refs.slider.appendChild(SlideInstance.$el);
+      } // for (let i = 0; i < 3; i++) this.renderSlides.push(this.slides[i]);
+
     },
     changeSlide: function changeSlide(side) {
       if (side == "next") {
@@ -631,6 +653,10 @@ __webpack_require__.r(__webpack_exports__);
         if (++this.slideIndex == this.slides.length - 1) {
           if (this.state == "month") this.slides.push(_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getMonth(this.monthN + 1));else this.slides.push(_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getWeek(this.dayN + 7));
         }
+
+        jquery__WEBPACK_IMPORTED_MODULE_3__(this.$refs.slider).children().first().remove();
+        var SlideInstance = this.getSlide(this.slideIndex + 1);
+        this.$refs.slider.appendChild(SlideInstance.$el);
       } else {
         this.monthN--;
         this.dayN -= 7;
@@ -639,11 +665,131 @@ __webpack_require__.r(__webpack_exports__);
           this.slideIndex = 1;
           if (this.state == "month") this.slides.unshift(_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getMonth(this.monthN - 1));else this.slides.unshift(_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getWeek(this.dayN - 7));
         }
+
+        jquery__WEBPACK_IMPORTED_MODULE_3__(this.$refs.slider).children().last().remove();
+
+        var _SlideInstance = this.getSlide(this.slideIndex - 1);
+
+        this.$refs.slider.prepend(_SlideInstance.$el);
       }
 
       console.log(this.slides);
+      console.log(this.renderSlides);
+      console.log("========");
+    },
+    getSlide: function getSlide(i) {
+      var SlideInstance = new SlideClass({
+        propsData: {
+          slide: this.slides[i],
+          state: this.state
+        }
+      });
+      SlideInstance.$mount();
+      return SlideInstance;
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HelperCL__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelperCL */ "./resources/js/components/calendar6/parts/CL/HelperCL.js");
+/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar6/services/Store.js");
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Day",
+  props: ["day"],
+  data: function data() {
+    return {
+      dayStr: "",
+      time: null,
+      offset: 0
+    };
+  },
+  created: function created() {
+    console.log(this.day);
+    this.setup();
+  },
+  methods: {
+    setup: function setup() {
+      if (this.day.type == "month") {
+        this.dayStr = this.day.YM.year + "-";
+        this.dayStr += _HelperCL__WEBPACK_IMPORTED_MODULE_0__["default"].zeroToNum(this.day.YM.month + 1) + "-";
+        this.dayStr += _HelperCL__WEBPACK_IMPORTED_MODULE_0__["default"].zeroToNum(this.day.dayM);
+        this.time = new Date(this.dayStr);
+
+        if (this.day.dayM == 1) {
+          this.offset = this.time.getDay();
+          if (_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].settings.mondayFirst) this.offset = --this.offset < 0 ? 6 : this.offset;
+          this.offset *= 100 / 7;
+          console.log(this.offset);
+        }
+      } else {
+        this.time = new Date(this.day.dayN * 86400000);
+        this.dayStr = this.time.toISOString().slice(0, 10);
+        console.log(this.time.toISOString().slice(0, 10));
+      }
+
+      console.log(this.dayStr);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Day__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Day */ "./resources/js/components/calendar6/parts/CL/Day.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Slide",
+  components: {
+    Day: _Day__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  props: ["slide", "state"],
+  data: function data() {
+    return {
+      YM: {
+        month: this.slide.month,
+        year: this.slide.year
+      }
+    };
+  },
+  created: function created() {},
+  methods: {}
 });
 
 /***/ }),
@@ -675,12 +821,9 @@ __webpack_require__.r(__webpack_exports__);
       stateCL: 'month'
     };
   },
-  created: function created() {
-    var _this = this;
-
-    setTimeout(function () {
-      _this.stateCL = 'week';
-    }, 2000);
+  created: function created() {// setTimeout(() => {
+    //     this.stateCL = 'week';
+    // }, 2000)
   }
 });
 
@@ -29951,13 +30094,84 @@ var render = function() {
       [_vm._v("Prev")]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "slides" }),
+    _c("div", { ref: "slider", staticClass: "slider" }),
     _vm._v(" "),
     _c("input", {
       attrs: { type: "hidden" },
       domProps: { value: _vm.stateObserver }
     })
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=template&id=1f0ecce7&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=template&id=1f0ecce7& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "day", style: { "margin-left": _vm.offset + "%" } },
+    [_c("div", { staticClass: "day-ins" }, [_vm._v(_vm._s(_vm.day.dayM))])]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=template&id=6c1dd888&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=template&id=6c1dd888& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "slide" },
+    [
+      _vm.state == "week"
+        ? _vm._l(7, function(n) {
+            return _c("Day", {
+              key: n,
+              attrs: { day: { type: "week", dayN: _vm.slide[n - 1] } }
+            })
+          })
+        : _vm._l(_vm.slide.days, function(n) {
+            return _c("Day", {
+              key: n,
+              attrs: { day: { type: "month", dayM: n, YM: _vm.YM } }
+            })
+          })
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -45587,6 +45801,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/calendar6/parts/CL/Day.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/CL/Day.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Day_vue_vue_type_template_id_1f0ecce7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Day.vue?vue&type=template&id=1f0ecce7& */ "./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=template&id=1f0ecce7&");
+/* harmony import */ var _Day_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Day.vue?vue&type=script&lang=js& */ "./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Day_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Day_vue_vue_type_template_id_1f0ecce7___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Day_vue_vue_type_template_id_1f0ecce7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/calendar6/parts/CL/Day.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Day_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Day.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Day_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=template&id=1f0ecce7&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=template&id=1f0ecce7& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Day_vue_vue_type_template_id_1f0ecce7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Day.vue?vue&type=template&id=1f0ecce7& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/CL/Day.vue?vue&type=template&id=1f0ecce7&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Day_vue_vue_type_template_id_1f0ecce7___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Day_vue_vue_type_template_id_1f0ecce7___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/calendar6/parts/CL/HelperCL.js":
 /*!****************************************************************!*\
   !*** ./resources/js/components/calendar6/parts/CL/HelperCL.js ***!
@@ -45638,7 +45921,7 @@ function () {
     }
   }, {
     key: "getMonth",
-    value: function getMonth(monthN) {
+    value: function getMonth(monthN, mondayFirst) {
       var year = Math.floor(monthN / 12);
       var month = monthN - year * 12;
       var res = {
@@ -45649,6 +45932,13 @@ function () {
       if (!(year % 4) && !!(year % 100) || !(year % 400)) res.days = daysX[month];else res.days = days[month];
       return res;
     }
+  }, {
+    key: "zeroToNum",
+    value: function zeroToNum(num) {
+      num = num.toString();
+      num = num.length < 2 ? '0' + num : num;
+      return num;
+    }
   }]);
 
   return HelperCL;
@@ -45656,6 +45946,75 @@ function () {
 
 var helperCL = new HelperCL();
 /* harmony default export */ __webpack_exports__["default"] = (helperCL);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/CL/Slide.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/CL/Slide.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Slide_vue_vue_type_template_id_6c1dd888___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Slide.vue?vue&type=template&id=6c1dd888& */ "./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=template&id=6c1dd888&");
+/* harmony import */ var _Slide_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Slide.vue?vue&type=script&lang=js& */ "./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Slide_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Slide_vue_vue_type_template_id_6c1dd888___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Slide_vue_vue_type_template_id_6c1dd888___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/calendar6/parts/CL/Slide.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Slide_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Slide.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Slide_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=template&id=6c1dd888&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=template&id=6c1dd888& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Slide_vue_vue_type_template_id_6c1dd888___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Slide.vue?vue&type=template&id=6c1dd888& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/CL/Slide.vue?vue&type=template&id=6c1dd888&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Slide_vue_vue_type_template_id_6c1dd888___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Slide_vue_vue_type_template_id_6c1dd888___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -45815,7 +46174,7 @@ var _default = function _default() {
   this.settings = {
     segment: 60,
     multiselect: true,
-    mondayFirst: true,
+    mondayFirst: false,
     hoursFormat: '12h',
     time: new Date()
   };

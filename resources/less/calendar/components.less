@@ -438,5 +438,57 @@
 }
 
 .CC{
-    
+    .slider{
+        .rel();
+        overflow: hidden;
+        height: 600px;
+        // border: 1px solid coral;
+    }
+    .slide{
+        .abs();
+        .f0();
+        // border: 1px solid coral;
+        height: 100%;
+        width: 100%;
+        transition: 0.2s all ease;
+        padding: 0.5px;
+        &:nth-child(1){
+            left: -100%;
+        }
+        &:nth-child(2){
+            left: 0%;
+        }
+        &:nth-child(3){
+            left: 100%;
+        }
+    }
+    .day{
+        .dinl-top();
+        .rel();
+        .f1();
+        width: 14.285714%;
+        padding-top: 14.285714%;
+        text-align: center;
+
+        &:before{
+            .abs();
+            .db();
+            content: '';
+            top: -0.5px;
+            left: -0.5px;
+            right: -0.5px;
+            bottom: -0.5px;
+            border: 1px solid #000;
+            z-index: -1;
+        }
+
+        &:hover:before{
+            border: 1px solid #f00;
+            z-index: 1;
+        }
+    }
+    .day-ins{
+        .full-abs();
+        z-index: 2;
+    }
 }

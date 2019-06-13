@@ -26,7 +26,7 @@ class HelperCL {
         return arr;
     }
 
-    getMonth(monthN) {
+    getMonth(monthN, mondayFirst) {
         let year = Math.floor(monthN / 12);
         let month = monthN - (year * 12);
 
@@ -41,6 +41,13 @@ class HelperCL {
         else
             res.days = days[month];
         return res;
+    }
+
+    zeroToNum(num)
+    {
+        num = num.toString();
+        num = num.length < 2 ? '0' + num : num;
+        return num;
     }
 }
 

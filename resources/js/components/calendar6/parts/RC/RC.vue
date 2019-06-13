@@ -18,9 +18,9 @@ export default {
         }
     },
     created() {
-        setTimeout(() => {
-            this.stateCL = 'week';
-        }, 2000)
+        // setTimeout(() => {
+        //     this.stateCL = 'week';
+        // }, 2000)
     }
 }
 </script>
