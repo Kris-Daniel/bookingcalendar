@@ -642,8 +642,9 @@ var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide__WEBPA
       for (var _i2 = 0; _i2 < 3; _i2++) {
         var SlideInstance = this.getSlide(_i2);
         this.$refs.slider.appendChild(SlideInstance.$el);
-      } // for (let i = 0; i < 3; i++) this.renderSlides.push(this.slides[i]);
+      }
 
+      this.setHeight();
     },
     changeSlide: function changeSlide(side) {
       if (side == "next") {
@@ -673,8 +674,9 @@ var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide__WEBPA
         this.$refs.slider.prepend(_SlideInstance.$el);
       }
 
-      console.log(this.slides);
-      console.log(this.renderSlides);
+      this.setHeight(); // console.log(this.slides);
+      // console.log(this.renderSlides);
+
       console.log("========");
     },
     getSlide: function getSlide(i) {
@@ -686,6 +688,10 @@ var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide__WEBPA
       });
       SlideInstance.$mount();
       return SlideInstance;
+    },
+    setHeight: function setHeight() {
+      var renderSlide = jquery__WEBPACK_IMPORTED_MODULE_3__(this.$refs.slider).children()[1];
+      jquery__WEBPACK_IMPORTED_MODULE_3__(this.$refs.slider).height(jquery__WEBPACK_IMPORTED_MODULE_3__(renderSlide).height() + 1);
     }
   }
 });
@@ -718,16 +724,18 @@ __webpack_require__.r(__webpack_exports__);
     return {
       dayStr: "",
       time: null,
-      offset: 0
+      offset: 0,
+      dayM: null
     };
   },
   created: function created() {
-    console.log(this.day);
+    // console.log(this.day);
     this.setup();
   },
   methods: {
     setup: function setup() {
       if (this.day.type == "month") {
+        this.dayM = this.day.dayM;
         this.dayStr = this.day.YM.year + "-";
         this.dayStr += _HelperCL__WEBPACK_IMPORTED_MODULE_0__["default"].zeroToNum(this.day.YM.month + 1) + "-";
         this.dayStr += _HelperCL__WEBPACK_IMPORTED_MODULE_0__["default"].zeroToNum(this.day.dayM);
@@ -736,16 +744,13 @@ __webpack_require__.r(__webpack_exports__);
         if (this.day.dayM == 1) {
           this.offset = this.time.getDay();
           if (_services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].settings.mondayFirst) this.offset = --this.offset < 0 ? 6 : this.offset;
-          this.offset *= 100 / 7;
-          console.log(this.offset);
+          this.offset *= 100 / 7; // console.log(this.offset);
         }
       } else {
         this.time = new Date(this.day.dayN * 86400000);
         this.dayStr = this.time.toISOString().slice(0, 10);
-        console.log(this.time.toISOString().slice(0, 10));
+        this.dayM = this.time.getDate();
       }
-
-      console.log(this.dayStr);
     }
   }
 });
@@ -818,7 +823,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      stateCL: 'month'
+      stateCL: 'week'
     };
   },
   created: function created() {// setTimeout(() => {
@@ -30127,7 +30132,7 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "day", style: { "margin-left": _vm.offset + "%" } },
-    [_c("div", { staticClass: "day-ins" }, [_vm._v(_vm._s(_vm.day.dayM))])]
+    [_c("div", { staticClass: "day-ins" }, [_vm._v(_vm._s(_vm.dayM))])]
   )
 }
 var staticRenderFns = []

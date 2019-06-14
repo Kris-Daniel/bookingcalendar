@@ -81,8 +81,7 @@ export default {
                 let SlideInstance = this.getSlide(i);
                 this.$refs.slider.appendChild(SlideInstance.$el);
             }
-
-            // for (let i = 0; i < 3; i++) this.renderSlides.push(this.slides[i]);
+            this.setHeight();
         },
         changeSlide(side) {
             if (side == "next") {
@@ -110,9 +109,11 @@ export default {
                 let SlideInstance = this.getSlide(this.slideIndex - 1);
                 this.$refs.slider.prepend(SlideInstance.$el);
             }
+            this.setHeight();
+            
 
-            console.log(this.slides);
-            console.log(this.renderSlides);
+            // console.log(this.slides);
+            // console.log(this.renderSlides);
             console.log("========");
         },
         getSlide(i) {
@@ -124,6 +125,10 @@ export default {
             });
             SlideInstance.$mount();
             return SlideInstance;
+        },
+        setHeight() {
+            let renderSlide = $(this.$refs.slider).children()[1];
+            $(this.$refs.slider).height($(renderSlide).height() + 1);
         }
     }
 };

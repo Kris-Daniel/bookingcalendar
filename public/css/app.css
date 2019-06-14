@@ -3517,13 +3517,14 @@ a {
 }
 .CC {
   margin: 20px;
-  padding: 100px 20px;
+  padding: 20px 20px;
   border: 1px solid #00cec9;
 }
 .CC .RC {
   margin: 0 auto;
   max-width: 1024px;
-  border: 1px solid #00cec9;
+  padding: 20px;
+  border: 1px solid coral;
 }
 .dcal .days {
   font-size: 0;
@@ -4019,12 +4020,11 @@ a {
 .CC .slider {
   position: relative;
   overflow: hidden;
-  height: 600px;
+  transition: 0.2s all ease;
 }
 .CC .slide {
   position: absolute;
   font-size: 0;
-  height: 100%;
   width: 100%;
   transition: 0.2s all ease;
   padding: 0.5px;

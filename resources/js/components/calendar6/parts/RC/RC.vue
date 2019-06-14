@@ -14,7 +14,7 @@ export default {
     },
     data() {
         return {
-            stateCL: 'month'
+            stateCL: 'week'
         }
     },
     created() {
