@@ -1,39 +1,36 @@
 <template>
     <div class="CL">
-        <div @click="changeSlide('next')">Next</div>
-        <div @click="changeSlide('prev')">Prev</div>
-        <div class="slider" ref="slider">
-            <!-- <template v-for="(slide, index) in renderSlides">
-            <Slide
-                :key="index"
-                :slide="slide"
-                :state="state"
-            ></Slide>
-            </template>-->
-        </div>
-        <input type="hidden" :value="stateObserver">
+        <WeekChangeSlide v-if="type == 'week'"></WeekChangeSlide>
+        <MonthChangeSlide v-else @myclick="changeSlide"></MonthChangeSlide>
+        <div class="slider" ref="slider"></div>
+        <input type="hidden" :value="typeObserver">
     </div>
 </template>
 
 <script>
+
 import Vue from "vue";
-import Store from "../../services/Store";
-import HelperCL from "./HelperCL";
-import * as $ from "jquery";
+import Store from '../../services/Store';
+import WeekChangeSlide from './ChangeSlide/WeekChangeSlide';
+import MonthChangeSlide from './ChangeSlide/MonthChangeSlide';
+import WeekSlide from './Slide/WeekSlide';
+import MonthSlide from './Slide/MonthSlide';
 
-import Slide from "./Slide";
-
-let SlideClass = Vue.extend(Slide);
+// let SlideClass = Vue.extend(Slide);
 
 export default {
     name: "CL",
     components: {
-        Slide
+        WeekChangeSlide,
+        MonthChangeSlide,
+        WeekSlide,
+        MonthSlide
+        // Slide,
     },
-    props: ["state", "extended"],
+    props: ["extended"],
     data() {
         return {
-            oldState: this.state,
+            type: 'month',
             time: Store.settings.time,
             slides: [],
             renderSlides: [],
@@ -47,29 +44,24 @@ export default {
         this.currentYear = this.time.getFullYear();
         this.dayN = this.currentDay;
         this.monthN = this.currentYear * 12 + this.currentMonth;
+        setInterval(() => {
+            this.type = 'week';
+        }, 2000)
+        console.log('created');
     },
     mounted() {
-        this.setSlides();
-
-        console.log(this.oldState, "mounted");
+        // this.setSlides();
+        console.log('mounted');
     },
     computed: {
-        stateObserver() {
-            if (this.oldState != this.state) {
-                this.oldState = this.state;
-                this.slides = [];
-                Vue.set(this, "renderSlides", []);
-                this.slideIndex = 1;
-                this.dayN = this.currentDay;
-                this.monthN = this.currentYear * 12 + this.currentMonth;
-                this.setSlides();
-            }
-            return this.state;
+        typeObserver() {
+            console.log('type was changed');
+            return this.type;
         }
     },
     methods: {
         setSlides() {
-            if (this.state == "month") {
+            if (this.type == "month") {
                 for (let i = this.monthN - 1; i <= this.monthN + 1; i++)
                     this.slides.push(HelperCL.getMonth(i));
             } else {
@@ -84,11 +76,13 @@ export default {
             this.setHeight();
         },
         changeSlide(side) {
+            console.log(side, 'side');
+            return false;
             if (side == "next") {
                 this.monthN++;
                 this.dayN += 7;
                 if (++this.slideIndex == this.slides.length - 1) {
-                    if (this.state == "month")
+                    if (this.type == "month")
                         this.slides.push(HelperCL.getMonth(this.monthN + 1));
                     else this.slides.push(HelperCL.getWeek(this.dayN + 7));
                 }
@@ -101,7 +95,7 @@ export default {
                 this.dayN -= 7;
                 if (--this.slideIndex == 0) {
                     this.slideIndex = 1;
-                    if (this.state == "month")
+                    if (this.type == "month")
                         this.slides.unshift(HelperCL.getMonth(this.monthN - 1));
                     else this.slides.unshift(HelperCL.getWeek(this.dayN - 7));
                 }
@@ -120,7 +114,7 @@ export default {
             let SlideInstance = new SlideClass({
                 propsData: {
                     slide: this.slides[i],
-                    state: this.state
+                    state: this.type
                 }
             });
             SlideInstance.$mount();

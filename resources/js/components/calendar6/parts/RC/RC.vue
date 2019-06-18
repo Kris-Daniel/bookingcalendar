@@ -1,6 +1,6 @@
 <template>
     <div class="RC">
-        <CL :state="stateCL" :extended="true"></CL>
+        <CL :extended="true"></CL>
     </div>
 </template>
 
@@ -14,12 +14,12 @@ export default {
     },
     data() {
         return {
-            stateCL: 'week'
+            
         }
     },
     created() {
         // setTimeout(() => {
-        //     this.stateCL = 'week';
+        //     this.typeCL = 'week';
         // }, 2000)
     }
 }

@@ -26,7 +26,7 @@ class HelperCL {
         return arr;
     }
 
-    getMonth(monthN, mondayFirst) {
+    getMonth(monthN) {
         let year = Math.floor(monthN / 12);
         let month = monthN - (year * 12);
 
