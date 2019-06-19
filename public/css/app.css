@@ -3276,6 +3276,17 @@ a {
     display: none !important;
   }
 }
+.cell-border:before {
+  position: absolute;
+  display: block;
+  content: '';
+  top: -0.5px;
+  left: -0.5px;
+  right: -0.5px;
+  bottom: -0.5px;
+  border: 1px solid #000;
+  z-index: -1;
+}
 .dcal {
   position: relative;
   font-size: 0;
@@ -4023,6 +4034,17 @@ a {
   overflow: hidden;
   transition: 0.2s all ease;
 }
+.CC .slider:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  right: 1px;
+  bottom: 0;
+  z-index: -1;
+  border: 1px solid #000;
+  border-top: none;
+}
 .CC .slide {
   position: absolute;
   font-size: 0;
@@ -4059,15 +4081,42 @@ a {
   border: 1px solid #000;
   z-index: -1;
 }
-.CC .day:hover:before {
+.CC .day.checked {
+  background: #6de9ff;
+}
+.CC .day--hover:hover:before {
   border: 1px solid #f00;
   z-index: 1;
 }
-.CC .day-ins {
+.CC .day_inside {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 2;
+}
+.CC .weekdays {
+  font-size: 0;
+  padding: 0 0.5px;
+}
+.CC .weekday {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  font-size: 16px;
+  text-align: center;
+  width: 14.285714%;
+  padding: 8px 0;
+}
+.CC .weekday:before {
+  position: absolute;
+  display: block;
+  content: '';
+  top: -0.5px;
+  left: -0.5px;
+  right: -0.5px;
+  bottom: -0.5px;
+  border: 1px solid #000;
+  z-index: -1;
 }

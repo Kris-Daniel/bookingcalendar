@@ -49,6 +49,13 @@ class HelperCL {
         num = num.length < 2 ? '0' + num : num;
         return num;
     }
+
+    getDayStr(year, month, day) {
+        let dayStr = year + '-';
+        dayStr += this.zeroToNum(month + 1) + '-';
+        dayStr += this.zeroToNum(day);
+        return dayStr;
+    }
 }
 
 let helperCL = new HelperCL();
