@@ -442,24 +442,12 @@
         .rel();
         overflow: hidden;
         transition: 0.2s all ease;
-        &:before{
-            .abs();
-            content: '';
-            top: 0;
-            left: 0;
-            right: 1px;
-            bottom: 0;
-            z-index: -1;
-            border: 1px solid #000;
-            border-top: none;
-        }
     }
     .slide{
         .abs();
-        .f0();
         width: 100%;
         transition: 0.2s all ease;
-        padding: 0.5px;
+        padding: 1px;
         &:nth-child(1){
             left: -100%;
         }
@@ -471,26 +459,20 @@
         }
     }
     .day{
-        .cell-border();
-        .dinl-top();
-        .rel();
-        .f1();
-        width: 14.285714%;
-        padding-top: 14.285714%;
+        .pointer-hover();
+        min-height: 109px;
         text-align: center;
-
+        margin: -1px;
+        border: 1px solid @gray;
         &.checked{
             background: rgb(109, 233, 255);
         }
-
-        &--hover:hover:before{
-            border: 1px solid #f00;
+        &:hover{
+            border: 1px solid @cyan;
             z-index: 1;
         }
     }
     .day_inside{
-        .full-abs();
-        z-index: 2;
     }
 
     .weekdays{
@@ -505,5 +487,25 @@
         .center();
         width: 14.285714%;
         padding: 8px 0;
+    }
+    .day-another{
+        color: #808288;
+    }
+    .slide_table{
+        width: 100%;
+    }
+    .slide_tr{
+    }
+    .slide_td{
+        .rel();
+        border: 1px solid transparent;
+        &:hover{
+            z-index: 2;
+        }
+    }
+
+    .change-slide_prev,
+    .change-slide_next{
+        .pointer-hover();
     }
 }

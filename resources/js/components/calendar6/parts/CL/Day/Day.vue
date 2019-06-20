@@ -1,47 +1,76 @@
 <template>
-    <div class="day" :style="{'margin-left': offset + '%'}">
-        <div class="day-ins">{{dayM}}</div>
+    <div
+        class="day"
+        :class="[dayParams.dayClasses(), {'checked': checked}, anotherDay]"
+        ref="dayDiv"
+        @click="click"
+    >
+        <component :is="days[dayParams.dayType]" class="tab" :dayInfo="dayInfo"></component>
     </div>
 </template>
 
 <script>
-import HelperCL from "./HelperCL";
-import Store from "../../services/Store";
+import HelperCL from "../helpers/HelperCL";
+import Store from "../../../services/Store";
+import ScheduleDay from "./ScheduleDay";
+import SimpleDay from "./SimpleDay";
+
 export default {
     name: "Day",
-    props: ["day"],
+    props: ["day", "dayParams", "currentMonth"],
+    components: {
+        ScheduleDay,
+        SimpleDay
+    },
     data() {
         return {
-            dayStr: "",
-            time: null,
-            offset: 0,
-            dayM: null
+            days: {
+                schedule: "ScheduleDay",
+                simple: "SimpleDay"
+            },
+            checked: false
         };
     },
+    computed: {
+        // changeSlideObserver
+        anotherDay() {
+            this.checked = this.dayParams.checkedDays[this.ref] ? true : false;
+            if (this.dayParams.dayType != "simple")
+                if (
+                    this.currentMonth.n !=
+                    this.dayInfo.year * 12 + this.dayInfo.month
+                )
+                    return "day-another";
+            return "";
+        }
+    },
     created() {
-        // console.log(this.day);
-        this.setup();
+        this.dayDiv = "";
+        this.time = new Date(this.day * 86400000);
+        this.dayStr = this.time.toISOString().slice(0, 10);
+        this.ref = "d" + this.dayStr;
+
+        this.weekDay = Store.WEEK[this.time.getDay];
+        let dateArr = this.dayStr.split("-").map(item => {
+            return parseInt(item);
+        });
+        this.dayInfo = {
+            ref: this.ref,
+            day: dateArr[2],
+            month: dateArr[1] - 1,
+            year: dateArr[0]
+        };
+    },
+    mounted() {
+        this.dayDiv = this.$refs.dayDiv;
     },
     methods: {
-        setup() {
-            if (this.day.type == "month") {
-                this.dayM = this.day.dayM;
-                this.dayStr = this.day.YM.year + "-";
-                this.dayStr += HelperCL.zeroToNum(this.day.YM.month + 1) + "-";
-                this.dayStr += HelperCL.zeroToNum(this.day.dayM);
-                this.time = new Date(this.dayStr);
-                if (this.day.dayM == 1) {
-                    this.offset = this.time.getDay();
-                    if (Store.settings.mondayFirst)
-                        this.offset = --this.offset < 0 ? 6 : this.offset;
-                    this.offset *= 100 / 7;
-                    // console.log(this.offset);
-                }
-            } else {
-                this.time = new Date(this.day.dayN * 86400000);
-                this.dayStr = this.time.toISOString().slice(0, 10);
-                this.dayM = this.time.getDate();
-            }
+        click() {
+            this.checked = !this.checked;
+            this.dayParams.checkedDays[this.ref]
+                ? delete this.dayParams.checkedDays[this.ref]
+                : (this.dayParams.checkedDays[this.ref] = true);
+            this.dayParams.dayClick(this.ref, this.dayDiv);
         }
     }
 };

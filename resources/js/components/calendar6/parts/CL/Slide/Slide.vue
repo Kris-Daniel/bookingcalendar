@@ -1,31 +1,33 @@
 <template>
     <div class="slide">
-        <template v-if="state == 'week'">
-            <Day v-for="n in 7" :day="{type: 'week', dayN: slide[n -1]}" :key="n"></Day>
-        </template>
-        <template v-else>
-            <Day v-for="n in slide.days" :day="{type: 'month', dayM: n, YM}" :key="n"></Day>
-        </template>
+        <table class="slide_table">
+            <tr
+                class="slide_tr"
+                v-for="(week, weekIndex) in weeksInMonth"
+                :key="'week' + weekIndex"
+            >
+                <td class="slide_td" v-for="(day, dayIndex) in week" :key="'day' + dayIndex">
+                    <Day :dayParams="dayParams" :currentMonth="currentMonth" :day="day"></Day>
+                </td>
+            </tr>
+        </table>
     </div>
 </template>
 
 <script>
-import Day from "./Day";
+import Day from "../Day/Day";
 export default {
     name: "Slide",
     components: {
         Day
     },
-    props: ["slide", "state"],
+    props: ["weeksInMonth", "dayParams", "currentMonth"],
     data() {
-        return {
-            YM: {
-                month: this.slide.month,
-                year: this.slide.year
-            }
-        };
+        return {};
     },
-    created() {},
+    created() {
+        // console.log(this.dayParams, this.weeksInMonth);
+    },
     methods: {}
 };
 </script>

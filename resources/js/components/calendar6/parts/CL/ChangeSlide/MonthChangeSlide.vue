@@ -12,7 +12,7 @@ import Store from "../../../services/Store";
 
 export default {
     name: "MonthChangeSlide",
-    props: ["currentSlide"],
+    props: ["currentMonth"],
     data() {
         return {
             month: "",
@@ -20,7 +20,7 @@ export default {
         };
     },
     watch: {
-        currentSlide() {
+        currentMonth() {
             this.setText();
         }
     },
@@ -32,9 +32,10 @@ export default {
             this.$emit("changeSlide", side);
         },
         setText() {
-            if (this.currentSlide) {
-                this.month = Store.MONTHS[this.currentSlide.month];
-                this.year = this.currentSlide.year;
+            if (this.currentMonth) {
+                this.year = Math.floor(this.currentMonth / 12);
+                this.monthIndex = this.currentMonth - this.year * 12;
+                this.month = Store.MONTHS[this.monthIndex];
             }
         }
     }

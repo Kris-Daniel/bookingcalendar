@@ -1,4 +1,5 @@
 import * as $ from "jquery";
+import Store from '../../../services/Store';
 
 const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const daysX = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -6,12 +7,12 @@ const daysX = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 class HelperCL {
     constructor() { }
 
-    getWeek(dayN, mondayFirst) {
+    getWeek(dayN) {
         let t = new Date(dayN * 86400000);
         let mid = t.getDay();
         let arr = [];
 
-        if (mondayFirst) {
+        if (Store.settings.mondayFirst) {
             if (mid == 0)
                 for (let i = 0; i < 7; i++)
                     arr.unshift(dayN - i);
@@ -43,8 +44,7 @@ class HelperCL {
         return res;
     }
 
-    zeroToNum(num)
-    {
+    zeroToNum(num) {
         num = num.toString();
         num = num.length < 2 ? '0' + num : num;
         return num;
@@ -55,6 +55,22 @@ class HelperCL {
         dayStr += this.zeroToNum(month + 1) + '-';
         dayStr += this.zeroToNum(day);
         return dayStr;
+    }
+
+    getWeeksInMonth(monthN) {
+        let monthObj = this.getMonth(monthN);
+        let weeksInMonth = [];
+        for (let i = 1; (i - monthObj.days) <= 7; i += 7) {
+            let dayNM = i > monthObj.days ? monthObj.days : i;
+            let dayStr = this.getDayStr(monthObj.year, monthObj.month, dayNM);
+
+            dayNM = new Date(dayStr);
+            dayNM = Math.floor(dayNM.getTime() / 86400000);
+            weeksInMonth.push(this.getWeek(dayNM));
+        }
+        if (weeksInMonth[weeksInMonth.length - 1][0] == weeksInMonth[weeksInMonth.length - 2][0])
+            weeksInMonth.pop();
+        return weeksInMonth;
     }
 }
 

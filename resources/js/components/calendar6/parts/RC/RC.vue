@@ -18,9 +18,16 @@ export default {
     },
     created() {
         this.mainCL = {
-            extended: true,
+            from: '',
+            to: '',
+            time: new Date(),
+            dayType: 'schedule',
+            checkedDays: {},
             dayClick(ref, dayDiv) {
-                console.log(ref, dayDiv, "ref here");
+                console.log(ref, dayDiv, "ref click here");
+            },
+            dayClasses(ref) {
+                return 'day-test';
             }
         };
         // setTimeout(() => {
