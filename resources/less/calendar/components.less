@@ -447,65 +447,56 @@
         .abs();
         width: 100%;
         transition: 0.2s all ease;
-        padding: 1px;
+        background: #fff;
         &:nth-child(1){
-            left: -100%;
+            left: -100px;
+            opacity: 0;
         }
         &:nth-child(2){
-            left: 0%;
+            left: 0px;
+            z-index: 2;
         }
         &:nth-child(3){
-            left: 100%;
+            left: 100px;
+            opacity: 0;
         }
     }
-    .day{
-        .pointer-hover();
-        min-height: 109px;
-        text-align: center;
-        margin: -1px;
-        border: 1px solid @gray;
-        &.checked{
-            background: rgb(109, 233, 255);
-        }
-        &:hover{
-            border: 1px solid @cyan;
-            z-index: 1;
-        }
-    }
-    .day_inside{
-    }
-
-    .weekdays{
-        .f0();
-        padding: 0 0.5px;
-    }
-    .weekday{
-        .cell-border();
-        .dinl-top();
-        .rel();
-        .f1();
-        .center();
-        width: 14.285714%;
-        padding: 8px 0;
-    }
-    .day-another{
-        color: #808288;
-    }
-    .slide_table{
+    .slide_table,
+    .weekdays-table{
         width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+        table-layout: fixed;
     }
-    .slide_tr{
+    .weekdays_td{
+        border: 1px double #000;
+        padding: 6px 0;
     }
     .slide_td{
         .rel();
-        border: 1px solid transparent;
-        &:hover{
-            z-index: 2;
+        border: 1px solid @gray;
+        cursor: pointer;
+        &:hover,
+        &.checked{
+            border: 1px double @cyan;
+        }
+        &.checked .day{
+            background: rgb(127, 230, 248);
+        }
+        .to(800px, {
+            display: block;
+        });
+    }
+    .day{
+        min-height: 109px;
+        text-align: center;
+        &--another{
+            color: #808288;
         }
     }
 
-    .change-slide_prev,
-    .change-slide_next{
-        .pointer-hover();
+    .change-slide_btn{
+        .dinl-top();
+        cursor: pointer;
     }
 }

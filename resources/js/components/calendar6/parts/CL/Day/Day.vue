@@ -1,12 +1,9 @@
 <template>
-    <div
-        class="day"
-        :class="[dayParams.dayClasses(), {'checked': checked}, anotherDay]"
-        ref="dayDiv"
-        @click="click"
-    >
-        <component :is="days[dayParams.dayType]" class="tab" :dayInfo="dayInfo"></component>
-    </div>
+    <td class="slide_td" :class="{'checked': checked}">
+        <div class="day" :class="[dayParams.dayClasses(), anotherDay]" ref="dayDiv" @click="click">
+            <component :is="days[dayParams.dayType]" class="tab" :dayInfo="dayInfo"></component>
+        </div>
+    </td>
 </template>
 
 <script>
@@ -40,7 +37,7 @@ export default {
                     this.currentMonth.n !=
                     this.dayInfo.year * 12 + this.dayInfo.month
                 )
-                    return "day-another";
+                    return "day--another";
             return "";
         }
     },
@@ -50,7 +47,6 @@ export default {
         this.dayStr = this.time.toISOString().slice(0, 10);
         this.ref = "d" + this.dayStr;
 
-        this.weekDay = Store.WEEK[this.time.getDay];
         let dateArr = this.dayStr.split("-").map(item => {
             return parseInt(item);
         });
@@ -58,7 +54,8 @@ export default {
             ref: this.ref,
             day: dateArr[2],
             month: dateArr[1] - 1,
-            year: dateArr[0]
+            year: dateArr[0],
+            weekDay: Store.WEEK[this.time.getDay()]
         };
     },
     mounted() {

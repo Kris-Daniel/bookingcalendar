@@ -18,8 +18,6 @@ export default {
     },
     created() {
         this.mainCL = {
-            from: '',
-            to: '',
             time: new Date(),
             dayType: 'schedule',
             checkedDays: {},

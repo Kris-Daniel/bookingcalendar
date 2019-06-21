@@ -2,9 +2,9 @@
     <div class="change-slide center">
         <div class="mb10">{{month}}</div>
         <div class="mb10">{{year}}</div>
-        <div @click="changeSlide('prev')" class="change-slide_prev dinl-top">Prev</div>
+        <div @click="changeSlide('prev')" class="change-slide_btn change-slide_btn--prev">Prev</div>
         <div class="dinl-top ph20"></div>
-        <div @click="changeSlide('next')" class="change-slide_next dinl-top">Next</div>
+        <div @click="changeSlide('next')" class="change-slide_btn change-slide_btn--next">Next</div>
     </div>
 </template>
 <script>

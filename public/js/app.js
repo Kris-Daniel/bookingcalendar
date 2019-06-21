@@ -865,9 +865,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -892,7 +889,7 @@ __webpack_require__.r(__webpack_exports__);
     // changeSlideObserver
     anotherDay: function anotherDay() {
       this.checked = this.dayParams.checkedDays[this.ref] ? true : false;
-      if (this.dayParams.dayType != "simple") if (this.currentMonth.n != this.dayInfo.year * 12 + this.dayInfo.month) return "day-another";
+      if (this.dayParams.dayType != "simple") if (this.currentMonth.n != this.dayInfo.year * 12 + this.dayInfo.month) return "day--another";
       return "";
     }
   },
@@ -901,7 +898,6 @@ __webpack_require__.r(__webpack_exports__);
     this.time = new Date(this.day * 86400000);
     this.dayStr = this.time.toISOString().slice(0, 10);
     this.ref = "d" + this.dayStr;
-    this.weekDay = _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].WEEK[this.time.getDay];
     var dateArr = this.dayStr.split("-").map(function (item) {
       return parseInt(item);
     });
@@ -909,7 +905,8 @@ __webpack_require__.r(__webpack_exports__);
       ref: this.ref,
       day: dateArr[2],
       month: dateArr[1] - 1,
-      year: dateArr[0]
+      year: dateArr[0],
+      weekDay: _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].WEEK[this.time.getDay()]
     };
   },
   mounted: function mounted() {
@@ -997,6 +994,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Slide",
@@ -1024,6 +1025,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/Store */ "./resources/js/components/calendar6/services/Store.js");
+//
 //
 //
 //
@@ -1093,8 +1095,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.mainCL = {
-      from: '',
-      to: '',
       time: new Date(),
       dayType: 'schedule',
       checkedDays: {},
@@ -30407,7 +30407,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "change-slide_prev dinl-top",
+        staticClass: "change-slide_btn change-slide_btn--prev",
         on: {
           click: function($event) {
             return _vm.changeSlide("prev")
@@ -30422,7 +30422,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "change-slide_next dinl-top",
+        staticClass: "change-slide_btn change-slide_btn--next",
         on: {
           click: function($event) {
             return _vm.changeSlide("next")
@@ -30512,25 +30512,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    {
-      ref: "dayDiv",
-      staticClass: "day",
-      class: [
-        _vm.dayParams.dayClasses(),
-        { checked: _vm.checked },
-        _vm.anotherDay
-      ],
-      on: { click: _vm.click }
-    },
+    "td",
+    { staticClass: "slide_td", class: { checked: _vm.checked } },
     [
-      _c(_vm.days[_vm.dayParams.dayType], {
-        tag: "component",
-        staticClass: "tab",
-        attrs: { dayInfo: _vm.dayInfo }
-      })
-    ],
-    1
+      _c(
+        "div",
+        {
+          ref: "dayDiv",
+          staticClass: "day",
+          class: [_vm.dayParams.dayClasses(), _vm.anotherDay],
+          on: { click: _vm.click }
+        },
+        [
+          _c(_vm.days[_vm.dayParams.dayType], {
+            tag: "component",
+            staticClass: "tab",
+            attrs: { dayInfo: _vm.dayInfo }
+          })
+        ],
+        1
+      )
+    ]
   )
 }
 var staticRenderFns = []
@@ -30614,22 +30616,16 @@ var render = function() {
           "tr",
           { key: "week" + weekIndex, staticClass: "slide_tr" },
           _vm._l(week, function(day, dayIndex) {
-            return _c(
-              "td",
-              { key: "day" + dayIndex, staticClass: "slide_td" },
-              [
-                _c("Day", {
-                  attrs: {
-                    dayParams: _vm.dayParams,
-                    currentMonth: _vm.currentMonth,
-                    day: day
-                  }
-                })
-              ],
-              1
-            )
+            return _c("Day", {
+              key: "day" + dayIndex,
+              attrs: {
+                dayParams: _vm.dayParams,
+                currentMonth: _vm.currentMonth,
+                day: day
+              }
+            })
           }),
-          0
+          1
         )
       }),
       0
@@ -30659,21 +30655,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "weekdays" },
+    "table",
+    { staticClass: "weekdays-table", attrs: { "data-ms": _vm.mondayFirst } },
     [
-      _vm._l(_vm.weekDays, function(day, index) {
-        return _c("div", { key: index, staticClass: "weekday" }, [
-          _vm._v(_vm._s(day))
-        ])
-      }),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { type: "hidden" },
-        domProps: { value: _vm.mondayFirst }
-      })
-    ],
-    2
+      _c(
+        "tr",
+        { staticClass: "weekdays_tr" },
+        _vm._l(_vm.weekDays, function(day, index) {
+          return _c("td", { key: index, staticClass: "weekdays_td" }, [
+            _vm._v(_vm._s(day))
+          ])
+        }),
+        0
+      )
+    ]
   )
 }
 var staticRenderFns = []
@@ -47049,7 +47044,7 @@ var _default = function _default() {
   this.settings = {
     segment: 60,
     multiselect: true,
-    mondayFirst: true,
+    mondayFirst: false,
     hoursFormat: '12h',
     time: new Date()
   };

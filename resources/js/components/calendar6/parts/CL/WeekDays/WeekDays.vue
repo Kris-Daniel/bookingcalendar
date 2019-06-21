@@ -1,8 +1,9 @@
 <template>
-    <div class="weekdays">
-        <div v-for="(day, index) in weekDays" :key="index" class="weekday">{{day}}</div>
-        <input type="hidden" :value="mondayFirst">
-    </div>
+    <table class="weekdays-table" :data-ms="mondayFirst">
+        <tr class="weekdays_tr">
+            <td v-for="(day, index) in weekDays" :key="index" class="weekdays_td">{{day}}</td>
+        </tr>
+    </table>
 </template>
 
 <script>

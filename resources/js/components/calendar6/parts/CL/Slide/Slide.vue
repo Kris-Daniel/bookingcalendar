@@ -6,9 +6,13 @@
                 v-for="(week, weekIndex) in weeksInMonth"
                 :key="'week' + weekIndex"
             >
-                <td class="slide_td" v-for="(day, dayIndex) in week" :key="'day' + dayIndex">
-                    <Day :dayParams="dayParams" :currentMonth="currentMonth" :day="day"></Day>
-                </td>
+                <Day
+                    v-for="(day, dayIndex) in week"
+                    :key="'day' + dayIndex"
+                    :dayParams="dayParams"
+                    :currentMonth="currentMonth"
+                    :day="day"
+                ></Day>
             </tr>
         </table>
     </div>

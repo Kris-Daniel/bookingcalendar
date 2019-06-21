@@ -4042,69 +4042,57 @@ a {
   position: absolute;
   width: 100%;
   transition: 0.2s all ease;
-  padding: 1px;
+  background: #fff;
 }
 .CC .slide:nth-child(1) {
-  left: -100%;
+  left: -100px;
+  opacity: 0;
 }
 .CC .slide:nth-child(2) {
-  left: 0%;
+  left: 0px;
+  z-index: 2;
 }
 .CC .slide:nth-child(3) {
-  left: 100%;
+  left: 100px;
+  opacity: 0;
 }
-.CC .day {
-  cursor: pointer;
-  min-height: 109px;
-  text-align: center;
-  margin: -1px;
-  border: 1px solid #c2c9dd;
-}
-.CC .day.checked {
-  background: #6de9ff;
-}
-.CC .day:hover {
-  border: 1px solid #00cec9;
-  z-index: 1;
-}
-.CC .weekdays {
-  font-size: 0;
-  padding: 0 0.5px;
-}
-.CC .weekday {
-  display: inline-block;
-  vertical-align: top;
-  position: relative;
-  font-size: 16px;
-  text-align: center;
-  width: 14.285714%;
-  padding: 8px 0;
-}
-.CC .weekday:before {
-  position: absolute;
-  display: block;
-  content: '';
-  top: -0.5px;
-  left: -0.5px;
-  right: -0.5px;
-  bottom: -0.5px;
-  border: 1px solid #000;
-  z-index: -1;
-}
-.CC .day-another {
-  color: #808288;
-}
-.CC .slide_table {
+.CC .slide_table,
+.CC .weekdays-table {
   width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.CC .weekdays_td {
+  border: 1px double #000;
+  padding: 6px 0;
 }
 .CC .slide_td {
   position: relative;
-  border: 1px solid transparent;
+  border: 1px solid #c2c9dd;
+  cursor: pointer;
 }
-.CC .slide_td:hover {
-  z-index: 2;
+.CC .slide_td:hover,
+.CC .slide_td.checked {
+  border: 1px double #00cec9;
 }
-.CC .change-slide_prev,
-.CC .change-slide_next {
+.CC .slide_td.checked .day {
+  background: #7fe6f8;
+}
+@media screen and (max-width: 800px) {
+  .CC .slide_td {
+    display: block;
+  }
+}
+.CC .day {
+  min-height: 109px;
+  text-align: center;
+}
+.CC .day--another {
+  color: #808288;
+}
+.CC .change-slide_btn {
+  display: inline-block;
+  vertical-align: top;
   cursor: pointer;
 }
