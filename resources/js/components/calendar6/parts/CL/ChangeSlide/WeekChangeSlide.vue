@@ -8,10 +8,12 @@
 </template>
 <script>
 import Store from "../../../services/Store";
+import ChangeSlideService from "./ChangeSlideService";
+import HelperCL from '../helpers/HelperCL';
 
 export default {
     name: "WeekChangeSlide",
-    props: ["currentSlide"],
+    props: ["weeks"],
     data() {
         return {
             from: "",
@@ -19,23 +21,22 @@ export default {
         };
     },
     watch: {
-        currentSlide() {
+        weeks() {
             this.setText();
         }
     },
-    created() {
+    mounted() {
         this.setText();
     },
     methods: {
         changeSlide(side) {
-            this.$emit("changeSlide", side);
+            ChangeSlideService.click(this, side);
         },
         setText() {
-            if (this.currentSlide) {
-                let dateFrom = new Date(this.currentSlide[0] * 86400000);
-                let dateTo = new Date(
-                    this.currentSlide[this.currentSlide.length - 1] * 86400000
-                );
+            if (this.weeks[1]) {
+                let daysInWeek = HelperCL.getWeek(this.weeks[1]);
+                let dateFrom = new Date(daysInWeek[0] * 86400000);
+                let dateTo = new Date(daysInWeek[6] * 86400000);
                 this.from = this.getDayAndShortMonth(dateFrom);
                 this.to = this.getDayAndShortMonth(dateTo);
             }

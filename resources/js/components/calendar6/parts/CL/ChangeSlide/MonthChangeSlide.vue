@@ -9,10 +9,11 @@
 </template>
 <script>
 import Store from "../../../services/Store";
+import ChangeSlideService from './ChangeSlideService';
 
 export default {
     name: "MonthChangeSlide",
-    props: ["currentMonth"],
+    props: ["months"],
     data() {
         return {
             month: "",
@@ -20,7 +21,7 @@ export default {
         };
     },
     watch: {
-        currentMonth() {
+        months() {
             this.setText();
         }
     },
@@ -29,12 +30,12 @@ export default {
     },
     methods: {
         changeSlide(side) {
-            this.$emit("changeSlide", side);
+            ChangeSlideService.click(this, side);
         },
         setText() {
-            if (this.currentMonth) {
-                this.year = Math.floor(this.currentMonth / 12);
-                this.monthIndex = this.currentMonth - this.year * 12;
+            if (this.months) {
+                this.year = Math.floor(this.months[1] / 12);
+                this.monthIndex = this.months[1] - this.year * 12;
                 this.month = Store.MONTHS[this.monthIndex];
             }
         }

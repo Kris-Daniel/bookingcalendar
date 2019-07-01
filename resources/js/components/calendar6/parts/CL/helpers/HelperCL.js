@@ -1,5 +1,6 @@
 import * as $ from "jquery";
 import Store from '../../../services/Store';
+import StoreCL from './StoreCL';
 
 const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const daysX = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -72,6 +73,7 @@ class HelperCL {
             weeksInMonth.pop();
         return weeksInMonth;
     }
+
 }
 
 let helperCL = new HelperCL();

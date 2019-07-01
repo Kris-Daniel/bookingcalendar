@@ -1,5 +1,6 @@
 <template>
     <div class="slide">
+        <input type="hidden" ref="slide">
         <table class="slide_table">
             <tr
                 class="slide_tr"
@@ -9,8 +10,7 @@
                 <Day
                     v-for="(day, dayIndex) in week"
                     :key="'day' + dayIndex"
-                    :dayParams="dayParams"
-                    :currentMonth="currentMonth"
+                    :calendarId="calendarId"
                     :day="day"
                 ></Day>
             </tr>
@@ -20,17 +20,27 @@
 
 <script>
 import Day from "../Day/Day";
+import HelperCL from "../helpers/HelperCL";
+import StoreCL from '../helpers/StoreCL';
+
 export default {
     name: "Slide",
     components: {
         Day
     },
-    props: ["weeksInMonth", "dayParams", "currentMonth"],
+    props: ["id", "calendarId"],
     data() {
-        return {};
+        return {
+            weeksInMonth: undefined
+        };
     },
     created() {
-        // console.log(this.dayParams, this.weeksInMonth);
+        let CL = StoreCL.calendars[this.calendarId];
+        this.weeksInMonth =
+            CL.type == "month"
+                ? HelperCL.getWeeksInMonth(this.id)
+                : [HelperCL.getWeek(this.id)];
+        
     },
     methods: {}
 };

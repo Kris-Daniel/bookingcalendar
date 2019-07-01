@@ -18,14 +18,17 @@ export default {
     },
     created() {
         this.mainCL = {
+            name: 'mainCL',
             time: new Date(),
-            dayType: 'schedule',
-            checkedDays: {},
-            dayClick(ref, dayDiv) {
-                console.log(ref, dayDiv, "ref click here");
-            },
-            dayClasses(ref) {
-                return 'day-test';
+            daysProps: {
+                dayType: 'schedule',
+                checkedDays: {},
+                dayClick(ref, dayDiv) {
+                    console.log(ref, dayDiv, "ref click here");
+                },
+                dayClasses(ref) {
+                    return 'day-test';
+                }
             }
         };
         // setTimeout(() => {

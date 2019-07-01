@@ -555,16 +555,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar6/services/Store.js");
-/* harmony import */ var _helpers_HelperCL__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/HelperCL */ "./resources/js/components/calendar6/parts/CL/helpers/HelperCL.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _ChangeSlide_WeekChangeSlide__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChangeSlide/WeekChangeSlide */ "./resources/js/components/calendar6/parts/CL/ChangeSlide/WeekChangeSlide.vue");
-/* harmony import */ var _ChangeSlide_MonthChangeSlide__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ChangeSlide/MonthChangeSlide */ "./resources/js/components/calendar6/parts/CL/ChangeSlide/MonthChangeSlide.vue");
-/* harmony import */ var _Slide_Slide__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Slide/Slide */ "./resources/js/components/calendar6/parts/CL/Slide/Slide.vue");
-/* harmony import */ var _WeekDays_WeekDays__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./WeekDays/WeekDays */ "./resources/js/components/calendar6/parts/CL/WeekDays/WeekDays.vue");
+/* harmony import */ var _helpers_StoreCL__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers/StoreCL */ "./resources/js/components/calendar6/parts/CL/helpers/StoreCL.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/Store */ "./resources/js/components/calendar6/services/Store.js");
+/* harmony import */ var _helpers_HelperCL__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers/HelperCL */ "./resources/js/components/calendar6/parts/CL/helpers/HelperCL.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _ChangeSlide_WeekChangeSlide__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ChangeSlide/WeekChangeSlide */ "./resources/js/components/calendar6/parts/CL/ChangeSlide/WeekChangeSlide.vue");
+/* harmony import */ var _ChangeSlide_MonthChangeSlide__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ChangeSlide/MonthChangeSlide */ "./resources/js/components/calendar6/parts/CL/ChangeSlide/MonthChangeSlide.vue");
+/* harmony import */ var _Slide_Slide__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Slide/Slide */ "./resources/js/components/calendar6/parts/CL/Slide/Slide.vue");
+/* harmony import */ var _WeekDays_WeekDays__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./WeekDays/WeekDays */ "./resources/js/components/calendar6/parts/CL/WeekDays/WeekDays.vue");
 //
 //
 //
@@ -586,146 +587,154 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide_Slide__WEBPACK_IMPORTED_MODULE_6__["default"]);
+
+var SlideClass = vue__WEBPACK_IMPORTED_MODULE_1___default.a.extend(_Slide_Slide__WEBPACK_IMPORTED_MODULE_7__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CL",
   components: {
-    WeekChangeSlide: _ChangeSlide_WeekChangeSlide__WEBPACK_IMPORTED_MODULE_4__["default"],
-    MonthChangeSlide: _ChangeSlide_MonthChangeSlide__WEBPACK_IMPORTED_MODULE_5__["default"],
-    WeekDays: _WeekDays_WeekDays__WEBPACK_IMPORTED_MODULE_7__["default"],
-    Slide: _Slide_Slide__WEBPACK_IMPORTED_MODULE_6__["default"]
+    WeekChangeSlide: _ChangeSlide_WeekChangeSlide__WEBPACK_IMPORTED_MODULE_5__["default"],
+    MonthChangeSlide: _ChangeSlide_MonthChangeSlide__WEBPACK_IMPORTED_MODULE_6__["default"],
+    WeekDays: _WeekDays_WeekDays__WEBPACK_IMPORTED_MODULE_8__["default"],
+    Slide: _Slide_Slide__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   props: ["params"],
   data: function data() {
     return {
-      type: "month",
-      time: this.params.time,
-      currentSlide: "",
-      currentSlideMonth: {
-        n: 0
-      },
-      checkedDays: this.params.checkedDays
+      cl: undefined,
+      oldType: 'month'
     };
   },
   created: function created() {
-    this.timeStamp = this.time.getTime();
-    this.currentDay = Math.floor(this.timeStamp / 86400000);
-    this.currentMonth = this.time.getMonth();
-    this.currentYear = this.time.getFullYear();
-
-    if (this.params.dayType != "simple") {
-      jquery__WEBPACK_IMPORTED_MODULE_3__(window).on("resize", this.resize);
-      this.resize();
-    }
-
+    var time = this.params.time;
+    var timeStamp = time.getTime();
+    var currentDay = Math.floor(timeStamp / 86400000);
+    var currentMonth = time.getMonth();
+    var currentYear = time.getFullYear();
+    vue__WEBPACK_IMPORTED_MODULE_1___default.a.set(_helpers_StoreCL__WEBPACK_IMPORTED_MODULE_0__["default"].calendars, this.params.name, {
+      time: time,
+      timeStamp: timeStamp,
+      currentDay: currentDay,
+      currentMonth: currentMonth,
+      currentYear: currentYear,
+      slides: [],
+      daysProps: this.params.daysProps,
+      type: "month"
+    });
+    this.cl = _helpers_StoreCL__WEBPACK_IMPORTED_MODULE_0__["default"].calendars[this.params.name];
+    this.oldType = this.cl.type;
+    this.setResize();
     this.setupSliderStart();
   },
   mounted: function mounted() {
     this.setSlides();
   },
-  watch: {
+  computed: {
     type: function type() {
-      this.setupSliderStart();
-      this.setSlides();
+      if (this.oldType != this.cl.type) {
+        this.oldType = this.cl.type;
+        this.setupSliderStart();
+        this.setSlides();
+      }
+
+      return this.cl.type;
+    },
+    slides: function slides() {
+      return this.cl.slides;
     }
   },
   methods: {
-    resize: function resize() {
-      this.setHeight();
-      var w = jquery__WEBPACK_IMPORTED_MODULE_3__(window).width();
-      if (w < 800 && this.type == "month") this.type = "week";else if (w >= 800 && this.type == "week") this.type = "month";
+    setResize: function setResize() {
+      var _this = this;
+
+      if (this.cl.daysProps.dayType != "simple") {
+        var resize = function resize() {
+          var w = jquery__WEBPACK_IMPORTED_MODULE_4__(window).width();
+          if (w < 800 && _this.cl.type == "month") _this.cl.type = "week";else if (w >= 800 && _this.cl.type == "week") _this.cl.type = "month";
+
+          _this.setHeight();
+        };
+
+        jquery__WEBPACK_IMPORTED_MODULE_4__(window).on("resize", resize);
+        resize();
+      }
     },
     setupSliderStart: function setupSliderStart() {
-      this.slides = [];
-      this.slideIndex = 1;
-      this.dayN = this.currentDay;
-      this.monthN = this.currentYear * 12 + this.currentMonth;
+      while (this.cl.slides.length > 0) {
+        this.cl.slides.pop();
+      }
+
+      this.cl.dayN = this.cl.currentDay;
+      this.cl.monthN = this.cl.currentYear * 12 + this.cl.currentMonth;
     },
     setSlides: function setSlides() {
       this.$refs.slider.innerHTML = "";
 
-      if (this.type == "month") {
-        for (var i = this.monthN - 1; i <= this.monthN + 1; i++) {
-          var weeksInMonth = _helpers_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getWeeksInMonth(i);
-          this.slides.push(weeksInMonth);
+      if (this.cl.type == "month") {
+        for (var i = this.cl.monthN - 1; i <= this.cl.monthN + 1; i++) {
+          this.cl.slides.push(i);
         }
       } else {
-        for (var _i = this.dayN - 7; _i <= this.dayN + 7; _i += 7) {
-          this.slides.push([_helpers_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getWeek(_i)]);
+        for (var _i = this.cl.dayN - 7; _i <= this.cl.dayN + 7; _i += 7) {
+          this.cl.slides.push(_i);
         }
       }
 
       for (var _i2 = 0; _i2 < 3; _i2++) {
-        var SlideInstance = this.getSlide(_i2);
+        var SlideInstance = this.getSlide(this.cl.slides[_i2]);
         this.$refs.slider.appendChild(SlideInstance.$el);
       }
 
-      this.currentSlide = this.slides[this.slideIndex];
       this.setHeight();
     },
     changeSlide: function changeSlide(side) {
       if (side == "next") {
-        this.type == "month" ? this.monthN++ : this.dayN += 7;
+        jquery__WEBPACK_IMPORTED_MODULE_4__(this.$refs.slider).children().first().remove();
+        this.cl.slides.shift();
 
-        if (++this.slideIndex == this.slides.length - 1) {
-          if (this.type == "month") {
-            var weeksInMonth = _helpers_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getWeeksInMonth(this.monthN + 1);
-            this.slides.push(weeksInMonth);
-          } else {
-            this.slides.push([_helpers_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getWeek(this.dayN + 7)]);
-          }
+        if (this.cl.type == "month") {
+          this.cl.monthN++;
+          this.cl.slides.push(this.cl.monthN + 1);
+        } else {
+          this.cl.dayN += 7;
+          this.cl.slides.push(this.cl.dayN + 7);
         }
 
-        jquery__WEBPACK_IMPORTED_MODULE_3__(this.$refs.slider).children().first().remove();
-        var SlideInstance = this.getSlide(this.slideIndex + 1);
+        var SlideInstance = this.getSlide(this.cl.slides[2]);
         this.$refs.slider.appendChild(SlideInstance.$el);
       } else {
-        this.type == "month" ? this.monthN-- : this.dayN -= 7;
+        jquery__WEBPACK_IMPORTED_MODULE_4__(this.$refs.slider).children().last().remove();
+        this.cl.slides.pop();
 
-        if (--this.slideIndex == 0) {
-          this.slideIndex = 1;
-
-          if (this.type == "month") {
-            var _weeksInMonth = _helpers_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getWeeksInMonth(this.monthN - 1);
-
-            this.slides.unshift(_weeksInMonth);
-          } else {
-            this.slides.unshift([_helpers_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getWeek(this.dayN - 7)]);
-          }
+        if (this.cl.type == "month") {
+          // Vue.set(this.cl, 'monthN', this.cl.monthN - 1);
+          this.cl.monthN--;
+          this.cl.slides.unshift(this.cl.monthN - 1);
+        } else {
+          this.cl.dayN -= 7;
+          this.cl.slides.unshift(this.cl.dayN - 7);
         }
 
-        jquery__WEBPACK_IMPORTED_MODULE_3__(this.$refs.slider).children().last().remove();
-
-        var _SlideInstance = this.getSlide(this.slideIndex - 1);
+        var _SlideInstance = this.getSlide(this.cl.slides[0]);
 
         this.$refs.slider.prepend(_SlideInstance.$el);
       }
 
-      this.currentSlide = this.slides[this.slideIndex];
       this.setHeight();
     },
     getSlide: function getSlide(i) {
-      this.currentSlideMonth.n = this.monthN;
-      var SlideInstance;
       var data = {
         propsData: {
-          currentMonth: this.currentSlideMonth,
-          weeksInMonth: this.slides[i],
-          dayParams: {
-            dayType: this.params.dayType,
-            dayClick: this.params.dayClick,
-            checkedDays: this.checkedDays,
-            dayClasses: this.params.dayClasses
-          }
+          id: i,
+          calendarId: this.params.name
         }
       };
-      SlideInstance = new SlideClass(data);
+      var SlideInstance = new SlideClass(data);
       SlideInstance.$mount();
       return SlideInstance;
     },
     setHeight: function setHeight() {
-      var renderSlide = jquery__WEBPACK_IMPORTED_MODULE_3__(this.$refs.slider).children()[1];
-      jquery__WEBPACK_IMPORTED_MODULE_3__(this.$refs.slider).height(jquery__WEBPACK_IMPORTED_MODULE_3__(renderSlide).height() + 1);
+      var renderSlide = jquery__WEBPACK_IMPORTED_MODULE_4__(this.$refs.slider).children()[1];
+      jquery__WEBPACK_IMPORTED_MODULE_4__(this.$refs.slider).height(jquery__WEBPACK_IMPORTED_MODULE_4__(renderSlide).height() + 1);
     }
   }
 });
@@ -742,6 +751,7 @@ var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide_Slide_
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/Store */ "./resources/js/components/calendar6/services/Store.js");
+/* harmony import */ var _ChangeSlideService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChangeSlideService */ "./resources/js/components/calendar6/parts/CL/ChangeSlide/ChangeSlideService.js");
 //
 //
 //
@@ -752,9 +762,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "MonthChangeSlide",
-  props: ["currentMonth"],
+  props: ["months"],
   data: function data() {
     return {
       month: "",
@@ -762,7 +773,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   watch: {
-    currentMonth: function currentMonth() {
+    months: function months() {
       this.setText();
     }
   },
@@ -771,12 +782,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     changeSlide: function changeSlide(side) {
-      this.$emit("changeSlide", side);
+      _ChangeSlideService__WEBPACK_IMPORTED_MODULE_1__["default"].click(this, side);
     },
     setText: function setText() {
-      if (this.currentMonth) {
-        this.year = Math.floor(this.currentMonth / 12);
-        this.monthIndex = this.currentMonth - this.year * 12;
+      if (this.months) {
+        this.year = Math.floor(this.months[1] / 12);
+        this.monthIndex = this.months[1] - this.year * 12;
         this.month = _services_Store__WEBPACK_IMPORTED_MODULE_0__["default"].MONTHS[this.monthIndex];
       }
     }
@@ -795,6 +806,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/Store */ "./resources/js/components/calendar6/services/Store.js");
+/* harmony import */ var _ChangeSlideService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChangeSlideService */ "./resources/js/components/calendar6/parts/CL/ChangeSlide/ChangeSlideService.js");
+/* harmony import */ var _helpers_HelperCL__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/HelperCL */ "./resources/js/components/calendar6/parts/CL/helpers/HelperCL.js");
 //
 //
 //
@@ -804,9 +817,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "WeekChangeSlide",
-  props: ["currentSlide"],
+  props: ["weeks"],
   data: function data() {
     return {
       from: "",
@@ -814,21 +829,22 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   watch: {
-    currentSlide: function currentSlide() {
+    weeks: function weeks() {
       this.setText();
     }
   },
-  created: function created() {
+  mounted: function mounted() {
     this.setText();
   },
   methods: {
     changeSlide: function changeSlide(side) {
-      this.$emit("changeSlide", side);
+      _ChangeSlideService__WEBPACK_IMPORTED_MODULE_1__["default"].click(this, side);
     },
     setText: function setText() {
-      if (this.currentSlide) {
-        var dateFrom = new Date(this.currentSlide[0] * 86400000);
-        var dateTo = new Date(this.currentSlide[this.currentSlide.length - 1] * 86400000);
+      if (this.weeks[1]) {
+        var daysInWeek = _helpers_HelperCL__WEBPACK_IMPORTED_MODULE_2__["default"].getWeek(this.weeks[1]);
+        var dateFrom = new Date(daysInWeek[0] * 86400000);
+        var dateTo = new Date(daysInWeek[6] * 86400000);
         this.from = this.getDayAndShortMonth(dateFrom);
         this.to = this.getDayAndShortMonth(dateTo);
       }
@@ -854,9 +870,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_HelperCL__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/HelperCL */ "./resources/js/components/calendar6/parts/CL/helpers/HelperCL.js");
-/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/Store */ "./resources/js/components/calendar6/services/Store.js");
-/* harmony import */ var _ScheduleDay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ScheduleDay */ "./resources/js/components/calendar6/parts/CL/Day/ScheduleDay.vue");
-/* harmony import */ var _SimpleDay__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SimpleDay */ "./resources/js/components/calendar6/parts/CL/Day/SimpleDay.vue");
+/* harmony import */ var _helpers_StoreCL__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/StoreCL */ "./resources/js/components/calendar6/parts/CL/helpers/StoreCL.js");
+/* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/Store */ "./resources/js/components/calendar6/services/Store.js");
+/* harmony import */ var _ScheduleDay__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ScheduleDay */ "./resources/js/components/calendar6/parts/CL/Day/ScheduleDay.vue");
+/* harmony import */ var _SimpleDay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SimpleDay */ "./resources/js/components/calendar6/parts/CL/Day/SimpleDay.vue");
+//
 //
 //
 //
@@ -869,31 +887,39 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+var Cl = "test";
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Day",
-  props: ["day", "dayParams", "currentMonth"],
+  props: ["day", "calendarId"],
   components: {
-    ScheduleDay: _ScheduleDay__WEBPACK_IMPORTED_MODULE_2__["default"],
-    SimpleDay: _SimpleDay__WEBPACK_IMPORTED_MODULE_3__["default"]
+    ScheduleDay: _ScheduleDay__WEBPACK_IMPORTED_MODULE_3__["default"],
+    SimpleDay: _SimpleDay__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
+      anotherDay: "",
       days: {
         schedule: "ScheduleDay",
         simple: "SimpleDay"
-      },
-      checked: false
+      }
     };
   },
   computed: {
-    // changeSlideObserver
-    anotherDay: function anotherDay() {
-      this.checked = this.dayParams.checkedDays[this.ref] ? true : false;
-      if (this.dayParams.dayType != "simple") if (this.currentMonth.n != this.dayInfo.year * 12 + this.dayInfo.month) return "day--another";
-      return "";
+    checked: function checked() {
+      return this.daysProps.checkedDays[this.ref] ? true : false;
+    },
+    monthN: function monthN() {
+      if (this.daysProps.dayType != "simple" && _helpers_StoreCL__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[this.calendarId]) if (this.CL.monthN != this.dayInfo.year * 12 + this.dayInfo.month) {
+        this.anotherDay = "day--another";
+      }
+      this.anotherDay = "";
+      return _helpers_StoreCL__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[this.calendarId].monthN;
     }
   },
   created: function created() {
+    this.CL = _helpers_StoreCL__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[this.calendarId];
+    this.daysProps = this.CL.daysProps;
     this.dayDiv = "";
     this.time = new Date(this.day * 86400000);
     this.dayStr = this.time.toISOString().slice(0, 10);
@@ -906,7 +932,7 @@ __webpack_require__.r(__webpack_exports__);
       day: dateArr[2],
       month: dateArr[1] - 1,
       year: dateArr[0],
-      weekDay: _services_Store__WEBPACK_IMPORTED_MODULE_1__["default"].WEEK[this.time.getDay()]
+      weekDay: _services_Store__WEBPACK_IMPORTED_MODULE_2__["default"].WEEK[this.time.getDay()]
     };
   },
   mounted: function mounted() {
@@ -914,9 +940,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     click: function click() {
-      this.checked = !this.checked;
-      this.dayParams.checkedDays[this.ref] ? delete this.dayParams.checkedDays[this.ref] : this.dayParams.checkedDays[this.ref] = true;
-      this.dayParams.dayClick(this.ref, this.dayDiv);
+      this.daysProps.checkedDays[this.ref] ? delete this.daysProps.checkedDays[this.ref] : this.daysProps.checkedDays[this.ref] = true;
+      this.daysProps.dayClick(this.ref, this.dayDiv);
     }
   }
 });
@@ -978,6 +1003,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Day_Day__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Day/Day */ "./resources/js/components/calendar6/parts/CL/Day/Day.vue");
+/* harmony import */ var _helpers_HelperCL__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/HelperCL */ "./resources/js/components/calendar6/parts/CL/helpers/HelperCL.js");
+/* harmony import */ var _helpers_StoreCL__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/StoreCL */ "./resources/js/components/calendar6/parts/CL/helpers/StoreCL.js");
 //
 //
 //
@@ -999,16 +1026,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Slide",
   components: {
     Day: _Day_Day__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ["weeksInMonth", "dayParams", "currentMonth"],
+  props: ["id", "calendarId"],
   data: function data() {
-    return {};
+    return {
+      weeksInMonth: undefined
+    };
   },
-  created: function created() {// console.log(this.dayParams, this.weeksInMonth);
+  created: function created() {
+    var CL = _helpers_StoreCL__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId];
+    this.weeksInMonth = CL.type == "month" ? _helpers_HelperCL__WEBPACK_IMPORTED_MODULE_1__["default"].getWeeksInMonth(this.id) : [_helpers_HelperCL__WEBPACK_IMPORTED_MODULE_1__["default"].getWeek(this.id)];
   },
   methods: {}
 });
@@ -1095,14 +1128,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.mainCL = {
+      name: 'mainCL',
       time: new Date(),
-      dayType: 'schedule',
-      checkedDays: {},
-      dayClick: function dayClick(ref, dayDiv) {
-        console.log(ref, dayDiv, "ref click here");
-      },
-      dayClasses: function dayClasses(ref) {
-        return 'day-test';
+      daysProps: {
+        dayType: 'schedule',
+        checkedDays: {},
+        dayClick: function dayClick(ref, dayDiv) {
+          console.log(ref, dayDiv, "ref click here");
+        },
+        dayClasses: function dayClasses(ref) {
+          return 'day-test';
+        }
       }
     }; // setTimeout(() => {
     //     this.typeCL = 'week';
@@ -30354,18 +30390,18 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "CL" },
+    { staticClass: "CL", attrs: { "data-id": _vm.params.name } },
     [
       _vm.type == "week"
         ? [
             _c("WeekChangeSlide", {
-              attrs: { currentSlide: _vm.currentSlide[0] },
+              attrs: { weeks: _vm.slides },
               on: { changeSlide: _vm.changeSlide }
             })
           ]
         : [
             _c("MonthChangeSlide", {
-              attrs: { currentMonth: _vm.currentSlideMonth.n },
+              attrs: { months: _vm.slides },
               on: { changeSlide: _vm.changeSlide }
             })
           ],
@@ -30515,16 +30551,21 @@ var render = function() {
     "td",
     { staticClass: "slide_td", class: { checked: _vm.checked } },
     [
+      _c("input", {
+        attrs: { type: "hidden" },
+        domProps: { value: _vm.monthN }
+      }),
+      _vm._v(" "),
       _c(
         "div",
         {
           ref: "dayDiv",
           staticClass: "day",
-          class: [_vm.dayParams.dayClasses(), _vm.anotherDay],
+          class: [_vm.daysProps.dayClasses(), _vm.anotherDay],
           on: { click: _vm.click }
         },
         [
-          _c(_vm.days[_vm.dayParams.dayType], {
+          _c(_vm.days[_vm.daysProps.dayType], {
             tag: "component",
             staticClass: "tab",
             attrs: { dayInfo: _vm.dayInfo }
@@ -30608,6 +30649,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "slide" }, [
+    _c("input", { ref: "slide", attrs: { type: "hidden" } }),
+    _vm._v(" "),
     _c(
       "table",
       { staticClass: "slide_table" },
@@ -30618,11 +30661,7 @@ var render = function() {
           _vm._l(week, function(day, dayIndex) {
             return _c("Day", {
               key: "day" + dayIndex,
-              attrs: {
-                dayParams: _vm.dayParams,
-                currentMonth: _vm.currentMonth,
-                day: day
-              }
+              attrs: { calendarId: _vm.calendarId, day: day }
             })
           }),
           1
@@ -46299,6 +46338,49 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/calendar6/parts/CL/ChangeSlide/ChangeSlideService.js":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/CL/ChangeSlide/ChangeSlideService.js ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var ChangeSlideServiceClass =
+/*#__PURE__*/
+function () {
+  function ChangeSlideServiceClass() {
+    _classCallCheck(this, ChangeSlideServiceClass);
+  }
+
+  _createClass(ChangeSlideServiceClass, [{
+    key: "click",
+    value: function click(component, side) {
+      if (!component.wasClicked) {
+        component.wasClicked = true;
+        component.$emit("changeSlide", side);
+        setTimeout(function () {
+          component.wasClicked = false;
+        }, 200);
+      }
+    }
+  }]);
+
+  return ChangeSlideServiceClass;
+}();
+
+var ChangeSlideService = new ChangeSlideServiceClass();
+/* harmony default export */ __webpack_exports__["default"] = (ChangeSlideService);
+
+/***/ }),
+
 /***/ "./resources/js/components/calendar6/parts/CL/ChangeSlide/MonthChangeSlide.vue":
 /*!*************************************************************************************!*\
   !*** ./resources/js/components/calendar6/parts/CL/ChangeSlide/MonthChangeSlide.vue ***!
@@ -46794,11 +46876,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _services_Store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/Store */ "./resources/js/components/calendar6/services/Store.js");
+/* harmony import */ var _StoreCL__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./StoreCL */ "./resources/js/components/calendar6/parts/CL/helpers/StoreCL.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -46885,6 +46969,76 @@ function () {
 
 var helperCL = new HelperCL();
 /* harmony default export */ __webpack_exports__["default"] = (helperCL);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/CL/helpers/StoreCL.js":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/CL/helpers/StoreCL.js ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var HashCalendars =
+/*#__PURE__*/
+function () {
+  function HashCalendars() {
+    _classCallCheck(this, HashCalendars);
+
+    this.length = 0;
+    this.calendars = {};
+  }
+
+  _createClass(HashCalendars, [{
+    key: "addCalendar",
+    value: function addCalendar(name, params) {
+      if (!this.calendars[name]) {
+        this.length++;
+        this.calendars[name] = params;
+      }
+    }
+  }, {
+    key: "get",
+    value: function get(name) {
+      return this.calendars[name] ? this.calendars[name] : false;
+    }
+  }, {
+    key: "delete",
+    value: function _delete(name) {
+      if (this.calendars[name]) {
+        delete this.calendars[name];
+        this.length--;
+        return true;
+      }
+
+      return false;
+    }
+  }]);
+
+  return HashCalendars;
+}();
+
+var StoreCL = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+  name: 'StoreCL',
+  data: function data() {
+    return {
+      calendars: {}
+    };
+  }
+});
+/* harmony default export */ __webpack_exports__["default"] = (StoreCL);
 
 /***/ }),
 
