@@ -5,8 +5,10 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import CL from "../CL/CL";
-import * as $ from "jquery";
+import CalendarClass from '../../services/GetCalendar';
+let RenderCalendar = new CalendarClass();
 
 export default {
     name: "RC",
@@ -22,7 +24,6 @@ export default {
             time: new Date(),
             daysProps: {
                 dayType: 'schedule',
-                checkedDays: {},
                 dayClick(ref, dayDiv) {
                     console.log(ref, dayDiv, "ref click here");
                 },
@@ -31,9 +32,9 @@ export default {
                 }
             }
         };
-        // setTimeout(() => {
-        //     this.typeCL = 'week';
-        // }, 2000)
+        Vue.set(this.mainCL.daysProps, 'checkedDays', {});
+        Vue.set(this.mainCL.daysProps, 'schedule', RenderCalendar.schedule);
+        Vue.set(this.mainCL.daysProps, 'settings', RenderCalendar.settings);
     }
 };
 </script>

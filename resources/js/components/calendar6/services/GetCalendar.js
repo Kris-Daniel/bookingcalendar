@@ -16,7 +16,7 @@ export default class {
                         to: '18:00'
                     }
                 ],
-                Mo: [
+                Fr: [
                     {
                         from: '09:00',
                         to: '11:00'
@@ -34,7 +34,7 @@ export default class {
                         to: '18:00'
                     }
                 ],
-                Tu: [
+                Mo: [
                     {
                         from: '00:00',
                         to: '11:00'
@@ -46,13 +46,13 @@ export default class {
                 ],
         },
             days: {
-                'd2019-06-04': [
+                'd2019-07-04': [
                     {
                         from: '10:00',
                         to: '15:00'
                     }
                 ],
-                'd2019-06-08': [],
+                'd2019-07-08': [],
             }
         }
         this.bookings =

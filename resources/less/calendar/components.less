@@ -438,6 +438,11 @@
 }
 
 .CC{
+    .calendar-box{
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: -2px 1px 20px 0px rgba(62, 69, 94, 0.1); 
+    }
     .slider{
         .rel();
         overflow: hidden;
@@ -446,7 +451,7 @@
     .slide{
         .abs();
         width: 100%;
-        transition: 0.2s all ease;
+        transition: 0.2s all linear;
         background: #fff;
         &:nth-child(1){
             left: -100px;
@@ -467,36 +472,184 @@
         text-align: center;
         border-collapse: collapse;
         table-layout: fixed;
+        border-spacing: 0;
     }
     .weekdays_td{
-        border: 1px double #000;
+        background: @cyan;
+        border: 1px double #fff;
+        border-top: none;
         padding: 6px 0;
+        color: #fff;
+        &:first-child{
+            border-left: none;
+        }
+        &:last-child{
+            border-right: none;
+        }
     }
+
+    .slide_tr:last-child{
+        .slide_td{
+            &:last-child .day{
+                border-bottom-right-radius: 10px;
+            }
+            &:nth-last-child(7) .day{
+                border-bottom-left-radius: 10px;
+            }
+        }
+    }
+    
     .slide_td{
         .rel();
-        border: 1px solid @gray;
+        border: 1px solid transparent;
+        height: 102px;
+        border-collapse: separate;
         cursor: pointer;
         &:hover,
         &.checked{
-            border: 1px double @cyan;
-        }
-        &.checked .day{
-            background: rgb(127, 230, 248);
+            z-index: 2;
+            .day{
+                box-shadow: 0px 0px 0px 1px @cyan;
+            }
+            // border: 1px double @cyan;
         }
         .to(800px, {
             display: block;
         });
     }
+
+    /* Calendar Day */
     .day{
-        min-height: 109px;
+        height: 100%;
         text-align: center;
+        background: #fcfcfe;
+        box-shadow: 0px 0px 0px 1px #ebebeb;
         &--another{
-            color: #808288;
+            background: #f5f5f7;
+            .day_num,
+            .day_schedule_time{
+                color: #c2c9dd;
+            }
         }
     }
 
-    .change-slide_btn{
+    .day_inside{
+        text-align: left;
+        padding: 10px;
+    }
+
+    .day_schedule{
+        .day_schedule_time:nth-child(n + 3){
+            display: none;
+        }
+    }
+
+    .day_num{
+        .rel();
         .dinl-top();
+        .size24;
+        .mb10();
+        .bold();
+        color: @gray;
+    }
+
+    .day_special{
+        .abs();
+        top: -2px;
+        right: -14px;
+        display: none;
+        width: 8px;
+        height: 8px;
+        border-radius: 100%;
+        background: @cyan;
+    }
+    .day_inside.special .day_special{
+        display: block;
+    }
+    .day_inside.special .day_num{
+        color: @cyan;
+    }
+    .day_edit{
+        .abs();
+        top: 8px;
+        right: 8px;
+        overflow: hidden;
+        transition: 0.3s all ease;
+        transform: scale(0);
+        svg{
+            width: 9px;
+            height: 15px;
+            * {
+                fill: #c2c9dd !important;
+            }
+        }
+    }
+    .day:hover .day_edit{
+        transform: scale(1);
+    }
+    .day_schedule_time{
+        .size12();
+        .mb10();
+        color: #666a73;
+    }
+    .day_schedule_more{
+        .size12();
+        .dinl-top();
+        color: @cyan;
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+    .day_schedule_more_angle-down{
+        .rel();
+        .dinl-top();
+        left: 5px;
+        bottom: 2px;
+        svg{
+            width: 6px;
+            height: 4px;
+            *{
+                fill: @cyan !important;
+            }
+        }
+    }
+
+    /* Change Slide */
+    .change-slide-wrapper{
+        .center();
+        margin-bottom: 20px;
+    }
+    .change-slide{
+        .rel();
+        .dinl-top();
+        width: 150px;
+    }
+    .change-slide_btn{
+        .abs();
+        top: 50%;
+        transform: translateY(-50%);
         cursor: pointer;
+        svg{
+            width: 12px;
+            height: 20px;
+            *{
+                fill: #c2c9dd !important;
+            }
+        }
+        &--prev{
+            left: -34px;
+        }
+        &--next{
+            right: -34px;
+        }
+    }
+    .change-slide_month{
+        .size29();
+        color: #585b61;
+        margin-bottom: 10px;
+    }
+    .change-slide_year{
+        .size20();
+        color: #c2c9dd;
     }
 }

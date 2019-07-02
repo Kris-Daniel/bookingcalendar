@@ -1,13 +1,13 @@
 <template>
     <td class="slide_td" :class="{'checked': checked}">
-        <input type="hidden" :value="monthN" />
         <div class="day" :class="[daysProps.dayClasses(), anotherDay]" ref="dayDiv" @click="click">
-            <component :is="days[daysProps.dayType]" class="tab" :dayInfo="dayInfo"></component>
+            <component :is="days[daysProps.dayType]" :dayInfo="dayInfo" :calendarId="calendarId"></component>
         </div>
     </td>
 </template>
 
 <script>
+import Vue from "vue";
 import HelperCL from "../helpers/HelperCL";
 import StoreCL from "../helpers/StoreCL";
 import Store from "../../../services/Store";
@@ -25,7 +25,7 @@ export default {
     },
     data() {
         return {
-            anotherDay: "",
+            oldMonthN: 0,
             days: {
                 schedule: "ScheduleDay",
                 simple: "SimpleDay"
@@ -36,16 +36,26 @@ export default {
         checked() {
             return this.daysProps.checkedDays[this.ref] ? true : false;
         },
-        monthN() {
-            if (this.daysProps.dayType != "simple" && StoreCL.calendars[this.calendarId])
+        anotherDay() {
+            if (this.oldMonthN != StoreCL.calendars[this.calendarId].monthN) {
+                this.oldMonthN = StoreCL.calendars[this.calendarId].monthN;
+                let monthCount = this.dayInfo.year * 12 + this.dayInfo.month;
+
+                // destroy from memory
                 if (
-                    this.CL.monthN !=
-                    this.dayInfo.year * 12 + this.dayInfo.month
+                    monthCount < this.oldMonthN - 2 ||
+                    monthCount > this.oldMonthN + 2
                 ) {
-                    this.anotherDay = "day--another";
+                    this.$destroy();
+                    return false;
                 }
-            this.anotherDay = "";
-            return StoreCL.calendars[this.calendarId].monthN;
+                if(this.CL.type != 'month') return "";
+
+                if (this.daysProps.dayType != "simple") {
+                    if (this.oldMonthN != monthCount) return "day--another";
+                }
+                return "";
+            }
         }
     },
     created() {
@@ -59,6 +69,7 @@ export default {
         let dateArr = this.dayStr.split("-").map(item => {
             return parseInt(item);
         });
+
         this.dayInfo = {
             ref: this.ref,
             day: dateArr[2],
@@ -72,9 +83,11 @@ export default {
     },
     methods: {
         click() {
-            this.daysProps.checkedDays[this.ref]
-                ? delete this.daysProps.checkedDays[this.ref]
-                : (this.daysProps.checkedDays[this.ref] = true);
+            if (!this.daysProps.checkedDays[this.ref]) {
+                Vue.set(this.daysProps, 'checkedDays', {});
+                Vue.set(this.daysProps.checkedDays, this.ref, true);
+            }
+            else Vue.delete(this.daysProps.checkedDays, this.ref);
             this.daysProps.dayClick(this.ref, this.dayDiv);
         }
     }
