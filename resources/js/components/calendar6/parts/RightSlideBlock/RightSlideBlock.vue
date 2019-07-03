@@ -6,6 +6,6 @@
 
 <script>
 export default {
-    name: 'TS'
+    name: 'RightSlideBlock'
 }
 </script>

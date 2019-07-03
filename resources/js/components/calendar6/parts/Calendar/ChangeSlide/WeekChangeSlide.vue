@@ -7,13 +7,13 @@
     </div>
 </template>
 <script>
-import Store from "../../../services/Store";
+import CalendarSTORE from "../helpers/CalendarSTORE";
 import ChangeSlideService from "./ChangeSlideService";
-import HelperCL from '../helpers/HelperCL';
+import CalendarHelper from "../helpers/CalendarHelper";
 
 export default {
     name: "WeekChangeSlide",
-    props: ["weeks"],
+    props: ["weeks", "calendarId"],
     data() {
         return {
             from: "",
@@ -34,7 +34,11 @@ export default {
         },
         setText() {
             if (this.weeks[1]) {
-                let daysInWeek = HelperCL.getWeek(this.weeks[1]);
+                let CalendarDATA = CalendarSTORE.calendars["calendarId"];
+                let daysInWeek = CalendarHelper.getWeek(
+                    this.weeks[1],
+                    CalendarDATA.daysProps.settings.mondayFirst
+                );
                 let dateFrom = new Date(daysInWeek[0] * 86400000);
                 let dateTo = new Date(daysInWeek[6] * 86400000);
                 this.from = this.getDayAndShortMonth(dateFrom);
@@ -44,7 +48,7 @@ export default {
         getDayAndShortMonth(date) {
             let d = date.getDate();
             let m = date.getMonth();
-            let shortMonth = Store.MONTHS[m].slice(0, 3);
+            let shortMonth = CalendarSTORE.MONTHS[m].slice(0, 3);
             return d + " " + shortMonth;
         }
     }

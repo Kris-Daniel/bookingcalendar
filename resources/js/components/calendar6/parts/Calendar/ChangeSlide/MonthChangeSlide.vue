@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import Store from "../../../services/Store";
+import CalendarSTORE from '../helpers/CalendarSTORE';
 import ChangeSlideService from "./ChangeSlideService";
 
 import ArrowLeft from '../../../../../svg/arrow-left';
@@ -48,7 +48,7 @@ export default {
             if (this.months) {
                 this.year = Math.floor(this.months[1] / 12);
                 this.monthIndex = this.months[1] - this.year * 12;
-                this.month = Store.MONTHS[this.monthIndex];
+                this.month = CalendarSTORE.MONTHS[this.monthIndex];
             }
         }
     }

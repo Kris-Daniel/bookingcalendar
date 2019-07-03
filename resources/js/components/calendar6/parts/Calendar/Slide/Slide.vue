@@ -20,8 +20,8 @@
 
 <script>
 import Day from "../Day/Day";
-import HelperCL from "../helpers/HelperCL";
-import StoreCL from '../helpers/StoreCL';
+import CalendarHelper from "../helpers/CalendarHelper";
+import CalendarSTORE from '../helpers/CalendarSTORE';
 
 export default {
     name: "Slide",
@@ -35,11 +35,11 @@ export default {
         };
     },
     created() {
-        let CL = StoreCL.calendars[this.calendarId];
+        let CalendarDATA = CalendarSTORE.calendars[this.calendarId];
         this.weeksInMonth =
-            CL.type == "month"
-                ? HelperCL.getWeeksInMonth(this.id)
-                : [HelperCL.getWeek(this.id)];
+            CalendarDATA.type == "month"
+                ? CalendarHelper.getWeeksInMonth(this.id, CalendarDATA.daysProps.settings.mondayFirst)
+                : [CalendarHelper.getWeek(this.id, CalendarDATA.daysProps.settings.mondayFirst)];
         
     },
     methods: {}

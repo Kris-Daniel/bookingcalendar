@@ -8,13 +8,10 @@
 
 <script>
 import Vue from "vue";
-import HelperCL from "../helpers/HelperCL";
-import StoreCL from "../helpers/StoreCL";
-import Store from "../../../services/Store";
+import CalendarHelper from "../helpers/CalendarHelper";
+import CalendarSTORE from "../helpers/CalendarSTORE";
 import ScheduleDay from "./ScheduleDay";
 import SimpleDay from "./SimpleDay";
-
-let Cl = "test";
 
 export default {
     name: "Day",
@@ -37,8 +34,8 @@ export default {
             return this.daysProps.checkedDays[this.ref] ? true : false;
         },
         anotherDay() {
-            if (this.oldMonthN != StoreCL.calendars[this.calendarId].monthN) {
-                this.oldMonthN = StoreCL.calendars[this.calendarId].monthN;
+            if (this.oldMonthN != CalendarSTORE.calendars[this.calendarId].monthN) {
+                this.oldMonthN = CalendarSTORE.calendars[this.calendarId].monthN;
                 let monthCount = this.dayInfo.year * 12 + this.dayInfo.month;
 
                 // destroy from memory
@@ -49,7 +46,7 @@ export default {
                     this.$destroy();
                     return false;
                 }
-                if(this.CL.type != 'month') return "";
+                if(this.CalendarDATA.type != 'month') return "";
 
                 if (this.daysProps.dayType != "simple") {
                     if (this.oldMonthN != monthCount) return "day--another";
@@ -59,8 +56,8 @@ export default {
         }
     },
     created() {
-        this.CL = StoreCL.calendars[this.calendarId];
-        this.daysProps = this.CL.daysProps;
+        this.CalendarDATA = CalendarSTORE.calendars[this.calendarId];
+        this.daysProps = this.CalendarDATA.daysProps;
         this.dayDiv = "";
         this.time = new Date(this.day * 86400000);
         this.dayStr = this.time.toISOString().slice(0, 10);
@@ -75,7 +72,7 @@ export default {
             day: dateArr[2],
             month: dateArr[1] - 1,
             year: dateArr[0],
-            weekDay: Store.WEEK[this.time.getDay()]
+            weekDay: CalendarSTORE.WEEK[this.time.getDay()]
         };
     },
     mounted() {

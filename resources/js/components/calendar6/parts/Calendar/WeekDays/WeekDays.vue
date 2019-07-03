@@ -1,5 +1,5 @@
 <template>
-    <table class="weekdays-table" :data-ms="mondayFirst">
+    <table class="weekdays-table" :data-monday-first="mondayFirst">
         <tr class="weekdays_tr">
             <td v-for="(day, index) in weekDays" :key="index" class="weekdays_td">{{day}}</td>
         </tr>
@@ -7,25 +7,28 @@
 </template>
 
 <script>
-import Store from "../../../services/Store";
+import CalendarSTORE from "../helpers/CalendarSTORE";
+
 export default {
     name: "WeekDays",
     computed: {
         mondayFirst() {
             this.weekDays = this.setWeekDays();
-            return Store.settings.mondayFirst;
+            return this.CalendarDATA.daysProps.settings.mondayFirst;
         }
     },
     created() {
+        this.CalendarDATA = CalendarSTORE.calendars["mainCalendar"];
         this.weekDays = this.setWeekDays();
     },
     methods: {
         setWeekDays() {
             let weekDays = [];
-            Store.WEEK.forEach(item => {
+            CalendarSTORE.WEEK.forEach(item => {
                 weekDays.push(item);
             });
-            if (Store.settings.mondayFirst) {
+
+            if (this.CalendarDATA.daysProps.settings.mondayFirst) {
                 let Su = weekDays[0];
                 weekDays.shift();
                 weekDays.push(Su);

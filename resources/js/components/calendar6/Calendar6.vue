@@ -1,21 +1,21 @@
 <template>
     <div class="CC" ref="CC">
-        <RC></RC>
-        <TS></TS>
+        <CalendarsWrapper></CalendarsWrapper>
+        <RightSlideBlock></RightSlideBlock>
     </div>
 </template>
 
 <script>
 import Vue from 'vue';
 import * as $ from 'jquery';
-import RC from './parts/RC/RC';
-import TS from './parts/TS/TS';
+import CalendarsWrapper from './parts/CalendarsWrapper/CalendarsWrapper';
+import RightSlideBlock from './parts/RightSlideBlock/RightSlideBlock';
 
 export default {
     name: 'calendar6',
     components: {
-        RC,
-        TS
+        CalendarsWrapper,
+        RightSlideBlock
     },
     mounted() {
         // let box = this.$refs.CC;

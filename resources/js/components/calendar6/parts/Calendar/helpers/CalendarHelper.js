@@ -1,19 +1,20 @@
 import * as $ from "jquery";
-import Store from '../../../services/Store';
-import StoreCL from './StoreCL';
+import CalendarSTORE from './CalendarSTORE';
 
 const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const daysX = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-class HelperCL {
-    constructor() { }
+class CalendarHelperClass {
+    constructor(calendarId) {
+        this.CalendarDATA = CalendarSTORE.calendars[calendarId];
+    }
 
-    getWeek(dayN) {
+    getWeek(dayN, mondayFirst) {
         let t = new Date(dayN * 86400000);
         let mid = t.getDay();
         let arr = [];
 
-        if (Store.settings.mondayFirst) {
+        if (mondayFirst) {
             if (mid == 0)
                 for (let i = 0; i < 7; i++)
                     arr.unshift(dayN - i);
@@ -58,7 +59,7 @@ class HelperCL {
         return dayStr;
     }
 
-    getWeeksInMonth(monthN) {
+    getWeeksInMonth(monthN, mondayFirst) {
         let monthObj = this.getMonth(monthN);
         let weeksInMonth = [];
         for (let i = 1; (i - monthObj.days) <= 7; i += 7) {
@@ -67,7 +68,7 @@ class HelperCL {
 
             dayNM = new Date(dayStr);
             dayNM = Math.floor(dayNM.getTime() / 86400000);
-            weeksInMonth.push(this.getWeek(dayNM));
+            weeksInMonth.push(this.getWeek(dayNM, mondayFirst));
         }
         if (weeksInMonth[weeksInMonth.length - 1][0] == weeksInMonth[weeksInMonth.length - 2][0])
             weeksInMonth.pop();
@@ -76,5 +77,5 @@ class HelperCL {
 
 }
 
-let helperCL = new HelperCL();
-export default helperCL;
+let CalendarHelper = new CalendarHelperClass();
+export default CalendarHelper;

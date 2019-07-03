@@ -4,7 +4,7 @@ export default class {
         this.settings = {
             segment: 60,
             multiselect: true,
-            mondayFirst: false,
+            mondayFirst: true,
             hoursFormat: '12h',
             time: new Date(),
         };

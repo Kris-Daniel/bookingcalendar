@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import HelperCL from "../helpers/HelperCL";
-import StoreCL from "../helpers/StoreCL";
+import CalendarHelper from "../helpers/CalendarHelper";
+import CalendarSTORE from "../helpers/CalendarSTORE";
 
 import Pencil from "../../../../../svg/pencil";
 import AngleDown from "../../../../../svg/angle-down";
@@ -51,9 +51,9 @@ export default {
         }
     },
     created() {
-        this.CL = StoreCL.calendars[this.calendarId];
-        this.SD = this.CL.daysProps.schedule.days;
-        this.WD = this.CL.daysProps.schedule.weekDays;
+        this.CalendarDATA = CalendarSTORE.calendars[this.calendarId];
+        this.SD = this.CalendarDATA.daysProps.schedule.days;
+        this.WD = this.CalendarDATA.daysProps.schedule.weekDays;
         this.schedule = null;
 
         this.setSchedule();

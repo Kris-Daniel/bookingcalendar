@@ -4107,6 +4107,9 @@ a {
 .CC .slide_td.checked .day {
   box-shadow: 0px 0px 0px 1px #00cec9;
 }
+.CC .slide_td.checked .day {
+  background: rgba(0, 206, 201, 0.07);
+}
 @media screen and (max-width: 800px) {
   .CC .slide_td {
     display: block;

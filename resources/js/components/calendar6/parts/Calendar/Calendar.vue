@@ -1,11 +1,6 @@
 <template>
     <div class="CL" :data-id="params.name" :class="classCss">
-        <template v-if="type == 'week'">
-            <WeekChangeSlide @changeSlide="changeSlide" :weeks="slides"></WeekChangeSlide>
-        </template>
-        <template v-else>
-            <MonthChangeSlide @changeSlide="changeSlide" :months="slides"></MonthChangeSlide>
-        </template>
+        <ChangeSlide :type="type" :slides="slides" @changeSlide="changeSlide" :calendarId="params.name"></ChangeSlide>
         <div class="calendar-box">
             <WeekDays v-if="type == 'month'"></WeekDays>
             <div class="slider" ref="slider"></div>
@@ -17,29 +12,26 @@
 import Vue from "vue";
 import * as $ from "jquery";
 
-import StoreCL from "./helpers/StoreCL";
-import Store from "../../services/Store";
-import HelperCL from "./helpers/HelperCL";
+import CalendarSTORE from "./helpers/CalendarSTORE";
+import CalendarHelper from "./helpers/CalendarHelper";
 
-import WeekChangeSlide from "./ChangeSlide/WeekChangeSlide";
-import MonthChangeSlide from "./ChangeSlide/MonthChangeSlide";
+import ChangeSlide from './ChangeSlide/ChangeSlide';
 import WeekDays from "./WeekDays/WeekDays";
 import Slide from "./Slide/Slide";
 
 let SlideClass = Vue.extend(Slide);
 
 export default {
-    name: "CL",
+    name: "Calendar",
     components: {
-        WeekChangeSlide,
-        MonthChangeSlide,
+        ChangeSlide,
         WeekDays,
         Slide
     },
     props: ["params"],
     data() {
         return {
-            cl: undefined,
+            CalendarDATA: undefined,
             oldType: "month"
         };
     },
@@ -50,7 +42,7 @@ export default {
         let currentMonth = time.getMonth();
         let currentYear = time.getFullYear();
 
-        Vue.set(StoreCL.calendars, this.params.name, {
+        Vue.set(CalendarSTORE.calendars, this.params.name, {
             time,
             timeStamp,
             currentDay,
@@ -61,8 +53,8 @@ export default {
             type: "month"
         });
 
-        this.CL = StoreCL.calendars[this.params.name];
-        this.oldType = this.CL.type;
+        this.CalendarDATA = CalendarSTORE.calendars[this.params.name];
+        this.oldType = this.CalendarDATA.type;
         this.setupSliderStart();
         this.setResize();
     },
@@ -71,32 +63,32 @@ export default {
     },
     computed: {
         type() {
-            if (this.oldType != this.CL.type) {
-                this.oldType = this.CL.type;
+            if (this.oldType != this.CalendarDATA.type) {
+                this.oldType = this.CalendarDATA.type;
                 this.setupSliderStart();
                 this.setSlides();
             }
-            return this.CL.type;
+            return this.CalendarDATA.type;
         },
         slides() {
-            return this.CL.slides;
+            return this.CalendarDATA.slides;
         },
         classCss() {
-            return 'CL-type-' + this.oldType;
+            return 'calendar-state-' + this.oldType;
         }
     },
     methods: {
         setResize() {
-            if (this.CL.daysProps.dayType != "simple") {
+            if (this.CalendarDATA.daysProps.dayType != "simple") {
                 let resize = () => {
                     let w = $(window).width();
-                    if (w <= 800 && this.CL.type == "month") {
-                        // this.CL.dayN = HelperCL.getWeeksInMonth(this.CL.monthN)[0][0];
-                        this.CL.type = "week";
-                    } else if (w > 800 && this.CL.type == "week") {
-                        // let dateDatN = new Date(this.CL.dayN * 86400000);
-                        // this.CL.monthN = dateDatN.getFullYear() * 12 + dateDatN.getMonth();
-                        this.CL.type = "month";
+                    if (w <= 800 && this.CalendarDATA.type == "month") {
+                        // this.CalendarDATA.dayN = CalendarHelper.getWeeksInMonth(this.CalendarDATA.monthN)[0][0];
+                        this.CalendarDATA.type = "week";
+                    } else if (w > 800 && this.CalendarDATA.type == "week") {
+                        // let dateDatN = new Date(this.CalendarDATA.dayN * 86400000);
+                        // this.CalendarDATA.monthN = dateDatN.getFullYear() * 12 + dateDatN.getMonth();
+                        this.CalendarDATA.type = "month";
                     }
                     this.setHeight();
                 };
@@ -106,29 +98,29 @@ export default {
         },
 
         setupSliderStart() {
-            while (this.CL.slides.length > 0) this.CL.slides.pop();
-            Vue.set(this.CL, "dayN", this.CL.currentDay);
+            while (this.CalendarDATA.slides.length > 0) this.CalendarDATA.slides.pop();
+            Vue.set(this.CalendarDATA, "dayN", this.CalendarDATA.currentDay);
             Vue.set(
-                this.CL,
+                this.CalendarDATA,
                 "monthN",
-                this.CL.currentYear * 12 + this.CL.currentMonth
+                this.CalendarDATA.currentYear * 12 + this.CalendarDATA.currentMonth
             );
         },
         setSlides() {
             if (!this.$refs.slider) return false;
             this.$refs.slider.innerHTML = "";
-            if (this.CL.type == "month") {
-                for (let i = this.CL.monthN - 1; i <= this.CL.monthN + 1; i++) {
-                    this.CL.slides.push(i);
+            if (this.CalendarDATA.type == "month") {
+                for (let i = this.CalendarDATA.monthN - 1; i <= this.CalendarDATA.monthN + 1; i++) {
+                    this.CalendarDATA.slides.push(i);
                 }
             } else {
-                for (let i = this.CL.dayN - 7; i <= this.CL.dayN + 7; i += 7) {
-                    this.CL.slides.push(i);
+                for (let i = this.CalendarDATA.dayN - 7; i <= this.CalendarDATA.dayN + 7; i += 7) {
+                    this.CalendarDATA.slides.push(i);
                 }
             }
 
             for (let i = 0; i < 3; i++) {
-                let SlideInstance = this.getSlide(this.CL.slides[i]);
+                let SlideInstance = this.getSlide(this.CalendarDATA.slides[i]);
                 this.$refs.slider.appendChild(SlideInstance.$el);
             }
             this.setHeight();
@@ -139,34 +131,34 @@ export default {
                     .children()
                     .first()
                     .remove();
-                this.CL.slides.shift();
+                this.CalendarDATA.slides.shift();
 
-                if (this.CL.type == "month") {
-                    this.CL.monthN++;
-                    this.CL.slides.push(this.CL.monthN + 1);
+                if (this.CalendarDATA.type == "month") {
+                    this.CalendarDATA.monthN++;
+                    this.CalendarDATA.slides.push(this.CalendarDATA.monthN + 1);
                 } else {
-                    this.CL.dayN += 7;
-                    this.CL.slides.push(this.CL.dayN + 7);
+                    this.CalendarDATA.dayN += 7;
+                    this.CalendarDATA.slides.push(this.CalendarDATA.dayN + 7);
                 }
 
-                let SlideInstance = this.getSlide(this.CL.slides[2]);
+                let SlideInstance = this.getSlide(this.CalendarDATA.slides[2]);
                 this.$refs.slider.appendChild(SlideInstance.$el);
             } else {
                 $(this.$refs.slider)
                     .children()
                     .last()
                     .remove();
-                this.CL.slides.pop();
+                this.CalendarDATA.slides.pop();
 
-                if (this.CL.type == "month") {
-                    this.CL.monthN--;
-                    this.CL.slides.unshift(this.CL.monthN - 1);
+                if (this.CalendarDATA.type == "month") {
+                    this.CalendarDATA.monthN--;
+                    this.CalendarDATA.slides.unshift(this.CalendarDATA.monthN - 1);
                 } else {
-                    this.CL.dayN -= 7;
-                    this.CL.slides.unshift(this.CL.dayN - 7);
+                    this.CalendarDATA.dayN -= 7;
+                    this.CalendarDATA.slides.unshift(this.CalendarDATA.dayN - 7);
                 }
 
-                let SlideInstance = this.getSlide(this.CL.slides[0]);
+                let SlideInstance = this.getSlide(this.CalendarDATA.slides[0]);
                 this.$refs.slider.prepend(SlideInstance.$el);
             }
             this.setHeight();
