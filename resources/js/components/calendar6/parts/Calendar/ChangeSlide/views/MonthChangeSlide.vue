@@ -13,11 +13,11 @@
     </div>
 </template>
 <script>
-import CalendarSTORE from '../helpers/CalendarSTORE';
-import ChangeSlideService from "./ChangeSlideService";
+import CalendarSTORE from '../../helpers/CalendarSTORE';
+import ChangeSlideService from "./../ChangeSlideService";
 
-import ArrowLeft from '../../../../../svg/arrow-left';
-import ArrowRight from '../../../../../svg/arrow-right';
+import ArrowLeft from '../../../../../../svg/arrow-left';
+import ArrowRight from '../../../../../../svg/arrow-right';
 
 export default {
     name: "MonthChangeSlide",

@@ -7,9 +7,9 @@
     </div>
 </template>
 <script>
-import CalendarSTORE from "../helpers/CalendarSTORE";
-import ChangeSlideService from "./ChangeSlideService";
-import CalendarHelper from "../helpers/CalendarHelper";
+import CalendarSTORE from "../../helpers/CalendarSTORE";
+import ChangeSlideService from "./../ChangeSlideService";
+import CalendarHelper from "../../helpers/CalendarHelper";
 
 export default {
     name: "WeekChangeSlide",
@@ -34,7 +34,7 @@ export default {
         },
         setText() {
             if (this.weeks[1]) {
-                let CalendarDATA = CalendarSTORE.calendars["calendarId"];
+                let CalendarDATA = CalendarSTORE.calendars[this.calendarId];
                 let daysInWeek = CalendarHelper.getWeek(
                     this.weeks[1],
                     CalendarDATA.daysProps.settings.mondayFirst

@@ -1,5 +1,5 @@
 <template>
-    <div class="CL" :data-id="params.name" :class="classCss">
+    <div class="calendar" :data-id="params.name" :class="classCss">
         <ChangeSlide :type="type" :slides="slides" @changeSlide="changeSlide" :calendarId="params.name"></ChangeSlide>
         <div class="calendar-box">
             <WeekDays v-if="type == 'month'"></WeekDays>

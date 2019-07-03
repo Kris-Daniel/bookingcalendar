@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import WeekChangeSlide from "./WeekChangeSlide";
-import MonthChangeSlide from "./MonthChangeSlide";
+import WeekChangeSlide from "./views/WeekChangeSlide";
+import MonthChangeSlide from "./views/MonthChangeSlide";
 
 export default {
     name: "changeSlide",

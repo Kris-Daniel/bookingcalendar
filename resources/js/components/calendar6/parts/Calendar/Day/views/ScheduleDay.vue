@@ -1,5 +1,5 @@
 <template>
-    <div class="day_inside day-schedule" :class="{special: isSpecial}">
+    <div class="day_inside day-schedule" :class="{special: isSpecial}" @click="click">
         <div class="day_num">
             {{dayInfo.day}}
             <div class="day_special"></div>
@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import CalendarHelper from "../helpers/CalendarHelper";
-import CalendarSTORE from "../helpers/CalendarSTORE";
+import CalendarHelper from "../../helpers/CalendarHelper";
+import CalendarSTORE from "../../helpers/CalendarSTORE";
 
-import Pencil from "../../../../../svg/pencil";
-import AngleDown from "../../../../../svg/angle-down";
+import Pencil from "../../../../../../svg/pencil";
+import AngleDown from "../../../../../../svg/angle-down";
 
 export default {
     name: "ScheduleDay",
@@ -64,6 +64,13 @@ export default {
             this.schedule = this.SD[this.dayInfo.ref]
                 ? this.SD[this.dayInfo.ref]
                 : this.WD[this.dayInfo.weekDay];
+        },
+        click() {
+            let data = {
+                type: 'schedule',
+                schedule: this.schedule
+            };
+            this.$emit('sendData', data);
         }
     }
 };

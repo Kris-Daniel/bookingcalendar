@@ -1,5 +1,5 @@
 <template>
-    <div class="RC">
+    <div class="calendars-wrapper">
         <Calendar :params="mainCalendar"></Calendar>
     </div>
 </template>
@@ -8,6 +8,8 @@
 import Vue from 'vue';
 import Calendar from "../Calendar/Calendar";
 import CalendarClassDATA from '../../services/GetCalendar';
+import RightSlideStore from '../RightSlideBlock/helpers/RightSlideSTORE';
+
 let CalendarDATA = new CalendarClassDATA();
 
 export default {
@@ -24,8 +26,10 @@ export default {
             time: new Date(),
             daysProps: {
                 dayType: 'schedule',
-                dayClick(ref, dayDiv) {
-                    console.log(ref, dayDiv, "ref click here");
+                dayClick(ref, daysProps, data) {
+                    RightSlideStore.render(ref, daysProps, data, 'mainCalendar');
+                    // RightSlideStore.showFlag = true;
+                    // console.log(ref, dayDiv, "ref click here");
                 },
                 dayClasses(ref) {
                     return 'day-test';
