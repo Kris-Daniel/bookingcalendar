@@ -1,35 +1,31 @@
 <template>
     <div class="CC" ref="CC">
         <CalendarsWrapper></CalendarsWrapper>
-        <RightSlideBlock></RightSlideBlock>
+        <ToggledSidebarWrapper></ToggledSidebarWrapper>
     </div>
 </template>
 
 <script>
-import Vue from 'vue';
-import * as $ from 'jquery';
-import CalendarsWrapper from './parts/CalendarsWrapper/CalendarsWrapper';
-import RightSlideBlock from './parts/RightSlideBlock/RightSlideBlock';
+import Vue from "vue";
+import Vuex from "vuex";
+
+import * as $ from "jquery";
+import CalendarsWrapper from "./parts/CalendarsWrapper/CalendarsWrapper";
+import ToggledSidebarWrapper from "./parts/ToggledSidebar/ToggledSidebarWrapper";
 
 export default {
-    name: 'calendar6',
+    name: "calendar6",
     components: {
         CalendarsWrapper,
-        RightSlideBlock
+        ToggledSidebarWrapper
     },
     mounted() {
         // let box = this.$refs.CC;
     },
-    computed: {
-        
-    },
-    methods: {
-        
-    },
-    created() {
-        
-    }
-}
+    computed: {},
+    methods: {},
+    created() {}
+};
 </script>
 
 <style>

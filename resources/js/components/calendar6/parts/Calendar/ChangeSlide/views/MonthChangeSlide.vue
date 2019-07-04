@@ -4,10 +4,10 @@
             <div class="change-slide_month">{{month}}</div>
             <div class="change-slide_year">{{year}}</div>
             <div @click="changeSlide('prev')" class="change-slide_btn change-slide_btn--prev">
-                <ArrowLeft></ArrowLeft>
+                <AngleLeft></AngleLeft>
             </div>
             <div @click="changeSlide('next')" class="change-slide_btn change-slide_btn--next">
-                <ArrowRight></ArrowRight>
+                <AngleRight></AngleRight>
             </div>
         </div>
     </div>
@@ -16,15 +16,15 @@
 import CalendarSTORE from '../../helpers/CalendarSTORE';
 import ChangeSlideService from "./../ChangeSlideService";
 
-import ArrowLeft from '../../../../../../svg/arrow-left';
-import ArrowRight from '../../../../../../svg/arrow-right';
+import AngleLeft from '../../../../../../svg/angle-left';
+import AngleRight from '../../../../../../svg/angle-right';
 
 export default {
     name: "MonthChangeSlide",
     props: ["months"],
     components: {
-        ArrowLeft,
-        ArrowRight
+        AngleLeft,
+        AngleRight
     },
     data() {
         return {

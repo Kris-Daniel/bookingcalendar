@@ -1,7 +1,7 @@
 <template>
-    <table class="weekdays-table" :data-monday-first="mondayFirst">
-        <tr class="weekdays_tr">
-            <td v-for="(day, index) in weekDays" :key="index" class="weekdays_td">{{day}}</td>
+    <table class="weekdays-table" :class="cssClass" :data-monday-first="mondayFirst">
+        <tr class="weekdays-table_tr">
+            <td v-for="(day, index) in weekDays" :key="index" class="weekdays-table_td">{{day}}</td>
         </tr>
     </table>
 </template>
@@ -11,6 +11,7 @@ import CalendarSTORE from "../helpers/CalendarSTORE";
 
 export default {
     name: "WeekDays",
+    props: ['calendarId'],
     computed: {
         mondayFirst() {
             this.weekDays = this.setWeekDays();
@@ -18,7 +19,8 @@ export default {
         }
     },
     created() {
-        this.CalendarDATA = CalendarSTORE.calendars["mainCalendar"];
+        this.CalendarDATA = CalendarSTORE.calendars[this.calendarId];
+        this.cssClass = "weekdays-table--" + this.CalendarDATA.daysProps.dayType;
         this.weekDays = this.setWeekDays();
     },
     methods: {

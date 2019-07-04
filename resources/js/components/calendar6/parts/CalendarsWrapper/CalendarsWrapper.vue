@@ -8,7 +8,7 @@
 import Vue from 'vue';
 import Calendar from "../Calendar/Calendar";
 import CalendarClassDATA from '../../services/GetCalendar';
-import RightSlideStore from '../RightSlideBlock/helpers/RightSlideSTORE';
+import ToggledSidebarSTORE from '../ToggledSidebar/helpers/ToggledSidebarSTORE';
 
 let CalendarDATA = new CalendarClassDATA();
 
@@ -26,9 +26,10 @@ export default {
             time: new Date(),
             daysProps: {
                 dayType: 'schedule',
+                multiselect: false,
                 dayClick(ref, daysProps, data) {
-                    RightSlideStore.render(ref, daysProps, data, 'mainCalendar');
-                    // RightSlideStore.showFlag = true;
+                    ToggledSidebarSTORE.render(ref, daysProps, data, 'mainCalendar');
+                    // ToggledSidebarSTORE.showFlag = true;
                     // console.log(ref, dayDiv, "ref click here");
                 },
                 dayClasses(ref) {

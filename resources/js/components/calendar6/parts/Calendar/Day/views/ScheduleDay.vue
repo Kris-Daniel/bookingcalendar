@@ -1,8 +1,8 @@
 <template>
-    <div class="day_inside day-schedule" :class="{special: isSpecial}" @click="click">
+    <div class="day_inside day--schedule" :class="{special: isSpecial}" @click="click">
         <div class="day_num">
             {{dayInfo.day}}
-            <div class="day_special"></div>
+            <div class="day_special-circle"></div>
         </div>
         <div class="day_schedule">
             <div
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        <div class="day_edit">
+        <div class="day_edit-icon">
             <Pencil></Pencil>
         </div>
     </div>
@@ -63,12 +63,13 @@ export default {
         setSchedule() {
             this.schedule = this.SD[this.dayInfo.ref]
                 ? this.SD[this.dayInfo.ref]
-                : this.WD[this.dayInfo.weekDay];
+                : this.WD[this.dayInfo.weekDayRef];
         },
         click() {
             let data = {
-                type: 'schedule',
-                schedule: this.schedule
+                component: 'timeSetting',
+                schedule: this.schedule,
+                dayInfo: this.dayInfo
             };
             this.$emit('sendData', data);
         }

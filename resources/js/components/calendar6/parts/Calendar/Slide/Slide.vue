@@ -3,7 +3,7 @@
         <input type="hidden" ref="slide">
         <table class="slide_table">
             <tr
-                class="slide_tr"
+                class="slide_table_tr"
                 v-for="(week, weekIndex) in weeksInMonth"
                 :key="'week' + weekIndex"
             >
@@ -12,6 +12,7 @@
                     :key="'day' + dayIndex"
                     :calendarId="calendarId"
                     :day="day"
+                    :slideId="slideId"
                 ></Day>
             </tr>
         </table>
@@ -28,7 +29,7 @@ export default {
     components: {
         Day
     },
-    props: ["id", "calendarId"],
+    props: ["slideId", "calendarId"],
     data() {
         return {
             weeksInMonth: undefined
@@ -38,8 +39,8 @@ export default {
         let CalendarDATA = CalendarSTORE.calendars[this.calendarId];
         this.weeksInMonth =
             CalendarDATA.type == "month"
-                ? CalendarHelper.getWeeksInMonth(this.id, CalendarDATA.daysProps.settings.mondayFirst)
-                : [CalendarHelper.getWeek(this.id, CalendarDATA.daysProps.settings.mondayFirst)];
+                ? CalendarHelper.getWeeksInMonth(this.slideId, CalendarDATA.daysProps.settings.mondayFirst)
+                : [CalendarHelper.getWeek(this.slideId, CalendarDATA.daysProps.settings.mondayFirst)];
         
     },
     methods: {}

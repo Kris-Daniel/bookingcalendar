@@ -6,8 +6,13 @@
 
 <script>
 export default {
-    name: 'RightSlideView',
+    name: 'Bookings',
     props: [],
-    
+    data() {
+        return {
+            
+        }
+    }
+
 }
 </script>

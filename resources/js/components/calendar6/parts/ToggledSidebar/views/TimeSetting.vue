@@ -1,0 +1,74 @@
+<template>
+    <div class="time-setting">
+        <div class="time-setting_content">
+            <div class="title center">Time Settings</div>
+            <div class="time-setting_close" @click="closeTimeSetting()">
+                <ArrowRight></ArrowRight>
+            </div>
+            <div class="mb30"></div>
+            <div class="mb10">
+                <div class="interval-grid">From</div>
+                <div class="interval-grid interval-grid--mid"></div>
+                <div class="interval-grid">To</div>
+            </div>
+            <div class="intervals mb20">
+                <div
+                    class="interval"
+                    v-for="(interval, index) in schedule"
+                    :key="'input-interval-' + index"
+                >
+                    <div class="interval-grid">{{interval.from}}</div>
+                    <div class="interval-grid interval-grid--mid center">
+                        <div class="dash"></div>
+                    </div>
+                    <div class="interval-grid">{{interval.to}}</div>
+                </div>
+            </div>
+            <div class="mb20">
+                <div class="text-btn">+ New Interval</div>
+            </div>
+            <div style="margin-bottom: 12px">
+                <div class="btn">Apply to {{dayInfo.day}} {{dayInfo.monthName}}</div>
+            </div>
+            <div class="mb20">
+                <div class="btn">Apply to all {{weekNamePlural}}</div>
+            </div>
+            <div class="center">
+                <div class="text-btn">Or apply to multiple</div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import ToggledSidebarSTORE from "../helpers/ToggledSidebarSTORE";
+import CalendarSTORE from "../../Calendar/helpers/CalendarSTORE";
+import ArrowRight from "../../../../../svg/arrow-right";
+
+export default {
+    name: "TimeSetting",
+    props: ["storeLink"],
+    components: {
+        ArrowRight
+    },
+    computed: {
+        schedule() {
+            return this.storeLink.props.data.schedule;
+        },
+        dayInfo() {
+            let dayInfo = this.storeLink.props.data.dayInfo;
+            this.weekNamePlural =
+                CalendarSTORE.WEEKNAMESPLURAL[dayInfo.weekDay];
+            return dayInfo;
+        }
+    },
+    created() {
+        console.log(this.storeLink, "storeLink");
+    },
+    methods: {
+        closeTimeSetting() {
+            ToggledSidebarSTORE.disableViews();
+        }
+    }
+};
+</script>

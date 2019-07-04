@@ -1,5 +1,5 @@
 <template>
-    <td class="slide_td" :class="{'checked': checked}">
+    <td class="slide_table_td" :class="{'checked': checked}">
         <div class="day" :class="[daysProps.dayClasses(), anotherDay]" ref="dayDiv">
             <component
                 :is="days[daysProps.dayType]"
@@ -20,7 +20,7 @@ import SimpleDay from "./views/SimpleDay";
 
 export default {
     name: "Day",
-    props: ["day", "calendarId"],
+    props: ["day", "calendarId", "slideId"],
     components: {
         ScheduleDay,
         SimpleDay
@@ -58,7 +58,7 @@ export default {
                 if (this.CalendarDATA.type != "month") return "";
 
                 if (this.daysProps.dayType != "simple") {
-                    if (this.oldMonthN != monthCount) return "day--another";
+                    if (this.slideId != monthCount) return "day--another-month";
                 }
                 return "";
             }
@@ -76,12 +76,16 @@ export default {
             return parseInt(item);
         });
 
+        let weekDay = this.time.getDay();
+
         this.dayInfo = {
             ref: this.ref,
             day: dateArr[2],
-            month: dateArr[1] - 1,
+            month: (dateArr[1] - 1),
             year: dateArr[0],
-            weekDay: CalendarSTORE.WEEK[this.time.getDay()]
+            weekDay,
+            weekDayRef: CalendarSTORE.WEEK[weekDay],
+            monthName: CalendarSTORE.MONTHS[(dateArr[1] - 1)]
         };
     },
     mounted() {
@@ -90,10 +94,16 @@ export default {
     methods: {
         click(data) {
             if (!this.daysProps.checkedDays[this.ref]) {
-                Vue.set(this.daysProps, "checkedDays", {});
+                if (!this.daysProps.multiselect)
+                    Vue.set(this.daysProps, "checkedDays", {});
                 Vue.set(this.daysProps.checkedDays, this.ref, true);
             } else Vue.delete(this.daysProps.checkedDays, this.ref);
-            this.daysProps.dayClick(this.ref, this.daysProps, data);
+
+            let newDayProps = {
+                checkedDays: this.daysProps.checkedDays,
+                settings: this.daysProps.settings
+            };
+            this.daysProps.dayClick(this.ref, newDayProps, data);
         }
     }
 };

@@ -1,8 +1,8 @@
 <template>
-    <div class="calendar" :data-id="params.name" :class="classCss">
+    <div class="calendar-wrapper" :data-id="params.name" :class="classCss">
         <ChangeSlide :type="type" :slides="slides" @changeSlide="changeSlide" :calendarId="params.name"></ChangeSlide>
-        <div class="calendar-box">
-            <WeekDays v-if="type == 'month'"></WeekDays>
+        <div class="calendar">
+            <WeekDays v-if="type == 'month'" :calendarId="params.name"></WeekDays>
             <div class="slider" ref="slider"></div>
         </div>
     </div>
@@ -166,7 +166,7 @@ export default {
         getSlide(i) {
             let data = {
                 propsData: {
-                    id: i,
+                    slideId: i,
                     calendarId: this.params.name
                 }
             };
