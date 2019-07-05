@@ -4050,6 +4050,7 @@ a {
 .CC .calendars-wrapper .slider {
   position: relative;
   overflow: hidden;
+  transition: 0.3s all ease;
 }
 .CC .calendars-wrapper .slide {
   position: absolute;
@@ -4057,7 +4058,7 @@ a {
   transition: 0.3s all ease;
 }
 .CC .calendars-wrapper .slide:nth-child(1) {
-  left: -100%;
+  left: -100px;
   opacity: 0;
 }
 .CC .calendars-wrapper .slide:nth-child(2) {
@@ -4065,8 +4066,13 @@ a {
   z-index: 2;
 }
 .CC .calendars-wrapper .slide:nth-child(3) {
-  left: 100%;
+  left: 100px;
   opacity: 0;
+}
+.CC .calendars-wrapper .slider-leave-to,
+.CC .calendars-wrapper .slider-leave-active {
+  transition: 0s all !important;
+  display: none !important;
 }
 .CC .calendars-wrapper .slide_table,
 .CC .calendars-wrapper .weekdays-table {
@@ -4134,7 +4140,7 @@ a {
 .CC .calendars-wrapper .day_schedule_time {
   font-size: 12px;
   line-height: 1 !important;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
   color: #666a73;
 }
 .CC .calendars-wrapper .day_num {
@@ -4258,6 +4264,8 @@ a {
 .CC .toggle-sidebar-wrapper {
   position: relative;
   z-index: 10;
+  /* Time Setting */
+  /* Multiple Days Choser */
 }
 .CC .toggle-sidebar-wrapper .retractable-sidebar {
   position: fixed;
@@ -4291,6 +4299,8 @@ a {
 .CC .toggle-sidebar-wrapper .time-setting {
   position: relative;
   height: 100%;
+  padding: 100px 18px 18px 18px;
+  overflow: auto;
 }
 .CC .toggle-sidebar-wrapper .time-setting_close {
   position: absolute;
@@ -4304,16 +4314,6 @@ a {
 }
 .CC .toggle-sidebar-wrapper .time-setting_close svg * {
   fill: #dbdbdb !important;
-}
-.CC .toggle-sidebar-wrapper .time-setting_content {
-  position: absolute;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  width: 100%;
-  max-height: 100%;
-  overflow: auto;
-  padding: 100px 18px 18px 18px;
 }
 .CC .toggle-sidebar-wrapper .title {
   font-size: 18px;
@@ -4383,4 +4383,26 @@ a {
 .CC .toggle-sidebar-wrapper .btn:hover {
   background: #00cec9;
   box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.25);
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser {
+  position: relative;
+  height: 100%;
+  padding: 100px 18px 18px 18px;
+  overflow: auto;
+  text-align: center;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser_close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  height: 25px;
+  width: 12px;
+  cursor: pointer;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser_close svg {
+  height: 25px;
+  width: 12px;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser_close svg * {
+  fill: #dbdbdb !important;
 }

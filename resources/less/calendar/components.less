@@ -450,13 +450,14 @@
     .slider{
         .rel();
         overflow: hidden;
+        transition: 0.3s all ease;
     }
     .slide{
         .abs();
         width: 100%;
         transition: 0.3s all ease;
         &:nth-child(1){
-            left: -100%;
+            left: -100px;
             opacity: 0;
         }
         &:nth-child(2){
@@ -464,9 +465,14 @@
             z-index: 2;
         }
         &:nth-child(3){
-            left: 100%;
+            left: 100px;
             opacity: 0;
         }
+    }
+    .slider-leave-to,
+    .slider-leave-active {
+        transition: 0s all !important;
+        display: none !important;
     }
     .slide_table,
     .weekdays-table{
@@ -545,7 +551,7 @@
     }
     .day_schedule_time{
         .size12();
-        .mb10();
+        margin-bottom: 7px;
         color: #666a73;
     }
     .day_num{
@@ -692,9 +698,13 @@
             opacity: 1;
         }
     }
+
+    /* Time Setting */
     .time-setting{
         position: relative;
         height: 100%;
+        padding: 100px 18px 18px 18px;
+        overflow: auto;
     }
     .time-setting_close{
         position: absolute;
@@ -708,13 +718,6 @@
                 fill: #dbdbdb !important;
             }
         }
-    }
-    .time-setting_content{
-        .x-center();
-        width: 100%;
-        max-height: 100%;
-        overflow: auto;
-        padding: 100px 18px 18px 18px;
     }
     .title{
         .size18();
@@ -777,6 +780,31 @@
         &:hover{
             background: @cyan;
             box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.25);
+        }
+    }
+
+    /* Multiple Days Choser */
+    .multiple-days-choser{
+        position: relative;
+        height: 100%;
+        padding: 100px 18px 18px 18px;
+        overflow: auto;
+        text-align: center;
+    }
+    .multiple-days-choser_close{
+        // .y-center();
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        height: 25px;
+        width: 12px;
+        cursor: pointer;
+        svg{
+            height: 25px;
+            width: 12px;
+            * {
+                fill: #dbdbdb !important;
+            }
         }
     }
 }

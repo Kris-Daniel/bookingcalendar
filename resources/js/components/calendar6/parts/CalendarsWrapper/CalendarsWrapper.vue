@@ -10,6 +10,7 @@ import Calendar from "../Calendar/Calendar";
 import CalendarClassDATA from '../../services/GetCalendar';
 import ToggledSidebarSTORE from '../ToggledSidebar/helpers/ToggledSidebarSTORE';
 
+Vue.component('Calendar', Calendar);
 let CalendarDATA = new CalendarClassDATA();
 
 export default {
@@ -27,10 +28,8 @@ export default {
             daysProps: {
                 dayType: 'schedule',
                 multiselect: false,
-                dayClick(ref, daysProps, data) {
-                    ToggledSidebarSTORE.render(ref, daysProps, data, 'mainCalendar');
-                    // ToggledSidebarSTORE.showFlag = true;
-                    // console.log(ref, dayDiv, "ref click here");
+                dayClick(commonDaysInfo, data) {
+                    ToggledSidebarSTORE.renderParentView('mainCalendar', commonDaysInfo, data);
                 },
                 dayClasses(ref) {
                     return 'day-test';

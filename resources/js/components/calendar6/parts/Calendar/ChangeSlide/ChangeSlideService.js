@@ -8,7 +8,7 @@ class ChangeSlideServiceClass {
             component.$emit("changeSlide", side);
             setTimeout(() => {
                 component.wasClicked = false;
-            }, 300);
+            }, 320);
         }
     }
 

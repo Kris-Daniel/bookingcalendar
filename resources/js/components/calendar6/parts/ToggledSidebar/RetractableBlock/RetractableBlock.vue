@@ -7,7 +7,7 @@
 <script>
 import TimeSetting from "../views/TimeSetting";
 import Bookings from "../views/Bookings";
-import SetMultipleDays from "../views/SetMultipleDays";
+import MultipleDaysChoser from "../views/MultipleDaysChoser";
 
 import ToggledSidebarSTORE from '../helpers/ToggledSidebarSTORE';
 
@@ -16,7 +16,7 @@ export default {
     components: {
         TimeSetting,
         Bookings,
-        SetMultipleDays
+        MultipleDaysChoser
     },
     props: ["views"],
     data() {
@@ -29,14 +29,20 @@ export default {
         isActive() {
             for(let propName in this.views) {
                 if(this.views[propName].active) {
-                    this.view = this.views[propName].component;
-                    ToggledSidebarSTORE.showOverlay = true;
-                    this.storeLink = this.views[propName];
-                    return 'active';
+                    if(this.views[propName]) {
+                        this.view = this.views[propName].component;
+                        ToggledSidebarSTORE.showOverlay = true;
+                        this.storeLink = this.views[propName];
+                        return 'active';
+
+                    }
                 }
             }
             return '';
         }
+    },
+    created() {
+        console.log(this.views, 'vvv');
     }
 };
 </script>

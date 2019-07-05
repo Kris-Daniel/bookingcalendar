@@ -11,11 +11,12 @@ import ToggledSidebarSTORE from "./helpers/ToggledSidebarSTORE";
 import CalendarSTORE from "../Calendar/helpers/CalendarSTORE";
 
 import RetractableBlock from './RetractableBlock/RetractableBlock';
+Vue.component('RetractableBlock', RetractableBlock);
 
 export default {
     name: "ToggledSidebarWrapper",
     components: {
-        RetractableBlock
+        
     },
     computed: {
         showOverlay() {

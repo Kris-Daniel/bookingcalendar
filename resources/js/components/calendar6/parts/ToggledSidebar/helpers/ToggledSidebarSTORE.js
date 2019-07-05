@@ -15,8 +15,8 @@ let ToggledSidebarSTORE = new Vue({
             timeSetting: {
                 component: 'TimeSetting',
                 children: {
-                    setMultipleDays: {
-                        component: 'SetMultipleDays',
+                    MultipleDaysChoser: {
+                        component: 'MultipleDaysChoser',
                         active: false
                     }
                 },
@@ -30,30 +30,36 @@ let ToggledSidebarSTORE = new Vue({
         console.log(this.views, 'views');
     },
     methods: {
-        render(ref, daysProps, data, calendarId) {
+        renderParentView(calendarId, commonDaysInfo, data) {
             this.calendarId = calendarId;
             this.views[data.component].active = true;
             Vue.set(this.views[data.component], 'props', {
-                ref,
-                daysProps,
+                commonDaysInfo,
                 data
             });
             // console.log(data, 'daysProps');
             // console.log(this.views, 'views');
         },
-        setViews(data, enviroment) {
-            for(let propName in data) {
+        renderChildView(child, data) {
+            child.active = true;
+            Vue.set(child, 'props', {
+                data
+            });
+        },
+        setViews(data, enviroment, parent) {
+            for (let propName in data) {
                 Vue.set(enviroment, propName, {});
                 Vue.set(enviroment[propName], 'component', data[propName].component);
                 Vue.set(enviroment[propName], 'active', data[propName].active);
-                if(data[propName].children) {
+                if (parent) enviroment[propName].parent = parent;
+                if (data[propName].children) {
                     Vue.set(enviroment[propName], 'children', {});
-                    this.setViews(data[propName].children, enviroment[propName].children);
+                    this.setViews(data[propName].children, enviroment[propName].children, enviroment[propName]);
                 }
             }
         },
         disableViews(enviroment) {
-            if(this.showOverlay) {
+            if (this.showOverlay) {
                 this.showOverlay = false;
                 Vue.set(
                     CalendarSTORE.calendars[this.calendarId].daysProps,
@@ -62,10 +68,10 @@ let ToggledSidebarSTORE = new Vue({
                 );
                 this.calendarId = null;
             }
-            if(!enviroment) enviroment = this.views;
-            for(let propName in enviroment) {
+            if (!enviroment) enviroment = this.views;
+            for (let propName in enviroment) {
                 enviroment[propName].active = false;
-                if(enviroment[propName].children)
+                if (enviroment[propName].children)
                     this.disableViews(enviroment[propName].children);
             }
         }

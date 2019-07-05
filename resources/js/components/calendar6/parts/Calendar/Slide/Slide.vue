@@ -1,6 +1,6 @@
 <template>
-    <div class="slide">
-        <input type="hidden" ref="slide">
+    <div class="slide" ref="slide" :data-month="monthN">
+        <input type="hidden" ref="slide" />
         <table class="slide_table">
             <tr
                 class="slide_table_tr"
@@ -35,14 +35,29 @@ export default {
             weeksInMonth: undefined
         };
     },
+    computed: {
+        monthN() {
+            this.setHeight();
+            return this.CalendarDATA.monthN;
+        }
+    },
+    mounted() {
+        this.setHeight();
+    },
     created() {
-        let CalendarDATA = CalendarSTORE.calendars[this.calendarId];
+        this.CalendarDATA = CalendarSTORE.calendars[this.calendarId];
         this.weeksInMonth =
-            CalendarDATA.type == "month"
-                ? CalendarHelper.getWeeksInMonth(this.slideId, CalendarDATA.daysProps.settings.mondayFirst)
-                : [CalendarHelper.getWeek(this.slideId, CalendarDATA.daysProps.settings.mondayFirst)];
+            this.CalendarDATA.type == "month"
+                ? CalendarHelper.getWeeksInMonth(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst)
+                : [CalendarHelper.getWeek(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst)];
         
     },
-    methods: {}
+    methods: {
+        setHeight() {
+            if(this.$refs.slide && this.slideId == this.CalendarDATA.monthN)
+                this.CalendarDATA.height = this.$refs.slide.offsetHeight;
+            return this.CalendarDATA.height;
+        }
+    }
 };
 </script>

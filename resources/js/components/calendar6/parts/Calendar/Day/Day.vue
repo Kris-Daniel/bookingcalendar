@@ -46,15 +46,6 @@ export default {
                 this.oldMonthN =
                     CalendarSTORE.calendars[this.calendarId].monthN;
                 let monthCount = this.dayInfo.year * 12 + this.dayInfo.month;
-
-                // destroy from memory
-                if (
-                    monthCount < this.oldMonthN - 2 ||
-                    monthCount > this.oldMonthN + 2
-                ) {
-                    this.$destroy();
-                    return false;
-                }
                 if (this.CalendarDATA.type != "month") return "";
 
                 if (this.daysProps.dayType != "simple") {
@@ -99,11 +90,12 @@ export default {
                 Vue.set(this.daysProps.checkedDays, this.ref, true);
             } else Vue.delete(this.daysProps.checkedDays, this.ref);
 
-            let newDayProps = {
+            let commonDaysInfo = {
                 checkedDays: this.daysProps.checkedDays,
                 settings: this.daysProps.settings
             };
-            this.daysProps.dayClick(this.ref, newDayProps, data);
+            data.ref = this.ref;
+            this.daysProps.dayClick(commonDaysInfo, data);
         }
     }
 };

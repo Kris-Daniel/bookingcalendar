@@ -576,6 +576,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -583,7 +595,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide_Slide__WEBPACK_IMPORTED_MODULE_6__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Calendar",
   components: {
@@ -595,7 +606,8 @@ var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide_Slide_
   data: function data() {
     return {
       CalendarDATA: undefined,
-      oldType: "month"
+      oldType: "month",
+      slides: []
     };
   },
   created: function created() {
@@ -610,9 +622,10 @@ var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide_Slide_
       currentDay: currentDay,
       currentMonth: currentMonth,
       currentYear: currentYear,
-      slides: [],
+      slides: this.slides,
       daysProps: this.params.daysProps,
-      type: "month"
+      type: "month",
+      height: 0
     });
     this.CalendarDATA = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.params.name];
     this.oldType = this.CalendarDATA.type;
@@ -620,7 +633,7 @@ var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide_Slide_
     this.setResize();
   },
   mounted: function mounted() {
-    this.setSlides();
+    if (!this.slides.length) this.setSlides();
   },
   computed: {
     type: function type() {
@@ -632,11 +645,11 @@ var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide_Slide_
 
       return this.CalendarDATA.type;
     },
-    slides: function slides() {
-      return this.CalendarDATA.slides;
-    },
     classCss: function classCss() {
-      return 'calendar-state-' + this.oldType;
+      return "calendar-state-" + this.oldType;
+    },
+    height: function height() {
+      return this.CalendarDATA.height + 'px';
     }
   },
   methods: {
@@ -655,8 +668,6 @@ var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide_Slide_
             // this.CalendarDATA.monthN = dateDatN.getFullYear() * 12 + dateDatN.getMonth();
             _this.CalendarDATA.type = "month";
           }
-
-          _this.setHeight();
         };
 
         jquery__WEBPACK_IMPORTED_MODULE_1__(window).on("resize", resize);
@@ -664,82 +675,57 @@ var SlideClass = vue__WEBPACK_IMPORTED_MODULE_0___default.a.extend(_Slide_Slide_
       }
     },
     setupSliderStart: function setupSliderStart() {
-      while (this.CalendarDATA.slides.length > 0) {
-        this.CalendarDATA.slides.pop();
-      }
-
+      this.slides.splice(0, 3);
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.CalendarDATA, "dayN", this.CalendarDATA.currentDay);
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.CalendarDATA, "monthN", this.CalendarDATA.currentYear * 12 + this.CalendarDATA.currentMonth);
     },
     setSlides: function setSlides() {
-      if (!this.$refs.slider) return false;
-      this.$refs.slider.innerHTML = "";
-
       if (this.CalendarDATA.type == "month") {
         for (var i = this.CalendarDATA.monthN - 1; i <= this.CalendarDATA.monthN + 1; i++) {
-          this.CalendarDATA.slides.push(i);
+          this.slides.push(i);
         }
       } else {
         for (var _i = this.CalendarDATA.dayN - 7; _i <= this.CalendarDATA.dayN + 7; _i += 7) {
-          this.CalendarDATA.slides.push(_i);
+          this.slides.push(_i);
         }
       }
 
-      for (var _i2 = 0; _i2 < 3; _i2++) {
-        var SlideInstance = this.getSlide(this.CalendarDATA.slides[_i2]);
-        this.$refs.slider.appendChild(SlideInstance.$el);
-      }
-
-      this.setHeight();
+      this.$nextTick(function () {});
     },
     changeSlide: function changeSlide(side) {
+      var _this2 = this;
+
+      var slideId;
+
       if (side == "next") {
-        jquery__WEBPACK_IMPORTED_MODULE_1__(this.$refs.slider).children().first().remove();
-        this.CalendarDATA.slides.shift();
+        this.slides.splice(0, 1);
 
         if (this.CalendarDATA.type == "month") {
           this.CalendarDATA.monthN++;
-          this.CalendarDATA.slides.push(this.CalendarDATA.monthN + 1);
+          slideId = this.CalendarDATA.monthN + 1;
         } else {
           this.CalendarDATA.dayN += 7;
-          this.CalendarDATA.slides.push(this.CalendarDATA.dayN + 7);
+          slideId = this.CalendarDATA.dayN + 7;
         }
 
-        var SlideInstance = this.getSlide(this.CalendarDATA.slides[2]);
-        this.$refs.slider.appendChild(SlideInstance.$el);
+        this.$nextTick(function () {
+          _this2.slides.splice(2, 0, slideId);
+        });
       } else {
-        jquery__WEBPACK_IMPORTED_MODULE_1__(this.$refs.slider).children().last().remove();
-        this.CalendarDATA.slides.pop();
+        this.slides.splice(2, 1);
 
         if (this.CalendarDATA.type == "month") {
           this.CalendarDATA.monthN--;
-          this.CalendarDATA.slides.unshift(this.CalendarDATA.monthN - 1);
+          slideId = this.CalendarDATA.monthN - 1;
         } else {
           this.CalendarDATA.dayN -= 7;
-          this.CalendarDATA.slides.unshift(this.CalendarDATA.dayN - 7);
+          slideId = this.CalendarDATA.dayN - 7;
         }
 
-        var _SlideInstance = this.getSlide(this.CalendarDATA.slides[0]);
-
-        this.$refs.slider.prepend(_SlideInstance.$el);
+        this.$nextTick(function () {
+          _this2.slides.splice(0, 0, slideId);
+        });
       }
-
-      this.setHeight();
-    },
-    getSlide: function getSlide(i) {
-      var data = {
-        propsData: {
-          slideId: i,
-          calendarId: this.params.name
-        }
-      };
-      var SlideInstance = new SlideClass(data);
-      SlideInstance.$mount();
-      return SlideInstance;
-    },
-    setHeight: function setHeight() {
-      var renderSlide = jquery__WEBPACK_IMPORTED_MODULE_1__(this.$refs.slider).children()[1];
-      jquery__WEBPACK_IMPORTED_MODULE_1__(this.$refs.slider).height(jquery__WEBPACK_IMPORTED_MODULE_1__(renderSlide).height() + 1);
     }
   }
 });
@@ -797,8 +783,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
 /* harmony import */ var _ChangeSlideService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../ChangeSlideService */ "./resources/js/components/calendar6/parts/Calendar/ChangeSlide/ChangeSlideService.js");
-/* harmony import */ var _svg_angle_left__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../svg/angle-left */ "./resources/js/svg/angle-left.vue");
-/* harmony import */ var _svg_angle_right__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../../svg/angle-right */ "./resources/js/svg/angle-right.vue");
+/* harmony import */ var _svg_angle_left__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../svg/angle-left */ "./resources/js/svg/angle-left.vue");
+/* harmony import */ var _svg_angle_right__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../svg/angle-right */ "./resources/js/svg/angle-right.vue");
 //
 //
 //
@@ -821,8 +807,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "MonthChangeSlide",
   props: ["months"],
   components: {
-    AngleLeft: _svg_angle_left__WEBPACK_IMPORTED_MODULE_3__["default"],
-    AngleRight: _svg_angle_right__WEBPACK_IMPORTED_MODULE_4__["default"]
+    AngleLeft: _svg_angle_left__WEBPACK_IMPORTED_MODULE_2__["default"],
+    AngleRight: _svg_angle_right__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -975,13 +961,7 @@ __webpack_require__.r(__webpack_exports__);
     anotherDay: function anotherDay() {
       if (this.oldMonthN != _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId].monthN) {
         this.oldMonthN = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId].monthN;
-        var monthCount = this.dayInfo.year * 12 + this.dayInfo.month; // destroy from memory
-
-        if (monthCount < this.oldMonthN - 2 || monthCount > this.oldMonthN + 2) {
-          this.$destroy();
-          return false;
-        }
-
+        var monthCount = this.dayInfo.year * 12 + this.dayInfo.month;
         if (this.CalendarDATA.type != "month") return "";
 
         if (this.daysProps.dayType != "simple") {
@@ -1023,11 +1003,12 @@ __webpack_require__.r(__webpack_exports__);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.daysProps.checkedDays, this.ref, true);
       } else vue__WEBPACK_IMPORTED_MODULE_0___default.a.delete(this.daysProps.checkedDays, this.ref);
 
-      var newDayProps = {
+      var commonDaysInfo = {
         checkedDays: this.daysProps.checkedDays,
         settings: this.daysProps.settings
       };
-      this.daysProps.dayClick(this.ref, newDayProps, data);
+      data.ref = this.ref;
+      this.daysProps.dayClick(commonDaysInfo, data);
     }
   }
 });
@@ -1188,11 +1169,25 @@ __webpack_require__.r(__webpack_exports__);
       weeksInMonth: undefined
     };
   },
-  created: function created() {
-    var CalendarDATA = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId];
-    this.weeksInMonth = CalendarDATA.type == "month" ? _helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getWeeksInMonth(this.slideId, CalendarDATA.daysProps.settings.mondayFirst) : [_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getWeek(this.slideId, CalendarDATA.daysProps.settings.mondayFirst)];
+  computed: {
+    monthN: function monthN() {
+      this.setHeight();
+      return this.CalendarDATA.monthN;
+    }
   },
-  methods: {}
+  mounted: function mounted() {
+    this.setHeight();
+  },
+  created: function created() {
+    this.CalendarDATA = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId];
+    this.weeksInMonth = this.CalendarDATA.type == "month" ? _helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getWeeksInMonth(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst) : [_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getWeek(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst)];
+  },
+  methods: {
+    setHeight: function setHeight() {
+      if (this.$refs.slide && this.slideId == this.CalendarDATA.monthN) this.CalendarDATA.height = this.$refs.slide.offsetHeight;
+      return this.CalendarDATA.height;
+    }
+  }
 });
 
 /***/ }),
@@ -1274,6 +1269,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Calendar', _Calendar_Calendar__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var CalendarDATA = new _services_GetCalendar__WEBPACK_IMPORTED_MODULE_2__["default"]();
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CalendarsWrapper",
@@ -1290,9 +1286,8 @@ var CalendarDATA = new _services_GetCalendar__WEBPACK_IMPORTED_MODULE_2__["defau
       daysProps: {
         dayType: 'schedule',
         multiselect: false,
-        dayClick: function dayClick(ref, daysProps, data) {
-          _ToggledSidebar_helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__["default"].render(ref, daysProps, data, 'mainCalendar'); // ToggledSidebarSTORE.showFlag = true;
-          // console.log(ref, dayDiv, "ref click here");
+        dayClick: function dayClick(commonDaysInfo, data) {
+          _ToggledSidebar_helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__["default"].renderParentView('mainCalendar', commonDaysInfo, data);
         },
         dayClasses: function dayClasses(ref) {
           return 'day-test';
@@ -1318,7 +1313,7 @@ var CalendarDATA = new _services_GetCalendar__WEBPACK_IMPORTED_MODULE_2__["defau
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_TimeSetting__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../views/TimeSetting */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/TimeSetting.vue");
 /* harmony import */ var _views_Bookings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../views/Bookings */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/Bookings.vue");
-/* harmony import */ var _views_SetMultipleDays__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../views/SetMultipleDays */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/SetMultipleDays.vue");
+/* harmony import */ var _views_MultipleDaysChoser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../views/MultipleDaysChoser */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue");
 /* harmony import */ var _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
 //
 //
@@ -1335,7 +1330,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     TimeSetting: _views_TimeSetting__WEBPACK_IMPORTED_MODULE_0__["default"],
     Bookings: _views_Bookings__WEBPACK_IMPORTED_MODULE_1__["default"],
-    SetMultipleDays: _views_SetMultipleDays__WEBPACK_IMPORTED_MODULE_2__["default"]
+    MultipleDaysChoser: _views_MultipleDaysChoser__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ["views"],
   data: function data() {
@@ -1348,15 +1343,20 @@ __webpack_require__.r(__webpack_exports__);
     isActive: function isActive() {
       for (var propName in this.views) {
         if (this.views[propName].active) {
-          this.view = this.views[propName].component;
-          _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__["default"].showOverlay = true;
-          this.storeLink = this.views[propName];
-          return 'active';
+          if (this.views[propName]) {
+            this.view = this.views[propName].component;
+            _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__["default"].showOverlay = true;
+            this.storeLink = this.views[propName];
+            return 'active';
+          }
         }
       }
 
       return '';
     }
+  },
+  created: function created() {
+    console.log(this.views, 'vvv');
   }
 });
 
@@ -1387,11 +1387,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('RetractableBlock', _RetractableBlock_RetractableBlock__WEBPACK_IMPORTED_MODULE_3__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ToggledSidebarWrapper",
-  components: {
-    RetractableBlock: _RetractableBlock_RetractableBlock__WEBPACK_IMPORTED_MODULE_3__["default"]
-  },
+  components: {},
   computed: {
     showOverlay: function showOverlay() {
       return _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].showOverlay ? 'active' : '';
@@ -1434,6 +1433,43 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
+/* harmony import */ var _svg_angle_right__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../svg/angle-right */ "./resources/js/svg/angle-right.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "MultipleDaysChoser",
+  components: {
+    AngleRight: _svg_angle_right__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: ["storeLink"],
+  methods: {
+    closeView: function closeView() {
+      this.storeLink.active = false;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/views/TimeSetting.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/ToggledSidebar/views/TimeSetting.vue?vue&type=script&lang=js& ***!
@@ -1446,6 +1482,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
 /* harmony import */ var _Calendar_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Calendar/helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
 /* harmony import */ var _svg_arrow_right__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../svg/arrow-right */ "./resources/js/svg/arrow-right.vue");
+//
 //
 //
 //
@@ -1511,8 +1548,12 @@ __webpack_require__.r(__webpack_exports__);
     console.log(this.storeLink, "storeLink");
   },
   methods: {
-    closeTimeSetting: function closeTimeSetting() {
+    closeView: function closeView() {
       _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].disableViews();
+    },
+    openChildRetractableBlock: function openChildRetractableBlock() {
+      console.log(this.storeLink.children);
+      _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].renderChildView(this.storeLink.children.MultipleDaysChoser);
     }
   }
 });
@@ -31709,7 +31750,21 @@ var render = function() {
             ? _c("WeekDays", { attrs: { calendarId: _vm.params.name } })
             : _vm._e(),
           _vm._v(" "),
-          _c("div", { ref: "slider", staticClass: "slider" })
+          _c(
+            "div",
+            {
+              ref: "slider",
+              staticClass: "slider",
+              style: { height: _vm.height }
+            },
+            _vm._l(_vm.slides, function(slide) {
+              return _c("Slide", {
+                key: slide,
+                attrs: { slideId: slide, calendarId: _vm.params.name }
+              })
+            }),
+            1
+          )
         ],
         1
       )
@@ -32034,32 +32089,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "slide" }, [
-    _c("input", { ref: "slide", attrs: { type: "hidden" } }),
-    _vm._v(" "),
-    _c(
-      "table",
-      { staticClass: "slide_table" },
-      _vm._l(_vm.weeksInMonth, function(week, weekIndex) {
-        return _c(
-          "tr",
-          { key: "week" + weekIndex, staticClass: "slide_table_tr" },
-          _vm._l(week, function(day, dayIndex) {
-            return _c("Day", {
-              key: "day" + dayIndex,
-              attrs: {
-                calendarId: _vm.calendarId,
-                day: day,
-                slideId: _vm.slideId
-              }
-            })
-          }),
-          1
-        )
-      }),
-      0
-    )
-  ])
+  return _c(
+    "div",
+    { ref: "slide", staticClass: "slide", attrs: { "data-month": _vm.monthN } },
+    [
+      _c("input", { ref: "slide", attrs: { type: "hidden" } }),
+      _vm._v(" "),
+      _c(
+        "table",
+        { staticClass: "slide_table" },
+        _vm._l(_vm.weeksInMonth, function(week, weekIndex) {
+          return _c(
+            "tr",
+            { key: "week" + weekIndex, staticClass: "slide_table_tr" },
+            _vm._l(week, function(day, dayIndex) {
+              return _c("Day", {
+                key: "day" + dayIndex,
+                attrs: {
+                  calendarId: _vm.calendarId,
+                  day: day,
+                  slideId: _vm.slideId
+                }
+              })
+            }),
+            1
+          )
+        }),
+        0
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -32234,6 +32293,47 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=template&id=68e191e0&":
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=template&id=68e191e0& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "multiple-days-choser" }, [
+    _c(
+      "div",
+      {
+        staticClass: "multiple-days-choser_close",
+        on: {
+          click: function($event) {
+            return _vm.closeView()
+          }
+        }
+      },
+      [_c("AngleRight")],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "title rel mb30" }, [_vm._v("Apply To Multiple")]),
+    _vm._v("MultipleDaysChoser\n")
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/views/TimeSetting.vue?vue&type=template&id=7610cd60&":
 /*!***************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/ToggledSidebar/views/TimeSetting.vue?vue&type=template&id=7610cd60& ***!
@@ -32249,9 +32349,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "time-setting" }, [
-    _c("div", { staticClass: "time-setting_content" }, [
-      _c("div", { staticClass: "title center" }, [_vm._v("Time Settings")]),
+  return _c(
+    "div",
+    { staticClass: "time-setting" },
+    [
+      _c("RetractableBlock", { attrs: { views: _vm.storeLink.children } }),
       _vm._v(" "),
       _c(
         "div",
@@ -32259,13 +32361,17 @@ var render = function() {
           staticClass: "time-setting_close",
           on: {
             click: function($event) {
-              return _vm.closeTimeSetting()
+              return _vm.closeView()
             }
           }
         },
         [_c("ArrowRight")],
         1
       ),
+      _vm._v(" "),
+      _c("div", { staticClass: "title center" }, [
+        _vm._v("\n        Time Settings\n    ")
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "mb30" }),
       _vm._v(" "),
@@ -32313,9 +32419,23 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(3)
-    ])
-  ])
+      _c("div", { staticClass: "center" }, [
+        _c(
+          "div",
+          {
+            staticClass: "text-btn",
+            on: {
+              click: function($event) {
+                return _vm.openChildRetractableBlock()
+              }
+            }
+          },
+          [_vm._v("Or apply to multiple")]
+        )
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -32346,14 +32466,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "mb20" }, [
       _c("div", { staticClass: "text-btn" }, [_vm._v("+ New Interval")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "center" }, [
-      _c("div", { staticClass: "text-btn" }, [_vm._v("Or apply to multiple")])
     ])
   }
 ]
@@ -49329,7 +49441,7 @@ function () {
         component.$emit("changeSlide", side);
         setTimeout(function () {
           component.wasClicked = false;
-        }, 300);
+        }, 320);
       }
     }
   }]);
@@ -50196,8 +50308,8 @@ var ToggledSidebarSTORE = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       timeSetting: {
         component: 'TimeSetting',
         children: {
-          setMultipleDays: {
-            component: 'SetMultipleDays',
+          MultipleDaysChoser: {
+            component: 'MultipleDaysChoser',
             active: false
           }
         },
@@ -50211,25 +50323,31 @@ var ToggledSidebarSTORE = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     console.log(this.views, 'views');
   },
   methods: {
-    render: function render(ref, daysProps, data, calendarId) {
+    renderParentView: function renderParentView(calendarId, commonDaysInfo, data) {
       this.calendarId = calendarId;
       this.views[data.component].active = true;
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.views[data.component], 'props', {
-        ref: ref,
-        daysProps: daysProps,
+        commonDaysInfo: commonDaysInfo,
         data: data
       }); // console.log(data, 'daysProps');
       // console.log(this.views, 'views');
     },
-    setViews: function setViews(data, enviroment) {
+    renderChildView: function renderChildView(child, data) {
+      child.active = true;
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(child, 'props', {
+        data: data
+      });
+    },
+    setViews: function setViews(data, enviroment, parent) {
       for (var propName in data) {
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(enviroment, propName, {});
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(enviroment[propName], 'component', data[propName].component);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(enviroment[propName], 'active', data[propName].active);
+        if (parent) enviroment[propName].parent = parent;
 
         if (data[propName].children) {
           vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(enviroment[propName], 'children', {});
-          this.setViews(data[propName].children, enviroment[propName].children);
+          this.setViews(data[propName].children, enviroment[propName].children, enviroment[propName]);
         }
       }
     },
@@ -50322,26 +50440,29 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/calendar6/parts/ToggledSidebar/views/SetMultipleDays.vue":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/calendar6/parts/ToggledSidebar/views/SetMultipleDays.vue ***!
-  \******************************************************************************************/
+/***/ "./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue ***!
+  \*********************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
+/* harmony import */ var _MultipleDaysChoser_vue_vue_type_template_id_68e191e0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MultipleDaysChoser.vue?vue&type=template&id=68e191e0& */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=template&id=68e191e0&");
+/* harmony import */ var _MultipleDaysChoser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MultipleDaysChoser.vue?vue&type=script&lang=js& */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
-  script,
-  render,
-  staticRenderFns,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _MultipleDaysChoser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _MultipleDaysChoser_vue_vue_type_template_id_68e191e0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _MultipleDaysChoser_vue_vue_type_template_id_68e191e0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -50349,8 +50470,42 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
-component.options.__file = "resources/js/components/calendar6/parts/ToggledSidebar/views/SetMultipleDays.vue"
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MultipleDaysChoser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./MultipleDaysChoser.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_MultipleDaysChoser_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=template&id=68e191e0&":
+/*!****************************************************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=template&id=68e191e0& ***!
+  \****************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MultipleDaysChoser_vue_vue_type_template_id_68e191e0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./MultipleDaysChoser.vue?vue&type=template&id=68e191e0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue?vue&type=template&id=68e191e0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MultipleDaysChoser_vue_vue_type_template_id_68e191e0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MultipleDaysChoser_vue_vue_type_template_id_68e191e0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
