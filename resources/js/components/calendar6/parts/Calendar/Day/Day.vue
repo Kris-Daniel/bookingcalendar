@@ -13,8 +13,8 @@
 
 <script>
 import Vue from "vue";
-import CalendarHelper from "../helpers/CalendarHelper";
-import CalendarSTORE from "../helpers/CalendarSTORE";
+import CalendarHelper from "Calendar/helpers/CalendarHelper";
+import CalendarSTORE from "CalendarSTORE";
 import ScheduleDay from "./views/ScheduleDay";
 import SimpleDay from "./views/SimpleDay";
 

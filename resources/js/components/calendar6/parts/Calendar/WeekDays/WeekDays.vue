@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import CalendarSTORE from "../helpers/CalendarSTORE";
+import CalendarSTORE from "CalendarSTORE";
 
 export default {
     name: "WeekDays",

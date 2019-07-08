@@ -24,7 +24,7 @@
 import Vue from "vue";
 import * as $ from "jquery";
 
-import CalendarSTORE from "./helpers/CalendarSTORE";
+import CalendarSTORE from "CalendarSTORE";
 import CalendarHelper from "./helpers/CalendarHelper";
 
 import ChangeSlide from "./ChangeSlide/ChangeSlide";

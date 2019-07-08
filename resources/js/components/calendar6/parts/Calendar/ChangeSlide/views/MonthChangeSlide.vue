@@ -13,11 +13,11 @@
     </div>
 </template>
 <script>
-import CalendarSTORE from '../../helpers/CalendarSTORE';
-import ChangeSlideService from "./../ChangeSlideService";
+import CalendarSTORE from 'CalendarSTORE';
+import ChangeSlideService from "../ChangeSlideService";
 
-import AngleLeft from '../../../../../../svg/angle-left';
-import AngleRight from '../../../../../../svg/angle-right';
+import AngleLeft from 'MySvg/angle-left';
+import AngleRight from 'MySvg/angle-right';
 
 export default {
     name: "MonthChangeSlide",

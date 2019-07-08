@@ -7,20 +7,17 @@
 
 <script>
 import Vue from "vue";
-import ToggledSidebarSTORE from "./helpers/ToggledSidebarSTORE";
-import CalendarSTORE from "../Calendar/helpers/CalendarSTORE";
+import ToggledSidebarSTORE from "ToggledSidebarSTORE";
+import CalendarSTORE from "CalendarSTORE";
 
-import RetractableBlock from './RetractableBlock/RetractableBlock';
-Vue.component('RetractableBlock', RetractableBlock);
+import RetractableBlock from "ToggledSidebar/RetractableBlock/RetractableBlock";
+Vue.component("RetractableBlock", RetractableBlock);
 
 export default {
     name: "ToggledSidebarWrapper",
-    components: {
-        
-    },
     computed: {
         showOverlay() {
-            return ToggledSidebarSTORE.showOverlay ? 'active' : '';
+            return ToggledSidebarSTORE.showOverlay ? "active" : "";
         }
     },
     created() {

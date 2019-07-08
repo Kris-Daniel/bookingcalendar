@@ -95,9 +95,10 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _views_HeaderView__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./views/HeaderView */ "./resources/js/views/HeaderView.vue");
-/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
-/* harmony import */ var _views_FooterView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/FooterView */ "./resources/js/views/FooterView.vue");
+/* harmony import */ var _services_GlobalComponents__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./services/GlobalComponents */ "./resources/js/services/GlobalComponents.js");
+/* harmony import */ var _views_HeaderView__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./views/HeaderView */ "./resources/js/views/HeaderView.vue");
+/* harmony import */ var _views_Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/Home */ "./resources/js/views/Home.vue");
+/* harmony import */ var _views_FooterView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/FooterView */ "./resources/js/views/FooterView.vue");
 //
 //
 //
@@ -109,12 +110,65 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+Object(_services_GlobalComponents__WEBPACK_IMPORTED_MODULE_0__["default"])();
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "App",
   components: {
-    FooterView: _views_FooterView__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Home: _views_Home__WEBPACK_IMPORTED_MODULE_1__["default"],
-    HeaderView: _views_HeaderView__WEBPACK_IMPORTED_MODULE_0__["default"]
+    FooterView: _views_FooterView__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Home: _views_Home__WEBPACK_IMPORTED_MODULE_2__["default"],
+    HeaderView: _views_HeaderView__WEBPACK_IMPORTED_MODULE_1__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Tabs/Tabs.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Tabs/Tabs.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Tabs",
+  props: ["length"],
+  data: function data() {
+    return {
+      activeTab: 1
+    };
+  },
+  methods: {
+    isActive: function isActive(n) {
+      if (this.activeTab == n) return "active";
+      return "";
+    },
+    setTab: function setTab(n) {
+      this.activeTab = n;
+    }
   }
 });
 
@@ -561,7 +615,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
 /* harmony import */ var _helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
 /* harmony import */ var _ChangeSlide_ChangeSlide__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChangeSlide/ChangeSlide */ "./resources/js/components/calendar6/parts/Calendar/ChangeSlide/ChangeSlide.vue");
 /* harmony import */ var _WeekDays_WeekDays__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./WeekDays/WeekDays */ "./resources/js/components/calendar6/parts/Calendar/WeekDays/WeekDays.vue");
@@ -616,7 +670,7 @@ __webpack_require__.r(__webpack_exports__);
     var currentDay = Math.floor(timeStamp / 86400000);
     var currentMonth = time.getMonth();
     var currentYear = time.getFullYear();
-    vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars, this.params.name, {
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars, this.params.name, {
       time: time,
       timeStamp: timeStamp,
       currentDay: currentDay,
@@ -627,7 +681,7 @@ __webpack_require__.r(__webpack_exports__);
       type: "month",
       height: 0
     });
-    this.CalendarDATA = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.params.name];
+    this.CalendarDATA = CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.params.name];
     this.oldType = this.CalendarDATA.type;
     this.setupSliderStart();
     this.setResize();
@@ -781,10 +835,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
-/* harmony import */ var _ChangeSlideService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../ChangeSlideService */ "./resources/js/components/calendar6/parts/Calendar/ChangeSlide/ChangeSlideService.js");
-/* harmony import */ var _svg_angle_left__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../svg/angle-left */ "./resources/js/svg/angle-left.vue");
-/* harmony import */ var _svg_angle_right__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../svg/angle-right */ "./resources/js/svg/angle-right.vue");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var _ChangeSlideService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ChangeSlideService */ "./resources/js/components/calendar6/parts/Calendar/ChangeSlide/ChangeSlideService.js");
+/* harmony import */ var MySvg_angle_left__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! MySvg/angle-left */ "./resources/js/svg/angle-left.vue");
+/* harmony import */ var MySvg_angle_right__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! MySvg/angle-right */ "./resources/js/svg/angle-right.vue");
 //
 //
 //
@@ -807,8 +861,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "MonthChangeSlide",
   props: ["months"],
   components: {
-    AngleLeft: _svg_angle_left__WEBPACK_IMPORTED_MODULE_2__["default"],
-    AngleRight: _svg_angle_right__WEBPACK_IMPORTED_MODULE_3__["default"]
+    AngleLeft: MySvg_angle_left__WEBPACK_IMPORTED_MODULE_2__["default"],
+    AngleRight: MySvg_angle_right__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -832,7 +886,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.months) {
         this.year = Math.floor(this.months[1] / 12);
         this.monthIndex = this.months[1] - this.year * 12;
-        this.month = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].MONTHS[this.monthIndex];
+        this.month = CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].MONTHS[this.monthIndex];
       }
     }
   }
@@ -916,8 +970,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
-/* harmony import */ var _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Calendar/helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
 /* harmony import */ var _views_ScheduleDay__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/ScheduleDay */ "./resources/js/components/calendar6/parts/Calendar/Day/views/ScheduleDay.vue");
 /* harmony import */ var _views_SimpleDay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/SimpleDay */ "./resources/js/components/calendar6/parts/Calendar/Day/views/SimpleDay.vue");
 //
@@ -959,8 +1013,8 @@ __webpack_require__.r(__webpack_exports__);
       return this.daysProps.checkedDays[this.ref] ? true : false;
     },
     anotherDay: function anotherDay() {
-      if (this.oldMonthN != _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId].monthN) {
-        this.oldMonthN = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId].monthN;
+      if (this.oldMonthN != CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId].monthN) {
+        this.oldMonthN = CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId].monthN;
         var monthCount = this.dayInfo.year * 12 + this.dayInfo.month;
         if (this.CalendarDATA.type != "month") return "";
 
@@ -973,7 +1027,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.CalendarDATA = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId];
+    this.CalendarDATA = CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId];
     this.daysProps = this.CalendarDATA.daysProps;
     this.dayDiv = "";
     this.time = new Date(this.day * 86400000);
@@ -989,8 +1043,8 @@ __webpack_require__.r(__webpack_exports__);
       month: dateArr[1] - 1,
       year: dateArr[0],
       weekDay: weekDay,
-      weekDayRef: _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].WEEK[weekDay],
-      monthName: _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].MONTHS[dateArr[1] - 1]
+      weekDayRef: CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].WEEK[weekDay],
+      monthName: CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].MONTHS[dateArr[1] - 1]
     };
   },
   mounted: function mounted() {
@@ -1024,10 +1078,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
-/* harmony import */ var _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
-/* harmony import */ var _svg_pencil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../svg/pencil */ "./resources/js/svg/pencil.vue");
-/* harmony import */ var _svg_angle_down__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../svg/angle-down */ "./resources/js/svg/angle-down.vue");
+/* harmony import */ var Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! Calendar/helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
+/* harmony import */ var Calendar_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Calendar/helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var MySvg_pencil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! MySvg/pencil */ "./resources/js/svg/pencil.vue");
+/* harmony import */ var MySvg_angle_down__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! MySvg/angle-down */ "./resources/js/svg/angle-down.vue");
 //
 //
 //
@@ -1063,8 +1117,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "ScheduleDay",
   props: ["dayInfo", "calendarId"],
   components: {
-    Pencil: _svg_pencil__WEBPACK_IMPORTED_MODULE_2__["default"],
-    AngleDown: _svg_angle_down__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Pencil: MySvg_pencil__WEBPACK_IMPORTED_MODULE_2__["default"],
+    AngleDown: MySvg_angle_down__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {};
@@ -1078,7 +1132,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.CalendarDATA = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[this.calendarId];
+    this.CalendarDATA = Calendar_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[this.calendarId];
     this.SD = this.CalendarDATA.daysProps.schedule.days;
     this.WD = this.CalendarDATA.daysProps.schedule.weekDays;
     this.schedule = null;
@@ -1131,9 +1185,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Day_Day__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Day/Day */ "./resources/js/components/calendar6/parts/Calendar/Day/Day.vue");
-/* harmony import */ var _helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
-/* harmony import */ var _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var Calendar_Day_Day__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! Calendar/Day/Day */ "./resources/js/components/calendar6/parts/Calendar/Day/Day.vue");
+/* harmony import */ var Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Calendar/helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
 //
 //
 //
@@ -1161,7 +1215,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Slide",
   components: {
-    Day: _Day_Day__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Day: Calendar_Day_Day__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: ["slideId", "calendarId"],
   data: function data() {
@@ -1179,8 +1233,8 @@ __webpack_require__.r(__webpack_exports__);
     this.setHeight();
   },
   created: function created() {
-    this.CalendarDATA = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId];
-    this.weeksInMonth = this.CalendarDATA.type == "month" ? _helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getWeeksInMonth(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst) : [_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getWeek(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst)];
+    this.CalendarDATA = CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId];
+    this.weeksInMonth = this.CalendarDATA.type == "month" ? Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getWeeksInMonth(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst) : [Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getWeek(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst)];
   },
   methods: {
     setHeight: function setHeight() {
@@ -1201,7 +1255,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
 //
 //
 //
@@ -1221,14 +1275,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.CalendarDATA = _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].calendars[this.calendarId];
+    this.CalendarDATA = CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].calendars[this.calendarId];
     this.cssClass = "weekdays-table--" + this.CalendarDATA.daysProps.dayType;
     this.weekDays = this.setWeekDays();
   },
   methods: {
     setWeekDays: function setWeekDays() {
       var weekDays = [];
-      _helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].WEEK.forEach(function (item) {
+      CalendarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].WEEK.forEach(function (item) {
         weekDays.push(item);
       });
 
@@ -1256,9 +1310,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Calendar_Calendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Calendar/Calendar */ "./resources/js/components/calendar6/parts/Calendar/Calendar.vue");
-/* harmony import */ var _services_GetCalendar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/GetCalendar */ "./resources/js/components/calendar6/services/GetCalendar.js");
-/* harmony import */ var _ToggledSidebar_helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ToggledSidebar/helpers/ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
+/* harmony import */ var _services_GetCalendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/GetCalendar */ "./resources/js/components/calendar6/services/GetCalendar.js");
+/* harmony import */ var ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
 //
 //
 //
@@ -1268,14 +1321,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Calendar', _Calendar_Calendar__WEBPACK_IMPORTED_MODULE_1__["default"]);
-var CalendarDATA = new _services_GetCalendar__WEBPACK_IMPORTED_MODULE_2__["default"]();
+var CalendarDATA = new _services_GetCalendar__WEBPACK_IMPORTED_MODULE_1__["default"]();
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CalendarsWrapper",
-  components: {
-    Calendar: _Calendar_Calendar__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
   data: function data() {
     return {};
   },
@@ -1287,7 +1335,7 @@ var CalendarDATA = new _services_GetCalendar__WEBPACK_IMPORTED_MODULE_2__["defau
         dayType: 'schedule',
         multiselect: false,
         dayClick: function dayClick(commonDaysInfo, data) {
-          _ToggledSidebar_helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__["default"].renderParentView('mainCalendar', commonDaysInfo, data);
+          ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].renderParentView('mainCalendar', commonDaysInfo, data);
         },
         dayClasses: function dayClasses(ref) {
           return 'day-test';
@@ -1311,10 +1359,10 @@ var CalendarDATA = new _services_GetCalendar__WEBPACK_IMPORTED_MODULE_2__["defau
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _views_TimeSetting__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../views/TimeSetting */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/TimeSetting.vue");
-/* harmony import */ var _views_Bookings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../views/Bookings */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/Bookings.vue");
-/* harmony import */ var _views_MultipleDaysChoser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../views/MultipleDaysChoser */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue");
-/* harmony import */ var _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
+/* harmony import */ var ToggledSidebar_views_TimeSetting__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ToggledSidebar/views/TimeSetting */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/TimeSetting.vue");
+/* harmony import */ var ToggledSidebar_views_Bookings__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ToggledSidebar/views/Bookings */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/Bookings.vue");
+/* harmony import */ var ToggledSidebar_views_MultipleDaysChoser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ToggledSidebar/views/MultipleDaysChoser */ "./resources/js/components/calendar6/parts/ToggledSidebar/views/MultipleDaysChoser.vue");
+/* harmony import */ var ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
 //
 //
 //
@@ -1328,9 +1376,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RetractableBlock",
   components: {
-    TimeSetting: _views_TimeSetting__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Bookings: _views_Bookings__WEBPACK_IMPORTED_MODULE_1__["default"],
-    MultipleDaysChoser: _views_MultipleDaysChoser__WEBPACK_IMPORTED_MODULE_2__["default"]
+    TimeSetting: ToggledSidebar_views_TimeSetting__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Bookings: ToggledSidebar_views_Bookings__WEBPACK_IMPORTED_MODULE_1__["default"],
+    MultipleDaysChoser: ToggledSidebar_views_MultipleDaysChoser__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ["views"],
   data: function data() {
@@ -1345,7 +1393,7 @@ __webpack_require__.r(__webpack_exports__);
         if (this.views[propName].active) {
           if (this.views[propName]) {
             this.view = this.views[propName].component;
-            _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__["default"].showOverlay = true;
+            ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__["default"].showOverlay = true;
             this.storeLink = this.views[propName];
             return 'active';
           }
@@ -1362,6 +1410,52 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_GetCalendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/GetCalendar */ "./resources/js/components/calendar6/services/GetCalendar.js");
+//
+//
+//
+//
+//
+//
+
+
+var CalendarDATA = new _services_GetCalendar__WEBPACK_IMPORTED_MODULE_1__["default"]();
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "SpecialDays",
+  created: function created() {
+    this.simpleCalendar = {
+      name: 'simpleCalendar',
+      time: new Date(),
+      daysProps: {
+        dayType: 'simple',
+        multiselect: false,
+        dayClick: function dayClick(commonDaysInfo, data) {
+          console.log(commonDaysInfo, data, 'simple');
+        },
+        dayClasses: function dayClasses(ref) {
+          return 'day-ssimple';
+        }
+      }
+    };
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.simpleCalendar.daysProps, 'checkedDays', {});
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.simpleCalendar.daysProps, 'schedule', CalendarDATA.schedule);
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.simpleCalendar.daysProps, 'settings', CalendarDATA.settings);
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/ToggledSidebarWrapper.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/ToggledSidebar/ToggledSidebarWrapper.vue?vue&type=script&lang=js& ***!
@@ -1373,9 +1467,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers/ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
-/* harmony import */ var _Calendar_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Calendar/helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
-/* harmony import */ var _RetractableBlock_RetractableBlock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./RetractableBlock/RetractableBlock */ "./resources/js/components/calendar6/parts/ToggledSidebar/RetractableBlock/RetractableBlock.vue");
+/* harmony import */ var ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var ToggledSidebar_RetractableBlock_RetractableBlock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ToggledSidebar/RetractableBlock/RetractableBlock */ "./resources/js/components/calendar6/parts/ToggledSidebar/RetractableBlock/RetractableBlock.vue");
 //
 //
 //
@@ -1387,21 +1481,98 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('RetractableBlock', _RetractableBlock_RetractableBlock__WEBPACK_IMPORTED_MODULE_3__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("RetractableBlock", ToggledSidebar_RetractableBlock_RetractableBlock__WEBPACK_IMPORTED_MODULE_3__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ToggledSidebarWrapper",
-  components: {},
   computed: {
     showOverlay: function showOverlay() {
-      return _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].showOverlay ? 'active' : '';
+      return ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].showOverlay ? "active" : "";
     }
   },
   created: function created() {
-    this.views = _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].views;
+    this.views = ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].views;
   },
   methods: {
     hideOverlay: function hideOverlay() {
-      _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].disableViews();
+      ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].disableViews();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "WeekDays",
+  props: ["storeLink"],
+  data: function data() {
+    return {
+      WEEKNAMES: CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].WEEKNAMES,
+      WEEK: CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].WEEK,
+      weekDays: []
+    };
+  },
+  computed: {
+    checkedDay: function checkedDay() {
+      this.weekDays = [];
+      var checkedDay = this.storeLink.parent.props.data.dayInfo.weekDayRef;
+
+      for (var i = 0; i < this.WEEK.length; i++) {
+        this.weekDays.push({
+          ref: this.WEEK[i],
+          name: this.WEEKNAMES[i],
+          active: checkedDay == this.WEEK[i] ? true : false
+        });
+      }
+
+      return checkedDay;
+    }
+  },
+  created: function created() {
+    var CalendarDATA = CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendarId];
+
+    if (CalendarDATA.daysProps.settings.mondayFirst) {
+      var Su = this.weekDays[0];
+      this.weekDays.shift();
+      this.weekDays.push(Su);
+    }
+  },
+  methods: {
+    swithDay: function swithDay(day) {
+      day.active = !day.active;
+    },
+    isDayActive: function isDayActive(day) {
+      if (day.active) return "active";
+      return "";
     }
   }
 });
@@ -1442,8 +1613,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
-/* harmony import */ var _svg_angle_right__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../svg/angle-right */ "./resources/js/svg/angle-right.vue");
+/* harmony import */ var ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
+/* harmony import */ var ToggledSidebar_WeekDays_WeekDays__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ToggledSidebar/WeekDays/WeekDays */ "./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue");
+/* harmony import */ var ToggledSidebar_SpecialDays_SpecialDays__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ToggledSidebar/SpecialDays/SpecialDays */ "./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue");
+/* harmony import */ var MySvg_angle_right__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! MySvg/angle-right */ "./resources/js/svg/angle-right.vue");
 //
 //
 //
@@ -1453,14 +1626,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "MultipleDaysChoser",
   components: {
-    AngleRight: _svg_angle_right__WEBPACK_IMPORTED_MODULE_1__["default"]
+    WeekDays: ToggledSidebar_WeekDays_WeekDays__WEBPACK_IMPORTED_MODULE_1__["default"],
+    SpecialDays: ToggledSidebar_SpecialDays_SpecialDays__WEBPACK_IMPORTED_MODULE_2__["default"],
+    AngleRight: MySvg_angle_right__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: ["storeLink"],
+  created: function created() {
+    this.tabs = [{
+      title: "Week",
+      content: "WeekDays"
+    }, {
+      title: "Special",
+      content: "SpecialDays"
+    }];
+  },
   methods: {
     closeView: function closeView() {
       this.storeLink.active = false;
@@ -1479,9 +1671,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
-/* harmony import */ var _Calendar_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Calendar/helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
-/* harmony import */ var _svg_arrow_right__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../svg/arrow-right */ "./resources/js/svg/arrow-right.vue");
+/* harmony import */ var ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var MySvg_arrow_right__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! MySvg/arrow-right */ "./resources/js/svg/arrow-right.vue");
 //
 //
 //
@@ -1532,7 +1724,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "TimeSetting",
   props: ["storeLink"],
   components: {
-    ArrowRight: _svg_arrow_right__WEBPACK_IMPORTED_MODULE_2__["default"]
+    ArrowRight: MySvg_arrow_right__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   computed: {
     schedule: function schedule() {
@@ -1540,7 +1732,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     dayInfo: function dayInfo() {
       var dayInfo = this.storeLink.props.data.dayInfo;
-      this.weekNamePlural = _Calendar_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].WEEKNAMESPLURAL[dayInfo.weekDay];
+      this.weekNamePlural = CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].WEEKNAMESPLURAL[dayInfo.weekDay];
       return dayInfo;
     }
   },
@@ -1549,11 +1741,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     closeView: function closeView() {
-      _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].disableViews();
+      ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].disableViews();
     },
     openChildRetractableBlock: function openChildRetractableBlock() {
       console.log(this.storeLink.children);
-      _helpers_ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].renderChildView(this.storeLink.children.MultipleDaysChoser);
+      ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].renderChildView(this.storeLink.children.MultipleDaysChoser);
     }
   }
 });
@@ -31286,6 +31478,71 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Tabs/Tabs.vue?vue&type=template&id=214ae398&":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Tabs/Tabs.vue?vue&type=template&id=214ae398& ***!
+  \************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "tabs" }, [
+    _c(
+      "div",
+      { staticClass: "tabs_titles" },
+      _vm._l(_vm.length, function(n) {
+        return _c(
+          "div",
+          {
+            key: "title" + n,
+            staticClass: "tabs_title",
+            class: _vm.isActive(n),
+            on: {
+              click: function($event) {
+                return _vm.setTab(n)
+              }
+            }
+          },
+          [_vm._t("title-" + n)],
+          2
+        )
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "tabs_contents" },
+      _vm._l(_vm.length, function(n) {
+        return _c(
+          "div",
+          {
+            key: "content" + n,
+            staticClass: "tabs_content",
+            class: _vm.isActive(n)
+          },
+          [_vm._t("content-" + n)],
+          2
+        )
+      }),
+      0
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar/Datetime.vue?vue&type=template&id=72737ade&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar/Datetime.vue?vue&type=template&id=72737ade& ***!
@@ -32228,6 +32485,35 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=template&id=3d553b42&":
+/*!*********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=template&id=3d553b42& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "special-days" },
+    [_c("Calendar", { attrs: { params: _vm.simpleCalendar } })],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/ToggledSidebarWrapper.vue?vue&type=template&id=14812f16&":
 /*!*******************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/ToggledSidebar/ToggledSidebarWrapper.vue?vue&type=template&id=14812f16& ***!
@@ -32260,6 +32546,81 @@ var render = function() {
       })
     ],
     1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=template&id=7bffebdd&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=template&id=7bffebdd& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "weekdays" },
+    [
+      _c("input", {
+        attrs: { type: "hidden" },
+        domProps: { value: _vm.checkedDay }
+      }),
+      _vm._v(" "),
+      _vm._l(_vm.weekDays, function(day) {
+        return [
+          _c(
+            "div",
+            {
+              key: day.ref,
+              staticClass: "weekday",
+              class: _vm.isDayActive(day)
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "weekday_name",
+                  on: {
+                    click: function($event) {
+                      return _vm.swithDay(day)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(day.name))]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "ios-switcher",
+                  class: _vm.isDayActive(day),
+                  on: {
+                    click: function($event) {
+                      return _vm.swithDay(day)
+                    }
+                  }
+                },
+                [_c("div", { staticClass: "ios-switcher_lever" })]
+              )
+            ]
+          )
+        ]
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -32308,24 +32669,61 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "multiple-days-choser" }, [
-    _c(
-      "div",
-      {
-        staticClass: "multiple-days-choser_close",
-        on: {
-          click: function($event) {
-            return _vm.closeView()
+  return _c(
+    "div",
+    { staticClass: "multiple-days-choser" },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "multiple-days-choser_close",
+          on: {
+            click: function($event) {
+              return _vm.closeView()
+            }
           }
-        }
-      },
-      [_c("AngleRight")],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "title rel mb30" }, [_vm._v("Apply To Multiple")]),
-    _vm._v("MultipleDaysChoser\n")
-  ])
+        },
+        [_c("AngleRight")],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "title rel mb30" }, [
+        _vm._v("Apply To Multiple")
+      ]),
+      _vm._v(" "),
+      _c(
+        "Tabs",
+        { attrs: { length: _vm.tabs.length } },
+        [
+          _vm._l(_vm.tabs, function(tab, index) {
+            return [
+              _c(
+                "span",
+                {
+                  key: tab.title,
+                  attrs: { slot: "title-" + (index + 1) },
+                  slot: "title-" + (index + 1)
+                },
+                [_vm._v(_vm._s(tab.title))]
+              ),
+              _vm._v(" "),
+              _c(tab.content, {
+                key: tab.content,
+                tag: "component",
+                attrs: {
+                  slot: "content-" + (index + 1),
+                  storeLink: _vm.storeLink
+                },
+                slot: "content-" + (index + 1)
+              })
+            ]
+          })
+        ],
+        2
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48708,6 +49106,75 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
 /***/ }),
 
+/***/ "./resources/js/components/Tabs/Tabs.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/components/Tabs/Tabs.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Tabs_vue_vue_type_template_id_214ae398___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Tabs.vue?vue&type=template&id=214ae398& */ "./resources/js/components/Tabs/Tabs.vue?vue&type=template&id=214ae398&");
+/* harmony import */ var _Tabs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tabs.vue?vue&type=script&lang=js& */ "./resources/js/components/Tabs/Tabs.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Tabs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Tabs_vue_vue_type_template_id_214ae398___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Tabs_vue_vue_type_template_id_214ae398___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Tabs/Tabs.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Tabs/Tabs.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/Tabs/Tabs.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Tabs.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Tabs/Tabs.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Tabs/Tabs.vue?vue&type=template&id=214ae398&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/Tabs/Tabs.vue?vue&type=template&id=214ae398& ***!
+  \******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_template_id_214ae398___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Tabs.vue?vue&type=template&id=214ae398& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Tabs/Tabs.vue?vue&type=template&id=214ae398&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_template_id_214ae398___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabs_vue_vue_type_template_id_214ae398___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/calendar/Datetime.vue":
 /*!*******************************************************!*\
   !*** ./resources/js/components/calendar/Datetime.vue ***!
@@ -49948,7 +50415,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -49966,7 +50433,7 @@ function () {
   function CalendarHelperClass(calendarId) {
     _classCallCheck(this, CalendarHelperClass);
 
-    this.CalendarDATA = _CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[calendarId];
+    this.CalendarDATA = CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[calendarId];
   }
 
   _createClass(CalendarHelperClass, [{
@@ -50211,6 +50678,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SpecialDays_vue_vue_type_template_id_3d553b42___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpecialDays.vue?vue&type=template&id=3d553b42& */ "./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=template&id=3d553b42&");
+/* harmony import */ var _SpecialDays_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SpecialDays.vue?vue&type=script&lang=js& */ "./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SpecialDays_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SpecialDays_vue_vue_type_template_id_3d553b42___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SpecialDays_vue_vue_type_template_id_3d553b42___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpecialDays_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SpecialDays.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpecialDays_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=template&id=3d553b42&":
+/*!***************************************************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=template&id=3d553b42& ***!
+  \***************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpecialDays_vue_vue_type_template_id_3d553b42___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SpecialDays.vue?vue&type=template&id=3d553b42& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue?vue&type=template&id=3d553b42&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpecialDays_vue_vue_type_template_id_3d553b42___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpecialDays_vue_vue_type_template_id_3d553b42___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/calendar6/parts/ToggledSidebar/ToggledSidebarWrapper.vue":
 /*!******************************************************************************************!*\
   !*** ./resources/js/components/calendar6/parts/ToggledSidebar/ToggledSidebarWrapper.vue ***!
@@ -50280,6 +50816,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _WeekDays_vue_vue_type_template_id_7bffebdd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WeekDays.vue?vue&type=template&id=7bffebdd& */ "./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=template&id=7bffebdd&");
+/* harmony import */ var _WeekDays_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WeekDays.vue?vue&type=script&lang=js& */ "./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _WeekDays_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _WeekDays_vue_vue_type_template_id_7bffebdd___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _WeekDays_vue_vue_type_template_id_7bffebdd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WeekDays_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./WeekDays.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WeekDays_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=template&id=7bffebdd&":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=template&id=7bffebdd& ***!
+  \*********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WeekDays_vue_vue_type_template_id_7bffebdd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./WeekDays.vue?vue&type=template&id=7bffebdd& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue?vue&type=template&id=7bffebdd&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WeekDays_vue_vue_type_template_id_7bffebdd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WeekDays_vue_vue_type_template_id_7bffebdd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js":
 /*!***********************************************************************************************!*\
   !*** ./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js ***!
@@ -50291,7 +50896,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Calendar_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Calendar/helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
 
 
 var ToggledSidebarSTORE = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -50354,7 +50959,7 @@ var ToggledSidebarSTORE = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     disableViews: function disableViews(enviroment) {
       if (this.showOverlay) {
         this.showOverlay = false;
-        vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_Calendar_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[this.calendarId].daysProps, "checkedDays", {});
+        vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[this.calendarId].daysProps, "checkedDays", {});
         this.calendarId = null;
       }
 
@@ -50705,6 +51310,30 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     component: _views_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
   }]
 }));
+
+/***/ }),
+
+/***/ "./resources/js/services/GlobalComponents.js":
+/*!***************************************************!*\
+  !*** ./resources/js/services/GlobalComponents.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GlobalComponents; });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var Components_Tabs_Tabs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Components/Tabs/Tabs */ "./resources/js/components/Tabs/Tabs.vue");
+/* harmony import */ var Calendar_Calendar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! Calendar/Calendar */ "./resources/js/components/calendar6/parts/Calendar/Calendar.vue");
+
+
+
+function GlobalComponents() {
+  vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Calendar', Calendar_Calendar__WEBPACK_IMPORTED_MODULE_2__["default"]);
+  vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Tabs', Components_Tabs_Tabs__WEBPACK_IMPORTED_MODULE_1__["default"]);
+}
 
 /***/ }),
 

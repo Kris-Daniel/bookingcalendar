@@ -42,10 +42,10 @@
 </template>
 
 <script>
-import ToggledSidebarSTORE from "../helpers/ToggledSidebarSTORE";
+import ToggledSidebarSTORE from "ToggledSidebarSTORE";
+import CalendarSTORE from "CalendarSTORE";
 
-import CalendarSTORE from "../../Calendar/helpers/CalendarSTORE";
-import ArrowRight from "../../../../../svg/arrow-right";
+import ArrowRight from "MySvg/arrow-right";
 
 export default {
     name: "TimeSetting",

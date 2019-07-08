@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import CalendarHelper from "../../helpers/CalendarHelper";
-import CalendarSTORE from "../../helpers/CalendarSTORE";
+import CalendarHelper from "Calendar/helpers/CalendarHelper";
+import CalendarSTORE from "Calendar/helpers/CalendarSTORE";
 
-import Pencil from "../../../../../../svg/pencil";
-import AngleDown from "../../../../../../svg/angle-down";
+import Pencil from "MySvg/pencil";
+import AngleDown from "MySvg/angle-down";
 
 export default {
     name: "ScheduleDay",

@@ -76,3 +76,36 @@
         z-index: -1;
     }
 }
+
+.ios-switcher{
+    .rel();
+    .dinl-mid();
+    width: 31px;
+    height: 14px;
+    border: 1px solid #e3e3e3;
+    border-radius: 14px;
+    cursor: pointer;
+    background: #ffffff;
+    transition: 0.3s all ease;
+    &_lever{
+        .abs();
+        left: 0;
+        top: 0;
+        height: 14px;
+        width: 14px;
+        border: 1px solid #e3e3e3;
+        margin: -1px;
+        border-radius: 14px;
+        background: #ffffff;
+        transition: 0.3s all ease;
+    }
+    &.active{
+        border: 1px solid @cyan;
+        background: @cyan;
+    }
+    &.active .ios-switcher_lever{
+        left: 17px;
+        border: 1px solid @cyan;
+        box-shadow: none;
+    }
+}

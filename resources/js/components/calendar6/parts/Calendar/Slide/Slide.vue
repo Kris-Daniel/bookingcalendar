@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import Day from "../Day/Day";
-import CalendarHelper from "../helpers/CalendarHelper";
-import CalendarSTORE from '../helpers/CalendarSTORE';
+import Day from "Calendar/Day/Day";
+import CalendarHelper from "Calendar/helpers/CalendarHelper";
+import CalendarSTORE from 'CalendarSTORE';
 
 export default {
     name: "Slide",

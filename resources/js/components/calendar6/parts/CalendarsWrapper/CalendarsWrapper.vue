@@ -6,18 +6,13 @@
 
 <script>
 import Vue from 'vue';
-import Calendar from "../Calendar/Calendar";
 import CalendarClassDATA from '../../services/GetCalendar';
-import ToggledSidebarSTORE from '../ToggledSidebar/helpers/ToggledSidebarSTORE';
+import ToggledSidebarSTORE from 'ToggledSidebarSTORE';
 
-Vue.component('Calendar', Calendar);
 let CalendarDATA = new CalendarClassDATA();
 
 export default {
     name: "CalendarsWrapper",
-    components: {
-        Calendar
-    },
     data() {
         return {};
     },

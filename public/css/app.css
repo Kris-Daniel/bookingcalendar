@@ -3287,6 +3287,39 @@ a {
   border: 1px solid #000;
   z-index: -1;
 }
+.ios-switcher {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 31px;
+  height: 14px;
+  border: 1px solid #e3e3e3;
+  border-radius: 14px;
+  cursor: pointer;
+  background: #ffffff;
+  transition: 0.3s all ease;
+}
+.ios-switcher_lever {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 14px;
+  width: 14px;
+  border: 1px solid #e3e3e3;
+  margin: -1px;
+  border-radius: 14px;
+  background: #ffffff;
+  transition: 0.3s all ease;
+}
+.ios-switcher.active {
+  border: 1px solid #00cec9;
+  background: #00cec9;
+}
+.ios-switcher.active .ios-switcher_lever {
+  left: 17px;
+  border: 1px solid #00cec9;
+  box-shadow: none;
+}
 .dcal {
   position: relative;
   font-size: 0;
@@ -4266,6 +4299,7 @@ a {
   z-index: 10;
   /* Time Setting */
   /* Multiple Days Choser */
+  /* Tabs */
 }
 .CC .toggle-sidebar-wrapper .retractable-sidebar {
   position: fixed;
@@ -4385,11 +4419,14 @@ a {
   box-shadow: 0px 2px 20px 0px rgba(62, 69, 94, 0.25);
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser {
+  display: flex;
+  flex-direction: column;
   position: relative;
   height: 100%;
-  padding: 100px 18px 18px 18px;
+  padding: 100px 0px 18px 0px;
   overflow: auto;
   text-align: center;
+  background: #f3f3f6;
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser_close {
   position: absolute;
@@ -4405,4 +4442,97 @@ a {
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser_close svg * {
   fill: #dbdbdb !important;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_titles {
+  position: relative;
+  z-index: 2;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_titles:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_title {
+  position: relative;
+  float: left;
+  width: 100%;
+  max-width: 130px;
+  padding: 8px 10px 12px 10px;
+  border-top: 5px solid transparent;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: #9198ae;
+  transition: 0.2s all ease;
+  cursor: pointer;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_title:last-child {
+  float: right;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_title:hover {
+  color: #00cec9;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_title:before {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  left: 0;
+  top: 100%;
+  background: #fff;
+  pointer-events: none;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_title.active {
+  border-top: 5px solid #00cec9;
+  color: #00cec9;
+  background: #fff;
+  box-shadow: -2px 1px 20px 0px rgba(62, 69, 94, 0.1);
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_title.active:before {
+  content: "";
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_contents {
+  flex-grow: 1;
+  min-height: 360px;
+  background: #fff;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_content {
+  display: none;
+  padding: 30px 18px;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_content.active {
+  display: block;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .weekdays {
+  text-align: left;
+  padding-left: 26px;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .weekday {
+  margin-bottom: 14px;
+  color: #293143;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .weekday.active {
+  color: #00cec9;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .weekday:last-child {
+  margin-bottom: 0;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .weekday_name {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 18px;
+  line-height: 1 !important;
+  width: 140px;
+  font-weight: 600;
+  transition: 0.3s all ease;
+  cursor: pointer;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .weekday_name:hover {
+  color: #00cec9;
 }

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import CalendarSTORE from '../../Calendar/helpers/CalendarSTORE';
+import CalendarSTORE from 'CalendarSTORE';
 
 let ToggledSidebarSTORE = new Vue({
     name: 'ToggleSidebarSTORE',

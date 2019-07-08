@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-import CalendarSTORE from './CalendarSTORE';
+import CalendarSTORE from 'CalendarSTORE';
 
 const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const daysX = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];

@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import TimeSetting from "../views/TimeSetting";
-import Bookings from "../views/Bookings";
-import MultipleDaysChoser from "../views/MultipleDaysChoser";
+import TimeSetting from "ToggledSidebar/views/TimeSetting";
+import Bookings from "ToggledSidebar/views/Bookings";
+import MultipleDaysChoser from "ToggledSidebar/views/MultipleDaysChoser";
 
-import ToggledSidebarSTORE from '../helpers/ToggledSidebarSTORE';
+import ToggledSidebarSTORE from 'ToggledSidebarSTORE';
 
 export default {
     name: "RetractableBlock",
