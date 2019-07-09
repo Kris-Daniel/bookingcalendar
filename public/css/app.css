@@ -3320,6 +3320,13 @@ a {
   border: 1px solid #00cec9;
   box-shadow: none;
 }
+.ios-switcher.default {
+  border: 1px solid #c2c9dd;
+  background: #c2c9dd;
+}
+.ios-switcher.default .ios-switcher_lever {
+  border: 1px solid #c2c9dd;
+}
 .dcal {
   position: relative;
   font-size: 0;
@@ -4066,234 +4073,6 @@ a {
   font-size: 13px;
   line-height: 1 !important;
 }
-.CC .calendars-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-  /* Layouts */
-  /* WeekDays td */
-  /* Schedule Day */
-  /* Day components */
-  /* Change Slide */
-}
-.CC .calendars-wrapper .calendar {
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: -2px 1px 20px 0px rgba(62, 69, 94, 0.1);
-}
-.CC .calendars-wrapper .slider {
-  position: relative;
-  overflow: hidden;
-  transition: 0.3s all ease;
-}
-.CC .calendars-wrapper .slide {
-  position: absolute;
-  width: 100%;
-  transition: 0.3s all ease;
-}
-.CC .calendars-wrapper .slide:nth-child(1) {
-  left: -100px;
-  opacity: 0;
-}
-.CC .calendars-wrapper .slide:nth-child(2) {
-  left: 0px;
-  z-index: 2;
-}
-.CC .calendars-wrapper .slide:nth-child(3) {
-  left: 100px;
-  opacity: 0;
-}
-.CC .calendars-wrapper .slider-leave-to,
-.CC .calendars-wrapper .slider-leave-active {
-  transition: 0s all !important;
-  display: none !important;
-}
-.CC .calendars-wrapper .slide_table,
-.CC .calendars-wrapper .weekdays-table {
-  width: 100%;
-  text-align: center;
-  border-collapse: collapse;
-  table-layout: fixed;
-  border-spacing: 0;
-}
-.CC .calendars-wrapper .weekdays-table--schedule .weekdays-table_td {
-  background: #00cec9;
-  border: 1px double #fff;
-  border-top: none;
-  padding: 6px 0;
-  color: #fff;
-}
-.CC .calendars-wrapper .weekdays-table--schedule .weekdays-table_td:first-child {
-  border-left: none;
-}
-.CC .calendars-wrapper .weekdays-table--schedule .weekdays-table_td:last-child {
-  border-right: none;
-}
-.CC .calendars-wrapper .slide_table_td {
-  position: relative;
-  border: 1px solid transparent;
-  border-collapse: separate;
-  cursor: pointer;
-}
-.CC .calendars-wrapper .slide_table_td:hover,
-.CC .calendars-wrapper .slide_table_td.checked {
-  z-index: 2;
-}
-.CC .calendars-wrapper .slide_table_td:hover .day--schedule,
-.CC .calendars-wrapper .slide_table_td.checked .day--schedule {
-  box-shadow: 0px 0px 0px 1px #00cec9;
-}
-.CC .calendars-wrapper .day--schedule {
-  height: 102px;
-  padding: 10px;
-  text-align: left;
-  background: #fcfcfe;
-  box-shadow: 0px 0px 0px 1px #ebebeb;
-}
-.CC .calendars-wrapper .slide_table_td.checked .day--schedule {
-  background: rgba(0, 206, 201, 0.07);
-}
-@media screen and (max-width: 800px) {
-  .CC .calendars-wrapper .slide_table_td .day--schedule {
-    display: block;
-  }
-}
-.CC .calendars-wrapper .slide_table_tr:last-child .slide_table_td:last-child .day .day--schedule {
-  border-bottom-right-radius: 10px;
-}
-.CC .calendars-wrapper .slide_table_tr:last-child .slide_table_td:nth-last-child(7) .day .day--schedule {
-  border-bottom-left-radius: 10px;
-}
-.CC .calendars-wrapper .slide_table_td:hover .day--schedule,
-.CC .calendars-wrapper .slide_table_td.checked .day--schedule {
-  box-shadow: 0px 0px 0px 1px #00cec9;
-}
-.CC .calendars-wrapper .day_schedule .day_schedule_time:nth-child(n + 3) {
-  display: none;
-}
-.CC .calendars-wrapper .day_schedule_time {
-  font-size: 12px;
-  line-height: 1 !important;
-  margin-bottom: 7px;
-  color: #666a73;
-}
-.CC .calendars-wrapper .day_num {
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  font-size: 24px;
-  line-height: 1 !important;
-  margin-bottom: 10px;
-  font-weight: 800;
-  color: #585b61;
-}
-.CC .calendars-wrapper .day--another-month .day--schedule {
-  background: #f5f5f7;
-}
-.CC .calendars-wrapper .day--another-month .day--schedule .day_num,
-.CC .calendars-wrapper .day--another-month .day--schedule .day_schedule_time {
-  color: #c2c9dd;
-}
-.CC .calendars-wrapper .day_special-circle {
-  position: absolute;
-  top: -2px;
-  right: -14px;
-  display: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 100%;
-  background: #00cec9;
-}
-.CC .calendars-wrapper .day_inside.special .day_special-circle {
-  display: block;
-}
-.CC .calendars-wrapper .day_inside.special .day_num {
-  color: #00cec9;
-}
-.CC .calendars-wrapper .day_edit-icon {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  overflow: hidden;
-  transition: 0.3s all ease;
-  -webkit-transform: scale(0);
-          transform: scale(0);
-}
-.CC .calendars-wrapper .day_edit-icon svg {
-  width: 9px;
-  height: 15px;
-}
-.CC .calendars-wrapper .day_edit-icon svg * {
-  fill: #c2c9dd !important;
-}
-.CC .calendars-wrapper .day:hover .day_edit-icon {
-  -webkit-transform: scale(1);
-          transform: scale(1);
-}
-.CC .calendars-wrapper .day_schedule_more {
-  font-size: 12px;
-  line-height: 1 !important;
-  display: inline-block;
-  vertical-align: top;
-  color: #00cec9;
-}
-.CC .calendars-wrapper .day_schedule_more:hover {
-  text-decoration: underline;
-}
-.CC .calendars-wrapper .day_schedule_more_angle-down {
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  left: 5px;
-  bottom: 2px;
-}
-.CC .calendars-wrapper .day_schedule_more_angle-down svg {
-  width: 6px;
-  height: 4px;
-}
-.CC .calendars-wrapper .day_schedule_more_angle-down svg * {
-  fill: #00cec9 !important;
-}
-.CC .calendars-wrapper .change-slide-wrapper {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.CC .calendars-wrapper .change-slide {
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  width: 150px;
-}
-.CC .calendars-wrapper .change-slide_btn {
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  cursor: pointer;
-}
-.CC .calendars-wrapper .change-slide_btn svg {
-  width: 12px;
-  height: 20px;
-}
-.CC .calendars-wrapper .change-slide_btn svg * {
-  fill: #c2c9dd !important;
-}
-.CC .calendars-wrapper .change-slide_btn--prev {
-  left: -34px;
-}
-.CC .calendars-wrapper .change-slide_btn--next {
-  right: -34px;
-}
-.CC .calendars-wrapper .change-slide_month {
-  font-size: 29px;
-  line-height: 1 !important;
-  color: #585b61;
-  margin-bottom: 10px;
-}
-.CC .calendars-wrapper .change-slide_year {
-  font-size: 20px;
-  line-height: 1 !important;
-  color: #c2c9dd;
-}
 .CC .toggle-sidebar-wrapper {
   position: relative;
   z-index: 10;
@@ -4447,18 +4226,11 @@ a {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  width: 100%;
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_titles {
   position: relative;
   z-index: 2;
-}
-.CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_titles:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_title {
   position: relative;
@@ -4503,10 +4275,14 @@ a {
   background: #fff;
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_content {
-  display: none;
-  padding: 30px 18px;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser .tabs_content.active {
+  padding: 30px 18px;
+  height: auto;
+  visibility: visible;
   display: block;
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser .weekdays {
@@ -4519,6 +4295,9 @@ a {
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser .weekday.active {
   color: #00cec9;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .weekday.default {
+  color: #c2c9dd;
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser .weekday:last-child {
   margin-bottom: 0;
@@ -4535,4 +4314,304 @@ a {
 }
 .CC .toggle-sidebar-wrapper .multiple-days-choser .weekday_name:hover {
   color: #00cec9;
+}
+.CC .toggle-sidebar-wrapper .multiple-days-choser .weekday.default .weekday_name:hover {
+  color: #c2c9dd;
+}
+/* Common */
+.CC .calendars-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.calendar-wrapper {
+  /* Layouts */
+  /* Day td */
+  /* Day schedule */
+  /* Day schedule components */
+  /* Simple Day */
+  /* Change Slide */
+}
+.calendar-wrapper .calendar {
+  border-radius: 10px;
+  overflow: hidden;
+}
+.calendar-wrapper .calendar--schedule {
+  box-shadow: -2px 1px 20px 0px rgba(62, 69, 94, 0.1);
+}
+.calendar-wrapper .slider {
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s all ease;
+}
+.calendar-wrapper .slide {
+  position: absolute;
+  width: 100%;
+  transition: 0.3s all ease;
+}
+.calendar-wrapper .slide:nth-child(1) {
+  left: -100px;
+  opacity: 0;
+}
+.calendar-wrapper .slide:nth-child(2) {
+  left: 0px;
+  z-index: 2;
+}
+.calendar-wrapper .slide:nth-child(3) {
+  left: 100px;
+  opacity: 0;
+}
+.calendar-wrapper .slide_table,
+.calendar-wrapper .weekdays-table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border-spacing: 0;
+}
+.calendar-wrapper .weekdays-table--schedule .weekdays-table_td {
+  background: #00cec9;
+  border: 1px double #fff;
+  border-top: none;
+  padding: 6px 0;
+  color: #fff;
+}
+.calendar-wrapper .weekdays-table--schedule .weekdays-table_td:first-child {
+  border-left: none;
+}
+.calendar-wrapper .weekdays-table--schedule .weekdays-table_td:last-child {
+  border-right: none;
+}
+.calendar-wrapper .slide_table_td {
+  position: relative;
+  border: 1px solid transparent;
+  border-collapse: separate;
+  cursor: pointer;
+}
+.calendar-wrapper .slide_table_td:hover,
+.calendar-wrapper .slide_table_td.checked {
+  z-index: 2;
+}
+.calendar-wrapper .slide_table_td:hover .day--schedule,
+.calendar-wrapper .slide_table_td.checked .day--schedule {
+  box-shadow: 0px 0px 0px 1px #00cec9;
+}
+.calendar-wrapper .day--schedule {
+  height: 102px;
+  padding: 10px;
+  text-align: left;
+  background: #fcfcfe;
+  box-shadow: 0px 0px 0px 1px #ebebeb;
+}
+.calendar-wrapper .slide_table_td.checked .day--schedule {
+  background: rgba(0, 206, 201, 0.07);
+}
+@media screen and (max-width: 800px) {
+  .calendar-wrapper .slide_table_td .day--schedule {
+    display: block;
+  }
+}
+.calendar-wrapper .slide_table_tr:last-child .slide_table_td:last-child .day .day--schedule {
+  border-bottom-right-radius: 10px;
+}
+.calendar-wrapper .slide_table_tr:last-child .slide_table_td:nth-last-child(7) .day .day--schedule {
+  border-bottom-left-radius: 10px;
+}
+.calendar-wrapper .slide_table_td:hover .day--schedule,
+.calendar-wrapper .slide_table_td.checked .day--schedule {
+  box-shadow: 0px 0px 0px 1px #00cec9;
+}
+.calendar-wrapper .day_schedule .day_schedule_time:nth-child(n + 3) {
+  display: none;
+}
+.calendar-wrapper .day_schedule_time {
+  font-size: 12px;
+  line-height: 1 !important;
+  margin-bottom: 7px;
+  color: #666a73;
+}
+.calendar-wrapper .day_num {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 24px;
+  line-height: 1 !important;
+  margin-bottom: 10px;
+  font-weight: 800;
+  color: #585b61;
+}
+.calendar-wrapper .day--another-month .day--schedule {
+  background: #f5f5f7;
+}
+.calendar-wrapper .day--another-month .day--schedule .day_num,
+.calendar-wrapper .day--another-month .day--schedule .day_schedule_time {
+  color: #c2c9dd;
+}
+.calendar-wrapper .day_special-circle {
+  position: absolute;
+  top: -2px;
+  right: -14px;
+  display: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background: #00cec9;
+}
+.calendar-wrapper .day_inside.special .day_special-circle {
+  display: block;
+}
+.calendar-wrapper .day_inside.special .day_num {
+  color: #00cec9;
+}
+.calendar-wrapper .day_edit-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  overflow: hidden;
+  transition: 0.3s all ease;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+.calendar-wrapper .day_edit-icon svg {
+  width: 9px;
+  height: 15px;
+}
+.calendar-wrapper .day_edit-icon svg * {
+  fill: #c2c9dd !important;
+}
+.calendar-wrapper .day:hover .day_edit-icon {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.calendar-wrapper .day_schedule_more {
+  font-size: 12px;
+  line-height: 1 !important;
+  display: inline-block;
+  vertical-align: top;
+  color: #00cec9;
+}
+.calendar-wrapper .day_schedule_more:hover {
+  text-decoration: underline;
+}
+.calendar-wrapper .day_schedule_more_angle-down {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  left: 5px;
+  bottom: 2px;
+}
+.calendar-wrapper .day_schedule_more_angle-down svg {
+  width: 6px;
+  height: 4px;
+}
+.calendar-wrapper .day_schedule_more_angle-down svg * {
+  fill: #00cec9 !important;
+}
+.calendar-wrapper .day--simple {
+  font-size: 13px;
+  line-height: 1 !important;
+  text-align: center;
+  color: #293143;
+}
+.calendar-wrapper .day--circle {
+  position: relative;
+  width: 33px;
+  height: 33px;
+  border-radius: 100%;
+  margin: 1px auto;
+}
+.calendar-wrapper .day--circle:hover {
+  background: #7fe6e4;
+}
+.calendar-wrapper .slide_table_td.checked .day--circle {
+  background: #7fe6e4;
+  color: #293143;
+}
+.calendar-wrapper .day.default .day--circle {
+  background: #c2c9dd;
+  color: #fff;
+}
+.calendar-wrapper .day_a-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+.calendar-wrapper .day--another-month .day--simple {
+  color: #c2c9dd;
+}
+.calendar-wrapper .weekdays-table--simple {
+  position: relative;
+  margin-bottom: 10px;
+}
+.calendar-wrapper .weekdays-table--simple:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 8px;
+  right: 8px;
+  height: 1px;
+  background: #c2c9dd;
+}
+.calendar-wrapper .weekdays-table--simple .weekdays-table_td {
+  font-size: 14px;
+  line-height: 1 !important;
+  padding: 10px 0;
+  color: #c2c9dd;
+  font-weight: 600;
+}
+.calendar-wrapper .change-slide-wrapper {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.calendar-wrapper .change-slide {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 150px;
+}
+.calendar-wrapper .change-slide_btn {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  cursor: pointer;
+}
+.calendar-wrapper .change-slide_btn svg {
+  width: 12px;
+  height: 20px;
+}
+.calendar-wrapper .change-slide_btn svg * {
+  fill: #c2c9dd !important;
+}
+.calendar-wrapper .change-slide_btn--prev {
+  left: -34px;
+}
+.calendar-wrapper .change-slide_btn--next {
+  right: -34px;
+}
+.calendar-wrapper .change-slide_month {
+  font-size: 29px;
+  line-height: 1 !important;
+  color: #585b61;
+  margin-bottom: 10px;
+}
+.calendar-wrapper .change-slide_year {
+  font-size: 20px;
+  line-height: 1 !important;
+  color: #c2c9dd;
+}
+.calendar-wrapper--simple .change-slide_month {
+  font-size: 20px;
+  line-height: 1 !important;
+  color: #293143;
+  margin-bottom: 6px;
+}
+.calendar-wrapper--simple .change-slide_year {
+  font-size: 15px;
+  line-height: 1 !important;
+  color: #293143;
+}
+.calendar-wrapper--simple .change-slide_btn svg * {
+  fill: #00cec9 !important;
 }

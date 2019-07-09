@@ -1,12 +1,12 @@
 <template>
-    <div class="calendar-wrapper" :data-id="params.name" :class="classCss">
+    <div class="calendar-wrapper" :data-id="params.name" :class="calendarWrapperCss('calendar-wrapper--')">
         <ChangeSlide
             :type="type"
             :slides="slides"
             @changeSlide="changeSlide"
             :calendarId="params.name"
         ></ChangeSlide>
-        <div class="calendar">
+        <div class="calendar" :class="calendarCss('calendar--')">
             <WeekDays v-if="type == 'month'" :calendarId="params.name"></WeekDays>
             <div class="slider" ref="slider" :style="{height}">
                 <Slide
@@ -82,9 +82,6 @@ export default {
             }
             return this.CalendarDATA.type;
         },
-        classCss() {
-            return "calendar-state-" + this.oldType;
-        },
         height() {
             return this.CalendarDATA.height + 'px';
         }
@@ -136,8 +133,6 @@ export default {
                     this.slides.push(i);
                 }
             }
-            this.$nextTick(() => {
-            });
         },
         changeSlide(side) {
             let slideId;
@@ -168,6 +163,14 @@ export default {
                     this.slides.splice(0, 0, slideId);
                 });
             }
+        },
+        
+        calendarWrapperCss(css) {
+            return css + this.oldType + " " + this.calendarCss(css);
+        },
+
+        calendarCss(css) {
+            return css + this.params.daysProps.dayType;
         }
     }
 };

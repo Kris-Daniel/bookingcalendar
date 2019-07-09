@@ -436,236 +436,6 @@
         .size13();
     }
 }
-
-.CC .calendars-wrapper{
-    max-width: 800px;
-    margin: 0 auto;
-
-    /* Layouts */
-    .calendar{
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: -2px 1px 20px 0px rgba(62, 69, 94, 0.1); 
-    }
-    .slider{
-        .rel();
-        overflow: hidden;
-        transition: 0.3s all ease;
-    }
-    .slide{
-        .abs();
-        width: 100%;
-        transition: 0.3s all ease;
-        &:nth-child(1){
-            left: -100px;
-            opacity: 0;
-        }
-        &:nth-child(2){
-            left: 0px;
-            z-index: 2;
-        }
-        &:nth-child(3){
-            left: 100px;
-            opacity: 0;
-        }
-    }
-    .slider-leave-to,
-    .slider-leave-active {
-        transition: 0s all !important;
-        display: none !important;
-    }
-    .slide_table,
-    .weekdays-table{
-        width: 100%;
-        text-align: center;
-        border-collapse: collapse;
-        table-layout: fixed;
-        border-spacing: 0;
-    }
-
-    /* WeekDays td */
-    .weekdays-table--schedule .weekdays-table_td{
-        background: @cyan;
-        border: 1px double #fff;
-        border-top: none;
-        padding: 6px 0;
-        color: #fff;
-        &:first-child{
-            border-left: none;
-        }
-        &:last-child{
-            border-right: none;
-        }
-    }
-    
-    .slide_table_td{
-        .rel();
-        border: 1px solid transparent;
-        border-collapse: separate;
-        cursor: pointer;
-        &:hover,
-        &.checked{
-            z-index: 2;
-            .day--schedule{
-                box-shadow: 0px 0px 0px 1px @cyan;
-            }
-        }
-    }
-
-    /* Schedule Day */
-    .day--schedule{
-        height: 102px;
-        padding: 10px;
-        text-align: left;
-        background: #fcfcfe;
-        box-shadow: 0px 0px 0px 1px #ebebeb;
-    }
-    .slide_table_td.checked .day--schedule{
-        background: rgba(0, 206, 201, 0.07);
-    }
-    .slide_table_td .day--schedule{
-        .to(800px, {
-            display: block;
-        });
-    }
-    .slide_table_tr:last-child{
-        .slide_table_td{
-            &:last-child .day .day--schedule{
-                border-bottom-right-radius: 10px;
-            }
-            &:nth-last-child(7) .day .day--schedule{
-                border-bottom-left-radius: 10px;
-            }
-        }
-    }
-    .slide_table_td:hover .day--schedule,
-    .slide_table_td.checked .day--schedule{
-        box-shadow: 0px 0px 0px 1px @cyan;
-    }
-
-    /* Day components */
-    .day_schedule{
-        .day_schedule_time:nth-child(n + 3){
-            display: none;
-        }
-    }
-    .day_schedule_time{
-        .size12();
-        margin-bottom: 7px;
-        color: #666a73;
-    }
-    .day_num{
-        .rel();
-        .dinl-top();
-        .size24;
-        .mb10();
-        .bold();
-        color: @gray;
-    }
-    .day--another-month .day--schedule{
-        background: #f5f5f7;
-        .day_num,
-        .day_schedule_time{
-            color: #c2c9dd;
-        }
-    }
-    .day_special-circle{
-        .abs();
-        top: -2px;
-        right: -14px;
-        display: none;
-        width: 8px;
-        height: 8px;
-        border-radius: 100%;
-        background: @cyan;
-    }
-
-    .day_inside.special .day_special-circle{
-        display: block;
-    }
-    .day_inside.special .day_num{
-        color: @cyan;
-    }
-    .day_edit-icon{
-        .abs();
-        top: 8px;
-        right: 8px;
-        overflow: hidden;
-        transition: 0.3s all ease;
-        transform: scale(0);
-        svg{
-            width: 9px;
-            height: 15px;
-            * {
-                fill: #c2c9dd !important;
-            }
-        }
-    }
-    .day:hover .day_edit-icon{
-        transform: scale(1);
-    }
-    .day_schedule_more{
-        .size12();
-        .dinl-top();
-        color: @cyan;
-        &:hover{
-            text-decoration: underline;
-        }
-    }
-    .day_schedule_more_angle-down{
-        .rel();
-        .dinl-top();
-        left: 5px;
-        bottom: 2px;
-        svg{
-            width: 6px;
-            height: 4px;
-            *{
-                fill: @cyan !important;
-            }
-        }
-    }
-
-    /* Change Slide */
-    .change-slide-wrapper{
-        .center();
-        margin-bottom: 20px;
-    }
-    .change-slide{
-        .rel();
-        .dinl-top();
-        width: 150px;
-    }
-    .change-slide_btn{
-        .abs();
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        svg{
-            width: 12px;
-            height: 20px;
-            *{
-                fill: #c2c9dd !important;
-            }
-        }
-        &--prev{
-            left: -34px;
-        }
-        &--next{
-            right: -34px;
-        }
-    }
-    .change-slide_month{
-        .size29();
-        color: #585b61;
-        margin-bottom: 10px;
-    }
-    .change-slide_year{
-        .size20();
-        color: #c2c9dd;
-    }
-}
-
 .CC .toggle-sidebar-wrapper{
     position: relative;
     z-index: 10;
@@ -817,9 +587,9 @@
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            width: 100%;
         }
         .tabs_titles{
-            .clearfix();
             position: relative;
             z-index: 2;
         }
@@ -867,9 +637,13 @@
             background: #fff;
         }
         .tabs_content{
-            display: none;
-            padding: 30px 18px;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
             &.active{
+                padding: 30px 18px;
+                height: auto;
+                visibility: visible;
                 display: block;
             }
         }
@@ -882,6 +656,9 @@
             color: #293143;
             &.active{
                 color: @cyan;
+            }
+            &.default{
+                color: #c2c9dd;
             }
             &:last-child{
                 margin-bottom: 0;
@@ -897,6 +674,9 @@
             &:hover{
                 color: @cyan;
             }
+        }
+        .weekday.default .weekday_name:hover{
+            color: #c2c9dd;
         }
     }
 }

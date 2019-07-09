@@ -7,7 +7,9 @@ let ToggledSidebarSTORE = new Vue({
         return {
             calendarId: null,
             views: {},
-            showOverlay: false
+            showOverlay: false,
+            editableDay: null,
+            editableWeekDay: null,
         }
     },
     created() {
@@ -74,6 +76,8 @@ let ToggledSidebarSTORE = new Vue({
                 if (enviroment[propName].children)
                     this.disableViews(enviroment[propName].children);
             }
+            this.editableDay = null;
+            this.editableWeekDay = null;
         }
     }
 });

@@ -57,7 +57,6 @@ export default {
         this.schedule = null;
 
         this.setSchedule();
-        // console.log(this.dayInfo, this.SD, this.WK, "schedule Day");
     },
     methods: {
         setSchedule() {

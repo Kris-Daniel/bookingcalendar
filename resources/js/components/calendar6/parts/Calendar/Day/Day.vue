@@ -1,6 +1,6 @@
 <template>
     <td class="slide_table_td" :class="{'checked': checked}">
-        <div class="day" :class="[daysProps.dayClasses(), anotherDay]" ref="dayDiv">
+        <div class="day" :class="[daysProps.dayClasses(), anotherDay(), defaultDay()]" ref="dayDiv">
             <component
                 :is="days[daysProps.dayType]"
                 :dayInfo="dayInfo"
@@ -15,6 +15,8 @@
 import Vue from "vue";
 import CalendarHelper from "Calendar/helpers/CalendarHelper";
 import CalendarSTORE from "CalendarSTORE";
+import ToggledSidebarSTORE from "ToggledSidebarSTORE";
+
 import ScheduleDay from "./views/ScheduleDay";
 import SimpleDay from "./views/SimpleDay";
 
@@ -37,22 +39,6 @@ export default {
     computed: {
         checked() {
             return this.daysProps.checkedDays[this.ref] ? true : false;
-        },
-        anotherDay() {
-            if (
-                this.oldMonthN !=
-                CalendarSTORE.calendars[this.calendarId].monthN
-            ) {
-                this.oldMonthN =
-                    CalendarSTORE.calendars[this.calendarId].monthN;
-                let monthCount = this.dayInfo.year * 12 + this.dayInfo.month;
-                if (this.CalendarDATA.type != "month") return "";
-
-                if (this.daysProps.dayType != "simple") {
-                    if (this.slideId != monthCount) return "day--another-month";
-                }
-                return "";
-            }
         }
     },
     created() {
@@ -72,11 +58,11 @@ export default {
         this.dayInfo = {
             ref: this.ref,
             day: dateArr[2],
-            month: (dateArr[1] - 1),
+            month: dateArr[1] - 1,
             year: dateArr[0],
             weekDay,
             weekDayRef: CalendarSTORE.WEEK[weekDay],
-            monthName: CalendarSTORE.MONTHS[(dateArr[1] - 1)]
+            monthName: CalendarSTORE.MONTHS[dateArr[1] - 1]
         };
     },
     mounted() {
@@ -84,6 +70,7 @@ export default {
     },
     methods: {
         click(data) {
+            if(ToggledSidebarSTORE.editableDay == this.ref) return false;
             if (!this.daysProps.checkedDays[this.ref]) {
                 if (!this.daysProps.multiselect)
                     Vue.set(this.daysProps, "checkedDays", {});
@@ -96,6 +83,15 @@ export default {
             };
             data.ref = this.ref;
             this.daysProps.dayClick(commonDaysInfo, data);
+        },
+        anotherDay() {
+            let monthCount = this.dayInfo.year * 12 + this.dayInfo.month;
+            if (this.slideId != monthCount) return "day--another-month";
+            return "";
+        },
+        defaultDay() {
+            if(ToggledSidebarSTORE.editableDay == this.ref) return "default";
+            return "";
         }
     }
 };

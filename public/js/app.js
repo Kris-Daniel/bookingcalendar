@@ -699,9 +699,6 @@ __webpack_require__.r(__webpack_exports__);
 
       return this.CalendarDATA.type;
     },
-    classCss: function classCss() {
-      return "calendar-state-" + this.oldType;
-    },
     height: function height() {
       return this.CalendarDATA.height + 'px';
     }
@@ -743,8 +740,6 @@ __webpack_require__.r(__webpack_exports__);
           this.slides.push(_i);
         }
       }
-
-      this.$nextTick(function () {});
     },
     changeSlide: function changeSlide(side) {
       var _this2 = this;
@@ -780,6 +775,12 @@ __webpack_require__.r(__webpack_exports__);
           _this2.slides.splice(0, 0, slideId);
         });
       }
+    },
+    calendarWrapperCss: function calendarWrapperCss(css) {
+      return css + this.oldType + " " + this.calendarCss(css);
+    },
+    calendarCss: function calendarCss(css) {
+      return css + this.params.daysProps.dayType;
     }
   }
 });
@@ -972,8 +973,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Calendar/helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
 /* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
-/* harmony import */ var _views_ScheduleDay__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/ScheduleDay */ "./resources/js/components/calendar6/parts/Calendar/Day/views/ScheduleDay.vue");
-/* harmony import */ var _views_SimpleDay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/SimpleDay */ "./resources/js/components/calendar6/parts/Calendar/Day/views/SimpleDay.vue");
+/* harmony import */ var ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
+/* harmony import */ var _views_ScheduleDay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/ScheduleDay */ "./resources/js/components/calendar6/parts/Calendar/Day/views/ScheduleDay.vue");
+/* harmony import */ var _views_SimpleDay__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./views/SimpleDay */ "./resources/js/components/calendar6/parts/Calendar/Day/views/SimpleDay.vue");
 //
 //
 //
@@ -987,6 +989,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -996,8 +999,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "Day",
   props: ["day", "calendarId", "slideId"],
   components: {
-    ScheduleDay: _views_ScheduleDay__WEBPACK_IMPORTED_MODULE_3__["default"],
-    SimpleDay: _views_SimpleDay__WEBPACK_IMPORTED_MODULE_4__["default"]
+    ScheduleDay: _views_ScheduleDay__WEBPACK_IMPORTED_MODULE_4__["default"],
+    SimpleDay: _views_SimpleDay__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
@@ -1011,19 +1014,6 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     checked: function checked() {
       return this.daysProps.checkedDays[this.ref] ? true : false;
-    },
-    anotherDay: function anotherDay() {
-      if (this.oldMonthN != CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId].monthN) {
-        this.oldMonthN = CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId].monthN;
-        var monthCount = this.dayInfo.year * 12 + this.dayInfo.month;
-        if (this.CalendarDATA.type != "month") return "";
-
-        if (this.daysProps.dayType != "simple") {
-          if (this.slideId != monthCount) return "day--another-month";
-        }
-
-        return "";
-      }
     }
   },
   created: function created() {
@@ -1052,6 +1042,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     click: function click(data) {
+      if (ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__["default"].editableDay == this.ref) return false;
+
       if (!this.daysProps.checkedDays[this.ref]) {
         if (!this.daysProps.multiselect) vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.daysProps, "checkedDays", {});
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.daysProps.checkedDays, this.ref, true);
@@ -1063,6 +1055,15 @@ __webpack_require__.r(__webpack_exports__);
       };
       data.ref = this.ref;
       this.daysProps.dayClick(commonDaysInfo, data);
+    },
+    anotherDay: function anotherDay() {
+      var monthCount = this.dayInfo.year * 12 + this.dayInfo.month;
+      if (this.slideId != monthCount) return "day--another-month";
+      return "";
+    },
+    defaultDay: function defaultDay() {
+      if (ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_3__["default"].editableDay == this.ref) return "default";
+      return "";
     }
   }
 });
@@ -1136,7 +1137,7 @@ __webpack_require__.r(__webpack_exports__);
     this.SD = this.CalendarDATA.daysProps.schedule.days;
     this.WD = this.CalendarDATA.daysProps.schedule.weekDays;
     this.schedule = null;
-    this.setSchedule(); // console.log(this.dayInfo, this.SD, this.WK, "schedule Day");
+    this.setSchedule();
   },
   methods: {
     setSchedule: function setSchedule() {
@@ -1164,14 +1165,41 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! Calendar/helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
+/* harmony import */ var Calendar_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Calendar/helpers/CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var MySvg_pencil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! MySvg/pencil */ "./resources/js/svg/pencil.vue");
+/* harmony import */ var MySvg_angle_down__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! MySvg/angle-down */ "./resources/js/svg/angle-down.vue");
 //
 //
 //
 //
 //
 //
+//
+//
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'SimpleDay'
+  name: "SimpleDay",
+  props: ["dayInfo", "calendarId"],
+  components: {
+    Pencil: MySvg_pencil__WEBPACK_IMPORTED_MODULE_2__["default"],
+    AngleDown: MySvg_angle_down__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  computed: {},
+  created: function created() {
+    this.CalendarDATA = Calendar_helpers_CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].calendars[this.calendarId];
+  },
+  methods: {
+    click: function click() {
+      var data = {
+        dayInfo: this.dayInfo
+      };
+      this.$emit('sendData', data);
+    }
+  }
 });
 
 /***/ }),
@@ -1185,9 +1213,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var Calendar_Day_Day__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! Calendar/Day/Day */ "./resources/js/components/calendar6/parts/Calendar/Day/Day.vue");
-/* harmony import */ var Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Calendar/helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
-/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var Calendar_Day_Day__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! Calendar/Day/Day */ "./resources/js/components/calendar6/parts/Calendar/Day/Day.vue");
+/* harmony import */ var Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! Calendar/helpers/CalendarHelper */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarHelper.js");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
 //
 //
 //
@@ -1209,13 +1241,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Slide",
   components: {
-    Day: Calendar_Day_Day__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Day: Calendar_Day_Day__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: ["slideId", "calendarId"],
   data: function data() {
@@ -1233,13 +1267,15 @@ __webpack_require__.r(__webpack_exports__);
     this.setHeight();
   },
   created: function created() {
-    this.CalendarDATA = CalendarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].calendars[this.calendarId];
-    this.weeksInMonth = this.CalendarDATA.type == "month" ? Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getWeeksInMonth(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst) : [Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getWeek(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst)];
+    this.CalendarDATA = CalendarSTORE__WEBPACK_IMPORTED_MODULE_4__["default"].calendars[this.calendarId];
+    this.weeksInMonth = this.CalendarDATA.type == "month" ? Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_3__["default"].getWeeksInMonth(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst) : [Calendar_helpers_CalendarHelper__WEBPACK_IMPORTED_MODULE_3__["default"].getWeek(this.slideId, this.CalendarDATA.daysProps.settings.mondayFirst)];
   },
   methods: {
     setHeight: function setHeight() {
-      if (this.$refs.slide && this.slideId == this.CalendarDATA.monthN) this.CalendarDATA.height = this.$refs.slide.offsetHeight;
-      return this.CalendarDATA.height;
+      if (this.$refs.slide && this.slideId == this.CalendarDATA.monthN) {
+        console.log(this.$refs.slide.querySelector('.day').offsetHeight);
+        this.CalendarDATA.height = this.$refs.slide.offsetHeight;
+      }
     }
   }
 });
@@ -1403,9 +1439,7 @@ __webpack_require__.r(__webpack_exports__);
       return '';
     }
   },
-  created: function created() {
-    console.log(this.views, 'vvv');
-  }
+  created: function created() {}
 });
 
 /***/ }),
@@ -1421,7 +1455,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _services_GetCalendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/GetCalendar */ "./resources/js/components/calendar6/services/GetCalendar.js");
+/* harmony import */ var CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! CalendarSTORE */ "./resources/js/components/calendar6/parts/Calendar/helpers/CalendarSTORE.js");
+/* harmony import */ var ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ToggledSidebarSTORE */ "./resources/js/components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js");
+//
 //
 //
 //
@@ -1430,27 +1466,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
-var CalendarDATA = new _services_GetCalendar__WEBPACK_IMPORTED_MODULE_1__["default"]();
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpecialDays",
+  props: ["storeLink"],
+  computed: {
+    changeParentTab: function changeParentTab() {
+      if (this.oldTab != this.$parent.activeTab) {
+        this.oldTab = this.$parent.activeTab;
+
+        for (var day in this.commonDaysInfo.checkedDays) {
+          if (day != ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].editableDay) vue__WEBPACK_IMPORTED_MODULE_0___default.a.delete(this.commonDaysInfo.checkedDays, day);
+        }
+      }
+
+      return this.$parent.activeTab;
+    }
+  },
   created: function created() {
+    this.oldTab = this.$parent.activeTab;
+    this.commonDaysInfo = this.storeLink.parent.props.commonDaysInfo;
     this.simpleCalendar = {
-      name: 'simpleCalendar',
+      name: "simpleCalendar",
       time: new Date(),
       daysProps: {
-        dayType: 'simple',
-        multiselect: false,
+        dayType: "simple",
+        multiselect: true,
         dayClick: function dayClick(commonDaysInfo, data) {
-          console.log(commonDaysInfo, data, 'simple');
+          console.log(commonDaysInfo, data, "simple");
         },
         dayClasses: function dayClasses(ref) {
-          return 'day-ssimple';
+          return "day-simple";
         }
       }
     };
-    vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.simpleCalendar.daysProps, 'checkedDays', {});
-    vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.simpleCalendar.daysProps, 'schedule', CalendarDATA.schedule);
-    vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.simpleCalendar.daysProps, 'settings', CalendarDATA.settings);
+    this.simpleCalendar.daysProps.checkedDays = this.commonDaysInfo.checkedDays;
+    this.simpleCalendar.daysProps.settings = this.commonDaysInfo.settings;
   }
 });
 
@@ -1528,6 +1579,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -1555,6 +1611,10 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return checkedDay;
+    },
+    changeParentTab: function changeParentTab() {
+      this.weekDays = [];
+      return this.$parent.activeTab;
     }
   },
   created: function created() {
@@ -1567,11 +1627,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    swithDay: function swithDay(day) {
+    switchDay: function switchDay(day) {
+      if (ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].editableWeekDay == day.ref) return false;
       day.active = !day.active;
     },
     isDayActive: function isDayActive(day) {
       if (day.active) return "active";
+      return "";
+    },
+    isDayDefault: function isDayDefault(day) {
+      if (ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].editableWeekDay == day.ref) return "default";
       return "";
     }
   }
@@ -1632,6 +1697,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -1644,7 +1714,14 @@ __webpack_require__.r(__webpack_exports__);
     AngleRight: MySvg_angle_right__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: ["storeLink"],
+  computed: {
+    show: function show() {
+      if (this.storeLink.active) this.tabKeyForReset++;
+      return this.storeLink.active;
+    }
+  },
   created: function created() {
+    this.tabKeyForReset = 0;
     this.tabs = [{
       title: "Week",
       content: "WeekDays"
@@ -1732,12 +1809,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     dayInfo: function dayInfo() {
       var dayInfo = this.storeLink.props.data.dayInfo;
+      ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].editableDay = dayInfo.ref;
+      ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_0__["default"].editableWeekDay = dayInfo.weekDayRef;
       this.weekNamePlural = CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].WEEKNAMESPLURAL[dayInfo.weekDay];
       return dayInfo;
     }
   },
-  created: function created() {
-    console.log(this.storeLink, "storeLink");
+  created: function created() {// console.log(this.storeLink, "storeLink");
   },
   methods: {
     closeView: function closeView() {
@@ -31986,7 +32064,7 @@ var render = function() {
     "div",
     {
       staticClass: "calendar-wrapper",
-      class: _vm.classCss,
+      class: _vm.calendarWrapperCss("calendar-wrapper--"),
       attrs: { "data-id": _vm.params.name }
     },
     [
@@ -32001,7 +32079,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "calendar" },
+        { staticClass: "calendar", class: _vm.calendarCss("calendar--") },
         [
           _vm.type == "month"
             ? _c("WeekDays", { attrs: { calendarId: _vm.params.name } })
@@ -32220,7 +32298,11 @@ var render = function() {
         {
           ref: "dayDiv",
           staticClass: "day",
-          class: [_vm.daysProps.dayClasses(), _vm.anotherDay]
+          class: [
+            _vm.daysProps.dayClasses(),
+            _vm.anotherDay(),
+            _vm.defaultDay()
+          ]
         },
         [
           _c(_vm.days[_vm.daysProps.dayType], {
@@ -32322,7 +32404,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "day_inside simple-day" })
+  return _c("div", { staticClass: "day_inside day--simple" }, [
+    _c("div", { staticClass: "day--circle", on: { click: _vm.click } }, [
+      _c("div", { staticClass: "day_a-center" }, [
+        _vm._v(_vm._s(_vm.dayInfo.day))
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -32503,7 +32591,14 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "special-days" },
-    [_c("Calendar", { attrs: { params: _vm.simpleCalendar } })],
+    [
+      _c("input", {
+        attrs: { type: "hidden" },
+        domProps: { value: _vm.changeParentTab }
+      }),
+      _vm._v(" "),
+      _c("Calendar", { attrs: { params: _vm.simpleCalendar } })
+    ],
     1
   )
 }
@@ -32576,6 +32671,11 @@ var render = function() {
     [
       _c("input", {
         attrs: { type: "hidden" },
+        domProps: { value: _vm.changeParentTab }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { type: "hidden" },
         domProps: { value: _vm.checkedDay }
       }),
       _vm._v(" "),
@@ -32586,7 +32686,7 @@ var render = function() {
             {
               key: day.ref,
               staticClass: "weekday",
-              class: _vm.isDayActive(day)
+              class: [_vm.isDayActive(day), _vm.isDayDefault(day)]
             },
             [
               _c(
@@ -32595,7 +32695,7 @@ var render = function() {
                   staticClass: "weekday_name",
                   on: {
                     click: function($event) {
-                      return _vm.swithDay(day)
+                      return _vm.switchDay(day)
                     }
                   }
                 },
@@ -32606,10 +32706,10 @@ var render = function() {
                 "div",
                 {
                   staticClass: "ios-switcher",
-                  class: _vm.isDayActive(day),
+                  class: [_vm.isDayActive(day), _vm.isDayDefault(day)],
                   on: {
                     click: function($event) {
-                      return _vm.swithDay(day)
+                      return _vm.switchDay(day)
                     }
                   }
                 },
@@ -32671,7 +32771,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "multiple-days-choser" },
+    { staticClass: "multiple-days-choser", attrs: { "data-show": _vm.show } },
     [
       _c(
         "div",
@@ -32693,7 +32793,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "Tabs",
-        { attrs: { length: _vm.tabs.length } },
+        { key: _vm.tabKeyForReset, attrs: { length: _vm.tabs.length } },
         [
           _vm._l(_vm.tabs, function(tab, index) {
             return [
@@ -50905,7 +51005,9 @@ var ToggledSidebarSTORE = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     return {
       calendarId: null,
       views: {},
-      showOverlay: false
+      showOverlay: false,
+      editableDay: null,
+      editableWeekDay: null
     };
   },
   created: function created() {
@@ -50969,6 +51071,9 @@ var ToggledSidebarSTORE = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
         enviroment[propName].active = false;
         if (enviroment[propName].children) this.disableViews(enviroment[propName].children);
       }
+
+      this.editableDay = null;
+      this.editableWeekDay = null;
     }
   }
 });

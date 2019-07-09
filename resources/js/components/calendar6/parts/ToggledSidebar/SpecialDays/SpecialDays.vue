@@ -1,34 +1,49 @@
 <template>
     <div class="special-days">
+        <input type="hidden" :value="changeParentTab" />
         <Calendar :params="simpleCalendar"></Calendar>
     </div>
 </template>
 
 <script>
-import Vue from 'vue';
-import CalendarClassDATA from '../../../services/GetCalendar';
-let CalendarDATA = new CalendarClassDATA();
+import Vue from "vue";
+import CalendarSTORE from "CalendarSTORE";
+import ToggledSidebarSTORE from "ToggledSidebarSTORE";
 
 export default {
     name: "SpecialDays",
+    props: ["storeLink"],
+    computed: {
+        changeParentTab() {
+            if (this.oldTab != this.$parent.activeTab) {
+                this.oldTab = this.$parent.activeTab;
+                for (let day in this.commonDaysInfo.checkedDays) {
+                    if (day != ToggledSidebarSTORE.editableDay)
+                        Vue.delete(this.commonDaysInfo.checkedDays, day);
+                }
+            }
+            return this.$parent.activeTab;
+        }
+    },
     created() {
+        this.oldTab = this.$parent.activeTab;
+        this.commonDaysInfo = this.storeLink.parent.props.commonDaysInfo;
         this.simpleCalendar = {
-            name: 'simpleCalendar',
+            name: "simpleCalendar",
             time: new Date(),
             daysProps: {
-                dayType: 'simple',
-                multiselect: false,
+                dayType: "simple",
+                multiselect: true,
                 dayClick(commonDaysInfo, data) {
-                    console.log(commonDaysInfo, data, 'simple')
+                    console.log(commonDaysInfo, data, "simple");
                 },
                 dayClasses(ref) {
-                    return 'day-ssimple';
+                    return "day-simple";
                 }
             }
         };
-        Vue.set(this.simpleCalendar.daysProps, 'checkedDays', {});
-        Vue.set(this.simpleCalendar.daysProps, 'schedule', CalendarDATA.schedule);
-        Vue.set(this.simpleCalendar.daysProps, 'settings', CalendarDATA.settings);
+        this.simpleCalendar.daysProps.checkedDays = this.commonDaysInfo.checkedDays;
+        this.simpleCalendar.daysProps.settings = this.commonDaysInfo.settings;
     }
-}
+};
 </script>

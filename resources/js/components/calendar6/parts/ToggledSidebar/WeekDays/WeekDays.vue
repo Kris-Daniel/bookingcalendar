@@ -1,10 +1,15 @@
 <template>
     <div class="weekdays">
+        <input type="hidden" :value="changeParentTab" />
         <input type="hidden" :value="checkedDay" />
         <template v-for="day in weekDays">
-            <div class="weekday" :key="day.ref" :class="isDayActive(day)">
-                <div class="weekday_name" @click="swithDay(day)">{{day.name}}</div>
-                <div class="ios-switcher" @click="swithDay(day)" :class="isDayActive(day)">
+            <div class="weekday" :key="day.ref" :class="[isDayActive(day), isDayDefault(day)]">
+                <div class="weekday_name" @click="switchDay(day)">{{day.name}}</div>
+                <div
+                    class="ios-switcher"
+                    @click="switchDay(day)"
+                    :class="[isDayActive(day), isDayDefault(day)]"
+                >
                     <div class="ios-switcher_lever"></div>
                 </div>
             </div>
@@ -30,7 +35,8 @@ export default {
     computed: {
         checkedDay() {
             this.weekDays = [];
-            let checkedDay = this.storeLink.parent.props.data.dayInfo.weekDayRef;
+            let checkedDay = this.storeLink.parent.props.data.dayInfo
+                .weekDayRef;
             for (let i = 0; i < this.WEEK.length; i++) {
                 this.weekDays.push({
                     ref: this.WEEK[i],
@@ -40,6 +46,10 @@ export default {
             }
             return checkedDay;
         },
+        changeParentTab() {
+            this.weekDays = [];
+            return this.$parent.activeTab;
+        }
     },
     created() {
         let CalendarDATA =
@@ -51,11 +61,17 @@ export default {
         }
     },
     methods: {
-        swithDay(day) {
+        switchDay(day) {
+            if (ToggledSidebarSTORE.editableWeekDay == day.ref) return false;
             day.active = !day.active;
         },
         isDayActive(day) {
             if (day.active) return "active";
+            return "";
+        },
+        isDayDefault(day) {
+            if (ToggledSidebarSTORE.editableWeekDay == day.ref)
+                return "default";
             return "";
         }
     }

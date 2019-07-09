@@ -42,7 +42,7 @@ export default {
         }
     },
     created() {
-        console.log(this.views, 'vvv');
+        
     }
 };
 </script>

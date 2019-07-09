@@ -59,13 +59,15 @@ export default {
         },
         dayInfo() {
             let dayInfo = this.storeLink.props.data.dayInfo;
+            ToggledSidebarSTORE.editableDay = dayInfo.ref;
+            ToggledSidebarSTORE.editableWeekDay = dayInfo.weekDayRef;
             this.weekNamePlural =
                 CalendarSTORE.WEEKNAMESPLURAL[dayInfo.weekDay];
             return dayInfo;
         }
     },
     created() {
-        console.log(this.storeLink, "storeLink");
+        // console.log(this.storeLink, "storeLink");
     },
     methods: {
         closeView() {

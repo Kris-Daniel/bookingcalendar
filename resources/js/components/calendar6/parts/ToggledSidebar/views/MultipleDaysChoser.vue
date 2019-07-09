@@ -1,13 +1,18 @@
 <template>
-    <div class="multiple-days-choser">
+    <div class="multiple-days-choser" :data-show="show">
         <div class="multiple-days-choser_close" @click="closeView()">
             <AngleRight></AngleRight>
         </div>
         <div class="title rel mb30">Apply To Multiple</div>
-        <Tabs :length="tabs.length">
+        <Tabs :length="tabs.length" :key="tabKeyForReset">
             <template v-for="(tab, index) in tabs">
                 <span :slot="'title-' + (index + 1)" :key="tab.title">{{tab.title}}</span>
-                <component :storeLink="storeLink" :slot="'content-' + (index + 1)" :is="tab.content" :key="tab.content"></component>
+                <component
+                    :storeLink="storeLink"
+                    :slot="'content-' + (index + 1)"
+                    :is="tab.content"
+                    :key="tab.content"
+                ></component>
             </template>
         </Tabs>
     </div>
@@ -15,8 +20,8 @@
 
 <script>
 import ToggledSidebarSTORE from "ToggledSidebarSTORE";
-import WeekDays from 'ToggledSidebar/WeekDays/WeekDays';
-import SpecialDays from 'ToggledSidebar/SpecialDays/SpecialDays';
+import WeekDays from "ToggledSidebar/WeekDays/WeekDays";
+import SpecialDays from "ToggledSidebar/SpecialDays/SpecialDays";
 
 import AngleRight from "MySvg/angle-right";
 
@@ -28,7 +33,14 @@ export default {
         AngleRight
     },
     props: ["storeLink"],
+    computed: {
+        show() {
+            if (this.storeLink.active) this.tabKeyForReset++;
+            return this.storeLink.active;
+        }
+    },
     created() {
+        this.tabKeyForReset = 0;
         this.tabs = [
             {
                 title: "Week",
@@ -38,7 +50,7 @@ export default {
                 title: "Special",
                 content: "SpecialDays"
             }
-        ]
+        ];
     },
     methods: {
         closeView() {
