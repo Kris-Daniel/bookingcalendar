@@ -1,6 +1,5 @@
 <template>
     <div class="weekdays">
-        <input type="hidden" :value="changeParentTab" />
         <input type="hidden" :value="checkedDay" />
         <template v-for="day in weekDays">
             <div class="weekday" :key="day.ref" :class="[isDayActive(day), isDayDefault(day)]">
@@ -24,7 +23,12 @@ import ToggledSidebarSTORE from "ToggledSidebarSTORE";
 
 export default {
     name: "WeekDays",
-    props: ["storeLink"],
+    props: ["storeLink", "activeTab"],
+    watch: {
+        activeTab() {
+            this.weekDays = [];
+        }
+    },
     data() {
         return {
             WEEKNAMES: CalendarSTORE.WEEKNAMES,
@@ -45,10 +49,6 @@ export default {
                 });
             }
             return checkedDay;
-        },
-        changeParentTab() {
-            this.weekDays = [];
-            return this.$parent.activeTab;
         }
     },
     created() {

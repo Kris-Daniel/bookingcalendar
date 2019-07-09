@@ -11,11 +11,13 @@
                 <slot :name="'title-' + n"></slot>
             </div>
         </div>
+
         <div class="tabs_contents">
             <div v-for="n in length" class="tabs_content" :class="isActive(n)" :key="'content' + n">
-                <slot :name="'content-' + n"></slot>
+                <slot :name="'content-' + n" :activeTab="activeTab"></slot>
             </div>
         </div>
+        
     </div>
 </template>
 

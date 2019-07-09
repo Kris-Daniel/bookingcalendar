@@ -153,6 +153,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Tabs",
   props: ["length"],
@@ -1463,28 +1465,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpecialDays",
-  props: ["storeLink"],
-  computed: {
-    changeParentTab: function changeParentTab() {
-      if (this.oldTab != this.$parent.activeTab) {
-        this.oldTab = this.$parent.activeTab;
-
-        for (var day in this.commonDaysInfo.checkedDays) {
-          if (day != ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].editableDay) vue__WEBPACK_IMPORTED_MODULE_0___default.a.delete(this.commonDaysInfo.checkedDays, day);
-        }
+  props: ["storeLink", "activeTab"],
+  watch: {
+    activeTab: function activeTab() {
+      for (var day in this.commonDaysInfo.checkedDays) {
+        if (day != ToggledSidebarSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].editableDay) vue__WEBPACK_IMPORTED_MODULE_0___default.a.delete(this.commonDaysInfo.checkedDays, day);
       }
-
-      return this.$parent.activeTab;
     }
   },
   created: function created() {
-    this.oldTab = this.$parent.activeTab;
     this.commonDaysInfo = this.storeLink.parent.props.commonDaysInfo;
     this.simpleCalendar = {
       name: "simpleCalendar",
@@ -1583,13 +1577,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "WeekDays",
-  props: ["storeLink"],
+  props: ["storeLink", "activeTab"],
+  watch: {
+    activeTab: function activeTab() {
+      this.weekDays = [];
+    }
+  },
   data: function data() {
     return {
       WEEKNAMES: CalendarSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].WEEKNAMES,
@@ -1611,10 +1609,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return checkedDay;
-    },
-    changeParentTab: function changeParentTab() {
-      this.weekDays = [];
-      return this.$parent.activeTab;
     }
   },
   created: function created() {
@@ -1682,6 +1676,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ToggledSidebar_WeekDays_WeekDays__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ToggledSidebar/WeekDays/WeekDays */ "./resources/js/components/calendar6/parts/ToggledSidebar/WeekDays/WeekDays.vue");
 /* harmony import */ var ToggledSidebar_SpecialDays_SpecialDays__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ToggledSidebar/SpecialDays/SpecialDays */ "./resources/js/components/calendar6/parts/ToggledSidebar/SpecialDays/SpecialDays.vue");
 /* harmony import */ var MySvg_angle_right__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! MySvg/angle-right */ "./resources/js/svg/angle-right.vue");
+//
+//
+//
 //
 //
 //
@@ -31606,7 +31603,7 @@ var render = function() {
             staticClass: "tabs_content",
             class: _vm.isActive(n)
           },
-          [_vm._t("content-" + n)],
+          [_vm._t("content-" + n, null, { activeTab: _vm.activeTab })],
           2
         )
       }),
@@ -32591,14 +32588,7 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "special-days" },
-    [
-      _c("input", {
-        attrs: { type: "hidden" },
-        domProps: { value: _vm.changeParentTab }
-      }),
-      _vm._v(" "),
-      _c("Calendar", { attrs: { params: _vm.simpleCalendar } })
-    ],
+    [_c("Calendar", { attrs: { params: _vm.simpleCalendar } })],
     1
   )
 }
@@ -32669,11 +32659,6 @@ var render = function() {
     "div",
     { staticClass: "weekdays" },
     [
-      _c("input", {
-        attrs: { type: "hidden" },
-        domProps: { value: _vm.changeParentTab }
-      }),
-      _vm._v(" "),
       _c("input", {
         attrs: { type: "hidden" },
         domProps: { value: _vm.checkedDay }
@@ -32793,7 +32778,33 @@ var render = function() {
       _vm._v(" "),
       _c(
         "Tabs",
-        { key: _vm.tabKeyForReset, attrs: { length: _vm.tabs.length } },
+        {
+          key: _vm.tabKeyForReset,
+          attrs: { length: _vm.tabs.length },
+          scopedSlots: _vm._u(
+            [
+              _vm._l(_vm.tabs, function(tab, index) {
+                return {
+                  key: "content-" + (index + 1),
+                  fn: function(props) {
+                    return [
+                      _c(tab.content, {
+                        key: tab.content,
+                        tag: "component",
+                        attrs: {
+                          "store-link": _vm.storeLink,
+                          activeTab: props.activeTab
+                        }
+                      })
+                    ]
+                  }
+                }
+              })
+            ],
+            null,
+            true
+          )
+        },
         [
           _vm._l(_vm.tabs, function(tab, index) {
             return [
@@ -32805,17 +32816,7 @@ var render = function() {
                   slot: "title-" + (index + 1)
                 },
                 [_vm._v(_vm._s(tab.title))]
-              ),
-              _vm._v(" "),
-              _c(tab.content, {
-                key: tab.content,
-                tag: "component",
-                attrs: {
-                  slot: "content-" + (index + 1),
-                  storeLink: _vm.storeLink
-                },
-                slot: "content-" + (index + 1)
-              })
+              )
             ]
           })
         ],
