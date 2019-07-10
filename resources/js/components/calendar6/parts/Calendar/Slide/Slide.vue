@@ -58,7 +58,6 @@ export default {
     methods: {
         setHeight() {
             if(this.$refs.slide && this.slideId == this.CalendarDATA.monthN) {
-                console.log(this.$refs.slide.querySelector('.day').offsetHeight);
                 this.CalendarDATA.height = this.$refs.slide.offsetHeight;
             }
         }

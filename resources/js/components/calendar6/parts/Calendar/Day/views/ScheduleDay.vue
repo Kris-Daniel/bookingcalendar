@@ -1,5 +1,7 @@
 <template>
     <div class="day_inside day--schedule" :class="{special: isSpecial}" @click="click">
+        <input type="hidden" :value="specialDaysSetter">
+        <input type="hidden" :value="weekDaysSetter">
         <div class="day_num">
             {{dayInfo.day}}
             <div class="day_special-circle"></div>
@@ -11,7 +13,7 @@
                 class="day_schedule_time"
             >{{interval.from}} - {{interval.to}}</div>
             <div>
-                <div class="day_schedule_more" v-if="isMoreThan2Intervals">
+                <div class="day_schedule_more" v-if="scheduleLength > 2">
                     Show more
                     <div class="day_schedule_more_angle-down">
                         <AngleDown></AngleDown>
@@ -40,14 +42,22 @@ export default {
         AngleDown
     },
     data() {
-        return {};
+        return {
+            scheduleLength: 0
+        };
     },
     computed: {
-        isSpecial() {
-            return !!this.SD[this.dayInfo.ref];
+        specialDaysSetter() {
+            this.setSchedule();
+            return this.CalendarDATA.daysProps.schedule.days;
         },
-        isMoreThan2Intervals() {
-            return this.schedule.length > 2;
+        weekDaysSetter() {
+            this.setSchedule();
+            return this.CalendarDATA.daysProps.schedule.weekDays;
+        },
+        isSpecial() {
+            // if(this.SD[this.dayInfo.ref]) return true;
+            return CalendarSTORE.calendars[this.calendarId].daysProps.schedule.days[this.dayInfo.ref];
         }
     },
     created() {
@@ -63,13 +73,15 @@ export default {
             this.schedule = this.SD[this.dayInfo.ref]
                 ? this.SD[this.dayInfo.ref]
                 : this.WD[this.dayInfo.weekDayRef];
+            this.scheduleLength = this.schedule.length;
         },
         click() {
             let data = {
                 component: 'timeSetting',
-                schedule: this.schedule,
+                schedule: JSON.parse(JSON.stringify(this.schedule)),
                 dayInfo: this.dayInfo
             };
+            console.log(this.schedule);
             this.$emit('sendData', data);
         }
     }

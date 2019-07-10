@@ -26,6 +26,8 @@ export default {
     props: ["storeLink", "activeTab"],
     watch: {
         activeTab() {
+            if(this.activeTab == 1) ToggledSidebarSTORE.dayApplyType = 'week';
+            else ToggledSidebarSTORE.dayApplyType = 'special';
             this.weekDays = [];
         }
     },
@@ -48,6 +50,7 @@ export default {
                     active: checkedDay == this.WEEK[i] ? true : false
                 });
             }
+            Vue.set(ToggledSidebarSTORE, 'weekDays', {});
             return checkedDay;
         }
     },
@@ -64,15 +67,21 @@ export default {
         switchDay(day) {
             if (ToggledSidebarSTORE.editableWeekDay == day.ref) return false;
             day.active = !day.active;
+            this.setStoreWeekDays(day.ref, day.active);
         },
         isDayActive(day) {
             if (day.active) return "active";
             return "";
         },
         isDayDefault(day) {
-            if (ToggledSidebarSTORE.editableWeekDay == day.ref)
+            if (ToggledSidebarSTORE.editableWeekDay == day.ref) {
+                ToggledSidebarSTORE.weekDays[ToggledSidebarSTORE.editableWeekDay] = true;
                 return "default";
+            }
             return "";
+        },
+        setStoreWeekDays(ref, active) {
+            ToggledSidebarSTORE.weekDays[ref] = active;
         }
     }
 };

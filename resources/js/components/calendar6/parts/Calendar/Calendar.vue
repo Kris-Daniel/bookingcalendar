@@ -92,11 +92,8 @@ export default {
                 let resize = () => {
                     let w = $(window).width();
                     if (w <= 800 && this.CalendarDATA.type == "month") {
-                        // this.CalendarDATA.dayN = CalendarHelper.getWeeksInMonth(this.CalendarDATA.monthN)[0][0];
                         this.CalendarDATA.type = "week";
                     } else if (w > 800 && this.CalendarDATA.type == "week") {
-                        // let dateDatN = new Date(this.CalendarDATA.dayN * 86400000);
-                        // this.CalendarDATA.monthN = dateDatN.getFullYear() * 12 + dateDatN.getMonth();
                         this.CalendarDATA.type = "month";
                     }
                 };

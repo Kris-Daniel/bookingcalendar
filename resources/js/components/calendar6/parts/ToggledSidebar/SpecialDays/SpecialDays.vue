@@ -29,7 +29,7 @@ export default {
                 dayType: "simple",
                 multiselect: true,
                 dayClick(commonDaysInfo, data) {
-                    console.log(commonDaysInfo, data, "simple");
+                    console.log(commonDaysInfo, data, "commonDaysInfo and data");
                 },
                 dayClasses(ref) {
                     return "day-simple";

@@ -10,6 +10,16 @@ let ToggledSidebarSTORE = new Vue({
             showOverlay: false,
             editableDay: null,
             editableWeekDay: null,
+            dayApplyType: "week",
+            weekDays: {
+                Su: false,
+                Mo: false,
+                Tu: false,
+                We: false,
+                Th: false,
+                Fr: false,
+                Sa: false,
+            }
         }
     },
     created() {
@@ -39,8 +49,6 @@ let ToggledSidebarSTORE = new Vue({
                 commonDaysInfo,
                 data
             });
-            // console.log(data, 'daysProps');
-            // console.log(this.views, 'views');
         },
         renderChildView(child, data) {
             child.active = true;
