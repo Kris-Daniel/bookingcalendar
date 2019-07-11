@@ -4,6 +4,9 @@ const path = require("path");
 function setDir(dir) {
    return path.resolve(__dirname, "resources/js/" + dir);
 }
+function setVueDir(dir) {
+   return path.resolve(__dirname, "resources/js/vue/" + dir);
+}
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -21,13 +24,17 @@ mix.js('resources/js/app.js', 'public/js')
 mix.webpackConfig({
    resolve: {
       alias: {
-         MySvg: setDir("svg/"),
-         Components: setDir("components/"),
-         Calendar: setDir("components/calendar6/parts/Calendar/"),
-         CalendarSTORE$: setDir("components/calendar6/parts/Calendar/helpers/CalendarSTORE.js"),
-         ToggledSidebar: setDir("components/calendar6/parts/ToggledSidebar/"),
-         ToggledSidebarSTORE$: setDir("components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js"),
-         CalendarsWrapper: setDir("components/calendar6/parts/CalendarsWrapper/"),
+         VuePath: setVueDir(""),
+         Store: setVueDir("store"),
+         Services: setVueDir("services"),
+         Mixins: setVueDir("mixins"),
+         MySvg: setVueDir("components/svg/"),
+         Components: setVueDir("components/"),
+         Layouts: setVueDir("components/layouts/"),
+         Calendar: setVueDir("components/extended/Calendar/"),
+         ToggledSidebar: setVueDir("components/extended/ToggledSidebar/"),
+         // ToggledSidebarSTORE$: setDir("components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js"),
+         // CalendarSTORE$: setDir("components/calendar6/parts/Calendar/helpers/CalendarSTORE.js"),
       },
       extensions: ['.vue', '.js', '.json']
    }

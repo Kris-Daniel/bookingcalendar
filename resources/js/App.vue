@@ -1,8 +1,6 @@
 <template>
     <div id="app">
-        <!-- <header-view></header-view> -->
         <home></home>
-        <!-- <footer-view></footer-view> -->
     </div>
 </template>
 

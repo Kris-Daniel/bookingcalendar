@@ -4388,7 +4388,7 @@ a {
   max-width: 800px;
   margin: 0 auto;
 }
-.calendar-wrapper {
+.calendar-page {
   /* Layouts */
   /* Day td */
   /* Day schedule */
@@ -4396,105 +4396,105 @@ a {
   /* Simple Day */
   /* Change Slide */
 }
-.calendar-wrapper .calendar {
+.calendar-page .calendar {
   border-radius: 10px;
   overflow: hidden;
 }
-.calendar-wrapper .calendar--schedule {
+.calendar-page .calendar--schedule {
   box-shadow: -2px 1px 20px 0px rgba(62, 69, 94, 0.1);
 }
-.calendar-wrapper .slider {
+.calendar-page .slider {
   position: relative;
   overflow: hidden;
   transition: 0.3s all ease;
 }
-.calendar-wrapper .slide {
+.calendar-page .slide {
   position: absolute;
   width: 100%;
   transition: 0.3s all ease;
 }
-.calendar-wrapper .slide:nth-child(1) {
+.calendar-page .slide:nth-child(1) {
   left: -100px;
   opacity: 0;
 }
-.calendar-wrapper .slide:nth-child(2) {
+.calendar-page .slide:nth-child(2) {
   left: 0px;
   z-index: 2;
 }
-.calendar-wrapper .slide:nth-child(3) {
+.calendar-page .slide:nth-child(3) {
   left: 100px;
   opacity: 0;
 }
-.calendar-wrapper .slide_table,
-.calendar-wrapper .weekdays-table {
+.calendar-page .slide_table,
+.calendar-page .weekdays-table {
   width: 100%;
   text-align: center;
   border-collapse: collapse;
   table-layout: fixed;
   border-spacing: 0;
 }
-.calendar-wrapper .weekdays-table--schedule .weekdays-table_td {
+.calendar-page .weekdays-table--schedule .weekdays-table_td {
   background: #00cec9;
   border: 1px double #fff;
   border-top: none;
   padding: 6px 0;
   color: #fff;
 }
-.calendar-wrapper .weekdays-table--schedule .weekdays-table_td:first-child {
+.calendar-page .weekdays-table--schedule .weekdays-table_td:first-child {
   border-left: none;
 }
-.calendar-wrapper .weekdays-table--schedule .weekdays-table_td:last-child {
+.calendar-page .weekdays-table--schedule .weekdays-table_td:last-child {
   border-right: none;
 }
-.calendar-wrapper .slide_table_td {
+.calendar-page .slide_table_td {
   position: relative;
   border: 1px solid transparent;
   border-collapse: separate;
   cursor: pointer;
 }
-.calendar-wrapper .slide_table_td:hover,
-.calendar-wrapper .slide_table_td.checked {
+.calendar-page .slide_table_td:hover,
+.calendar-page .slide_table_td.checked {
   z-index: 2;
 }
-.calendar-wrapper .slide_table_td:hover .day--schedule,
-.calendar-wrapper .slide_table_td.checked .day--schedule {
+.calendar-page .slide_table_td:hover .day--schedule,
+.calendar-page .slide_table_td.checked .day--schedule {
   box-shadow: 0px 0px 0px 1px #00cec9;
 }
-.calendar-wrapper .day--schedule {
+.calendar-page .day--schedule {
   height: 102px;
   padding: 10px;
   text-align: left;
   background: #fcfcfe;
   box-shadow: 0px 0px 0px 1px #ebebeb;
 }
-.calendar-wrapper .slide_table_td.checked .day--schedule {
+.calendar-page .slide_table_td.checked .day--schedule {
   background: rgba(0, 206, 201, 0.07);
 }
 @media screen and (max-width: 800px) {
-  .calendar-wrapper .slide_table_td .day--schedule {
+  .calendar-page .slide_table_td .day--schedule {
     display: block;
   }
 }
-.calendar-wrapper .slide_table_tr:last-child .slide_table_td:last-child .day .day--schedule {
+.calendar-page .slide_table_tr:last-child .slide_table_td:last-child .day .day--schedule {
   border-bottom-right-radius: 10px;
 }
-.calendar-wrapper .slide_table_tr:last-child .slide_table_td:nth-last-child(7) .day .day--schedule {
+.calendar-page .slide_table_tr:last-child .slide_table_td:nth-last-child(7) .day .day--schedule {
   border-bottom-left-radius: 10px;
 }
-.calendar-wrapper .slide_table_td:hover .day--schedule,
-.calendar-wrapper .slide_table_td.checked .day--schedule {
+.calendar-page .slide_table_td:hover .day--schedule,
+.calendar-page .slide_table_td.checked .day--schedule {
   box-shadow: 0px 0px 0px 1px #00cec9;
 }
-.calendar-wrapper .day_schedule .day_schedule_time:nth-child(n + 3) {
+.calendar-page .day_schedule .day_schedule_time:nth-child(n + 3) {
   display: none;
 }
-.calendar-wrapper .day_schedule_time {
+.calendar-page .day_schedule_time {
   font-size: 12px;
   line-height: 1 !important;
   margin-bottom: 7px;
   color: #666a73;
 }
-.calendar-wrapper .day_num {
+.calendar-page .day_num {
   position: relative;
   display: inline-block;
   vertical-align: top;
@@ -4504,14 +4504,14 @@ a {
   font-weight: 800;
   color: #585b61;
 }
-.calendar-wrapper .day--another-month .day--schedule {
+.calendar-page .day--another-month .day--schedule {
   background: #f5f5f7;
 }
-.calendar-wrapper .day--another-month .day--schedule .day_num,
-.calendar-wrapper .day--another-month .day--schedule .day_schedule_time {
+.calendar-page .day--another-month .day--schedule .day_num,
+.calendar-page .day--another-month .day--schedule .day_schedule_time {
   color: #c2c9dd;
 }
-.calendar-wrapper .day_special-circle {
+.calendar-page .day_special-circle {
   position: absolute;
   top: -2px;
   right: -14px;
@@ -4521,13 +4521,13 @@ a {
   border-radius: 100%;
   background: #00cec9;
 }
-.calendar-wrapper .day_inside.special .day_special-circle {
+.calendar-page .day_inside.special .day_special-circle {
   display: block;
 }
-.calendar-wrapper .day_inside.special .day_num {
+.calendar-page .day_inside.special .day_num {
   color: #00cec9;
 }
-.calendar-wrapper .day_edit-icon {
+.calendar-page .day_edit-icon {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -4536,80 +4536,80 @@ a {
   -webkit-transform: scale(0);
           transform: scale(0);
 }
-.calendar-wrapper .day_edit-icon svg {
+.calendar-page .day_edit-icon svg {
   width: 9px;
   height: 15px;
 }
-.calendar-wrapper .day_edit-icon svg * {
+.calendar-page .day_edit-icon svg * {
   fill: #c2c9dd !important;
 }
-.calendar-wrapper .day:hover .day_edit-icon {
+.calendar-page .day:hover .day_edit-icon {
   -webkit-transform: scale(1);
           transform: scale(1);
 }
-.calendar-wrapper .day_schedule_more {
+.calendar-page .day_schedule_more {
   font-size: 12px;
   line-height: 1 !important;
   display: inline-block;
   vertical-align: top;
   color: #00cec9;
 }
-.calendar-wrapper .day_schedule_more:hover {
+.calendar-page .day_schedule_more:hover {
   text-decoration: underline;
 }
-.calendar-wrapper .day_schedule_more_angle-down {
+.calendar-page .day_schedule_more_angle-down {
   position: relative;
   display: inline-block;
   vertical-align: top;
   left: 5px;
   bottom: 2px;
 }
-.calendar-wrapper .day_schedule_more_angle-down svg {
+.calendar-page .day_schedule_more_angle-down svg {
   width: 6px;
   height: 4px;
 }
-.calendar-wrapper .day_schedule_more_angle-down svg * {
+.calendar-page .day_schedule_more_angle-down svg * {
   fill: #00cec9 !important;
 }
-.calendar-wrapper .day--simple {
+.calendar-page .day--simple {
   font-size: 13px;
   line-height: 1 !important;
   text-align: center;
   color: #293143;
 }
-.calendar-wrapper .day--circle {
+.calendar-page .day--circle {
   position: relative;
   width: 33px;
   height: 33px;
   border-radius: 100%;
   margin: 1px auto;
 }
-.calendar-wrapper .day--circle:hover {
+.calendar-page .day--circle:hover {
   background: #7fe6e4;
 }
-.calendar-wrapper .slide_table_td.checked .day--circle {
+.calendar-page .slide_table_td.checked .day--circle {
   background: #7fe6e4;
   color: #293143;
 }
-.calendar-wrapper .day.default .day--circle {
+.calendar-page .day.default .day--circle {
   background: #c2c9dd;
   color: #fff;
 }
-.calendar-wrapper .day_a-center {
+.calendar-page .day_a-center {
   position: absolute;
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
 }
-.calendar-wrapper .day--another-month .day--simple {
+.calendar-page .day--another-month .day--simple {
   color: #c2c9dd;
 }
-.calendar-wrapper .weekdays-table--simple {
+.calendar-page .weekdays-table--simple {
   position: relative;
   margin-bottom: 10px;
 }
-.calendar-wrapper .weekdays-table--simple:after {
+.calendar-page .weekdays-table--simple:after {
   content: '';
   position: absolute;
   top: 100%;
@@ -4618,50 +4618,50 @@ a {
   height: 1px;
   background: #c2c9dd;
 }
-.calendar-wrapper .weekdays-table--simple .weekdays-table_td {
+.calendar-page .weekdays-table--simple .weekdays-table_td {
   font-size: 14px;
   line-height: 1 !important;
   padding: 10px 0;
   color: #c2c9dd;
   font-weight: 600;
 }
-.calendar-wrapper .change-slide-wrapper {
+.calendar-page .change-slide-wrapper {
   text-align: center;
   margin-bottom: 20px;
 }
-.calendar-wrapper .change-slide {
+.calendar-page .change-slide {
   position: relative;
   display: inline-block;
   vertical-align: top;
   width: 150px;
 }
-.calendar-wrapper .change-slide_btn {
+.calendar-page .change-slide_btn {
   position: absolute;
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
   cursor: pointer;
 }
-.calendar-wrapper .change-slide_btn svg {
+.calendar-page .change-slide_btn svg {
   width: 12px;
   height: 20px;
 }
-.calendar-wrapper .change-slide_btn svg * {
+.calendar-page .change-slide_btn svg * {
   fill: #c2c9dd !important;
 }
-.calendar-wrapper .change-slide_btn--prev {
+.calendar-page .change-slide_btn--prev {
   left: -34px;
 }
-.calendar-wrapper .change-slide_btn--next {
+.calendar-page .change-slide_btn--next {
   right: -34px;
 }
-.calendar-wrapper .change-slide_month {
+.calendar-page .change-slide_month {
   font-size: 29px;
   line-height: 1 !important;
   color: #585b61;
   margin-bottom: 10px;
 }
-.calendar-wrapper .change-slide_year {
+.calendar-page .change-slide_year {
   font-size: 20px;
   line-height: 1 !important;
   color: #c2c9dd;
