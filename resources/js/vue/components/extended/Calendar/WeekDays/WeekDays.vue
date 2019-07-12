@@ -1,16 +1,35 @@
 <template>
-    <div class="weekdays">
-        WeekDays
-    </div>
+    <table class="weekdays-table" :class="tableCssClass">
+        <tr class="weekdays-table_tr">
+            <td v-for="(day, index) in weekDays" :key="index" class="weekdays-table_td">{{day}}</td>
+        </tr>
+    </table>
 </template>
 
 <script>
-import Finder from 'Services/global/Finder';
+import CalendarMixin from "Mixins/CalendarMixin";
+
 export default {
     name: "WeekDays",
+    mixins: [CalendarMixin],
+    computed: {
+        mondayFirst() {
+            return this.exists(this.store, () => {
+                return this.store.settings.mondayFirst;
+            });
+        },
+        tableCssClass() {
+            return "weekdays-table--" + this.store.daysProps.dayType;
+        }
+    },
+    watch: {
+        mondayFirst() {
+            this.weekDays = this.getWeekDays();
+        }
+    },
     created() {
-        let customId = Finder.getParent(this, "customId");
-        console.log("WeekDays", customId);
-    }
-}
+        this.weekDays = this.getWeekDays();
+    },
+    methods: {}
+};
 </script>

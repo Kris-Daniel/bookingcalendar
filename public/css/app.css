@@ -4384,7 +4384,7 @@ a {
   color: #c2c9dd;
 }
 /* Common */
-.CC .calendars-wrapper {
+.calendar-page {
   max-width: 800px;
   margin: 0 auto;
 }
@@ -4414,15 +4414,15 @@ a {
   transition: 0.3s all ease;
 }
 .calendar-page .slide:nth-child(1) {
-  left: -100px;
+  left: -100%;
   opacity: 0;
 }
 .calendar-page .slide:nth-child(2) {
-  left: 0px;
+  left: 0%;
   z-index: 2;
 }
 .calendar-page .slide:nth-child(3) {
-  left: 100px;
+  left: 100%;
   opacity: 0;
 }
 .calendar-page .slide_table,
