@@ -2,6 +2,7 @@
     <div class="CC">
         <div class="calendar-page">
             <Calendar :options="ScheduleCalendarData"></Calendar>
+            <ToggledSidebar :options="ToggledSidebarData"></ToggledSidebar>
         </div>
     </div>
 </template>
@@ -29,6 +30,26 @@ export default {
             }
         };
         this.ScheduleCalendarData.settings.multiselect = false;
+
+        this.ToggledSidebarData = {
+            name: "mainToggledSidebar",
+            views: {
+                timeSetting: {
+                    component: "TimeSetting",
+                    children: {
+                        MultipleDaysChoser: {
+                            component: "MultipleDaysChoser",
+                            active: false
+                        }
+                    },
+                    active: false
+                },
+                bookings: {
+                    component: "bookings",
+                    active: false
+                }
+            }
+        };
     }
 };
 </script>

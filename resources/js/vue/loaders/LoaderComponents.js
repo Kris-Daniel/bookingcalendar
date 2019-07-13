@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Calendar from 'Calendar/Calendar';
 import ToggledSidebar from 'ToggledSidebar/ToggledSidebar';
+import Tabs from "Components/simple/Tabs";
+import RetractableBlock from "Components/simple/RetractableBlock";
 
 export default class{
     constructor() {
@@ -9,6 +11,8 @@ export default class{
     }
     
     setSimpleComponents() {
+        Vue.component('Tabs', Tabs);
+        Vue.component('RetractableBlock', RetractableBlock);
 
         return this;
     }
@@ -16,6 +20,7 @@ export default class{
     setExtendedComponents() {
         Vue.component('Calendar', Calendar);
         Vue.component('ToggledSidebar', ToggledSidebar);
+        
         return this;
     }
 }
