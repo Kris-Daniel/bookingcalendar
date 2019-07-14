@@ -7,11 +7,11 @@
 </template>
 
 <script>
-import CalendarMixin from "Mixins/CalendarMixin";
+import FindParentMixin from "Mixins/FindParentMixin";
 
 export default {
     name: "WeekDays",
-    mixins: [CalendarMixin],
+    mixins: [FindParentMixin],
     computed: {
         mondayFirst() {
             return this.exists(this.store, () => {

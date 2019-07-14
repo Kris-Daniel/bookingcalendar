@@ -6,6 +6,7 @@ import LoaderComponents from './loaders/LoaderComponents';
 import LoaderSvg  from './loaders/LoaderSvg';
 import LoaderStore from './loaders/LoaderStore';
 import LoaderMixins from './loaders/LoaderMixins';
+import DirectiveMixins from './loaders/LoaderDirectives';
 
 const AppLoader = class {
     constructor() {
@@ -13,6 +14,7 @@ const AppLoader = class {
             .setGlobalComponents()
             .setGlobalStore()
             .setGlobalMixins()
+            .setGlobalDirectives()
             .render();
     }
 
@@ -36,6 +38,13 @@ const AppLoader = class {
 
     setGlobalMixins() {
         this.mixins = new LoaderMixins();
+
+        return this;
+    }
+
+    setGlobalDirectives() {
+        this.directives = new DirectiveMixins();
+
         return this;
     }
 

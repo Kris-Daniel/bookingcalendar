@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CalendarMixin from "Mixins/CalendarMixin";
+import FindParentMixin from "Mixins/FindParentMixin";
 import ChangeSlideWeek from "./views/ChangeSlideWeek";
 import ChangeSlideMonth from "./views/ChangeSlideMonth";
 
@@ -15,7 +15,7 @@ export default {
         ChangeSlideWeek,
         ChangeSlideMonth
     },
-    mixins: [CalendarMixin],
+    mixins: [FindParentMixin],
     data() {
         return {
             store: ""

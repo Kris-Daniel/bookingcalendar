@@ -9,9 +9,11 @@
 
 <script>
 import CalendarHttp from "Services/http/CalendarHttp";
+import store from "Store/GlobalSTORE";
 
 export default {
     name: "CalendarPage",
+    store,
     created() {
         this.ScheduleCalendarData = {
             name: "mainCalendar",
@@ -20,9 +22,12 @@ export default {
             checkedDays: {},
             daysProps: {
                 dayType: "schedule",
-                dayClick(data) {
-                    console.log(data, "day click");
-                    // ToggledSidebarSTORE.renderParentView('mainCalendar', commonDaysInfo, data);
+                dayClick: (data) => {
+                    let dayInfo = JSON.parse(JSON.stringify(data.dayInfo));
+                    this.$store.commit("mainToggledSidebar/setDayInfo", dayInfo);
+                    this.$store.commit("mainToggledSidebar/setCalendarStoreRef", "mainCalendar");
+                    this.$store.commit("mainToggledSidebar/showParentView", data.component);
+                    console.log(this.$store.state.mainToggledSidebar);
                 },
                 dayClasses(ref) {
                     return "day-test";

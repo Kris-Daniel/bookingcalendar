@@ -1,7 +1,7 @@
 <template>
     <div class="toggle-sidebar-wrapper">
-        <!-- <RetractableBlock :views="this.views"></RetractableBlock> -->
-        <!-- <div class="overlay" :class="showOverlay" @click="hideOverlay()"></div> -->
+        <RetractableBlock :views="this.views"></RetractableBlock>
+        <div class="overlay" :class="showOverlay" @click="hideOverlay()"></div>
     </div>
 </template>
 
@@ -15,25 +15,25 @@ export default {
     props: ["options"],
     data() {
         return {
-            views: ""
+            views: "",
+            ToggledSidebarSTORE: ""
         }
     },
     computed: {
-        // showOverlay() {
-        //     return ToggledSidebarSTORE.showOverlay ? "active" : "";
-        // }
+        showOverlay() {
+            return this.ToggledSidebarSTORE.showOverlay ? "active" : "";
+        }
     },
     created() {
         this.customId = this.options.name;
         this.$store.dispatch("registerToggledSidebarModule", this.options);
-
-        console.log(this.$store.state[this.options.name]);
-
-        // this.views = ToggledSidebarSTORE.views;
+        this.ToggledSidebarSTORE = this.$store.state[this.customId];
+        this.views = this.ToggledSidebarSTORE.views;
     },
     methods: {
         hideOverlay() {
-            // ToggledSidebarSTORE.disableViews();
+            this.$store.dispatch("emptyCheckedDays", this.ToggledSidebarSTORE.calendarStoreRef);
+            this.$store.commit("mainToggledSidebar/hideViews");
         }
     }
 };

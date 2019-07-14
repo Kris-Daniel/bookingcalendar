@@ -14,7 +14,7 @@
 import Vue from "vue";
 // import ToggledSidebarSTORE from "ToggledSidebarSTORE";
 
-import CalendarMixin from "Mixins/CalendarMixin";
+import FindParentMixin from "Mixins/FindParentMixin";
 
 import ScheduleDay from "./views/DaySchedule";
 import SimpleDay from "./views/DaySimple";
@@ -22,7 +22,7 @@ import SimpleDay from "./views/DaySimple";
 export default {
     name: "Day",
     props: ["day", "slideId"],
-    mixins: [CalendarMixin],
+    mixins: [FindParentMixin],
     components: {
         ScheduleDay,
         SimpleDay

@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import CalendarMixin from "Mixins/CalendarMixin";
+import FindParentMixin from "Mixins/FindParentMixin";
 
 export default {
     name: "DaySchedule",
     props: ["dayInfo"],
-    mixins: [CalendarMixin],
+    mixins: [FindParentMixin],
     data() {
         return {
             store: ""

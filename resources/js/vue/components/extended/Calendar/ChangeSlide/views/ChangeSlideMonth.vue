@@ -13,12 +13,12 @@
     </div>
 </template>
 <script>
-import CalendarMixin from "Mixins/CalendarMixin";
+import FindParentMixin from "Mixins/FindParentMixin";
 import ChangeSlideMixin from "Mixins/ChangeSlideMixin";
 
 export default {
     name: "ChangeSlideMonth",
-    mixins: [CalendarMixin, ChangeSlideMixin],
+    mixins: [FindParentMixin, ChangeSlideMixin],
     data() {
         return {
             store: "",

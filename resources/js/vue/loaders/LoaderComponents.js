@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Cleave from "vue-cleave-component";
 import Calendar from 'Calendar/Calendar';
 import ToggledSidebar from 'ToggledSidebar/ToggledSidebar';
 import Tabs from "Components/simple/Tabs";
@@ -12,6 +13,7 @@ export default class{
     
     setSimpleComponents() {
         Vue.component('Tabs', Tabs);
+        Vue.component('Cleave', Cleave);
         Vue.component('RetractableBlock', RetractableBlock);
 
         return this;

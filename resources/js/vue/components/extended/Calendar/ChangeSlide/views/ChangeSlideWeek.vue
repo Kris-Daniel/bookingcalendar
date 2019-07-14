@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import CalendarMixin from "Mixins/CalendarMixin";
+import FindParentMixin from "Mixins/FindParentMixin";
 import ChangeSlideMixin from "Mixins/ChangeSlideMixin";
 import DateService from "Services/date/DateService";
 
 export default {
     name: "WeekChangeSlide",
-    mixins: [CalendarMixin, ChangeSlideMixin],
+    mixins: [FindParentMixin, ChangeSlideMixin],
     data() {
         return {
             store: "",

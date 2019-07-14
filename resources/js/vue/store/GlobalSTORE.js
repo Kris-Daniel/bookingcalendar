@@ -22,6 +22,9 @@ const store = new Vuex.Store({
         },
         registerToggledSidebarModule(context, options) {
             this.registerModule(options.name, new ToggledSidebarSTORE(options));
+        },
+        emptyCheckedDays(context, storeName) {
+            this.commit(`${storeName}/emptyCheckedDays`);
         }
     },
     modules: {

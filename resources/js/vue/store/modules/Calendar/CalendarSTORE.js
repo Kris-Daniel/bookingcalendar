@@ -14,8 +14,8 @@ export default class CalendarSTORE {
 
     setMutations() {
         this.mutations = {
-            inc(state) {
-                state.name = "hello 2";
+            emptyCheckedDays(state) {
+                state.checkedDays = {};
             }
         }
 

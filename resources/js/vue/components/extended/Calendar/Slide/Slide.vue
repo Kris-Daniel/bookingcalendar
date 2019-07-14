@@ -19,7 +19,7 @@
 
 <script>
 
-import CalendarMixin from "Mixins/CalendarMixin";
+import FindParentMixin from "Mixins/FindParentMixin";
 import DateService from "Services/date/DateService";
 import Day from 'Calendar/Day/Day';
 
@@ -28,7 +28,7 @@ export default {
     components: {
         Day
     },
-    mixins: [CalendarMixin],
+    mixins: [FindParentMixin],
     props: ["slideId"],
     data() {
         return {

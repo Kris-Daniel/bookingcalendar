@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Finder from 'Services/global/Finder';
 
-const CalendarMixin = {
+const FindParentMixin = {
     created() {
         this.customId = Finder.getParentId(this, "customId");
         this.store = Finder.getStoreModule(this.customId);
@@ -9,7 +9,6 @@ const CalendarMixin = {
     methods: {
         getWeekDays() {
             let weekDays = [];
-            console.log(this.store);
             this.store.constants.WEEK.forEach(item => {
                 weekDays.push(item);
             });
@@ -23,4 +22,4 @@ const CalendarMixin = {
         }
     },
 }
-export default CalendarMixin;
+export default FindParentMixin;
