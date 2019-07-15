@@ -1,6 +1,6 @@
 <template>
     <td class="slide_table_td" :class="{'checked': checked}">
-        <div class="day" :class="[daysProps.dayClasses(), anotherDay(), defaultDay()]" ref="dayDiv">
+        <div class="day" :class="[daysProps.dayClasses(), anotherDay(), defaultDay]" ref="dayDiv">
             <component
                 :is="days[daysProps.dayType]"
                 :dayInfo="dayInfo"
@@ -12,7 +12,7 @@
 
 <script>
 import Vue from "vue";
-// import ToggledSidebarSTORE from "ToggledSidebarSTORE";
+import store from "Store/GlobalSTORE";
 
 import FindParentMixin from "Mixins/FindParentMixin";
 
@@ -41,6 +41,11 @@ export default {
             return this.exists(this.store, () => {
                 return this.store.checkedDays[this.ref] ? true : false;
             });
+        },
+        defaultDay() {
+            return this.exists(this.store, () => {
+                return this.store.defaultDays[this.ref] ? "default" : "";
+            });
         }
     },
     created() {
@@ -62,8 +67,8 @@ export default {
             month: dateArr[1] - 1,
             year: dateArr[0],
             weekDay,
-            weekDayRef: this.store.constants.WEEK[weekDay],
-            monthName: this.store.constants.MONTHS[dateArr[1] - 1]
+            weekDayRef: store.state.Constants.WEEK[weekDay],
+            monthName: store.state.Constants.MONTHS[dateArr[1] - 1]
         };
     },
     mounted() {
@@ -71,7 +76,7 @@ export default {
     },
     methods: {
         click(data) {
-            // if(ToggledSidebarSTORE.editableDay == this.ref) return false;
+            if(this.defaultDay.length) return false;
             if (!this.checked) {
                 if (!this.store.settings.multiselect)
                     Vue.set(this.store, "checkedDays", {});
@@ -83,10 +88,6 @@ export default {
         anotherDay() {
             let monthCount = this.dayInfo.year * 12 + this.dayInfo.month;
             if (this.slideId != monthCount) return "day--another-month";
-            return "";
-        },
-        defaultDay() {
-            // if(ToggledSidebarSTORE.editableDay == this.ref) return "default";
             return "";
         }
     }

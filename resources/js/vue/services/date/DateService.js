@@ -69,6 +69,14 @@ class DateServiceClass  {
             weeksInMonth.pop();
         return weeksInMonth;
     }
+
+    addHourDelimiter(value) {
+        return value.slice(0, 2) + ":" + value.slice(2, 4);
+    }
+
+    getScheduleCopy(schedule) {
+        return JSON.parse(JSON.stringify(schedule));
+    }
 }
 const DateService = new DateServiceClass();
 export default DateService;

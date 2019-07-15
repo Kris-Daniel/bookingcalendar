@@ -24,11 +24,11 @@ export default {
     },
     watch: {
         mondayFirst() {
-            this.weekDays = this.getWeekDays();
+            this.weekDays = this.getWeekDays(this.store.settings.mondayFirst);
         }
     },
     created() {
-        this.weekDays = this.getWeekDays();
+        this.weekDays = this.getWeekDays(this.store.settings.mondayFirst);
     },
     methods: {}
 };

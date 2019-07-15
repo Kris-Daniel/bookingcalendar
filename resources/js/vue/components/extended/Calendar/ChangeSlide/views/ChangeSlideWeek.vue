@@ -11,6 +11,7 @@
 import FindParentMixin from "Mixins/FindParentMixin";
 import ChangeSlideMixin from "Mixins/ChangeSlideMixin";
 import DateService from "Services/date/DateService";
+import store from "Store/GlobalSTORE";
 
 export default {
     name: "WeekChangeSlide",
@@ -56,7 +57,7 @@ export default {
         getDayAndShortMonth(date) {
             let d = date.getDate();
             let m = date.getMonth();
-            let shortMonth = this.store.constants.MONTHS[m].slice(0, 3);
+            let shortMonth = store.state.Constants.MONTHS[m].slice(0, 3);
             return d + " " + shortMonth;
         }
     }

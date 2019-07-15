@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Finder from 'Services/global/Finder';
+import store from "Store/GlobalSTORE";
 
 const FindParentMixin = {
     created() {
@@ -7,18 +8,21 @@ const FindParentMixin = {
         this.store = Finder.getStoreModule(this.customId);
     },
     methods: {
-        getWeekDays() {
+        getWeekDays(mondayFirst) {
             let weekDays = [];
-            this.store.constants.WEEK.forEach(item => {
+            store.state.Constants.WEEK.forEach(item => {
                 weekDays.push(item);
             });
     
-            if (this.store.settings.mondayFirst) {
+            if (mondayFirst) {
                 let Su = weekDays[0];
                 weekDays.shift();
                 weekDays.push(Su);
             }
             return weekDays;
+        },
+        getStoreModule(storeName) {
+            return store.state[storeName];
         }
     },
 }

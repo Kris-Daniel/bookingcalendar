@@ -20,6 +20,7 @@ export default {
             settings: CalendarHttp.getSettings(),
             schedule: CalendarHttp.getSchedule(),
             checkedDays: {},
+            defaultDays: {},
             daysProps: {
                 dayType: "schedule",
                 dayClick: (data) => {

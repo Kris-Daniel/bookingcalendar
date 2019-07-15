@@ -30,6 +30,9 @@ export default {
             activeTab: 1
         };
     },
+    created() {
+        this.$emit("tabChanged", this.activeTab);
+    },
     methods: {
         isActive(n) {
             if (this.activeTab == n) return "active";
@@ -37,6 +40,7 @@ export default {
         },
         setTab(n) {
             this.activeTab = n;
+            this.$emit("tabChanged", this.activeTab);
         }
     }
 };

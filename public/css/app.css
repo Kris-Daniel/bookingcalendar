@@ -4174,6 +4174,10 @@ a {
   border: 1px solid #00cec9;
   color: #00cec9;
 }
+.CC .toggle-sidebar-wrapper .interval.wrong .interval_input {
+  border: 1px solid #ff6d9e;
+  color: #ff6d9e;
+}
 .CC .toggle-sidebar-wrapper .interval_delete {
   position: absolute;
   top: 50%;
@@ -4204,6 +4208,9 @@ a {
 }
 .CC .toggle-sidebar-wrapper .interval.checked .interval_dash {
   background: #00cec9;
+}
+.CC .toggle-sidebar-wrapper .interval.wrong .interval_dash {
+  background: #ff6d9e;
 }
 .CC .toggle-sidebar-wrapper .text-btn {
   display: inline-block;

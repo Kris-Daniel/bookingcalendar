@@ -11,31 +11,9 @@
             <div class="interval-grid interval-grid--mid"></div>
             <div class="interval-grid">To</div>
         </div>
-        <div class="intervals mb20" v-click-outside="uncheckIntervals">
-            <div
-                class="interval"
-                v-for="(interval, index) in applySchedule"
-                :key="index"
-                @click="setCheckedInterval(index)"
-                :class="isIntervalChecked(index)"
-            >
-                <div class="interval-grid">
-                    <cleave v-model="interval.from" :options="options" class="interval_input"></cleave>
-                </div>
-                <div class="interval-grid interval-grid--mid center">
-                    <div class="interval_dash"></div>
-                </div>
-                <div class="interval-grid">
-                    <cleave v-model="interval.to" :options="options" class="interval_input"></cleave>
-                </div>
-                <div class="interval_delete" @click="deleteInterval(index)">
-                    <Trash></Trash>
-                </div>
-            </div>
-        </div>
-        <div class="mb20">
-            <div class="text-btn" @click="addInterval()">+ New Interval</div>
-        </div>
+        
+        <Schedule :applySchedule="applySchedule"></Schedule>
+
         <div style="margin-bottom: 12px">
             <div class="btn" @click="ApplyToDay()">Apply to {{dayInfo.day}} {{dayInfo.monthName}}</div>
         </div>
@@ -53,19 +31,19 @@ import Vue from "vue";
 import FindParentMixin from "Mixins/FindParentMixin";
 import store from "Store/GlobalSTORE";
 
+import Schedule from "ToggledSidebar/Schedule/Schedule";
+import DateService from "Services/date/DateService";
+
 export default {
     name: "TimeSetting",
     props: ["storeLink"],
     mixins: [FindParentMixin],
+    components: {
+        Schedule
+    },
     data() {
         return {
-            store: "",
-            checkedInterval: null,
-            options: {
-                time: true,
-                timeFormat: "24",
-                timePattern: ["h", "m"]
-            }
+            store: ""
         };
     },
     computed: {
@@ -85,7 +63,7 @@ export default {
             });
         },
         weekNamePlural() {
-                return store.state.Constants.WEEKNAMESPLURAL[this.dayInfo.weekDay];
+                return store.state.Constants.WEEKNAMESPLURAL[this.dayInfo.weekDayRef];
         }
     },
     watch: {
@@ -97,7 +75,7 @@ export default {
         },
     },
     created() {
-        // console.log(this.schedule);
+        this.CalendarRef = this.getStoreModule(this.store.calendarStoreRef);
     },
     methods: {
         closeView() {
@@ -107,51 +85,13 @@ export default {
         openChildRetractableBlock() {
             store.commit(`${this.customId}/showView`, this.storeLink.children.MultipleDaysChoser);
         },
-        addInterval() {
-            this.applySchedule.push({
-                from: "",
-                to: "",
-                formatFrom: "A",
-                formatTo: "A"
-            });
-        },
-        deleteInterval(index) {
-            this.applySchedule.splice(index, 1);
-            this.uncheckIntervals();
-        },
         ApplyToDay() {
-            // let dayRef = this.storeLink.props.data.ref;
-            // let calendarId = ToggledSidebarSTORE.calendarId;
-            // let SpecialDays =
-            //     CalendarSTORE.calendars[calendarId].daysProps.schedule.days;
-            // Vue.set(
-            //     SpecialDays,
-            //     dayRef,
-            //     JSON.parse(JSON.stringify(this.schedule))
-            // );
-            // ToggledSidebarSTORE.disableViews();
+            Vue.set(this.CalendarRef.schedule.days, this.dayInfo.ref, DateService.getScheduleCopy(this.applySchedule));
+            this.closeView();
         },
         ApplyToWeekDay() {
-            // let dayRef = this.storeLink.props.data.dayInfo.weekDayRef;
-            // let calendarId = ToggledSidebarSTORE.calendarId;
-            // let WeekDays =
-            //     CalendarSTORE.calendars[calendarId].daysProps.schedule.weekDays;
-            // Vue.set(
-            //     WeekDays,
-            //     dayRef,
-            //     JSON.parse(JSON.stringify(this.schedule))
-            // );
-            // ToggledSidebarSTORE.disableViews();
-        },
-        setCheckedInterval(index) {
-            this.checkedInterval = index;
-        },
-        isIntervalChecked(index) {
-            if (this.checkedInterval === index) return "checked";
-            return "";
-        },
-        uncheckIntervals() {
-            this.checkedInterval = null;
+            Vue.set(this.CalendarRef.schedule.weekDays, this.dayInfo.weekDayRef, DateService.getScheduleCopy(this.applySchedule));
+            this.closeView();
         }
     }
 };

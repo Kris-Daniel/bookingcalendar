@@ -15,6 +15,7 @@
 <script>
 import FindParentMixin from "Mixins/FindParentMixin";
 import ChangeSlideMixin from "Mixins/ChangeSlideMixin";
+import store from "Store/GlobalSTORE";
 
 export default {
     name: "ChangeSlideMonth",
@@ -49,7 +50,7 @@ export default {
             if (this.months) {
                 this.year = Math.floor(this.months[1] / 12);
                 this.monthIndex = this.months[1] - this.year * 12;
-                this.month = this.store.constants.MONTHS[this.monthIndex];
+                this.month = store.state.Constants.MONTHS[this.monthIndex];
             }
         }
     }

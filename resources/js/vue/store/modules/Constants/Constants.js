@@ -10,8 +10,8 @@ class ConstantsClass {
                 'July', 'August', 'September', 'October', 'November', 'December'
             ],
             WEEK: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-            WEEKNAMES: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-            WEEKNAMESPLURAL: ['Sundays', 'Mondays', 'Tuesdays', 'Wednesdays', 'Thursdays', 'Fridays', 'Saturdays']
+            WEEKNAMES: {Su: 'Sunday', Mo: 'Monday', Tu: 'Tuesday', We: 'Wednesday', Th: 'Thursday', Fr: 'Friday', Sa: 'Saturday'},
+            WEEKNAMESPLURAL: {Su: 'Sundays', Mo: 'Mondays', Tu: 'Tuesdays', We: 'Wednesdays', Th: 'Thursdays', Fr: 'Fridays', Sa: 'Saturdays'}
         }
     }
 }

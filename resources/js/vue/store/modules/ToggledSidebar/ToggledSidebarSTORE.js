@@ -10,7 +10,7 @@ export default class ToggledSidebarSTORE {
     setState(data) {
         this.namespaced = true;
         this.state = data;
-        this.state.applySchedule = false;
+        this.state.applySchedule = [];
 
         return this;
     }
@@ -19,6 +19,9 @@ export default class ToggledSidebarSTORE {
         this.state.calendarStoreRef = false;
         this.state.showOverlay = false;
         this.state.dayInfo = false;
+        this.state.applyType = false;
+        this.state.applyWeekDays = [];
+        this.state.applyDays = {};
 
         return this;
     }
@@ -37,8 +40,11 @@ export default class ToggledSidebarSTORE {
                 it.setProperties();
             },
             setApplySchedule(state, schedule) {
-                if (schedule)
-                    Vue.set(state, "applySchedule", JSON.parse(JSON.stringify(schedule)));
+                if (schedule) state.applySchedule = JSON.parse(JSON.stringify(schedule));
+                if(!state.applySchedule.length) state.applySchedule.push({
+                    from: "",
+                    to: ""
+                });
             },
             showParentView(state, component) {
                 state.views[component].active = true;

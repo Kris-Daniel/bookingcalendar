@@ -1,41 +1,50 @@
 <template>
     <div class="special-days">
-        <Calendar :params="simpleCalendar"></Calendar>
+        <Calendar :options="SimpleCalendarData"></Calendar>
     </div>
 </template>
 
 <script>
 import Vue from "vue";
+import FindParentMixin from "Mixins/FindParentMixin";
+import store from "Store/GlobalSTORE";
 
 export default {
     name: "SpecialDays",
     props: ["storeLink", "activeTab"],
+    mixins: [FindParentMixin],
+    data() {
+        return {
+            SimpleCalendarData: ""
+        }
+    },
     watch: {
         activeTab() {
-            for (let day in this.commonDaysInfo.checkedDays) {
-                if (day != ToggledSidebarSTORE.editableDay)
-                    Vue.delete(this.commonDaysInfo.checkedDays, day);
-            }
+            Vue.set(this.store, "applyDays", {});
+            Vue.set(store.state.SimpleCalendarData, "checkedDays", this.store.applyDays);
+            this.store.applyDays[this.store.dayInfo.ref] = true;
         }
     },
     created() {
-        this.commonDaysInfo = this.storeLink.parent.props.commonDaysInfo;
-        this.simpleCalendar = {
-            name: "simpleCalendar",
-            time: new Date(),
+        let calendarStore = store.state[this.store.calendarStoreRef];
+        this.SimpleCalendarData = {
+            name: "SimpleCalendarData",
+            settings: calendarStore.settings,
+            checkedDays: this.store.applyDays,
+            defaultDays: {
+                [this.store.dayInfo.ref]: true
+            },
             daysProps: {
                 dayType: "simple",
-                multiselect: true,
-                dayClick(commonDaysInfo, data) {
-                    console.log(commonDaysInfo, data, "commonDaysInfo and data");
+                dayClick(data) {
+                    
                 },
                 dayClasses(ref) {
                     return "day-simple";
                 }
             }
         };
-        this.simpleCalendar.daysProps.checkedDays = this.commonDaysInfo.checkedDays;
-        this.simpleCalendar.daysProps.settings = this.commonDaysInfo.settings;
+        this.SimpleCalendarData.settings.multiselect = true;
     }
 };
 </script>
