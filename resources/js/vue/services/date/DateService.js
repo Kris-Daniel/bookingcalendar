@@ -1,8 +1,8 @@
 const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const daysX = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-class DateServiceClass  {
-    constructor() {}
+class DateServiceClass {
+    constructor() { }
 
     getWeek(dayN, mondayFirst) {
         let t = new Date(dayN * 86400000);
@@ -76,6 +76,43 @@ class DateServiceClass  {
 
     getScheduleCopy(schedule) {
         return JSON.parse(JSON.stringify(schedule));
+    }
+
+    getIntHours(time) {
+        time = time.split(":").join("");
+        return parseInt(time);
+    }
+
+    convertTime24to12(date) {
+        date = date.split(":");
+        var hours = parseInt(date[0]);
+        var minutes = parseInt(date[1]);
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var strTime = hours + ':' + minutes;
+        return {
+            time: strTime,
+            ampm: ampm
+        }
+    }
+
+    convertTime12to24(time12h) {
+        const [time, modifier] = time12h.split(' ');
+
+        let [hours, minutes] = time.split(':');
+
+        if (hours === '12') {
+            hours = '00';
+        }
+
+        if (modifier === 'PM') {
+            hours = parseInt(hours, 10) + 12;
+        }
+
+        return `${hours}:${minutes}`;
     }
 }
 const DateService = new DateServiceClass();

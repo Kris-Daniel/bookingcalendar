@@ -518,6 +518,11 @@
         }
     }
 
+    .interval_input-wrapper{
+        .rel();
+        .dinl-mid();
+    }
+
     .interval_input{
         .size14();
         width: 95px;
@@ -537,6 +542,29 @@
     .interval.wrong .interval_input{
         border: 1px solid #ff6d9e;
         color: #ff6d9e;
+    }
+
+    .interval_input-ampm{
+        .abs();
+        .size15();
+        .center();
+        right: 1px;
+        top: 1px;
+        bottom: 1px;
+        width: 28px;
+        color: #fff;
+        text-transform: capitalize;
+        border: 1px solid #fff;
+        border-radius: 100%;
+        background: #dbdbdb;
+        padding-top: 6px;
+        cursor: pointer;
+    }
+    .interval.checked .interval_input-ampm{
+        background: @cyan;
+    }
+    .interval.wrong .interval_input-ampm{
+        background: #ff6d9e;
     }
 
     .interval_delete{

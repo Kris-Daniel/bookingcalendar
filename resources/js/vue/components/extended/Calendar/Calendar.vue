@@ -91,9 +91,9 @@ export default {
     methods: {
         setupSliderStart() {
             this.slides.splice(0, 3);
-            this.CalendarDATA.dayN = this.CalendarDATA.currentDay;
-            this.CalendarDATA.monthN = this.CalendarDATA.currentYear * 12 + this.CalendarDATA.currentMonth;
-
+            Vue.set(this.CalendarDATA, "dayN", this.CalendarDATA.currentDay);
+            Vue.set(this.CalendarDATA, "monthN", this.CalendarDATA.currentYear * 12 + this.CalendarDATA.currentMonth);
+            
             return this;
         },
         setSlides() {

@@ -4,8 +4,8 @@ import AngleLeft from "MySvg/AngleLeft";
 import AngleRight from "MySvg/AngleRight";
 import ArrowRight from "MySvg/ArrowRight";
 import Mark from "MySvg/Mark";
-import Pencil from "MySvg/AngleDown";
-import Plus from "MySvg/AngleDown";
+import Pencil from "MySvg/Pencil";
+import Plus from "MySvg/Plus";
 import Trash from "MySvg/Trash";
 import X from "MySvg/X";
 

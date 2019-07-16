@@ -22,6 +22,9 @@ export default class ToggledSidebarSTORE {
         this.state.applyType = false;
         this.state.applyWeekDays = [];
         this.state.applyDays = {};
+        this.state.applyValid = false;
+        this.state.inValidationCycle = false;
+        this.state.afterValidationCallback = false;
 
         return this;
     }
@@ -43,7 +46,10 @@ export default class ToggledSidebarSTORE {
                 if (schedule) state.applySchedule = JSON.parse(JSON.stringify(schedule));
                 if(!state.applySchedule.length) state.applySchedule.push({
                     from: "",
-                    to: ""
+                    to: "",
+                });
+                state.applySchedule.map((item) => {
+                    Vue.set(item, "valid", true);
                 });
             },
             showParentView(state, component) {

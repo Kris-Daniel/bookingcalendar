@@ -25,7 +25,7 @@
             </Tabs>
             <div class="btns_wrapper">
                 <div class="btn-grid btn-grid--left">
-                    <div class="btn" @click="applyToDays()">Apply</div>
+                    <div class="btn" @click="runValidationCycle(applyToDays)">Apply</div>
                 </div>
                 <div class="btn-grid btn-grid--right">
                     <div class="btn btn--red" @click="closeView()">Cancel</div>
@@ -51,6 +51,11 @@ export default {
     },
     mixins: [FindParentMixin],
     props: ["storeLink"],
+    data() {
+        return {
+            store: ""
+        }
+    },
     computed: {
         show() {
             if (this.storeLink.active) this.tabKeyForReset++;
@@ -78,7 +83,11 @@ export default {
         tabChanged(type) {
             this.store.applyType = type == 1 ? "week" : "day";
         },
-        applyToDays(type) {
+        runValidationCycle(callback) {
+            this.store.inValidationCycle = true;
+            this.store.afterValidationCallback = callback;
+        },
+        applyToDays() {
             let schedule = DateService.getScheduleCopy(this.store.applySchedule);
             if(this.store.applyType == "week") {
                 for(let i = 0; i < 7; i++) {

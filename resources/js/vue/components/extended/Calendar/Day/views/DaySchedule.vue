@@ -9,7 +9,7 @@
                 v-for="(interval, index) in schedule"
                 :key="index"
                 class="day_schedule_time"
-            >{{interval.from}} - {{interval.to}}</div>
+            >{{getCurrentTimeFormat(interval.from)}} - {{getCurrentTimeFormat(interval.to)}}</div>
             <div>
                 <div class="day_schedule_more" v-if="scheduleLength > 2">
                     Show more
@@ -27,6 +27,7 @@
 
 <script>
 import FindParentMixin from "Mixins/FindParentMixin";
+import DateService from "Services/date/DateService";
 
 export default {
     name: "DaySchedule",
@@ -78,6 +79,12 @@ export default {
                 dayInfo: this.dayInfo
             };
             this.$emit("sendData", data);
+        },
+        getCurrentTimeFormat(time) {
+            if(this.store.settings.hoursFormat == "12") {
+                time = DateService.convertTime24to12(time);
+                return time.time + " " + time.ampm.slice(0, 1).toLowerCase();
+            }
         }
     }
 };

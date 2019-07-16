@@ -1,6 +1,7 @@
 <template>
     <div class="toggle-sidebar-wrapper">
         <RetractableBlock :views="this.views"></RetractableBlock>
+        <ValidationWatcher></ValidationWatcher>
         <div class="overlay" :class="showOverlay" @click="hideOverlay()"></div>
     </div>
 </template>
@@ -8,11 +9,15 @@
 <script>
 import Vue from "vue";
 import store from "Store/GlobalSTORE";
+import ValidationWatcher from "./ValidationWatcher/ValidationWatcher";
 
 export default {
     name: "ToggledSidebarWrapper",
     store,
     props: ["options"],
+    components: {
+        ValidationWatcher
+    },
     data() {
         return {
             views: "",
@@ -21,7 +26,12 @@ export default {
     },
     computed: {
         showOverlay() {
-            return this.ToggledSidebarSTORE.showOverlay ? "active" : "";
+            if(this.ToggledSidebarSTORE.showOverlay) {
+                document.querySelector("body").style.overflow = "hidden";
+                return "active"
+            }
+            document.querySelector("body").style.overflow = "auto";
+            return "";
         }
     },
     created() {

@@ -15,10 +15,10 @@
         <Schedule :applySchedule="applySchedule"></Schedule>
 
         <div style="margin-bottom: 12px">
-            <div class="btn" @click="ApplyToDay()">Apply to {{dayInfo.day}} {{dayInfo.monthName}}</div>
+            <div class="btn" @click="runValidationCycle(ApplyToDay)">Apply to {{dayInfo.day}} {{dayInfo.monthName}}</div>
         </div>
         <div class="mb20">
-            <div class="btn" @click="ApplyToWeekDay()">Apply to all {{weekNamePlural}}</div>
+            <div class="btn" @click="runValidationCycle(ApplyToWeekDay)">Apply to all {{weekNamePlural}}</div>
         </div>
         <div class="center">
             <div class="text-btn" @click="openChildRetractableBlock()">Or apply to multiple</div>
@@ -84,6 +84,10 @@ export default {
         },
         openChildRetractableBlock() {
             store.commit(`${this.customId}/showView`, this.storeLink.children.MultipleDaysChoser);
+        },
+        runValidationCycle(callback) {
+            this.store.inValidationCycle = true;
+            this.store.afterValidationCallback = callback;
         },
         ApplyToDay() {
             Vue.set(this.CalendarRef.schedule.days, this.dayInfo.ref, DateService.getScheduleCopy(this.applySchedule));
