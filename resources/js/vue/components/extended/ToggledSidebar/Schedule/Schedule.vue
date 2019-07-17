@@ -1,5 +1,13 @@
 <template>
     <div class="schedule">
+        <div v-if="!applySchedule.length" class="schedule_unavailable">
+            Unavailable
+        </div>
+        <div class="mb10" v-if="applySchedule.length">
+            <div class="interval-grid">From</div>
+            <div class="interval-grid interval-grid--mid"></div>
+            <div class="interval-grid">To</div>
+        </div>
         <div class="intervals mb20">
             <InputsFromTo
                 v-for="(interval, index) in applySchedule"
@@ -56,13 +64,19 @@ export default {
                 this.store.applyValid = this.isIntervalsValid() ? true : false;
                 this.store.inValidationCycle = false;
             }
+        },
+        [`applySchedule.length`]() {
+            console.log(this.applySchedule.length, "length");
         }
     },
     created() {
         this.options.timeFormat = store.state[this.store.calendarStoreRef].settings.hoursFormat;
     },
+    mounted(){
+    },
     methods: {
         addInterval() {
+            console.log(this.applySchedule, "new interval");
             this.applySchedule.push({
                 from: "",
                 to: "",
@@ -84,21 +98,25 @@ export default {
         isIntervalsValid() {
             let valid = true;
             let len = this.applySchedule.length;
-            for(let i = 0; i < (len - 1); i++) {
+            for(let i = 0; i < len; i++) {
                 let iterated = this.getIntInterval(i);
-                if(iterated.from > iterated.to) {
-                    this.applySchedule[i].valid = false;
+                console.log(iterated);
+                if(
+                    iterated.from >= iterated.to
+                ) {
+                    Vue.set(this.applySchedule[i], "valid", false);
                     valid = false;
                 }
-                
-                for(let j = i + 1; j < len; j++) {
-                    let verifiable = this.getIntInterval(j);
-                    let A = (verifiable.from > iterated.from) ? iterated : verifiable;
-                    let B = (A == verifiable) ? iterated : verifiable;
-                    if(B.from - A.to < 0) {
-                        this.applySchedule[i].valid = false;
-                        this.applySchedule[j].valid = false;
-                        valid = false;
+                if(i + 1 < len) {
+                    for(let j = i + 1; j < len; j++) {
+                        let verifiable = this.getIntInterval(j);
+                        let A = (verifiable.from > iterated.from) ? iterated : verifiable;
+                        let B = (A == verifiable) ? iterated : verifiable;
+                        if(B.from - A.to < 0) {
+                            this.applySchedule[i].valid = false;
+                            this.applySchedule[j].valid = false;
+                            valid = false;
+                        }
                     }
                 }
 

@@ -6,7 +6,7 @@ class CalendarHttpClass{
             segment: 60,
             multiselect: true,
             mondayFirst: true,
-            hoursFormat: '12',
+            hoursFormat: '24',
             time: new Date(),
         }
     }

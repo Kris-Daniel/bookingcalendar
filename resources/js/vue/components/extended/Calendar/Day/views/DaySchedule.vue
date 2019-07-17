@@ -84,7 +84,7 @@ export default {
             if(this.store.settings.hoursFormat == "12") {
                 time = DateService.convertTime24to12(time);
                 return time.time + " " + time.ampm.slice(0, 1).toLowerCase();
-            }
+            } else return time;
         }
     }
 };

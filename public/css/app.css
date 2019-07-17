@@ -4150,6 +4150,12 @@ a {
 .CC .toggle-sidebar-wrapper .interval-grid--mid {
   width: 26px;
 }
+.CC .toggle-sidebar-wrapper .schedule_unavailable {
+  text-align: center;
+  padding: 10px 0;
+  color: #dbdbdb;
+  border: 1px dashed #dbdbdb;
+}
 .CC .toggle-sidebar-wrapper .interval {
   position: relative;
   margin-bottom: 12px;

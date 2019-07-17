@@ -673,7 +673,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.store.settings.hoursFormat == "12") {
         time = Services_date_DateService__WEBPACK_IMPORTED_MODULE_1__["default"].convertTime24to12(time);
         return time.time + " " + time.ampm.slice(0, 1).toLowerCase();
-      }
+      } else return time;
     }
   }
 });
@@ -933,7 +933,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.inFocus = true;
     },
     inFocusDisabled: function inFocusDisabled(type) {
-      // complete time value and remove class
+      // Complete time value and remove class
       while (this[type].time.length < 4) {
         this[type].time += "0";
       }
@@ -943,10 +943,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     changeValue: function changeValue(value, type) {
       // Emit value to 24 for parent
-      value = Services_date_DateService__WEBPACK_IMPORTED_MODULE_1__["default"].addHourDelimiter(value);
+      if (value != "") {
+        value = Services_date_DateService__WEBPACK_IMPORTED_MODULE_1__["default"].addHourDelimiter(value);
 
-      if (this.options.timeFormat == "12") {
-        value = Services_date_DateService__WEBPACK_IMPORTED_MODULE_1__["default"].convertTime12to24(value + " " + this[type].ampm);
+        if (this.options.timeFormat == "12") {
+          value = Services_date_DateService__WEBPACK_IMPORTED_MODULE_1__["default"].convertTime12to24(value + " " + this[type].ampm);
+        }
       }
 
       this.$emit("changeIntervalTime", value, type, this.index);
@@ -965,8 +967,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
 
         if (this.options.timeFormat == "12") {
-          this.from.ampm = "AM";
-          this.to.ampm = "AM";
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.from, "ampm", "AM");
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.to, "ampm", "AM");
         }
       }
     },
@@ -995,6 +997,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var Store_GlobalSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! Store/GlobalSTORE */ "./resources/js/vue/store/GlobalSTORE.js");
 /* harmony import */ var ToggledSidebar_InputsFromTo_InputsFromTo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ToggledSidebar/InputsFromTo/InputsFromTo */ "./resources/js/vue/components/extended/ToggledSidebar/InputsFromTo/InputsFromTo.vue");
 /* harmony import */ var Services_date_DateService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! Services/date/DateService */ "./resources/js/vue/services/date/DateService.js");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1047,19 +1059,23 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  watch: {
+  watch: _defineProperty({
     inValidationCycle: function inValidationCycle() {
       if (this.inValidationCycle) {
         this.store.applyValid = this.isIntervalsValid() ? true : false;
         this.store.inValidationCycle = false;
       }
     }
-  },
+  }, "applySchedule.length", function applyScheduleLength() {
+    console.log(this.applySchedule.length, "length");
+  }),
   created: function created() {
     this.options.timeFormat = Store_GlobalSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].state[this.store.calendarStoreRef].settings.hoursFormat;
   },
+  mounted: function mounted() {},
   methods: {
     addInterval: function addInterval() {
+      console.log(this.applySchedule, "new interval");
       this.applySchedule.push({
         from: "",
         to: ""
@@ -1082,23 +1098,26 @@ __webpack_require__.r(__webpack_exports__);
       var valid = true;
       var len = this.applySchedule.length;
 
-      for (var i = 0; i < len - 1; i++) {
+      for (var i = 0; i < len; i++) {
         var iterated = this.getIntInterval(i);
+        console.log(iterated);
 
-        if (iterated.from > iterated.to) {
-          this.applySchedule[i].valid = false;
+        if (iterated.from >= iterated.to) {
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.applySchedule[i], "valid", false);
           valid = false;
         }
 
-        for (var j = i + 1; j < len; j++) {
-          var verifiable = this.getIntInterval(j);
-          var A = verifiable.from > iterated.from ? iterated : verifiable;
-          var B = A == verifiable ? iterated : verifiable;
+        if (i + 1 < len) {
+          for (var j = i + 1; j < len; j++) {
+            var verifiable = this.getIntInterval(j);
+            var A = verifiable.from > iterated.from ? iterated : verifiable;
+            var B = A == verifiable ? iterated : verifiable;
 
-          if (B.from - A.to < 0) {
-            this.applySchedule[i].valid = false;
-            this.applySchedule[j].valid = false;
-            valid = false;
+            if (B.from - A.to < 0) {
+              this.applySchedule[i].valid = false;
+              this.applySchedule[j].valid = false;
+              valid = false;
+            }
           }
         }
       }
@@ -1553,8 +1572,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -1625,6 +1642,9 @@ __webpack_require__.r(__webpack_exports__);
     ApplyToWeekDay: function ApplyToWeekDay() {
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.CalendarRef.schedule.weekDays, this.dayInfo.weekDayRef, Services_date_DateService__WEBPACK_IMPORTED_MODULE_4__["default"].getScheduleCopy(this.applySchedule));
       this.closeView();
+    },
+    SetUnavailable: function SetUnavailable() {
+      this.applySchedule.splice(0, this.applySchedule.length);
     }
   }
 });
@@ -6861,6 +6881,22 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "schedule" }, [
+    !_vm.applySchedule.length
+      ? _c("div", { staticClass: "schedule_unavailable" }, [
+          _vm._v("\n        Unavailable\n    ")
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.applySchedule.length
+      ? _c("div", { staticClass: "mb10" }, [
+          _c("div", { staticClass: "interval-grid" }, [_vm._v("From")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "interval-grid interval-grid--mid" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "interval-grid" }, [_vm._v("To")])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "intervals mb20" },
@@ -7238,8 +7274,6 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "mb30" }),
       _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
       _c("Schedule", { attrs: { applySchedule: _vm.applySchedule } }),
       _vm._v(" "),
       _c("div", { staticStyle: { "margin-bottom": "12px" } }, [
@@ -7279,7 +7313,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "center" }, [
+      _c("div", { staticClass: "center mb20" }, [
         _c(
           "div",
           {
@@ -7292,25 +7326,27 @@ var render = function() {
           },
           [_vm._v("Or apply to multiple")]
         )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "center" }, [
+        _c(
+          "div",
+          {
+            staticClass: "text-btn",
+            on: {
+              click: function($event) {
+                return _vm.SetUnavailable()
+              }
+            }
+          },
+          [_vm._v("I'm unavailable")]
+        )
       ])
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mb10" }, [
-      _c("div", { staticClass: "interval-grid" }, [_vm._v("From")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "interval-grid interval-grid--mid" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "interval-grid" }, [_vm._v("To")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -26502,6 +26538,7 @@ function () {
   }, {
     key: "getIntHours",
     value: function getIntHours(time) {
+      if (time.length < 2) return "";
       time = time.split(":").join("");
       return parseInt(time);
     }
@@ -26631,7 +26668,7 @@ function () {
         segment: 60,
         multiselect: true,
         mondayFirst: true,
-        hoursFormat: '12',
+        hoursFormat: '24',
         time: new Date()
       };
     }
@@ -26951,10 +26988,6 @@ function () {
         },
         setApplySchedule: function setApplySchedule(state, schedule) {
           if (schedule) state.applySchedule = JSON.parse(JSON.stringify(schedule));
-          if (!state.applySchedule.length) state.applySchedule.push({
-            from: "",
-            to: ""
-          });
           state.applySchedule.map(function (item) {
             vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(item, "valid", true);
           });

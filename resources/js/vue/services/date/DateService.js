@@ -79,6 +79,7 @@ class DateServiceClass {
     }
 
     getIntHours(time) {
+        if(time.length < 2) return "";
         time = time.split(":").join("");
         return parseInt(time);
     }

@@ -44,10 +44,6 @@ export default class ToggledSidebarSTORE {
             },
             setApplySchedule(state, schedule) {
                 if (schedule) state.applySchedule = JSON.parse(JSON.stringify(schedule));
-                if(!state.applySchedule.length) state.applySchedule.push({
-                    from: "",
-                    to: "",
-                });
                 state.applySchedule.map((item) => {
                     Vue.set(item, "valid", true);
                 });

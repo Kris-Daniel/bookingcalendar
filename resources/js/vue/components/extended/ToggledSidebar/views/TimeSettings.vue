@@ -6,11 +6,6 @@
         </div>
         <div class="title center">Time Settings</div>
         <div class="mb30"></div>
-        <div class="mb10">
-            <div class="interval-grid">From</div>
-            <div class="interval-grid interval-grid--mid"></div>
-            <div class="interval-grid">To</div>
-        </div>
         
         <Schedule :applySchedule="applySchedule"></Schedule>
 
@@ -20,8 +15,11 @@
         <div class="mb20">
             <div class="btn" @click="runValidationCycle(ApplyToWeekDay)">Apply to all {{weekNamePlural}}</div>
         </div>
-        <div class="center">
+        <div class="center mb20">
             <div class="text-btn" @click="openChildRetractableBlock()">Or apply to multiple</div>
+        </div>
+        <div class="center">
+            <div class="text-btn" @click="SetUnavailable()">I'm unavailable</div>
         </div>
     </div>
 </template>
@@ -96,6 +94,9 @@ export default {
         ApplyToWeekDay() {
             Vue.set(this.CalendarRef.schedule.weekDays, this.dayInfo.weekDayRef, DateService.getScheduleCopy(this.applySchedule));
             this.closeView();
+        },
+        SetUnavailable() {
+            this.applySchedule.splice(0, this.applySchedule.length);
         }
     }
 };
