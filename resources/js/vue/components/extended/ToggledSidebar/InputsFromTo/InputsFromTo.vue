@@ -2,7 +2,7 @@
     <div class="interval" :class="{checked: inFocus, wrong: wrong}">
         <div class="interval-grid">
             <div class="interval_input-wrapper" @click="inFocusEnabled">
-                <div class="interval_input-ampm" v-if="from.ampm" @click="changeAMPM($event, 'from')">{{from.ampm.slice(0, 1)}}</div>
+                <div class="interval_input-ampm" v-if="from.ampm" @click="changeAMPM($event, 'from')">{{from.ampm}}</div>
                 <cleave
                     v-model="from.time"
                     :options="options"
@@ -17,7 +17,7 @@
         </div>
         <div class="interval-grid">
             <div class="interval_input-wrapper" @click="inFocusEnabled">
-                <div class="interval_input-ampm" v-if="to.ampm" @click="changeAMPM($event, 'to')">{{to.ampm.slice(0, 1)}}</div>
+                <div class="interval_input-ampm" v-if="to.ampm" @click="changeAMPM($event, 'to')">{{to.ampm}}</div>
                 <cleave
                     v-model="to.time"
                     :options="options"
@@ -101,6 +101,10 @@ export default {
             event.stopPropagation();
             this[time].ampm = this[time].ampm == "PM" ? "AM" : "PM"
             this.changeValue(this[time].time, time);
+            if(time == "from" && this[time].ampm == "PM") {
+                this.to.ampm = "PM";
+                this.changeValue(this.to.time, "to");
+            }
         }
     }
 };

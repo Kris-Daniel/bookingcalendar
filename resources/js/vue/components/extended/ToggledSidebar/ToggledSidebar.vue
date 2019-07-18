@@ -12,7 +12,7 @@ import store from "Store/GlobalSTORE";
 import ValidationWatcher from "./ValidationWatcher/ValidationWatcher";
 
 export default {
-    name: "ToggledSidebarWrapper",
+    name: "ToggledSidebar",
     store,
     props: ["options"],
     components: {

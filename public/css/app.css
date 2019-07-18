@@ -4191,7 +4191,7 @@ a {
 }
 .CC .toggle-sidebar-wrapper .interval_input-ampm {
   position: absolute;
-  font-size: 15px;
+  font-size: 11px;
   line-height: 1 !important;
   text-align: center;
   right: 1px;
@@ -4203,7 +4203,7 @@ a {
   border: 1px solid #fff;
   border-radius: 100%;
   background: #dbdbdb;
-  padding-top: 6px;
+  padding-top: 8px;
   cursor: pointer;
 }
 .CC .toggle-sidebar-wrapper .interval.checked .interval_input-ampm {
@@ -4503,7 +4503,7 @@ a {
 }
 .calendar-page .day--schedule {
   height: 102px;
-  padding: 10px;
+  padding: 8px;
   text-align: left;
   background: #fcfcfe;
   box-shadow: 0px 0px 0px 1px #ebebeb;
@@ -4530,10 +4530,11 @@ a {
   display: none;
 }
 .calendar-page .day_schedule_time {
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1 !important;
   margin-bottom: 7px;
   color: #666a73;
+  white-space: nowrap;
 }
 .calendar-page .day_num {
   position: relative;

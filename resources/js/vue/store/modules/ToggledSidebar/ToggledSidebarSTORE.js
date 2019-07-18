@@ -11,10 +11,10 @@ export default class ToggledSidebarSTORE {
         this.namespaced = true;
         this.state = data;
         this.state.applySchedule = [];
-
+        
         return this;
     }
-
+    
     setProperties() {
         this.state.calendarStoreRef = false;
         this.state.showOverlay = false;

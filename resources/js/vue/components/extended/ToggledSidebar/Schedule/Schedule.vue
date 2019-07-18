@@ -31,7 +31,6 @@ import Vue from "vue";
 import FindParentMixin from "Mixins/FindParentMixin";
 import store from "Store/GlobalSTORE";
 import InputsFromTo from "ToggledSidebar/InputsFromTo/InputsFromTo";
-import DateService from "Services/date/DateService";
 
 export default {
     name: "Schedule",
@@ -52,22 +51,10 @@ export default {
         };
     },
     computed: {
-        inValidationCycle() {
-            return this.exists(this.store, () => {
-                return this.store.inValidationCycle;
-            });
-        }
+        
     },
     watch: {
-        inValidationCycle() {
-            if(this.inValidationCycle) {
-                this.store.applyValid = this.isIntervalsValid() ? true : false;
-                this.store.inValidationCycle = false;
-            }
-        },
-        [`applySchedule.length`]() {
-            console.log(this.applySchedule.length, "length");
-        }
+        
     },
     created() {
         this.options.timeFormat = store.state[this.store.calendarStoreRef].settings.hoursFormat;
@@ -76,7 +63,6 @@ export default {
     },
     methods: {
         addInterval() {
-            console.log(this.applySchedule, "new interval");
             this.applySchedule.push({
                 from: "",
                 to: "",
@@ -95,40 +81,7 @@ export default {
         changeIntervalTime(time, type, index) {
             this.applySchedule[index][type] = time;
         },
-        isIntervalsValid() {
-            let valid = true;
-            let len = this.applySchedule.length;
-            for(let i = 0; i < len; i++) {
-                let iterated = this.getIntInterval(i);
-                console.log(iterated);
-                if(
-                    iterated.from >= iterated.to
-                ) {
-                    Vue.set(this.applySchedule[i], "valid", false);
-                    valid = false;
-                }
-                if(i + 1 < len) {
-                    for(let j = i + 1; j < len; j++) {
-                        let verifiable = this.getIntInterval(j);
-                        let A = (verifiable.from > iterated.from) ? iterated : verifiable;
-                        let B = (A == verifiable) ? iterated : verifiable;
-                        if(B.from - A.to < 0) {
-                            this.applySchedule[i].valid = false;
-                            this.applySchedule[j].valid = false;
-                            valid = false;
-                        }
-                    }
-                }
-
-            }
-            return valid;
-        },
-        getIntInterval(index) {
-            return {
-                from: DateService.getIntHours(this.applySchedule[index].from),
-                to: DateService.getIntHours(this.applySchedule[index].to),
-            }
-        }
+        
     }
 };
 </script>

@@ -18,12 +18,13 @@
 <script>
 import Vue from "vue";
 import FindParentMixin from "Mixins/FindParentMixin";
+import ToggledSidebarMixin from "Mixins/ToggledSidebarMixin";
 import store from "Store/GlobalSTORE";
 
 export default {
     name: "WeekDays",
     props: ["storeLink", "activeTab"],
-    mixins: [FindParentMixin],
+    mixins: [FindParentMixin, ToggledSidebarMixin],
     data() {
         return {
             store: ""
@@ -39,7 +40,7 @@ export default {
         weekDays() {
             return this.exists(this.store, () => {
                 return this.store.applyWeekDays;
-            })
+            });
         }
     },
     watch: {
@@ -63,20 +64,6 @@ export default {
         isDayDefault(day) {
             return (this.store.dayInfo.weekDayRef == day.ref) ? "default" : "";
         },
-        setWeekDays() {
-            this.weekDays.splice(0, this.weekDays.length);
-            if(!this.store.calendarStoreRef) return false;
-            let weekDays = this.getWeekDays(this.getStoreModule(this.store.calendarStoreRef).settings.mondayFirst);
-
-            for(let i = 0; i < 7; i++) {
-                this.weekDays.push({
-                    ref: weekDays[i],
-                    name: store.state.Constants.WEEKNAMES[weekDays[i]],
-                    active: weekDays[i] == this.store.dayInfo.weekDayRef ? true : false,
-                });
-            }
-        }
-        
     }
 };
 </script>

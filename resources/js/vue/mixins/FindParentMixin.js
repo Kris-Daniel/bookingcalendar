@@ -1,4 +1,3 @@
-import Vue from "vue";
 import Finder from 'Services/global/Finder';
 import store from "Store/GlobalSTORE";
 

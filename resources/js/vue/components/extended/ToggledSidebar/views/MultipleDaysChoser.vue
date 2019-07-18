@@ -37,11 +37,11 @@
 
 <script>
 import Vue from 'vue';
-import FindParentMixin from "Mixins/FindParentMixin";
 import store from "Store/GlobalSTORE";
+import FindParentMixin from "Mixins/FindParentMixin";
+import ToggledSidebarMixin from "Mixins/ToggledSidebarMixin";
 import WeekDays from "ToggledSidebar/WeekDays/WeekDays";
 import SpecialDays from "ToggledSidebar/SpecialDays/SpecialDays";
-import DateService from "Services/date/DateService";
 
 export default {
     name: "MultipleDaysChoser",
@@ -49,7 +49,7 @@ export default {
         WeekDays,
         SpecialDays,
     },
-    mixins: [FindParentMixin],
+    mixins: [FindParentMixin, ToggledSidebarMixin],
     props: ["storeLink"],
     data() {
         return {
@@ -74,37 +74,12 @@ export default {
                 content: "SpecialDays"
             }
         ];
-        this.CalendarRef = this.getStoreModule(this.store.calendarStoreRef);
     },
     methods: {
-        closeView() {
-            store.commit(`${this.customId}/hideView`, this.storeLink);
-        },
         tabChanged(type) {
             this.store.applyType = type == 1 ? "week" : "day";
         },
-        runValidationCycle(callback) {
-            this.store.inValidationCycle = true;
-            this.store.afterValidationCallback = callback;
-        },
-        applyToDays() {
-            let schedule = DateService.getScheduleCopy(this.store.applySchedule);
-            if(this.store.applyType == "week") {
-                for(let i = 0; i < 7; i++) {
-                    if(this.store.applyWeekDays[i].active) {
-                        Vue.set(this.CalendarRef.schedule.weekDays, this.store.applyWeekDays[i].ref, schedule);
-                    }
-                }
-            } else {
-                for(let day in this.store.applyDays) {
-                    Vue.set(this.CalendarRef.schedule.days, day, schedule);
-                }
-            }
-
-            store.dispatch("emptyCheckedDays", this.store.calendarStoreRef);
-            store.commit(`${this.customId}/hideViews`);
-            
-        }
+        
     }
 };
 </script>
