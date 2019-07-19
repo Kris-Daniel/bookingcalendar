@@ -1,5 +1,5 @@
 <template>
-    <div class="weekdays">
+    <div class="weekdays toggled-sidebar_container">
         <template v-for="day in weekDays">
             <div class="weekday" :key="day.ref" :class="[isDayActive(day), isDayDefault(day)]">
                 <div class="weekday_name" @click="switchDay(day)">{{day.name}}</div>

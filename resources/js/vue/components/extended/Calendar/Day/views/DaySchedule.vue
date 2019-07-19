@@ -8,15 +8,15 @@
             <div
                 v-for="(interval, index) in schedule"
                 :key="index"
-                class="day_schedule_time"
+                class="day_time"
             >{{getCurrentTimeFormat(interval.from)}} - {{getCurrentTimeFormat(interval.to)}}</div>
             <div>
-                <div class="day_schedule_more" v-if="scheduleLength > 2">
+                <span class="link size12" v-if="scheduleLength > 2">
                     Show more
-                    <div class="day_schedule_more_angle-down">
+                    <div class="day_link-angle-down">
                         <AngleDown></AngleDown>
                     </div>
-                </div>
+                </span>
             </div>
         </div>
         <div class="day_edit-icon">

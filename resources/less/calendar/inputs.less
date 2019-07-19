@@ -1,0 +1,49 @@
+/* Interval Input */
+.interval_input-wrapper{
+    .rel();
+    .dinl-mid();
+}
+
+.interval_input{
+    .size14();
+    width: 95px;
+    height: 30px;
+    border: 1px solid @grayHalf;
+    color: @gray;
+    padding: 0 13px;
+    border-radius: 13px;
+    box-sizing: border-box;
+    outline: none;
+    // box-shadow: -2px 1px 20px 0px rgba(62, 69, 94, 0.1);
+}
+.interval.checked .interval_input{
+    border: 1px solid @cyan;
+    color: @cyan;
+}
+.interval.wrong .interval_input{
+    border: 1px solid @red;
+    color: @red;
+}
+
+.interval_input-ampm{
+    .abs();
+    .size11();
+    .center();
+    .cursor();
+    right: 1px;
+    top: 1px;
+    bottom: 1px;
+    width: 28px;
+    color: #fff;
+    text-transform: capitalize;
+    border: 1px solid #fff;
+    border-radius: 100%;
+    background: @grayHalf;
+    padding-top: 8px;
+}
+.interval.checked .interval_input-ampm{
+    background: @cyan;
+}
+.interval.wrong .interval_input-ampm{
+    background: @red;
+}

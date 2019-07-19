@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="change-slide-wrapper">
         <component :is="view" @changeSlide="changeSlide"></component>
     </div>
 </template>

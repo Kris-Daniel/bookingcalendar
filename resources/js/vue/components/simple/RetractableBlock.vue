@@ -1,5 +1,5 @@
 <template>
-    <div class="retractable-sidebar" :class="isActive">
+    <div class="retractable" :class="isActive">
         <component :is="view" :storeLink="storeLink"></component>
     </div>
 </template>

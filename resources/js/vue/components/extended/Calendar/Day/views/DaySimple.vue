@@ -1,8 +1,6 @@
 <template>
-    <div class="day_inside day--simple">
-        <div class="day--circle" @click="click">
-            <div class="day_a-center">{{dayInfo.day}}</div>
-        </div>
+    <div class="day_inside day--simple" @click="click">
+        <div class="day_num">{{dayInfo.day}}</div>
     </div>
 </template>
 

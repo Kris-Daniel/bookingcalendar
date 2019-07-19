@@ -1,25 +1,22 @@
 <template>
     <div class="time-setting">
         <RetractableBlock :views="storeLink.children"></RetractableBlock>
-        <div class="time-setting_close" @click="closeViews()">
-            <ArrowRight></ArrowRight>
-        </div>
-        <div class="title center">Time Settings</div>
-        <div class="mb30"></div>
-        
-        <Schedule :applySchedule="applySchedule"></Schedule>
+        <div class="toggled-sidebar_container">
+            <div class="time-setting_close" @click="closeViews()">
+                <ArrowRight></ArrowRight>
+            </div>
+            <div class="title center mb30">Time Settings</div>
+            
+            <Schedule :applySchedule="applySchedule"></Schedule>
 
-        <div style="margin-bottom: 12px">
-            <div class="btn" @click="ApplyToDay()">Apply to {{dayInfo.day}} {{dayInfo.monthName}}</div>
-        </div>
-        <div class="mb20">
-            <div class="btn" @click="ApplyToWeekDay()">Apply to all {{weekNamePlural}}</div>
-        </div>
-        <div class="center mb20">
-            <div class="text-btn" @click="openChildRetractableBlock()">Or apply to multiple</div>
-        </div>
-        <div class="center">
-            <div class="text-btn" @click="SetUnavailable()">I'm unavailable</div>
+            <div class="btn mb20" @click="ApplyToDay()">Apply to {{dayInfo.day}} {{dayInfo.monthName}}</div>
+            <div class="btn mb20" @click="ApplyToWeekDay()">Apply to all {{weekNamePlural}}</div>
+            <div class="center mb20">
+                <span class="link size15" @click="openChildRetractableBlock()">Or apply to multiple</span>
+            </div>
+            <div class="center">
+                <span class="link size15" @click="SetUnavailable()">I'm unavailable</span>
+            </div>
         </div>
     </div>
 </template>

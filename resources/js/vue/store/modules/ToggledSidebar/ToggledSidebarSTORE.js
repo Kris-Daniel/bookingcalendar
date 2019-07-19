@@ -12,6 +12,7 @@ export default class ToggledSidebarSTORE {
         this.state = data;
         this.state.dayInfo = false;
         this.state.applySchedule = [];
+        this.state.applyWeekDays = [];
         
         return this;
     }
@@ -20,7 +21,6 @@ export default class ToggledSidebarSTORE {
         this.state.calendarStoreRef = false;
         this.state.showOverlay = false;
         this.state.applyType = false;
-        this.state.applyWeekDays = [];
         this.state.applyDays = {};
         this.state.applyValid = false;
         this.state.inValidationCycle = false;
@@ -35,7 +35,6 @@ export default class ToggledSidebarSTORE {
         this.mutations = {
             setDayInfo(state, day) {
                 Vue.set(state, "dayInfo", day);
-                // state.dayInfo = day;
             },
             setCalendarStoreRef(state, name) {
                 state.calendarStoreRef = name;

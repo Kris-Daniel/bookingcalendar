@@ -3,10 +3,9 @@
         <div v-if="!applySchedule.length" class="schedule_unavailable">
             Unavailable
         </div>
-        <div class="mb10" v-if="applySchedule.length">
-            <div class="interval-grid">From</div>
-            <div class="interval-grid interval-grid--mid"></div>
-            <div class="interval-grid">To</div>
+        <div class="interval" v-if="applySchedule.length">
+            <div class="interval_title">From</div>
+            <div class="interval_title">To</div>
         </div>
         <div class="intervals mb20">
             <InputsFromTo
@@ -21,7 +20,7 @@
             </InputsFromTo>
         </div>
         <div class="mb20">
-            <div class="text-btn" @click="addInterval()">+ New Interval</div>
+            <span class="link size15" @click="addInterval()">+ New Interval</span>
         </div>
     </div>
 </template>

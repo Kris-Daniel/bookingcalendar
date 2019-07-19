@@ -32,7 +32,7 @@ export default {
                     console.log(this.$store.state.mainToggledSidebar, "ToggledSidebarStore");
                 },
                 dayClasses(ref) {
-                    return "day-test";
+                    return "";
                 }
             }
         };

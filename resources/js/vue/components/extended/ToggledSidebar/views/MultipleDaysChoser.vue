@@ -23,13 +23,9 @@
                     ></component>
                 </template>
             </Tabs>
-            <div class="btns_wrapper">
-                <div class="btn-grid btn-grid--left">
-                    <div class="btn" @click="runValidationCycle(applyToDays)">Apply</div>
-                </div>
-                <div class="btn-grid btn-grid--right">
-                    <div class="btn btn--red" @click="closeView()">Cancel</div>
-                </div>
+            <div class="toggled-sidebar_container multiple-days-choser_btns">
+                <div class="btn btn--min" @click="runValidationCycle(applyToDays)">Apply</div>
+                <div class="btn btn--red btn--min" @click="closeView()">Cancel</div>
             </div>
         </div>
     </div>

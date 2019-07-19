@@ -43,7 +43,7 @@ export default {
     methods: {
         hideOverlay() {
             this.$store.dispatch("emptyCheckedDays", this.ToggledSidebarSTORE.calendarStoreRef);
-            this.$store.commit("mainToggledSidebar/hideViews");
+            this.$store.commit(`${this.customId}/hideViews`);
         }
     }
 };

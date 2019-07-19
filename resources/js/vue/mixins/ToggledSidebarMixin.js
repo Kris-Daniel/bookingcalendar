@@ -34,8 +34,8 @@ const ToggledSidebarMixin = {
             }
         },
         setWeekDays() {
-            this.store.applyWeekDays.splice(0, this.store.applyWeekDays.length);
             if(!this.store.calendarStoreRef) return false;
+            this.store.applyWeekDays.splice(0, 7);
             let weekDays = this.getWeekDays(this.getStoreModule(this.store.calendarStoreRef).settings.mondayFirst);
 
             for(let i = 0; i < 7; i++) {

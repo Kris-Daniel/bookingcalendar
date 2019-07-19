@@ -345,8 +345,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -696,8 +694,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DaySimple",
   props: ["dayInfo", "calendarId"],
@@ -898,12 +894,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1005,7 +995,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var Mixins_FindParentMixin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Mixins/FindParentMixin */ "./resources/js/vue/mixins/FindParentMixin.js");
 /* harmony import */ var Store_GlobalSTORE__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! Store/GlobalSTORE */ "./resources/js/vue/store/GlobalSTORE.js");
 /* harmony import */ var ToggledSidebar_InputsFromTo_InputsFromTo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ToggledSidebar/InputsFromTo/InputsFromTo */ "./resources/js/vue/components/extended/ToggledSidebar/InputsFromTo/InputsFromTo.vue");
-//
 //
 //
 //
@@ -1138,7 +1127,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         dayType: "simple",
         dayClick: function dayClick(data) {},
         dayClasses: function dayClasses(ref) {
-          return "day-simple";
+          return "";
         }
       }
     };
@@ -1205,7 +1194,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     hideOverlay: function hideOverlay() {
       this.$store.dispatch("emptyCheckedDays", this.ToggledSidebarSTORE.calendarStoreRef);
-      this.$store.commit("mainToggledSidebar/hideViews");
+      this.$store.commit("".concat(this.customId, "/hideViews"));
     }
   }
 });
@@ -1459,10 +1448,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -1523,9 +1508,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var Mixins_ToggledSidebarMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! Mixins/ToggledSidebarMixin */ "./resources/js/vue/mixins/ToggledSidebarMixin.js");
 /* harmony import */ var ToggledSidebar_Schedule_Schedule__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ToggledSidebar/Schedule/Schedule */ "./resources/js/vue/components/extended/ToggledSidebar/Schedule/Schedule.vue");
 /* harmony import */ var Services_date_DateService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! Services/date/DateService */ "./resources/js/vue/services/date/DateService.js");
-//
-//
-//
 //
 //
 //
@@ -1673,7 +1655,7 @@ __webpack_require__.r(__webpack_exports__);
           console.log(_this.$store.state.mainToggledSidebar, "ToggledSidebarStore");
         },
         dayClasses: function dayClasses(ref) {
-          return "day-test";
+          return "";
         }
       }
     };
@@ -6332,6 +6314,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "change-slide-wrapper" },
     [_c(_vm.view, { tag: "component", on: { changeSlide: _vm.changeSlide } })],
     1
   )
@@ -6358,44 +6341,40 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "change-slide-wrapper" }, [
-    _c("div", { staticClass: "change-slide" }, [
-      _c("div", { staticClass: "change-slide_month" }, [
-        _vm._v(_vm._s(_vm.month))
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "change-slide_year" }, [
-        _vm._v(_vm._s(_vm.year))
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "change-slide_btn change-slide_btn--prev",
-          on: {
-            click: function($event) {
-              return _vm.changeSlide("prev")
-            }
+  return _c("div", { staticClass: "change-slide" }, [
+    _c("div", { staticClass: "change-slide_month" }, [
+      _vm._v(_vm._s(_vm.month))
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "change-slide_year" }, [_vm._v(_vm._s(_vm.year))]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "change-slide_btn change-slide_btn--prev",
+        on: {
+          click: function($event) {
+            return _vm.changeSlide("prev")
           }
-        },
-        [_c("AngleLeft")],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "change-slide_btn change-slide_btn--next",
-          on: {
-            click: function($event) {
-              return _vm.changeSlide("next")
-            }
+        }
+      },
+      [_c("AngleLeft")],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "change-slide_btn change-slide_btn--next",
+        on: {
+          click: function($event) {
+            return _vm.changeSlide("next")
           }
-        },
-        [_c("AngleRight")],
-        1
-      )
-    ])
+        }
+      },
+      [_c("AngleRight")],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -6539,7 +6518,7 @@ var render = function() {
         { staticClass: "day_schedule" },
         [
           _vm._l(_vm.schedule, function(interval, index) {
-            return _c("div", { key: index, staticClass: "day_schedule_time" }, [
+            return _c("div", { key: index, staticClass: "day_time" }, [
               _vm._v(
                 _vm._s(_vm.getCurrentTimeFormat(interval.from)) +
                   " - " +
@@ -6550,11 +6529,11 @@ var render = function() {
           _vm._v(" "),
           _c("div", [
             _vm.scheduleLength > 2
-              ? _c("div", { staticClass: "day_schedule_more" }, [
+              ? _c("span", { staticClass: "link size12" }, [
                   _vm._v("\n                Show more\n                "),
                   _c(
                     "div",
-                    { staticClass: "day_schedule_more_angle-down" },
+                    { staticClass: "day_link-angle-down" },
                     [_c("AngleDown")],
                     1
                   )
@@ -6591,13 +6570,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "day_inside day--simple" }, [
-    _c("div", { staticClass: "day--circle", on: { click: _vm.click } }, [
-      _c("div", { staticClass: "day_a-center" }, [
-        _vm._v(_vm._s(_vm.dayInfo.day))
-      ])
-    ])
-  ])
+  return _c(
+    "div",
+    { staticClass: "day_inside day--simple", on: { click: _vm.click } },
+    [_c("div", { staticClass: "day_num" }, [_vm._v(_vm._s(_vm.dayInfo.day))])]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -6710,103 +6687,99 @@ var render = function() {
       class: { checked: _vm.inFocus, wrong: _vm.wrong }
     },
     [
-      _c("div", { staticClass: "interval-grid" }, [
-        _c(
-          "div",
-          {
-            staticClass: "interval_input-wrapper",
-            on: { click: _vm.inFocusEnabled }
-          },
-          [
-            _c("cleave", {
-              ref: "inputFrom",
-              staticClass: "interval_input",
-              attrs: { options: _vm.options },
-              on: {
-                blur: function($event) {
-                  return _vm.inFocusDisabled("from")
-                },
-                input: function($event) {
-                  return _vm.changeValue(_vm.from.time, "from")
-                }
+      _c(
+        "div",
+        {
+          staticClass: "interval_input-wrapper",
+          on: { click: _vm.inFocusEnabled }
+        },
+        [
+          _c("cleave", {
+            ref: "inputFrom",
+            staticClass: "interval_input",
+            attrs: { options: _vm.options },
+            on: {
+              blur: function($event) {
+                return _vm.inFocusDisabled("from")
               },
-              model: {
-                value: _vm.from.time,
-                callback: function($$v) {
-                  _vm.$set(_vm.from, "time", $$v)
-                },
-                expression: "from.time"
+              input: function($event) {
+                return _vm.changeValue(_vm.from.time, "from")
               }
-            }),
-            _vm._v(" "),
-            _vm.from.ampm
-              ? _c(
-                  "div",
-                  {
-                    staticClass: "interval_input-ampm",
-                    on: {
-                      click: function($event) {
-                        return _vm.changeAMPM($event, "from", "inputFrom")
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.from.ampm))]
-                )
-              : _vm._e()
-          ],
-          1
-        )
-      ]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "interval-grid" }, [
-        _c(
-          "div",
-          {
-            staticClass: "interval_input-wrapper",
-            on: { click: _vm.inFocusEnabled }
-          },
-          [
-            _c("cleave", {
-              ref: "inputTo",
-              staticClass: "interval_input",
-              attrs: { options: _vm.options },
-              on: {
-                blur: function($event) {
-                  return _vm.inFocusDisabled("to")
-                },
-                input: function($event) {
-                  return _vm.changeValue(_vm.to.time, "to")
-                }
+            },
+            model: {
+              value: _vm.from.time,
+              callback: function($$v) {
+                _vm.$set(_vm.from, "time", $$v)
               },
-              model: {
-                value: _vm.to.time,
-                callback: function($$v) {
-                  _vm.$set(_vm.to, "time", $$v)
-                },
-                expression: "to.time"
-              }
-            }),
-            _vm._v(" "),
-            _vm.to.ampm
-              ? _c(
-                  "div",
-                  {
-                    staticClass: "interval_input-ampm",
-                    on: {
-                      click: function($event) {
-                        return _vm.changeAMPM($event, "to", "inputTo")
-                      }
+              expression: "from.time"
+            }
+          }),
+          _vm._v(" "),
+          _vm.from.ampm
+            ? _c(
+                "div",
+                {
+                  staticClass: "interval_input-ampm",
+                  on: {
+                    click: function($event) {
+                      return _vm.changeAMPM($event, "from", "inputFrom")
                     }
-                  },
-                  [_vm._v(_vm._s(_vm.to.ampm))]
-                )
-              : _vm._e()
-          ],
-          1
-        )
-      ]),
+                  }
+                },
+                [_vm._v(_vm._s(_vm.from.ampm))]
+              )
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "interval_dash" }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "interval_input-wrapper",
+          on: { click: _vm.inFocusEnabled }
+        },
+        [
+          _c("cleave", {
+            ref: "inputTo",
+            staticClass: "interval_input",
+            attrs: { options: _vm.options },
+            on: {
+              blur: function($event) {
+                return _vm.inFocusDisabled("to")
+              },
+              input: function($event) {
+                return _vm.changeValue(_vm.to.time, "to")
+              }
+            },
+            model: {
+              value: _vm.to.time,
+              callback: function($$v) {
+                _vm.$set(_vm.to, "time", $$v)
+              },
+              expression: "to.time"
+            }
+          }),
+          _vm._v(" "),
+          _vm.to.ampm
+            ? _c(
+                "div",
+                {
+                  staticClass: "interval_input-ampm",
+                  on: {
+                    click: function($event) {
+                      return _vm.changeAMPM($event, "to", "inputTo")
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(_vm.to.ampm))]
+              )
+            : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -6824,18 +6797,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "interval-grid interval-grid--mid center" },
-      [_c("div", { staticClass: "interval_dash" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -6865,12 +6827,10 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.applySchedule.length
-      ? _c("div", { staticClass: "mb10" }, [
-          _c("div", { staticClass: "interval-grid" }, [_vm._v("From")]),
+      ? _c("div", { staticClass: "interval" }, [
+          _c("div", { staticClass: "interval_title" }, [_vm._v("From")]),
           _vm._v(" "),
-          _c("div", { staticClass: "interval-grid interval-grid--mid" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "interval-grid" }, [_vm._v("To")])
+          _c("div", { staticClass: "interval_title" }, [_vm._v("To")])
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -6892,9 +6852,9 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "mb20" }, [
       _c(
-        "div",
+        "span",
         {
-          staticClass: "text-btn",
+          staticClass: "link size15",
           on: {
             click: function($event) {
               return _vm.addInterval()
@@ -6930,7 +6890,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "special-days" },
+    { staticClass: "special-days toggled-sidebar_container" },
     [_c("Calendar", { attrs: { options: _vm.SimpleCalendarData } })],
     1
   )
@@ -7026,7 +6986,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "weekdays" },
+    { staticClass: "weekdays toggled-sidebar_container" },
     [
       _vm._l(_vm.weekDays, function(day) {
         return [
@@ -7168,12 +7128,16 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "btns_wrapper" }, [
-            _c("div", { staticClass: "btn-grid btn-grid--left" }, [
+          _c(
+            "div",
+            {
+              staticClass: "toggled-sidebar_container multiple-days-choser_btns"
+            },
+            [
               _c(
                 "div",
                 {
-                  staticClass: "btn",
+                  staticClass: "btn btn--min",
                   on: {
                     click: function($event) {
                       return _vm.runValidationCycle(_vm.applyToDays)
@@ -7181,14 +7145,12 @@ var render = function() {
                   }
                 },
                 [_vm._v("Apply")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "btn-grid btn-grid--right" }, [
+              ),
+              _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass: "btn btn--red",
+                  staticClass: "btn btn--red btn--min",
                   on: {
                     click: function($event) {
                       return _vm.closeView()
@@ -7197,8 +7159,8 @@ var render = function() {
                 },
                 [_vm._v("Cancel")]
               )
-            ])
-          ])
+            ]
+          )
         ],
         1
       )
@@ -7235,90 +7197,93 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "time-setting_close",
-          on: {
-            click: function($event) {
-              return _vm.closeViews()
-            }
-          }
-        },
-        [_c("ArrowRight")],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "title center" }, [_vm._v("Time Settings")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "mb30" }),
-      _vm._v(" "),
-      _c("Schedule", { attrs: { applySchedule: _vm.applySchedule } }),
-      _vm._v(" "),
-      _c("div", { staticStyle: { "margin-bottom": "12px" } }, [
-        _c(
-          "div",
-          {
-            staticClass: "btn",
-            on: {
-              click: function($event) {
-                return _vm.ApplyToDay()
+        { staticClass: "toggled-sidebar_container" },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "time-setting_close",
+              on: {
+                click: function($event) {
+                  return _vm.closeViews()
+                }
               }
-            }
-          },
-          [
-            _vm._v(
-              "Apply to " +
-                _vm._s(_vm.dayInfo.day) +
-                " " +
-                _vm._s(_vm.dayInfo.monthName)
+            },
+            [_c("ArrowRight")],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "title center mb30" }, [
+            _vm._v("Time Settings")
+          ]),
+          _vm._v(" "),
+          _c("Schedule", { attrs: { applySchedule: _vm.applySchedule } }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "btn mb20",
+              on: {
+                click: function($event) {
+                  return _vm.ApplyToDay()
+                }
+              }
+            },
+            [
+              _vm._v(
+                "Apply to " +
+                  _vm._s(_vm.dayInfo.day) +
+                  " " +
+                  _vm._s(_vm.dayInfo.monthName)
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "btn mb20",
+              on: {
+                click: function($event) {
+                  return _vm.ApplyToWeekDay()
+                }
+              }
+            },
+            [_vm._v("Apply to all " + _vm._s(_vm.weekNamePlural))]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "center mb20" }, [
+            _c(
+              "span",
+              {
+                staticClass: "link size15",
+                on: {
+                  click: function($event) {
+                    return _vm.openChildRetractableBlock()
+                  }
+                }
+              },
+              [_vm._v("Or apply to multiple")]
             )
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "mb20" }, [
-        _c(
-          "div",
-          {
-            staticClass: "btn",
-            on: {
-              click: function($event) {
-                return _vm.ApplyToWeekDay()
-              }
-            }
-          },
-          [_vm._v("Apply to all " + _vm._s(_vm.weekNamePlural))]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "center mb20" }, [
-        _c(
-          "div",
-          {
-            staticClass: "text-btn",
-            on: {
-              click: function($event) {
-                return _vm.openChildRetractableBlock()
-              }
-            }
-          },
-          [_vm._v("Or apply to multiple")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "center" }, [
-        _c(
-          "div",
-          {
-            staticClass: "text-btn",
-            on: {
-              click: function($event) {
-                return _vm.SetUnavailable()
-              }
-            }
-          },
-          [_vm._v("I'm unavailable")]
-        )
-      ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "center" }, [
+            _c(
+              "span",
+              {
+                staticClass: "link size15",
+                on: {
+                  click: function($event) {
+                    return _vm.SetUnavailable()
+                  }
+                }
+              },
+              [_vm._v("I'm unavailable")]
+            )
+          ])
+        ],
+        1
+      )
     ],
     1
   )
@@ -7382,7 +7347,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "retractable-sidebar", class: _vm.isActive },
+    { staticClass: "retractable", class: _vm.isActive },
     [_c(_vm.view, { tag: "component", attrs: { storeLink: _vm.storeLink } })],
     1
   )
@@ -26418,8 +26383,8 @@ var ToggledSidebarMixin = {
       }
     },
     setWeekDays: function setWeekDays() {
-      this.store.applyWeekDays.splice(0, this.store.applyWeekDays.length);
       if (!this.store.calendarStoreRef) return false;
+      this.store.applyWeekDays.splice(0, 7);
       var weekDays = this.getWeekDays(this.getStoreModule(this.store.calendarStoreRef).settings.mondayFirst);
 
       for (var i = 0; i < 7; i++) {
@@ -26998,6 +26963,7 @@ function () {
       this.state = data;
       this.state.dayInfo = false;
       this.state.applySchedule = [];
+      this.state.applyWeekDays = [];
       return this;
     }
   }, {
@@ -27006,7 +26972,6 @@ function () {
       this.state.calendarStoreRef = false;
       this.state.showOverlay = false;
       this.state.applyType = false;
-      this.state.applyWeekDays = [];
       this.state.applyDays = {};
       this.state.applyValid = false;
       this.state.inValidationCycle = false;
@@ -27019,7 +26984,7 @@ function () {
       var it = this;
       this.mutations = {
         setDayInfo: function setDayInfo(state, day) {
-          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(state, "dayInfo", day); // state.dayInfo = day;
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(state, "dayInfo", day);
         },
         setCalendarStoreRef: function setCalendarStoreRef(state, name) {
           state.calendarStoreRef = name;

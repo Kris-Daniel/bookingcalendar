@@ -1,0 +1,18 @@
+.CC{
+    margin: 20px;
+    padding: 20px 20px;
+    border: 1px solid @cyan;
+    background: #fcfcfe;
+}
+.overlay{
+    .curve();
+    .full-fixed();
+    background: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+    &.active{
+        visibility: visible;
+        opacity: 1;
+    }
+}

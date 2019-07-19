@@ -1,5 +1,5 @@
 <template>
-    <div class="special-days">
+    <div class="special-days toggled-sidebar_container">
         <Calendar :options="SimpleCalendarData"></Calendar>
     </div>
 </template>
@@ -40,7 +40,7 @@ export default {
                     
                 },
                 dayClasses(ref) {
-                    return "day-simple";
+                    return "";
                 }
             }
         };

@@ -1,0 +1,204 @@
+.retractable_close{
+    .abs();
+    .cursor();
+    top: 15px;
+    right: 15px;
+}
+.toggle-sidebar_view{
+    padding: 100px 0 18px 0;
+}
+.toggle-sidebar-wrapper{
+    .rel();
+    font-family: 'LatoWeb', sans-serif;
+    z-index: 10;
+    user-select: none;
+    .retractable{
+        .curve();
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: -280px;
+        width: 280px;
+        background: @whiteLight;
+        z-index: 2;
+        &.active{
+            right: 0;
+        }
+    }
+    .toggled-sidebar_container{
+        max-width: 244px;
+        margin: 0 auto;
+    }
+
+    /* Time Setting */
+    .time-setting{
+        .rel();
+        .toggle-sidebar_view();
+        height: 100%;
+        overflow: auto;
+    }
+    .time-setting_close{
+        .retractable_close();
+        svg{
+            width: 25px;
+            height: 25px;
+            *{
+                fill: @grayHalf !important;
+            }
+        }
+    }
+    .title{
+        .size18();
+        color: @dark;
+        font-weight: 600;
+    }
+    .text{
+        .size16();
+        color: @dark;
+        font-weight: 600;
+    }
+
+    .schedule_unavailable{
+        text-align: center;
+        padding: 10px 0;
+        color: @gray;
+        border: 1px dashed @gray;
+    }
+
+    /* Interval layout */
+    .interval{
+        .rel();
+        .dflex-between-center();
+        align-items: center;
+        margin-bottom: 12px;
+        padding-right: 18px;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+    .interval_title{
+        width: 95px;
+    }
+    .interval_dash{
+        width: 11px;
+        height: 2px;
+        background: @grayHalf;
+    }
+    .interval.checked .interval_dash{
+        background: @cyan;
+    }
+    .interval.wrong .interval_dash{
+        background: @red;
+    }
+
+    .interval_delete{
+        .abs();
+        .y-center();
+        .cursor();
+        right: -4px;
+        svg{
+            width: 14px;
+            height: 19px;
+            *{
+                fill: @grayHalf;
+            }
+        }
+        &:hover svg *{
+            fill: @dark;
+        }
+    }
+
+    /* Multiple Days Choser */
+    .multiple-days-choser{
+        .rel();
+        .dflex();
+        .center();
+        .toggle-sidebar_view();
+        flex-direction: column;
+        height: 100%;
+        overflow: auto;
+        background: @silver;
+    }
+    .multiple-days-choser_close{
+        .retractable_close();
+        height: 25px;
+        width: 12px;
+        svg{
+            height: 25px;
+            width: 12px;
+            * {
+                fill: @grayHalf !important;
+            }
+        }
+    }
+    .multiple-days-choser_btns{
+        .f0();
+        .dflex-between();
+    }
+
+    /* Tabs */
+    .multiple-days-choser .tabs-wrapper{
+        flex-grow: 1;
+        min-height: 360px;
+        background: #fff;
+        .tabs_titles{
+            overflow-y: hidden;
+            justify-content: space-between;
+            background: @silver;
+        }
+        .tabs_title{
+            width: 100%;
+            max-width: 130px;
+            padding: 8px 10px 12px 10px;
+            border-top: 5px solid transparent;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            color: @gray;
+            &:hover{
+                color: @cyan;
+            }
+            &.active{
+                .shadow();
+                border-top: 5px solid @cyan;
+                color: @cyan;
+                background: #fff;
+            }
+        }
+        .tabs_content.active{
+            padding: 30px 0px;
+        }
+    }
+
+    /* WeekDays */        
+    .weekdays{
+        .text-left();
+        padding-left: 26px;
+    }
+    .weekday{
+        margin-bottom: 14px;
+        color: @dark;
+        &.active{
+            color: @cyan;
+        }
+        &.default{
+            color: @gray;
+        }
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+    .weekday_name{
+        .dinl-mid();
+        .size18();
+        .curve();
+        .cursor();
+        width: 140px;
+        font-weight: 600;
+        &:hover{
+            color: @cyan;
+        }
+    }
+    .weekday.default .weekday_name:hover{
+        color: @gray;
+    }
+}
