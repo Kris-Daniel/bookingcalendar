@@ -1,5 +1,5 @@
 <template>
-    <div class="calendar-wrapper" :class="[`calendar-wrapper--${calendarType}`, `calendar-wrapper--${dayType}`]">
+    <div class="calendar-wrapper" ref="calendarWrapper":class="[`calendar-wrapper--${calendarType}`, `calendar-wrapper--${dayType}`]">
         <ChangeSlide @changeSlide="changeSlide"></ChangeSlide>
         <div class="calendar">
             <WeekDays></WeekDays>
@@ -82,11 +82,11 @@ export default {
         this.daysProps = this.$store.state[this.customId].daysProps;
 
         this.setupSliderStart()
-            .setSlides()
-            .setResize();
+            .setSlides();
     },
     mounted() {
         if (!this.slides.length) this.setSlides();
+        this.setResize();
     },
     methods: {
         setupSliderStart() {
@@ -107,10 +107,10 @@ export default {
         setResize() {
             if (this.daysProps.dayType != "simple") {
                 let resize = () => {
-                    let w = window.innerWidth;
-                    if (w <= 800 && this.CalendarDATA.type == "month") {
+                    let w = this.$refs.calendarWrapper.offsetWidth;
+                    if (w <= 768 && this.CalendarDATA.type == "month") {
                         this.CalendarDATA.type = "week";
-                    } else if (w > 800 && this.CalendarDATA.type == "week") {
+                    } else if (w > 768 && this.CalendarDATA.type == "week") {
                         this.CalendarDATA.type = "month";
                     }
                 };

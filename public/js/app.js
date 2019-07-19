@@ -201,10 +201,11 @@ __webpack_require__.r(__webpack_exports__);
     });
     this.CalendarDATA = this.$store.state[this.customId].CalendarDATA;
     this.daysProps = this.$store.state[this.customId].daysProps;
-    this.setupSliderStart().setSlides().setResize();
+    this.setupSliderStart().setSlides();
   },
   mounted: function mounted() {
     if (!this.slides.length) this.setSlides();
+    this.setResize();
   },
   methods: {
     setupSliderStart: function setupSliderStart() {
@@ -228,11 +229,11 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.daysProps.dayType != "simple") {
         var resize = function resize() {
-          var w = window.innerWidth;
+          var w = _this3.$refs.calendarWrapper.offsetWidth;
 
-          if (w <= 800 && _this3.CalendarDATA.type == "month") {
+          if (w <= 768 && _this3.CalendarDATA.type == "month") {
             _this3.CalendarDATA.type = "week";
-          } else if (w > 800 && _this3.CalendarDATA.type == "week") {
+          } else if (w > 768 && _this3.CalendarDATA.type == "week") {
             _this3.CalendarDATA.type = "month";
           }
         };
@@ -901,6 +902,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -972,8 +975,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
     },
-    changeAMPM: function changeAMPM(event, time) {
-      event.stopPropagation();
+    changeAMPM: function changeAMPM(event, time, input) {
       this[time].ampm = this[time].ampm == "PM" ? "AM" : "PM";
       this.changeValue(this[time].time, time);
 
@@ -981,6 +983,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.to.ampm = "PM";
         this.changeValue(this.to.time, "to");
       }
+
+      this.$refs[input].$el.focus();
     }
   }
 });
@@ -1061,7 +1065,8 @@ __webpack_require__.r(__webpack_exports__);
     addInterval: function addInterval() {
       this.applySchedule.push({
         from: "",
-        to: ""
+        to: "",
+        valid: true
       });
     },
     deleteInterval: function deleteInterval(index) {
@@ -1285,7 +1290,7 @@ __webpack_require__.r(__webpack_exports__);
         var iterated = this.getIntInterval(i);
 
         if (iterated.from >= iterated.to) {
-          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.store.applySchedule[i], "valid", false);
+          this.store.applySchedule[i].valid = false;
           valid = false;
         }
 
@@ -6267,6 +6272,7 @@ var render = function() {
   return _c(
     "div",
     {
+      ref: "calendarWrapper",
       staticClass: "calendar-wrapper",
       class: [
         "calendar-wrapper--" + _vm.calendarType,
@@ -6712,22 +6718,8 @@ var render = function() {
             on: { click: _vm.inFocusEnabled }
           },
           [
-            _vm.from.ampm
-              ? _c(
-                  "div",
-                  {
-                    staticClass: "interval_input-ampm",
-                    on: {
-                      click: function($event) {
-                        return _vm.changeAMPM($event, "from")
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.from.ampm))]
-                )
-              : _vm._e(),
-            _vm._v(" "),
             _c("cleave", {
+              ref: "inputFrom",
               staticClass: "interval_input",
               attrs: { options: _vm.options },
               on: {
@@ -6745,7 +6737,22 @@ var render = function() {
                 },
                 expression: "from.time"
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.from.ampm
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "interval_input-ampm",
+                    on: {
+                      click: function($event) {
+                        return _vm.changeAMPM($event, "from", "inputFrom")
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.from.ampm))]
+                )
+              : _vm._e()
           ],
           1
         )
@@ -6761,22 +6768,8 @@ var render = function() {
             on: { click: _vm.inFocusEnabled }
           },
           [
-            _vm.to.ampm
-              ? _c(
-                  "div",
-                  {
-                    staticClass: "interval_input-ampm",
-                    on: {
-                      click: function($event) {
-                        return _vm.changeAMPM($event, "to")
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.to.ampm))]
-                )
-              : _vm._e(),
-            _vm._v(" "),
             _c("cleave", {
+              ref: "inputTo",
               staticClass: "interval_input",
               attrs: { options: _vm.options },
               on: {
@@ -6794,7 +6787,22 @@ var render = function() {
                 },
                 expression: "to.time"
               }
-            })
+            }),
+            _vm._v(" "),
+            _vm.to.ampm
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "interval_input-ampm",
+                    on: {
+                      click: function($event) {
+                        return _vm.changeAMPM($event, "to", "inputTo")
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.to.ampm))]
+                )
+              : _vm._e()
           ],
           1
         )
@@ -26289,7 +26297,7 @@ var ChangeSlideMixin = {
         component.$emit("changeSlide", side);
         setTimeout(function () {
           component.wasClicked = false;
-        }, 320);
+        }, 400);
       }
     }
   }
@@ -26988,6 +26996,7 @@ function () {
     value: function setState(data) {
       this.namespaced = true;
       this.state = data;
+      this.state.dayInfo = false;
       this.state.applySchedule = [];
       return this;
     }
@@ -26996,7 +27005,6 @@ function () {
     value: function setProperties() {
       this.state.calendarStoreRef = false;
       this.state.showOverlay = false;
-      this.state.dayInfo = false;
       this.state.applyType = false;
       this.state.applyWeekDays = [];
       this.state.applyDays = {};
@@ -27011,7 +27019,7 @@ function () {
       var it = this;
       this.mutations = {
         setDayInfo: function setDayInfo(state, day) {
-          state.dayInfo = day;
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(state, "dayInfo", day); // state.dayInfo = day;
         },
         setCalendarStoreRef: function setCalendarStoreRef(state, name) {
           state.calendarStoreRef = name;

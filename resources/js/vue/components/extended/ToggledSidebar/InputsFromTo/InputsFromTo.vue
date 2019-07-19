@@ -2,14 +2,15 @@
     <div class="interval" :class="{checked: inFocus, wrong: wrong}">
         <div class="interval-grid">
             <div class="interval_input-wrapper" @click="inFocusEnabled">
-                <div class="interval_input-ampm" v-if="from.ampm" @click="changeAMPM($event, 'from')">{{from.ampm}}</div>
                 <cleave
                     v-model="from.time"
                     :options="options"
                     class="interval_input"
                     @blur="inFocusDisabled('from')"
                     @input="changeValue(from.time, 'from')"
+                    ref="inputFrom"
                 ></cleave>
+                <div class="interval_input-ampm" v-if="from.ampm" @click="changeAMPM($event, 'from', 'inputFrom')">{{from.ampm}}</div>
             </div>
         </div>
         <div class="interval-grid interval-grid--mid center">
@@ -17,14 +18,15 @@
         </div>
         <div class="interval-grid">
             <div class="interval_input-wrapper" @click="inFocusEnabled">
-                <div class="interval_input-ampm" v-if="to.ampm" @click="changeAMPM($event, 'to')">{{to.ampm}}</div>
                 <cleave
                     v-model="to.time"
                     :options="options"
                     class="interval_input"
                     @blur="inFocusDisabled('to')"
                     @input="changeValue(to.time, 'to')"
+                    ref="inputTo"
                 ></cleave>
+                <div class="interval_input-ampm" v-if="to.ampm" @click="changeAMPM($event, 'to', 'inputTo')">{{to.ampm}}</div>
             </div>
         </div>
         <div class="interval_delete" @click="deleteInterval(index)">
@@ -97,14 +99,14 @@ export default {
                 }
             }
         },
-        changeAMPM(event, time) {
-            event.stopPropagation();
+        changeAMPM(event, time, input) {
             this[time].ampm = this[time].ampm == "PM" ? "AM" : "PM"
             this.changeValue(this[time].time, time);
             if(time == "from" && this[time].ampm == "PM") {
                 this.to.ampm = "PM";
                 this.changeValue(this.to.time, "to");
             }
+            this.$refs[input].$el.focus();
         }
     }
 };

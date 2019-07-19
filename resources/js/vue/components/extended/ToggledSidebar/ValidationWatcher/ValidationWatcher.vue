@@ -58,7 +58,7 @@ export default {
             for(let i = 0; i < len; i++) {
                 let iterated = this.getIntInterval(i);
                 if(iterated.from >= iterated.to) {
-                    Vue.set(this.store.applySchedule[i], "valid", false);
+                    this.store.applySchedule[i].valid = false;
                     valid = false;
                 }
                 if(i + 1 < len) {

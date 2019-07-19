@@ -66,6 +66,7 @@ export default {
             this.applySchedule.push({
                 from: "",
                 to: "",
+                valid: true
             });
         },
         deleteInterval(index) {

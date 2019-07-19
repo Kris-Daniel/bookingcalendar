@@ -4087,7 +4087,7 @@ a {
   right: -280px;
   width: 280px;
   background: #fcfcfe;
-  transition: 0.2s all ease;
+  transition: 300ms all ease-in-out;
   z-index: 2;
 }
 .CC .toggle-sidebar-wrapper .retractable-sidebar.active {
@@ -4103,7 +4103,7 @@ a {
   visibility: hidden;
   opacity: 0;
   z-index: 1;
-  transition: 0.2s all ease;
+  transition: 300ms all ease-in-out;
 }
 .CC .toggle-sidebar-wrapper .overlay.active {
   visibility: visible;
@@ -4447,12 +4447,12 @@ a {
 .calendar-page .slider {
   position: relative;
   overflow: hidden;
-  transition: 0.3s all ease;
+  transition: 300ms all ease-in-out;
 }
 .calendar-page .slide {
   position: absolute;
   width: 100%;
-  transition: 0.3s all ease;
+  transition: 300ms all ease-in-out;
 }
 .calendar-page .slide:nth-child(1) {
   left: -100%;
