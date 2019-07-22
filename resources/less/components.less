@@ -1,0 +1,142 @@
+.text-wings {
+    border-top: 1px solid @gray;
+    color     : @gray;
+
+    &_text {
+        padding: 0 20px;
+        color  : @gray;
+        margin : 0 auto;
+    }
+}
+
+.ios-switcher {
+    .rel();
+    .dinl-mid();
+    .curve();
+    .cursor();
+    width        : 31px;
+    height       : 14px;
+    border       : 1px solid @grayHalf;
+    border-radius: 14px;
+    background   : #ffffff;
+
+    &_lever {
+        .abs();
+        .curve();
+        left         : 0;
+        top          : 0;
+        height       : 14px;
+        width        : 14px;
+        border       : 1px solid @grayHalf;
+        margin       : -1px;
+        border-radius: 14px;
+        background   : #ffffff;
+    }
+
+    &.active {
+        border    : 1px solid @cyan;
+        background: @cyan;
+    }
+
+    &.active .ios-switcher_lever {
+        left      : 17px;
+        border    : 1px solid @cyan;
+        box-shadow: none;
+    }
+
+    &.default {
+        border    : 1px solid @gray;
+        background: @gray;
+    }
+
+    &.default .ios-switcher_lever {
+        border: 1px solid @gray;
+    }
+}
+
+.btn {
+    .dinl();
+    .lineh();
+    .cursor();
+    .curve();
+    .shadow-hover();
+    font-size    : 15px;
+    width        : 100%;
+    max-width    : 280px;
+    min-width    : 100px;
+    padding      : 10px;
+    color        : #fff;
+    font-weight  : bold;
+    text-align   : center;
+    background   : @cyanTransparentHalf;
+    border-radius: 6px;
+    border       : none;
+    outline      : none !important;
+
+    &:hover {
+        background: @cyan;
+    }
+
+    &--red {
+        background: @redTransparentHalf;
+        &:hover{
+            background: @red;
+        }
+    }
+
+    &--lgn {
+        .uppercase();
+        .semi-bold();
+        width    : auto;
+        font-size: 18px;
+        padding  : 20px;
+        min-width: 200px;
+    }
+
+    &--long {
+        min-width: 300px;
+    }
+}
+
+.link {
+    .cursor();
+    color: @cyan;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+/* Tabs */
+.tabs-wrapper {
+    display       : flex;
+    flex-direction: column;
+    width         : 100%;
+
+    .tabs_titles {
+        .dflex();
+        .rel();
+    }
+
+    .tabs_title {
+        .rel();
+        .cursor();
+        .curve();
+    }
+
+    .tabs_contents {
+        .rel();
+    }
+
+    .tabs_content {
+        height    : 0;
+        overflow  : hidden;
+        visibility: hidden;
+
+        &.active {
+            height    : auto;
+            visibility: visible;
+            display   : block;
+        }
+    }
+}

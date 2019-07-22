@@ -675,10 +675,6 @@
 .justify{
 	text-align: justify;
 }
-.tran() {
-	transition: 300ms all ease-in-out;
-}
-
 .to(@max_width, @content) {
 	@media screen and (max-width: @max_width){
 		@content();
@@ -688,4 +684,7 @@
 	@media screen and (min-width: @min_width){
 		@content();
 	}
+}
+.tran() {
+	transition: 0.3s all ease;
 }
