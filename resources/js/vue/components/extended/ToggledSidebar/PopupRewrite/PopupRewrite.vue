@@ -3,7 +3,7 @@
         <div class="popup_overlay" @click="closePopup()"></div>
         <div class="popup_content">
             <div class="mb80 size18 lineh dark">
-                For this days: 
+                For these days: 
                 <span v-for="(weekDay, index) in popupRewrite.rewriteWeekNames" :key="weekDay" class="cyan italic">
                     {{weekDay}}<span v-if="index != popupRewrite.rewriteWeekNames.length - 1">,</span>
                 </span>
