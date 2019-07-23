@@ -1,16 +1,16 @@
 import Vue from 'vue';
 import Cleave from "vue-cleave-component";
-import Calendar from 'Calendar/Calendar';
-import ToggledSidebar from 'ToggledSidebar/ToggledSidebar';
-import Tabs from "Components/simple/Tabs";
-import RetractableBlock from "Components/simple/RetractableBlock";
+import Calendar from 'VueCalendar/Calendar';
+import ToggledSidebar from 'VueToggledSidebar/ToggledSidebar';
+import Tabs from "VueComponents/simple/Tabs";
+import RetractableBlock from "VueComponents/simple/RetractableBlock";
 
-export default class{
+export default class {
     constructor() {
         this.setSimpleComponents()
             .setExtendedComponents();
     }
-    
+
     setSimpleComponents() {
         Vue.component('Tabs', Tabs);
         Vue.component('Cleave', Cleave);
@@ -22,7 +22,7 @@ export default class{
     setExtendedComponents() {
         Vue.component('Calendar', Calendar);
         Vue.component('ToggledSidebar', ToggledSidebar);
-        
+
         return this;
     }
 }

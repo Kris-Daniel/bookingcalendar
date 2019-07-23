@@ -18,10 +18,9 @@
 </template>
 
 <script>
-
-import FindParentMixin from "Mixins/FindParentMixin";
-import DateService from "Services/date/DateService";
-import Day from 'Calendar/Day/Day';
+import FindParentMixin from "VueMixins/FindParentMixin";
+import DateService from "VueServices/date/DateService";
+import Day from "VueCalendar/Day/Day";
 
 export default {
     name: "Slide",
@@ -42,6 +41,11 @@ export default {
                 return this.store.CalendarDATA.monthN;
             });
         },
+        dayN() {
+            return this.exists(this.store, () => {
+                return this.store.CalendarDATA.dayN;
+            });
+        },
         mondayFirst() {
             return this.exists(this.store, () => {
                 return this.store.settings.mondayFirst;
@@ -50,6 +54,9 @@ export default {
     },
     watch: {
         monthN() {
+            this.setHeight();
+        },
+        dayN() {
             this.setHeight();
         },
         mondayFirst() {
@@ -64,14 +71,20 @@ export default {
     },
     methods: {
         setHeight() {
-            if(this.$refs.slide && this.slideId == this.store.CalendarDATA.monthN) {
+            if (
+                this.$refs.slide &&
+                (this.slideId == this.monthN || this.slideId == this.dayN)
+            ) {
                 this.store.CalendarDATA.height = this.$refs.slide.offsetHeight;
             }
         },
         setWeeksInMonth() {
             this.weeksInMonth =
                 this.store.CalendarDATA.type == "month"
-                    ? DateService.getWeeksInMonth(this.slideId, this.mondayFirst)
+                    ? DateService.getWeeksInMonth(
+                          this.slideId,
+                          this.mondayFirst
+                      )
                     : [DateService.getWeek(this.slideId, this.mondayFirst)];
         }
     }

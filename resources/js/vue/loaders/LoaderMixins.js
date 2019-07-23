@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import TestingMixin from "Mixins/TestingMixin";
+import TestingMixin from "VueMixins/TestingMixin";
 
 export default class{
     constructor() {

@@ -1,13 +1,13 @@
 import Vue from 'vue';
-import AngleDown from "MySvg/AngleDown";
-import AngleLeft from "MySvg/AngleLeft";
-import AngleRight from "MySvg/AngleRight";
-import ArrowRight from "MySvg/ArrowRight";
-import Mark from "MySvg/Mark";
-import Pencil from "MySvg/Pencil";
-import Plus from "MySvg/Plus";
-import Trash from "MySvg/Trash";
-import X from "MySvg/X";
+import AngleDown from "VueSvg/AngleDown";
+import AngleLeft from "VueSvg/AngleLeft";
+import AngleRight from "VueSvg/AngleRight";
+import ArrowRight from "VueSvg/ArrowRight";
+import Mark from "VueSvg/Mark";
+import Pencil from "VueSvg/Pencil";
+import Plus from "VueSvg/Plus";
+import Trash from "VueSvg/Trash";
+import X from "VueSvg/X";
 
 export default class {
     constructor() {

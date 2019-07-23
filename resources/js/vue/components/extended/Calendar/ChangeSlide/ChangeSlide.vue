@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import FindParentMixin from "Mixins/FindParentMixin";
+import FindParentMixin from "VueMixins/FindParentMixin";
 import ChangeSlideWeek from "./views/ChangeSlideWeek";
 import ChangeSlideMonth from "./views/ChangeSlideMonth";
 

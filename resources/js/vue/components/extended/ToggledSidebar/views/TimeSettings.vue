@@ -23,12 +23,12 @@
 
 <script>
 import Vue from "vue";
-import store from "Store/GlobalSTORE";
-import FindParentMixin from "Mixins/FindParentMixin";
-import ToggledSidebarMixin from "Mixins/ToggledSidebarMixin";
+import store from "VueStore/GlobalSTORE";
+import FindParentMixin from "VueMixins/FindParentMixin";
+import ToggledSidebarMixin from "VueMixins/ToggledSidebarMixin";
 
-import Schedule from "ToggledSidebar/Schedule/Schedule";
-import DateService from "Services/date/DateService";
+import Schedule from "VueToggledSidebar/Schedule/Schedule";
+import DateService from "VueServices/date/DateService";
 
 export default {
     name: "TimeSetting",

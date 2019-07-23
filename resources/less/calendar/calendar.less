@@ -6,18 +6,14 @@
     margin: 0 auto;
     user-select: none;
 }
-.calendar{
-    border-radius: 10px;
-    overflow: hidden;
-}
 .slider{
     .rel();
-    .curve();
+    .curve-slow();
     overflow: hidden;
 }
 .slide{
     .abs();
-    .curve();
+    .curve-slow();
     width: 100%;
     &:nth-child(1){
         left: -100%;
@@ -86,8 +82,10 @@
 }
 
 /* Schedule Modifier */
-.calendar--schedule{
+.calendar-wrapper--month .calendar--schedule{
     .shadow();
+    border-radius: 10px;
+    overflow: hidden;
 }
 .day--schedule{
     height: 102px;
@@ -111,13 +109,16 @@
     }
 }
 
-.slide_table_tr:last-child .slide_table_td{
+.calendar-wrapper--month .slide_table_tr:last-child .slide_table_td{
     &:first-child .day .day--schedule{
         border-bottom-left-radius: 10px;
     }
     &:last-child .day .day--schedule{
         border-bottom-right-radius: 10px;
     }
+}
+.calendar-wrapper--week .weekdays-table--schedule{
+    display: none;
 }
 
 .slide_table_td{
@@ -130,7 +131,7 @@
     }
 }
 
-.day--another-month .day--schedule{
+.calendar-wrapper--month .day--another-month .day--schedule{
     background: @grayLight;
     .day_num,
     .day_schedule_time{
@@ -147,6 +148,64 @@
         .size20();
         color: @gray;
     }
+}
+.calendar-wrapper--month{
+    .day_month-year,
+    .day_weekname{
+        display: none;
+    }
+}
+/* Schedule Modifier Mobile */
+.calendar-wrapper--week.calendar-wrapper--schedule{
+    .slide_table_td{
+        .shadow();
+        border-radius: 5px;
+        border: 1px solid @gray;
+        margin-bottom: 10px;
+        overflow: hidden;
+        &:last-child{
+            margin-bottom: 0;
+        }
+    }
+    .day--schedule{
+        .dflex();
+        align-items: center;
+        height: 78px;
+        padding: 14px 16px;
+        &:hover{
+            background: @grayLight;
+        }
+    }
+    .day_num{
+        margin-bottom: 6px;
+    }
+    .day_schedule{
+        .center();
+        flex-grow: 1;
+    }
+    .day_time{
+        .size12();
+    }
+    .day_weekname{
+        .size16();
+    }
+    .day_month-year{
+        .size13();
+    }
+
+    .change-slide{
+        color: @dark;
+        width: 250px;
+    }
+    .change-slide_btn{
+        &--prev{
+            left: -13px;
+        }
+        &--next{
+            right: -13px;
+        }
+    }
+    
 }
 
 /* Day schedule components */

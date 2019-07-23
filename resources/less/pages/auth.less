@@ -1,0 +1,373 @@
+/* Layout */
+.lgn-box {
+    .box-flex-center();
+    width: 100%;
+}
+
+.lgn-grid-bg {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#00cec9+0,cdf5ef+100 */
+    background                                        : #00cec9;
+    /* Old browsers */
+    background: -moz-linear-gradient(bottom, #00cec9 0%, #cdf5ef 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(bottom, #00cec9 0%, #cdf5ef 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to top, #00cec9 0%, #cdf5ef 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00cec9', endColorstr='#cdf5ef', GradientType=0);
+    /* IE6-9 */
+}
+
+.lgn-box_content {
+    .center();
+    .whiteLight_bg();
+    width    : 100%;
+    max-width: 340px;
+    padding  : 20px;
+}
+
+.lgn-box_bg {
+    .a-center();
+    width     : 100%;
+    height    : 100%;
+    max-width : 80%;
+    max-height: 80%;
+
+    svg * {
+        // fill: #7ae5e1 !important;
+    }
+}
+/* Some components */
+.lgn-box_grid_text {
+    .a-center();
+    .center();
+    color: #fff;
+    width: 90%;
+}
+
+.lgn-btn_icon{
+    .dinl-top();
+    svg{
+        height: 16px;
+        * {
+            fill: #fff;
+        }
+    }
+}
+
+.lgn-logo {
+    .db();
+    .center();
+
+    svg {
+        .dinl();
+        width: 250px;
+    }
+}
+/* Form */
+.lgn-form {
+    .dinl();
+    &.disable{
+        pointer-events: none !important;
+    }
+}
+
+/* Label */
+
+.icon-bg {
+    fill: transparent;
+}
+.icon-border {
+    fill: #a2a5a6;
+}
+
+.lgn-label {
+    .db();
+    .rel();
+    width    : 100%;
+    max-width: 340px;
+    &.wrong {
+        .lgn-input_icon-x{
+            .db();
+        }
+        .lgn-input {
+            border-bottom: 3px solid @red;
+        }
+        .icon-border {
+            fill: #F8C3DA;
+        }
+
+        .icon-bg {
+            fill: #F16C9C;
+        }
+    }
+    &.correct{
+        .lgn-input_icon-mark{
+            .db();
+        }
+    }
+
+    &.correct,
+    &.active {
+        .icon-border {
+            fill: #4bc6c6;
+        }
+
+        .icon-bg {
+            fill: #addede;
+        }
+    }
+}
+
+.lgn-label_empty{
+    .x-center();
+    .size12();
+    .tran();
+    .center();
+    bottom: -14px;
+    opacity: 0;
+    height: 0;
+    color: @red;
+    margin-top: 2px;
+    visibility: hidden;
+    width: 100%;
+    z-index: 2;
+}
+.lgn-label.empty .lgn-label_empty{
+    opacity: 1;
+    height: 12px;
+    visibility: visible;
+}
+
+/* Input */
+.lgn-input {
+    .rel();
+    .size18();
+    width        : 100%;
+    border       : none;
+    border-bottom: 1px solid #dbdbdb;
+    padding      : 8px 35px;
+    height       : 40px;
+    box-sizing   : border-box;
+    background   : transparent !important;
+
+    &:focus {
+        outline      : none;
+        padding      : 8px 35px 5px 35px;
+        border-bottom: 3px solid @cyan;
+    }
+}
+
+.lgn-input_icon-mark,
+.lgn-input_icon-x{
+    .dn();
+}
+.lgn-input_icon{
+    user-select: none;
+}
+.lgn-input_icon-x,
+.lgn-input_icon-eye{
+    .cursor();
+}
+
+
+
+
+.lgn-input_icon {
+    .y-center();
+    .center();
+    width  : 20px;
+    height : 20px;
+    z-index: 2;
+
+    svg {
+        max-width : 20px;
+        max-height: 20px;
+    }
+
+    &--left {
+        left: 1px;
+    }
+
+    &--right {
+        right: 1px;
+    }
+}
+
+/* Checkbox input and label */
+.lgn-check {
+    .rel();
+    .dinl();
+    .text-left();
+    user-select: none;
+    color: @cyanHalf;
+    &.wrong,
+    &.wrong a{
+        color: @red !important;
+    }
+    &.wrong .lgn-check_check{
+        border: 2px solid @red !important;
+    }
+}
+
+.lgn-check_check {
+    .rel();
+    .cursor();
+    float : left;
+    width : 15px;
+    height: 15px;
+    border: 2px solid @sulfurDark;
+    margin: 0 15px 15px 0;
+}
+
+.lgn-check_mark {
+    .dn();
+    .abs();
+    top : -4px;
+    left: 2px;
+
+    svg {
+        width     : 18px;
+        max-width : none;
+        max-height: none;
+
+        * {
+            fill: @cyan  !important;
+        }
+    }
+}
+
+.lgn-check_input {
+    .abs();
+    width  : 0;
+    height : 0;
+    opacity: 0;
+    margin : 0;
+
+    &:checked~.lgn-check_check {
+        border: 2px solid @cyan;
+    }
+
+    &:checked~.lgn-check_check>.lgn-check_mark {
+        .db();
+    }
+}
+
+/* Socials */
+.lgn-social {
+    .rel();
+    .dinl-top();
+    .cursor();
+    .tran();
+    width        : 54px;
+    height       : 54px;
+    margin       : 0 9px;
+    background   : @cyanHalf;
+    border-radius: 6px;
+
+    &:hover {
+        .shadow();
+    }
+
+    &--facebook:hover {
+        background: @facebook;
+    }
+
+    &--linkedin:hover {
+        background: @linkedin;
+    }
+
+    &--google:hover {
+        background: #fff;
+    }
+}
+
+.lgn-social_icon {
+    .a-center();
+    width: 40px;
+
+    svg {
+        height: 24px;
+    }
+    svg * {
+        .tran();
+    }
+}
+
+.lgn-social:not(.lgn-social--google) svg *,
+.lgn-social--google:not(:hover) svg * {
+    fill: #fff;
+}
+
+/* Error module */
+
+.lgn-errors_ul{
+    .text-left();
+    .shadow();
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.lgn-errors_ul.active{
+    padding: 10px 35px;
+    border: 1px solid @red;
+}
+.lgn-errors_li{
+    .lineh();
+    font-size: 14px;
+    color: @red;
+    margin-bottom: 4px;
+    display: none;
+    &:last-child{
+        margin-bottom: 0;
+    }
+}
+
+/* Succes popup */
+.lgn-not-redirect{
+    .rel();
+    .dn();
+}
+.lgn-cyan-bg{
+    .a-center();
+    svg{
+        width: 300px;
+        max-width: none;
+        max-height: none;
+        * {
+            fill: @cyanTransparentLow;
+        }
+    }
+}
+
+.lgn-check-big{
+    svg{
+        width: 111px;
+        * {
+            fill: @cyan !important;
+        }
+    }
+}
+
+/* Animated Clock */
+.lgn-loader{
+    .full-abs();
+    .af-center();
+    .tran();
+    visibility: hidden;
+    opacity: 0;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.7);
+    svg{
+        width: 100px;
+        height: 100px;
+        max-width: none;
+        max-height: none;
+        *{
+            stroke: @cyan !important;
+        }
+    }
+    &.active{
+        visibility: visible;
+        opacity: 1;
+    }
+}

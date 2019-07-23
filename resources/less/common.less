@@ -2,7 +2,8 @@
 @grayLight: #f5f5f7;
 @grayHalf: #e3e3e3;
 @gray: #c2c9dd;
-@silver: #f3f3f6;
+@silver: #ebecf2;
+@silverLight: #f3f3f6;
 @dark: #293143;
 @darkHalf: #585b61;
 @sulfurDark: #77757f;
@@ -47,17 +48,20 @@
 .redTransparentHalf_bg{background-color: @redTransparentHalf;}
 
 .curve() {
-    transition: 300ms all ease-in-out;
+    transition: 200ms all ease-in-out;
+}
+.curve-slow{
+    transition: 420ms all ease-in-out;
 }
 
 .shadow {
-    box-shadow: 0px 2px 6px 0px rgba(62, 69, 94, 0.25);
+    // box-shadow: 0px 2px 6px 0px rgba(62, 69, 94, 0.25);
 }
 .shadow-hover{
-    .shadow();
-    &:hover{
-        box-shadow: 0px 2px 12px 0px rgba(62, 69, 94, 0.25);
-    }
+    // .shadow();
+    // &:hover{
+    //     box-shadow: 0px 2px 12px 0px rgba(62, 69, 94, 0.25);
+    // }
 }
 .link-transparent{
     color: @cyanHalf;

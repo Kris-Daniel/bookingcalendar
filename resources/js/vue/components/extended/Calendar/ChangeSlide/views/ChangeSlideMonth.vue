@@ -11,9 +11,9 @@
     </div>
 </template>
 <script>
-import FindParentMixin from "Mixins/FindParentMixin";
-import ChangeSlideMixin from "Mixins/ChangeSlideMixin";
-import store from "Store/GlobalSTORE";
+import FindParentMixin from "VueMixins/FindParentMixin";
+import ChangeSlideMixin from "VueMixins/ChangeSlideMixin";
+import store from "VueStore/GlobalSTORE";
 
 export default {
     name: "ChangeSlideMonth",

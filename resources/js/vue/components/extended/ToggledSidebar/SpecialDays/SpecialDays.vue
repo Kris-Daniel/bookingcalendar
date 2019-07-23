@@ -6,8 +6,8 @@
 
 <script>
 import Vue from "vue";
-import FindParentMixin from "Mixins/FindParentMixin";
-import store from "Store/GlobalSTORE";
+import FindParentMixin from "VueMixins/FindParentMixin";
+import store from "VueStore/GlobalSTORE";
 
 export default {
     name: "SpecialDays",

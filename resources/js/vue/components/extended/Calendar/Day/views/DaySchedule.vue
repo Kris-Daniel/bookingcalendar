@@ -1,9 +1,16 @@
 <template>
     <div class="day_inside day--schedule" :class="{special: isSpecial}" @click="click">
-        <div class="day_num">
-            {{dayInfo.day}}
-            <div class="day_special-circle"></div>
+        <div class="day_date">
+            <div class="day_num">
+                <span class="day_weekname">{{dayInfo.weekDayRef}},</span>
+                {{dayInfo.day}}
+                <div class="day_special-circle"></div>
+            </div>
+            <div class="day_month-year">
+                {{monthName}} {{dayInfo.year}}
+            </div>
         </div>
+        
         <div class="day_schedule">
             <div
                 v-for="(interval, index) in schedule"
@@ -26,8 +33,9 @@
 </template>
 
 <script>
-import FindParentMixin from "Mixins/FindParentMixin";
-import DateService from "Services/date/DateService";
+import FindParentMixin from "VueMixins/FindParentMixin";
+import DateService from "VueServices/date/DateService";
+import store from "VueStore/GlobalSTORE";
 
 export default {
     name: "DaySchedule",
@@ -67,7 +75,9 @@ export default {
             this.dayInfo.schedule = JSON.parse(JSON.stringify(this.schedule));
         }
     },
-    created() {},
+    created() {
+        this.monthName = store.state.Constants.MONTHS[this.dayInfo.month];
+    },
     mounted() {},
     methods: {
         getRightSchedule(schedule) {

@@ -1,9 +1,9 @@
 <template>
-    <div class="calendar-wrapper" ref="calendarWrapper":class="[`calendar-wrapper--${calendarType}`, `calendar-wrapper--${dayType}`]">
+    <div class="calendar-wrapper" ref="calendarWrapper" :class="[`calendar-wrapper--${calendarType}`, `calendar-wrapper--${dayType}`]">
         <ChangeSlide @changeSlide="changeSlide"></ChangeSlide>
-        <div class="calendar">
+        <div class="calendar" :class="[`calendar--${dayType}`]">
             <WeekDays></WeekDays>
-            <div class="slider" ref="slider" :style="{height}" :class="[`calendar--${dayType}`]">
+            <div class="slider" ref="slider" :style="{height}">
                 <Slide
                     v-for="slide in slides"
                     :slideId="slide"
@@ -16,7 +16,7 @@
 
 <script>
 import Vue from "vue";
-import store from "Store/GlobalSTORE";
+import store from "VueStore/GlobalSTORE";
 import WeekDays from "./WeekDays/WeekDays";
 import Slide from "./Slide/Slide";
 import ChangeSlide from "./ChangeSlide/ChangeSlide";

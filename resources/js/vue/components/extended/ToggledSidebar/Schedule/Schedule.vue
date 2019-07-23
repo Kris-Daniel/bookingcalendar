@@ -27,9 +27,9 @@
 
 <script>
 import Vue from "vue";
-import FindParentMixin from "Mixins/FindParentMixin";
-import store from "Store/GlobalSTORE";
-import InputsFromTo from "ToggledSidebar/InputsFromTo/InputsFromTo";
+import FindParentMixin from "VueMixins/FindParentMixin";
+import store from "VueStore/GlobalSTORE";
+import InputsFromTo from "VueToggledSidebar/InputsFromTo/InputsFromTo";
 
 export default {
     name: "Schedule",

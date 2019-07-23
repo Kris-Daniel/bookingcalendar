@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import TimeSetting from "ToggledSidebar/views/TimeSettings";
-import Bookings from "ToggledSidebar/views/Bookings";
-import MultipleDaysChoser from "ToggledSidebar/views/MultipleDaysChoser";
+import TimeSetting from "VueToggledSidebar/views/TimeSettings";
+import Bookings from "VueToggledSidebar/views/Bookings";
+import MultipleDaysChoser from "VueToggledSidebar/views/MultipleDaysChoser";
 
-import FindParentMixin from "Mixins/FindParentMixin";
+import FindParentMixin from "VueMixins/FindParentMixin";
 
 export default {
     name: "RetractableBlock",

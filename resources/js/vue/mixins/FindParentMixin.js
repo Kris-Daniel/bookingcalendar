@@ -1,5 +1,5 @@
-import Finder from 'Services/global/Finder';
-import store from "Store/GlobalSTORE";
+import Finder from 'VueServices/global/Finder';
+import store from "VueStore/GlobalSTORE";
 
 const FindParentMixin = {
     created() {

@@ -12,9 +12,9 @@
 
 <script>
 import Vue from "vue";
-import store from "Store/GlobalSTORE";
+import store from "VueStore/GlobalSTORE";
 
-import FindParentMixin from "Mixins/FindParentMixin";
+import FindParentMixin from "VueMixins/FindParentMixin";
 
 import ScheduleDay from "./views/DaySchedule";
 import SimpleDay from "./views/DaySimple";

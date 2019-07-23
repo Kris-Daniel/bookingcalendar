@@ -49,10 +49,13 @@ const AppLoader = class {
     }
 
     render() {
-        new Vue({
-            router,
-            render: h => h(App)
-        }).$mount("#app");
+        let app = document.getElementById("app");
+        if(app) {
+            new Vue({
+                router,
+                render: h => h(App)
+            }).$mount("#app");
+        }
     }
 }
 

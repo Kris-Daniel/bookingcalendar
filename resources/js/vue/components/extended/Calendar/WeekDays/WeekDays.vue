@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import FindParentMixin from "Mixins/FindParentMixin";
+import FindParentMixin from "VueMixins/FindParentMixin";
 
 export default {
     name: "WeekDays",

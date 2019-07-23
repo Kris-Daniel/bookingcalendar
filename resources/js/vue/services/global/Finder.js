@@ -1,4 +1,4 @@
-import store from "Store/GlobalSTORE";
+import store from "VueStore/GlobalSTORE";
 
 class FinderClass {
     constructor() { }

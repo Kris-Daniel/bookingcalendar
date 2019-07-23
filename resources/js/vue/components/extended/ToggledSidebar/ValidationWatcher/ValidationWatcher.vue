@@ -4,9 +4,9 @@
 
 <script>
 import Vue from 'vue';
-import FindParentMixin from "Mixins/FindParentMixin";
-import ToggledSidebarMixin from "Mixins/ToggledSidebarMixin";
-import DateService from "Services/date/DateService";
+import FindParentMixin from "VueMixins/FindParentMixin";
+import ToggledSidebarMixin from "VueMixins/ToggledSidebarMixin";
+import DateService from "VueServices/date/DateService";
 
 export default {
     name: "ValidationWatcher",

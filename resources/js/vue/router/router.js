@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import CalendarPage from 'Layouts/CalendarPage';
+import CalendarPage from 'VueLayouts/CalendarPage';
 Vue.use(Router);
 
 export default new Router({

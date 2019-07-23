@@ -8,7 +8,7 @@
 
 <script>
 import Vue from "vue";
-import store from "Store/GlobalSTORE";
+import store from "VueStore/GlobalSTORE";
 import ValidationWatcher from "./ValidationWatcher/ValidationWatcher";
 
 export default {

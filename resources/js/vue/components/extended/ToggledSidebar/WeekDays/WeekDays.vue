@@ -17,9 +17,9 @@
 
 <script>
 import Vue from "vue";
-import FindParentMixin from "Mixins/FindParentMixin";
-import ToggledSidebarMixin from "Mixins/ToggledSidebarMixin";
-import store from "Store/GlobalSTORE";
+import FindParentMixin from "VueMixins/FindParentMixin";
+import ToggledSidebarMixin from "VueMixins/ToggledSidebarMixin";
+import store from "VueStore/GlobalSTORE";
 
 export default {
     name: "WeekDays",

@@ -31,7 +31,7 @@
 
 <script>
 import Vue from "vue";
-import DateService from "Services/date/DateService";
+import DateService from "VueServices/date/DateService";
 
 export default {
     name: "InputsFromTo",
@@ -89,7 +89,7 @@ export default {
                 this.to = { time: this.interval.to };
                 if(this.options.timeFormat == "12") {
                     Vue.set(this.from, "ampm", "AM");
-                    Vue.set(this.to, "ampm", "AM");
+                    Vue.set(this.to, "ampm", "PM");
                 }
             }
         },

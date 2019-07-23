@@ -1,17 +1,20 @@
 <template>
-    <div class="change-slide center">
-        <div class="mb10">{{from}} - {{to}}</div>
-        <div @click="changeSlide('prev')" class="change-slide_prev dinl-top">Prev</div>
-        <div class="dinl-top ph20"></div>
-        <div @click="changeSlide('next')" class="change-slide_next dinl-top">Next</div>
+    <div class="change-slide center mb16">
+        <div class="dark size18">{{from}} - {{to}}</div>
+        <div @click="changeSlide('prev')" class="change-slide_btn change-slide_btn--prev">
+            <AngleLeft></AngleLeft>
+        </div>
+        <div @click="changeSlide('next')" class="change-slide_btn change-slide_btn--next">
+            <AngleRight></AngleRight>
+        </div>
     </div>
 </template>
 
 <script>
-import FindParentMixin from "Mixins/FindParentMixin";
-import ChangeSlideMixin from "Mixins/ChangeSlideMixin";
-import DateService from "Services/date/DateService";
-import store from "Store/GlobalSTORE";
+import FindParentMixin from "VueMixins/FindParentMixin";
+import ChangeSlideMixin from "VueMixins/ChangeSlideMixin";
+import DateService from "VueServices/date/DateService";
+import store from "VueStore/GlobalSTORE";
 
 export default {
     name: "WeekChangeSlide",
@@ -57,7 +60,7 @@ export default {
         getDayAndShortMonth(date) {
             let d = date.getDate();
             let m = date.getMonth();
-            let shortMonth = store.state.Constants.MONTHS[m].slice(0, 3);
+            let shortMonth = store.state.Constants.MONTHS[m];
             return d + " " + shortMonth;
         }
     }

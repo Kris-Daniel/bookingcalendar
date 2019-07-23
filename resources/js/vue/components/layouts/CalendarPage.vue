@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import CalendarHttp from "Services/http/CalendarHttp";
-import store from "Store/GlobalSTORE";
+import CalendarHttp from "VueServices/http/CalendarHttp";
+import store from "VueStore/GlobalSTORE";
 
 export default {
     name: "CalendarPage",

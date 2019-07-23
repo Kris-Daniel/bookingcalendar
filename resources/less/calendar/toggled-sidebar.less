@@ -13,7 +13,7 @@
     z-index: 10;
     user-select: none;
     .retractable{
-        .curve();
+        .curve-slow();
         position: fixed;
         top: 0;
         bottom: 0;
@@ -117,7 +117,7 @@
         flex-direction: column;
         height: 100%;
         overflow: auto;
-        background: @silver;
+        background: @silverLight;
     }
     .multiple-days-choser_close{
         .retractable_close();
@@ -131,10 +131,6 @@
             }
         }
     }
-    .multiple-days-choser_btns{
-        .f0();
-        .dflex-between();
-    }
 
     /* Tabs */
     .multiple-days-choser .tabs-wrapper{
@@ -144,7 +140,7 @@
         .tabs_titles{
             overflow-y: hidden;
             justify-content: space-between;
-            background: @silver;
+            background: @silverLight;
         }
         .tabs_title{
             width: 100%;

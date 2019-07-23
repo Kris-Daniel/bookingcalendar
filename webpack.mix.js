@@ -1,8 +1,8 @@
 const mix = require('laravel-mix');
 const path = require("path");
 
-function setDir(dir) {
-   return path.resolve(__dirname, "resources/js/" + dir);
+function setModulesDir(dir) {
+   return path.resolve(__dirname, "resources/js/modules/" + dir);
 }
 function setVueDir(dir) {
    return path.resolve(__dirname, "resources/js/vue/" + dir);
@@ -24,17 +24,20 @@ mix.js('resources/js/app.js', 'public/js')
 mix.webpackConfig({
    resolve: {
       alias: {
+         ModulesPath: setModulesDir(""),
+         Services: setModulesDir("services/"),
+         Helpers: setModulesDir("helpers/"),
+         PagesJS: setModulesDir("pagesJS/"),
          VuePath: setVueDir(""),
-         Store: setVueDir("store"),
-         Services: setVueDir("services"),
-         Mixins: setVueDir("mixins"),
-         MySvg: setVueDir("components/svg/"),
-         Components: setVueDir("components/"),
-         Layouts: setVueDir("components/layouts/"),
-         Calendar: setVueDir("components/extended/Calendar/"),
-         ToggledSidebar: setVueDir("components/extended/ToggledSidebar/"),
-         // ToggledSidebarSTORE$: setDir("components/calendar6/parts/ToggledSidebar/helpers/ToggledSidebarSTORE.js"),
-         // CalendarSTORE$: setDir("components/calendar6/parts/Calendar/helpers/CalendarSTORE.js"),
+         VueStore: setVueDir("store"),
+         VueServices: setVueDir("services"),
+         VueMixins: setVueDir("mixins"),
+         VueSvg: setVueDir("components/svg/"),
+         VueComponents: setVueDir("components/"),
+         VueLayouts: setVueDir("components/layouts/"),
+         VueCalendar: setVueDir("components/extended/Calendar/"),
+         VueToggledSidebar: setVueDir("components/extended/ToggledSidebar/"),
+
       },
       extensions: ['.vue', '.js', '.json']
    }

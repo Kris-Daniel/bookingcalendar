@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import store from "Store/GlobalSTORE";
-import DateService from "Services/date/DateService";
+import store from "VueStore/GlobalSTORE";
+import DateService from "VueServices/date/DateService";
 
 const ToggledSidebarMixin = {
     created() {

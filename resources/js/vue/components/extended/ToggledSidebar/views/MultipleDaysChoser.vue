@@ -23,9 +23,13 @@
                     ></component>
                 </template>
             </Tabs>
-            <div class="toggled-sidebar_container multiple-days-choser_btns">
-                <div class="btn btn--min" @click="runValidationCycle(applyToDays)">Apply</div>
-                <div class="btn btn--red btn--min" @click="closeView()">Cancel</div>
+            <div class="toggled-sidebar_container f0 w100">
+                <div class="a-6 text-left">
+                    <div class="btn btn--min" @click="runValidationCycle(applyToDays)">Apply</div>
+                </div>
+                <div class="a-6 text-right">
+                    <div class="btn btn--red btn--min" @click="closeView()">Cancel</div>
+                </div>
             </div>
         </div>
     </div>
@@ -33,11 +37,11 @@
 
 <script>
 import Vue from 'vue';
-import store from "Store/GlobalSTORE";
-import FindParentMixin from "Mixins/FindParentMixin";
-import ToggledSidebarMixin from "Mixins/ToggledSidebarMixin";
-import WeekDays from "ToggledSidebar/WeekDays/WeekDays";
-import SpecialDays from "ToggledSidebar/SpecialDays/SpecialDays";
+import store from "VueStore/GlobalSTORE";
+import FindParentMixin from "VueMixins/FindParentMixin";
+import ToggledSidebarMixin from "VueMixins/ToggledSidebarMixin";
+import WeekDays from "VueToggledSidebar/WeekDays/WeekDays";
+import SpecialDays from "VueToggledSidebar/SpecialDays/SpecialDays";
 
 export default {
     name: "MultipleDaysChoser",

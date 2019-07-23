@@ -7,7 +7,7 @@ const ChangeSlideMixin = {
                 component.$emit("changeSlide", side);
                 setTimeout(() => {
                     component.wasClicked = false;
-                }, 400);
+                }, 420);
             }
         }
     },
