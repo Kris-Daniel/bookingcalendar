@@ -197,4 +197,33 @@
     .weekday.default .weekday_name:hover{
         color: @gray;
     }
+
+    .popup-rewrite{
+        display: none;
+        &.active{
+            display: block;
+        }
+    }
+    .popup_overlay{
+        .curve();
+        .full-fixed();
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+    }
+    .popup_content{
+        .x-center();
+        position: fixed;
+        top: 100px;
+        width: 60%;
+        max-width: 325px;
+        min-width: 300px;
+        padding: 20px;
+        background: @whiteLight;
+        border-radius: 6px;
+        z-index: 3;
+    }
+    .popup_btn{
+        font-size: 14px !important;
+        white-space: nowrap;
+    }
 }

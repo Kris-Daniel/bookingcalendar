@@ -7,9 +7,9 @@ const ToggledSidebarMixin = {
         this.CalendarRef = this.getStoreModule(this.store.calendarStoreRef);
     },
     methods: {
-        runValidationCycle(callback) {
+        runValidationCycle() {
             this.store.inValidationCycle = true;
-            this.store.afterValidationCallback = callback;
+            this.store.afterValidationCallback = this.applyToDays;
         },
         closeViews() {
             store.dispatch("emptyCheckedDays", this.store.calendarStoreRef);
@@ -18,20 +18,58 @@ const ToggledSidebarMixin = {
         closeView() {
             store.commit(`${this.customId}/hideView`, this.storeLink);
         },
-        applyToDays() {
+        applyToDays(notOverride) {
             this.CalendarRef = this.getStoreModule(this.store.calendarStoreRef);
             let schedule = DateService.getScheduleCopy(this.store.applySchedule);
             if(this.store.applyType == "week") {
-                for(let i = 0; i < 7; i++) {
-                    if(this.store.applyWeekDays[i].active) {
-                        Vue.set(this.CalendarRef.schedule.weekDays, this.store.applyWeekDays[i].ref, schedule);
+                let rewriteWeekNames = [];
+                let specialDaysForRewrite = [];
+                let rewriteDaysCount = 0;
+
+                let setWeekDaysSchedule = () => {
+                    for(let i = 0; i < 7; i++) {
+                        if(this.store.applyWeekDays[i].active)
+                            Vue.set(this.CalendarRef.schedule.weekDays, this.store.applyWeekDays[i].ref, schedule);
                     }
+                    this.applyToDaysSuccess();
+                }
+
+                if(notOverride) {
+                    setWeekDaysSchedule();
+                    return false;
+                }
+                for(let i = 0; i < 7; i++) {
+                    let weekRef = this.store.applyWeekDays[i].ref;
+                    specialDaysForRewrite.push([]);
+                    if(this.store.applyWeekDays[i].active) {
+                        specialDaysForRewrite[i] = this.getSpecialDaysforRewrite(weekRef);
+                        rewriteDaysCount += specialDaysForRewrite[i].length;
+                        if(specialDaysForRewrite[i].length)
+                            rewriteWeekNames.push(weekRef);
+                    }
+                }
+                if(!rewriteWeekNames.length)
+                    setWeekDaysSchedule();
+                else {
+                    store.commit(`${this.customId}/showPopup`, {
+                        specialDaysForRewrite,
+                        rewriteDaysCount,
+                        rewriteWeekNames,
+                        schedule,
+                    });
                 }
             } else {
                 for(let day in this.store.applyDays) {
                     Vue.set(this.CalendarRef.schedule.days, day, schedule);
                 }
+                this.applyToDaysSuccess();
             }
+            
+        },
+        applyToDaysSuccess() {
+            this.store.afterValidationCallback = false;
+            this.store.applyValid = false;
+            this.closeViews();
         },
         setWeekDays() {
             if(!this.store.calendarStoreRef) return false;
@@ -45,6 +83,21 @@ const ToggledSidebarMixin = {
                     active: weekDays[i] == this.store.dayInfo.weekDayRef ? true : false,
                 });
             }
+        },
+        removeScheduleFromSpecialDay(dayRef) {
+            this.CalendarRef = this.getStoreModule(this.store.calendarStoreRef);
+            let SD = this.CalendarRef.schedule.days;
+            Vue.delete(SD, dayRef);
+        },
+        getSpecialDaysforRewrite(refWeek) {
+            let SD = this.CalendarRef.schedule.days;
+            let specialDaysForRewrite = [];
+            for(let dayRef in SD) {
+                let dayRefWeek = DateService.getWeekRefByDateRef(dayRef);
+                if(refWeek == dayRefWeek)
+                    specialDaysForRewrite.push(dayRef);
+            }
+            return specialDaysForRewrite;
         }
     },
 }

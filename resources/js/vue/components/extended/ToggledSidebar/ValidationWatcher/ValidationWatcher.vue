@@ -43,10 +43,7 @@ export default {
         applyValid() {
             if(this.applyValid) {
                 this.store.afterValidationCallback();
-                this.store.afterValidationCallback = false;
-                this.store.applyValid = false;
-
-                this.closeViews();
+                // this.closeViews();
             }
         },
         

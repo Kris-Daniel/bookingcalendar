@@ -25,6 +25,13 @@ export default class ToggledSidebarSTORE {
         this.state.applyValid = false;
         this.state.inValidationCycle = false;
         this.state.afterValidationCallback = false;
+        this.state.popupRewrite = {
+            show: false,
+            schedule: false,
+            specialDaysForRewrite: false,
+            rewriteWeekNames: false,
+            rewriteDaysCount: 0
+        }
 
         return this;
     }
@@ -47,6 +54,13 @@ export default class ToggledSidebarSTORE {
                 state.applySchedule.map((item) => {
                     Vue.set(item, "valid", true);
                 });
+            },
+            showPopup(state, params) {
+                Vue.set(state.popupRewrite, 'show', true);
+                Vue.set(state.popupRewrite, 'schedule', params.schedule);
+                Vue.set(state.popupRewrite, 'specialDaysForRewrite', params.specialDaysForRewrite);
+                Vue.set(state.popupRewrite, 'rewriteWeekNames', params.rewriteWeekNames);
+                Vue.set(state.popupRewrite, 'rewriteDaysCount', params.rewriteDaysCount);
             },
             showParentView(state, component) {
                 state.views[component].active = true;

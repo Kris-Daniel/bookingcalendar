@@ -1,5 +1,6 @@
 const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const daysX = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const WEEK = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 class DateServiceClass {
     constructor() { }
@@ -114,6 +115,11 @@ class DateServiceClass {
         }
 
         return `${hours}:${minutes}`;
+    }
+
+    getWeekRefByDateRef(ref) {
+        let date = new Date(ref.split("d").join());
+        return WEEK[date.getDay()];
     }
 }
 const DateService = new DateServiceClass();

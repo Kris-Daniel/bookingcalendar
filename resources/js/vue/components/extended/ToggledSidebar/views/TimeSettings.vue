@@ -82,11 +82,11 @@ export default {
         },
         ApplyToDay() {
             this.store.applyType = "day";
-            this.runValidationCycle(this.applyToDays);
+            this.runValidationCycle();
         },
         ApplyToWeekDay() {
             this.store.applyType = "week";
-            this.runValidationCycle(this.applyToDays);
+            this.runValidationCycle();
         },
         SetUnavailable() {
             this.applySchedule.splice(0, this.applySchedule.length);

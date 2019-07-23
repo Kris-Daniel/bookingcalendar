@@ -2315,6 +2315,9 @@ a {
 .btn--long {
   min-width: 300px;
 }
+.btn--min {
+  max-width: 116px;
+}
 .link {
   cursor: pointer;
   color: #00cec9;
@@ -2904,6 +2907,41 @@ a {
 }
 .toggle-sidebar-wrapper .weekday.default .weekday_name:hover {
   color: #c2c9dd;
+}
+.toggle-sidebar-wrapper .popup-rewrite {
+  display: none;
+}
+.toggle-sidebar-wrapper .popup-rewrite.active {
+  display: block;
+}
+.toggle-sidebar-wrapper .popup_overlay {
+  transition: 200ms all ease-in-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+.toggle-sidebar-wrapper .popup_content {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  position: fixed;
+  top: 100px;
+  width: 60%;
+  max-width: 325px;
+  min-width: 300px;
+  padding: 20px;
+  background: #fcfcfe;
+  border-radius: 6px;
+  z-index: 3;
+}
+.toggle-sidebar-wrapper .popup_btn {
+  font-size: 14px !important;
+  white-space: nowrap;
 }
 /* Interval Input */
 .interval_input-wrapper {

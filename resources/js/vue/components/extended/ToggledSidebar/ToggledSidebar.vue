@@ -2,6 +2,7 @@
     <div class="toggle-sidebar-wrapper">
         <RetractableBlock :views="this.views"></RetractableBlock>
         <ValidationWatcher></ValidationWatcher>
+        <PopupRewrite></PopupRewrite>
         <div class="overlay" :class="showOverlay" @click="hideOverlay()"></div>
     </div>
 </template>
@@ -10,13 +11,15 @@
 import Vue from "vue";
 import store from "VueStore/GlobalSTORE";
 import ValidationWatcher from "./ValidationWatcher/ValidationWatcher";
+import PopupRewrite from "./PopupRewrite/PopupRewrite";
 
 export default {
     name: "ToggledSidebar",
     store,
     props: ["options"],
     components: {
-        ValidationWatcher
+        ValidationWatcher,
+        PopupRewrite
     },
     data() {
         return {

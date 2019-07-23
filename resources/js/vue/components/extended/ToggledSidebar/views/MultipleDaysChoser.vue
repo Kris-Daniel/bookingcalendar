@@ -25,7 +25,7 @@
             </Tabs>
             <div class="toggled-sidebar_container f0 w100">
                 <div class="a-6 text-left">
-                    <div class="btn btn--min" @click="runValidationCycle(applyToDays)">Apply</div>
+                    <div class="btn btn--min" @click="runValidationCycle()">Apply</div>
                 </div>
                 <div class="a-6 text-right">
                     <div class="btn btn--red btn--min" @click="closeView()">Cancel</div>
