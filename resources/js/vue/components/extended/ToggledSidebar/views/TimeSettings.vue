@@ -7,7 +7,7 @@
             </div>
             <div class="title center mb30">Time Settings</div>
             
-            <Schedule :applySchedule="applySchedule"></Schedule>
+            <Schedule></Schedule>
 
             <div class="btn mb20" @click="ApplyToDay()">Apply to {{dayInfo.day}} {{dayInfo.monthName}}</div>
             <div class="btn mb20" @click="ApplyToWeekDay()">Apply to all {{weekNamePlural}}</div>
@@ -53,14 +53,14 @@ export default {
                 return this.store.dayInfo.schedule;
             });
         },
+        weekNamePlural() {
+            return store.state.Constants.WEEKNAMESPLURAL[this.dayInfo.weekDayRef];
+        },
         applySchedule() {
             return this.exists(this.store, () => {
                 return this.store.applySchedule;
             });
         },
-        weekNamePlural() {
-            return store.state.Constants.WEEKNAMESPLURAL[this.dayInfo.weekDayRef];
-        }
     },
     watch: {
         dayInfo() {
@@ -69,12 +69,7 @@ export default {
                 this.setWeekDays();
             }
         },
-        storeSchedule() {
-            store.commit(
-                `${this.customId}/setApplySchedule`,
-                this.store.dayInfo.schedule
-            );
-        },
+        
     },
     methods: {
         openChildRetractableBlock() {

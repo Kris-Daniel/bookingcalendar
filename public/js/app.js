@@ -1131,7 +1131,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Schedule",
   mixins: [VueMixins_FindParentMixin__WEBPACK_IMPORTED_MODULE_1__["default"]],
-  props: ["applySchedule"],
+  props: [],
   components: {
     InputsFromTo: VueToggledSidebar_InputsFromTo_InputsFromTo__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
@@ -1146,8 +1146,32 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  computed: {},
-  watch: {},
+  computed: {
+    storeSchedule: function storeSchedule() {
+      var _this = this;
+
+      return this.exists(this.store, function () {
+        return _this.store.dayInfo.schedule;
+      });
+    },
+    applySchedule: function applySchedule() {
+      var _this2 = this;
+
+      return this.exists(this.store, function () {
+        return _this2.store.applySchedule;
+      });
+    }
+  },
+  watch: {
+    storeSchedule: function storeSchedule() {
+      var _this3 = this;
+
+      VueStore_GlobalSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].commit("".concat(this.customId, "/setApplySchedule"), this.store.dayInfo.schedule);
+      this.$nextTick(function () {
+        if (_this3.applySchedule.length == 0) _this3.addInterval();
+      });
+    }
+  },
   created: function created() {
     this.options.timeFormat = VueStore_GlobalSTORE__WEBPACK_IMPORTED_MODULE_2__["default"].state[this.store.calendarStoreRef].settings.hoursFormat;
   },
@@ -1671,15 +1695,15 @@ __webpack_require__.r(__webpack_exports__);
         return _this2.store.dayInfo.schedule;
       });
     },
+    weekNamePlural: function weekNamePlural() {
+      return VueStore_GlobalSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].state.Constants.WEEKNAMESPLURAL[this.dayInfo.weekDayRef];
+    },
     applySchedule: function applySchedule() {
       var _this3 = this;
 
       return this.exists(this.store, function () {
         return _this3.store.applySchedule;
       });
-    },
-    weekNamePlural: function weekNamePlural() {
-      return VueStore_GlobalSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].state.Constants.WEEKNAMESPLURAL[this.dayInfo.weekDayRef];
     }
   },
   watch: {
@@ -1688,9 +1712,6 @@ __webpack_require__.r(__webpack_exports__);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(this.store.applyDays, this.store.dayInfo.ref, true);
         this.setWeekDays();
       }
-    },
-    storeSchedule: function storeSchedule() {
-      VueStore_GlobalSTORE__WEBPACK_IMPORTED_MODULE_1__["default"].commit("".concat(this.customId, "/setApplySchedule"), this.store.dayInfo.schedule);
     }
   },
   methods: {
@@ -1756,10 +1777,9 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.$store.commit("mainToggledSidebar/setCalendarStoreRef", "mainCalendar");
 
-          _this.$store.commit("mainToggledSidebar/showParentView", data.component);
+          _this.$store.commit("mainToggledSidebar/showParentView", data.component); // console.log(this.$store.state.mainCalendar, "calendarStore");
+          // console.log(this.$store.state.mainToggledSidebar, "ToggledSidebarStore");
 
-          console.log(_this.$store.state.mainCalendar, "calendarStore");
-          console.log(_this.$store.state.mainToggledSidebar, "ToggledSidebarStore");
         },
         dayClasses: function dayClasses(ref) {
           return "";
@@ -22018,11 +22038,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass: "day_inside day--schedule",
-      class: { special: _vm.isSpecial },
-      on: { click: _vm.click }
-    },
+    { staticClass: "day_inside day--schedule", on: { click: _vm.click } },
     [
       _c("div", { staticClass: "day_date" }, [
         _c("div", { staticClass: "day_num" }, [
@@ -22371,7 +22387,7 @@ var render = function() {
           "div",
           { staticClass: "mb80 size18 lineh dark" },
           [
-            _vm._v("\n            For this days: \n            "),
+            _vm._v("\n            For these days: \n            "),
             _vm._l(_vm.popupRewrite.rewriteWeekNames, function(weekDay, index) {
               return _c("span", { key: weekDay, staticClass: "cyan italic" }, [
                 _vm._v("\n                " + _vm._s(weekDay)),
@@ -22846,7 +22862,7 @@ var render = function() {
             _vm._v("Time Settings")
           ]),
           _vm._v(" "),
-          _c("Schedule", { attrs: { applySchedule: _vm.applySchedule } }),
+          _c("Schedule"),
           _vm._v(" "),
           _c(
             "div",

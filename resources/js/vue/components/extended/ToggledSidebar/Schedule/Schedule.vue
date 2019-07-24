@@ -34,7 +34,7 @@ import InputsFromTo from "VueToggledSidebar/InputsFromTo/InputsFromTo";
 export default {
     name: "Schedule",
     mixins: [FindParentMixin],
-    props: ["applySchedule"],
+    props: [],
     components: {
         InputsFromTo
     },
@@ -50,15 +50,33 @@ export default {
         };
     },
     computed: {
-        
+        storeSchedule() {
+            return this.exists(this.store, () => {
+                return this.store.dayInfo.schedule;
+            });
+        },
+        applySchedule() {
+            return this.exists(this.store, () => {
+                return this.store.applySchedule;
+            });
+        },
     },
     watch: {
-        
+        storeSchedule() {
+            store.commit(
+                `${this.customId}/setApplySchedule`,
+                this.store.dayInfo.schedule
+            );
+            this.$nextTick(() => {
+                if(this.applySchedule.length == 0) this.addInterval();
+            });
+        },
     },
     created() {
         this.options.timeFormat = store.state[this.store.calendarStoreRef].settings.hoursFormat;
     },
     mounted(){
+        
     },
     methods: {
         addInterval() {

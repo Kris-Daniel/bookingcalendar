@@ -28,8 +28,8 @@ export default {
                     this.$store.commit("mainToggledSidebar/setDayInfo", dayInfo);
                     this.$store.commit("mainToggledSidebar/setCalendarStoreRef", "mainCalendar");
                     this.$store.commit("mainToggledSidebar/showParentView", data.component);
-                    console.log(this.$store.state.mainCalendar, "calendarStore");
-                    console.log(this.$store.state.mainToggledSidebar, "ToggledSidebarStore");
+                    // console.log(this.$store.state.mainCalendar, "calendarStore");
+                    // console.log(this.$store.state.mainToggledSidebar, "ToggledSidebarStore");
                 },
                 dayClasses(ref) {
                     return "";

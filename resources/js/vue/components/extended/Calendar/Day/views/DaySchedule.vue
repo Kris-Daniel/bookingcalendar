@@ -1,5 +1,5 @@
 <template>
-    <div class="day_inside day--schedule" :class="{special: isSpecial}" @click="click">
+    <div class="day_inside day--schedule" @click="click">
         <div class="day_date">
             <div class="day_num">
                 <span class="day_weekname">{{dayInfo.weekDayRef}},</span>
